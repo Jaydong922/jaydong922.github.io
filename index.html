@@ -254,7 +254,7 @@
 </head>
 <body>
 
-    <!-- SOUND EFFECT: MEMORY REBOOT -->
+    <!-- SOUND EFFECT: MEMORY REBOOT (FIXED) -->
     <audio id="startSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-message-alert-1332.mp3" type="audio/mpeg">
         Your browser does not support audio.
@@ -399,12 +399,13 @@
     <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
     <script>
-        // === PLAY SOUND ON PAGE LOAD ===
-        window.addEventListener('load', () => {
+        // === PLAY SOUND ON PAGE LOAD (FIXED LOGIC) ===
+        document.addEventListener('DOMContentLoaded', () => {
             const sound = document.getElementById('startSound');
-            sound.volume = 0.4; // HINDI MASYADONG MALAKAS
-            sound.play().catch(err => {
-                // Para gumana sa lahat ng browser (kailangan ng unang click minsan)
+            sound.volume = 0.4;
+            // Try play first
+            sound.play().catch(() => {
+                // If blocked, play on first click anywhere
                 document.addEventListener('click', () => sound.play(), { once: true });
             });
         });
