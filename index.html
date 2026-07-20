@@ -1,458 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CyberJayd - Ethical Security Researcher & Developer | Global Portfolio">
-    <meta name="keywords" content="Cybersecurity, Ethical Hacking, Software Development, Termux, Bug Bounty, CyberJayd Security Lab">
-    <meta name="author" content="Jayd Repoberbio">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
-    <title>CyberJayd | Global Security & Development</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        :root {
-            --neon-main: #00d4ff;
-            --neon-glow: rgba(0, 212, 255, 0.6);
-            --neon-soft: rgba(0, 212, 255, 0.15);
-            --dark-bg: #050b18;
-            --card-bg: rgba(10, 20, 40, 0.8);
-            --text: #e0f7ff;
-            --muted: #8ab4c8;
-            --border: rgba(0, 212, 255, 0.4);
-            --success: #00ffb3;
-        }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--dark-bg);
-            color: var(--text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* === MATRIX BACKGROUND === */
-        #matrix-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            display: block;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(8, 16, 32, 0.95), rgba(5, 11, 24, 0.9));
-            padding: 3.5rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--neon-main);
-            box-shadow: 0 0 25px var(--neon-glow);
-            backdrop-filter: blur(4px);
-        }
-        h1 {
-            font-size: 2.8rem;
-            color: var(--neon-main);
-            margin-bottom: 0.6rem;
-            text-shadow: 0 0 15px var(--neon-glow), 0 0 30px var(--neon-glow);
-            letter-spacing: 1px;
-        }
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--muted);
-            max-width: 650px;
-            margin: 0 auto;
-        }
-        .container {
-            max-width: 1050px;
-            margin: 3rem auto;
-            padding: 0 1rem;
-        }
-        section { margin-bottom: 3.2rem; }
-        h2 {
-            color: var(--neon-main);
-            margin-bottom: 1.2rem;
-            border-left: 4px solid var(--neon-main);
-            padding-left: 0.8rem;
-            text-shadow: 0 0 8px var(--neon-glow);
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
-        }
-        .card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            transition: 0.3s ease;
-            border: 1px solid var(--border);
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
-            backdrop-filter: blur(6px);
-        }
-        .card:hover {
-            border-color: var(--neon-main);
-            transform: translateY(-4px);
-            box-shadow: 0 0 20px var(--neon-glow);
-        }
-        .card h3 { margin-bottom: 0.7rem; color: var(--neon-main); text-shadow: 0 0 5px var(--neon-glow); }
-        a { color: var(--neon-main); text-decoration: none; transition: 0.2s; }
-        a:hover { text-decoration: underline; text-shadow: 0 0 8px var(--neon-glow); }
-        .skills-list {
-            display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.5rem;
-        }
-        .skill-tag {
-            background: var(--neon-soft);
-            color: var(--neon-main);
-            padding: 0.4rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid var(--border);
-            transition: 0.2s;
-            box-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
-        }
-        .skill-tag:hover {
-            background: var(--neon-main);
-            color: var(--dark-bg);
-            box-shadow: 0 0 15px var(--neon-glow);
-        }
-
-        /* === SKILL BARS === */
-        .skill-bar {
-            margin: 0.8rem 0;
-        }
-        .skill-name {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-            color: var(--text);
-        }
-        .bar-bg {
-            width: 100%;
-            height: 8px;
-            background: var(--neon-soft);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: inset 0 0 5px rgba(0, 212, 255, 0.2);
-        }
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--neon-main), #66e0ff);
-            border-radius: 4px;
-            box-shadow: 0 0 10px var(--neon-glow);
-        }
-
-        /* === SERVICES === */
-        .service-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .service-item:last-child { border: none; }
-        .service-item strong { color: var(--success); text-shadow: 0 0 5px rgba(0, 255, 179, 0.4); }
-
-        /* === TIMELINE === */
-        .timeline-item {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .timeline-item::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: var(--neon-main);
-            font-weight: bold;
-            text-shadow: 0 0 8px var(--neon-glow);
-        }
-        .timeline-date {
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
-        /* === BADGE === */
-        .badge {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            background: rgba(0, 255, 179, 0.15);
-            color: var(--success);
-            border: 1px solid var(--success);
-            box-shadow: 0 0 8px rgba(0, 255, 179, 0.3);
-            margin-right: 0.5rem;
-        }
-
-        /* === CONTACT === */
-        .contact-note {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid var(--neon-main);
-            border-radius: 8px;
-            color: var(--neon-main);
-            box-shadow: 0 0 12px var(--neon-glow);
-            font-weight: 500;
-        }
-        .contact-btn {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.7rem 1.5rem;
-            background: var(--neon-main);
-            color: var(--dark-bg);
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 0 15px var(--neon-glow);
-            transition: 0.3s;
-        }
-        .contact-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px var(--neon-glow);
-        }
-
-        /* === BACK TO TOP === */
-        #backToTop {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--neon-main);
-            color: var(--dark-bg);
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 0 20px var(--neon-glow);
-            opacity: 0;
-            transition: 0.3s;
-            z-index: 2;
-        }
-        #backToTop.show { opacity: 1; }
-        #backToTop:hover { transform: scale(1.1); }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(8, 16, 32, 0.9);
-            color: var(--muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -5px 15px rgba(0, 212, 255, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2.1rem; }
-            .container { margin: 2rem auto; }
-            section { margin-bottom: 2.5rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberJayd | Global Security & Development</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Roboto,Arial,sans-serif}
+:root{--neon:#00d4ff;--glow:rgba(0,212,255,.6);--bg:#050b18;--card:rgba(10,20,40,.8);--txt:#e0f7ff;--muted:#8ab4c8;--ok:#00ffb3}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);line-height:1.7;overflow-x:hidden}
+#matrix{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1}
+header{background:linear-gradient(135deg,rgba(8,16,32,.95),rgba(5,11,24,.9));padding:3rem 1rem;text-align:center;border-bottom:1px solid var(--neon);box-shadow:0 0 25px var(--glow)}
+h1{font-size:2.5rem;color:var(--neon);text-shadow:0 0 15px var(--glow),0 0 30px var(--glow)}
+.tagline{color:var(--muted);margin-top:.5rem}
+.container{max-width:1000px;margin:2rem auto;padding:0 1rem}
+section{margin-bottom:2.5rem}
+h2{color:var(--neon);border-left:4px solid var(--neon);padding-left:.8rem;text-shadow:0 0 8px var(--glow);margin-bottom:1rem}
+.card{background:var(--card);padding:1.2rem;border-radius:10px;border:1px solid rgba(0,212,255,.4);box-shadow:0 0 10px rgba(0,212,255,.1);backdrop-filter:blur(6px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.tag{display:inline-block;background:rgba(0,212,255,.15);color:var(--neon);padding:.3rem .7rem;border-radius:20px;font-size:.85rem;border:1px solid rgba(0,212,255,.4);margin:.2rem}
+.bar{margin:.5rem 0}
+.bar-name{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.2rem}
+.bar-bg{width:100%;height:6px;background:rgba(0,212,255,.15);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--neon),#66e0ff);border-radius:3px;box-shadow:0 0 8px var(--glow)}
+.item{padding:.6rem 0;border-bottom:1px solid rgba(0,212,255,.2)}
+.item:last-child{border:none}
+.item strong{color:var(--ok);text-shadow:0 0 5px rgba(0,255,179,.4)}
+.note{margin-top:1rem;padding:.8rem;background:rgba(0,212,255,.08);border:1px solid var(--neon);border-radius:8px;color:var(--neon);box-shadow:0 0 12px var(--glow);font-weight:500}
+.btn{display:inline-block;margin-top:1rem;padding:.6rem 1.2rem;background:var(--neon);color:var(--bg);border-radius:8px;font-weight:bold;box-shadow:0 0 15px var(--glow);text-decoration:none}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 25px var(--glow)}
+footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.9rem;border-top:1px solid rgba(0,212,255,.4)}
+@media(max-width:600px){h1{font-size:1.8rem}}
+</style>
 </head>
 <body>
 
-    <!-- SOUND EFFECT: MEMORY REBOOT (FIXED) -->
-    <audio id="startSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-message-alert-1332.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-    
+<audio id="snd" preload="auto">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-message-alert-1332.mp3" type="audio/mpeg">
 
-    <canvas id="matrix-bg"></canvas>
 
-    <div class="content-wrapper">
-        <header>
-            <h1>🛡️ CyberJayd</h1>
-            <p class="tagline">Global Ethical Security Researcher • Software Developer • Mobile Tech Specialist</p>
-        </header>
+<canvas id="matrix"></canvas>
+<div class="wrap">
+<header>
+<h1>🛡️ CyberJayd</h1>
+<p class="tagline">Global Ethical Security Researcher • Software Developer • Mobile Tech Specialist</p>
+</header>
 
-        <div class="container">
-            <section>
-                <h2>About Me</h2>
-                <div class="card">
-                    <p>I am a BSED English student and self-taught technologist from the Philippines, focused on ethical cybersecurity, automation, and accessible software development. I build powerful, lightweight tools that work on mobile devices — making advanced tech available to everyone.</p>
-                    <br>
-                    <p>My mission: To learn, create, and share knowledge while practicing security legally and responsibly worldwide.</p>
-                </div>
-            </section>
+<div class="container">
+<section>
+<h2>About Me</h2>
+<div class="card">
+<p>I am a BSED English student and self-taught technologist from the Philippines, focused on ethical cybersecurity, automation, and accessible software development. I build powerful, lightweight tools that work on mobile devices — making advanced tech available to everyone.</p>
+<br>
+<p>My mission: To learn, create, and share knowledge while practicing security legally and responsibly worldwide.</p>
+</div>
+</section>
 
-            <section>
-                <h2>My Journey</h2>
-                <div class="card">
-                    <div class="timeline-item">
-                        <div class="timeline-date">July 2026</div>
-                        <p>✅ Launched Official Global Portfolio & CyberJayd Security Lab v1.7.2</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Started</div>
-                        <p>📚 Began self-learning Programming, Web Development & Cybersecurity</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Currently</div>
-                        <p>🎓 BSED English Student | Ethical Security Researcher | Open Source Contributor</p>
-                    </div>
-                </div>
-            </section>
+<section>
+<h2>My Journey</h2>
+<div class="card">
+<p>▹ <b>July 2026</b> — Launched Official Global Portfolio & CyberJayd Security Lab v1.7.2</p>
+<p>▹ <b>Started</b> — Began self-learning Programming, Web Development & Cybersecurity</p>
+<p>▹ <b>Currently</b> — BSED English Student | Ethical Security Researcher | Open Source Contributor</p>
+</div>
+</section>
 
-            <section>
-                <h2>Core Skills</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3>Cybersecurity</h3>
-                        <div class="skills-list">
-                            <span class="skill-tag">Ethical Hacking</span>
-                            <span class="skill-tag">Bug Bounty</span>
-                            <span class="skill-tag">SSRF Testing</span>
-                            <span class="skill-tag">Reconnaissance</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-name"><span>Security Analysis</span><span>80%</span></div>
-                            <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Development</h3>
-                        <div class="skills-list">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Bash Scripting</span>
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">Automation</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-name"><span>Web Dev (HTML/CSS/JS)</span><span>100%</span></div>
-                            <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-name"><span>Scripting</span><span>75%</span></div>
-                            <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Platforms</h3>
-                        <div class="skills-list">
-                            <span class="skill-tag">Termux / Linux</span>
-                            <span class="skill-tag">Mobile Dev</span>
-                            <span class="skill-tag">GitHub</span>
-                            <span class="skill-tag">Cloud Hosting</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-name"><span>Linux / Termux</span><span>85%</span></div>
-                            <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<section>
+<h2>Core Skills</h2>
+<div class="grid">
+<div class="card">
+<h3>Cybersecurity</h3>
+<div class="tag">Ethical Hacking</div>
+<div class="tag">Bug Bounty</div>
+<div class="tag">SSRF Testing</div>
+<div class="tag">Reconnaissance</div>
+<div class="bar"><div class="bar-name"><span>Security Analysis</span><span>80%</span></div><div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div></div>
+</div>
+<div class="card">
+<h3>Development</h3>
+<div class="tag">Python</div>
+<div class="tag">Bash Scripting</div>
+<div class="tag">HTML/CSS</div>
+<div class="tag">Automation</div>
+<div class="bar"><div class="bar-name"><span>Web Dev</span><span>100%</span></div><div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div></div>
+<div class="bar"><div class="bar-name"><span>Scripting</span><span>75%</span></div><div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div></div>
+</div>
+<div class="card">
+<h3>Platforms</h3>
+<div class="tag">Termux / Linux</div>
+<div class="tag">Mobile Dev</div>
+<div class="tag">GitHub</div>
+<div class="tag">Cloud Hosting</div>
+<div class="bar"><div class="bar-name"><span>Linux / Termux</span><span>85%</span></div><div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div></div>
+</div>
+</div>
+</section>
 
-            <section>
-                <h2>Services I Offer</h2>
-                <div class="card">
-                    <div class="service-item">
-                        <strong>🌐 Custom Website Development</strong>
-                        <p>Personal portfolios, business pages, and landing pages — fully responsive and modern design.</p>
-                    </div>
-                    <div class="service-item">
-                        <strong>🔒 Website Security Audit & Hardening</strong>
-                        <p>Basic vulnerability checks and security improvements for your site.</p>
-                    </div>
-                    <div class="service-item">
-                        <strong>⚙️ Automation Scripts & Tools</strong>
-                        <p>Custom Python/Bash scripts to automate tasks and workflows.</p>
-                    </div>
-                    <div class="service-item">
-                        <strong>📱 Termux / Linux Setup & Optimization</strong>
-                        <p>Installation, configuration, and troubleshooting for mobile Linux environments.</p>
-                    </div>
-                </div>
-            </section>
+<section>
+<h2>Services I Offer</h2>
+<div class="card">
+<div class="item"><strong>🌐 Custom Website Development</strong><br>Personal portfolios, business pages, landing pages — fully responsive & modern.</div>
+<div class="item"><strong>🔒 Website Security Audit</strong><br>Basic vulnerability checks & security improvements.</div>
+<div class="item"><strong>⚙️ Automation Scripts</strong><br>Custom Python/Bash tools to automate tasks.</div>
+<div class="item"><strong>📱 Termux / Linux Setup</strong><br>Installation, config & troubleshooting for mobile Linux.</div>
+</div>
+</section>
 
-            <section>
-                <h2>Featured Projects</h2>
-                <div class="card">
-                    <h3>🔐 CyberJayd Security Lab v1.7.2 <span class="badge">Active</span></h3>
-                    <p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host check, SSRF testing, and full automation workflows.</p>
-                    <br>
-                    <p><strong>Repository:</strong> <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
-                </div>
-            </section>
+<section>
+<h2>Featured Projects</h2>
+<div class="card">
+<h3>🔐 CyberJayd Security Lab v1.7.2 <span style="color:var(--ok);font-size:.8rem;">Active</span></h3>
+<p>All-in-one security toolkit for Android via Termux: subdomain scan, live host check, SSRF test & automation.</p>
+<br>
+<p><b>Repo:</b> <a href="https://github.com/Jaydong922/cyberjayd-security-lab" style="color:var(--neon)">github.com/Jaydong922/cyberjayd-security-lab</a></p>
+</div>
+</section>
 
-            <section>
-                <h2>Global Contact</h2>
-                <div class="card">
-                    <p><strong>📧 Email:</strong> <a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></p>
-                    <p><strong>📍 Location:</strong> Cebu City, Central Visayas, Philippines 🇵🇭</p>
-                    <p><strong>💼 Availability:</strong> Open for collaborations, freelance work, and knowledge sharing.</p>
+<section>
+<h2>Global Contact</h2>
+<div class="card">
+<p><b>📧 Email:</b> repoberbiojayd3@gmail.com</p>
+<p><b>📍 Location:</b> Cebu City, Central Visayas, Philippines 🇵🇭</p>
+<p><b>💼 Availability:</b> Open for collaborations & freelance work.</p>
+<a href="mailto:repoberbiojayd3@gmail.com" class="btn">📩 Send Email / Hire Me</a>
+<div class="note">⚠️ ALL WORK STRICTLY FOR LEGAL & ETHICAL PURPOSES ONLY. No unauthorized access or hacking requests accepted.</div>
+</div>
+</section>
+</div>
 
-                    <a href="mailto:repoberbiojayd3@gmail.com" class="contact-btn">📩 Send Email / Hire Me</a>
+<footer>© 2026 CyberJayd | Built with passion & ethics</footer>
+</div>
 
-                    <div class="contact-note">
-                        ⚠️ IMPORTANT NOTE: All services and work are done strictly for **LEGAL & ETHICAL PURPOSES ONLY**. I do not accept requests for unauthorized access, hacking, or any activities that violate laws or privacy rights.
-                    </div>
-                </div>
-            </section>
-        </div>
+<script>
+// SOUND
+document.addEventListener('DOMContentLoaded',()=>{
+const snd=document.getElementById('snd');snd.volume=0.4;
+snd.play().catch(()=>document.addEventListener('click',()=>snd.play(),{once:true}));
+});
 
-        <footer>© 2026 CyberJayd | All Rights Reserved • Built with passion and ethics</footer>
-    </div>
-
-    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-    <script>
-        // === PLAY SOUND ON PAGE LOAD (FIXED LOGIC) ===
-        document.addEventListener('DOMContentLoaded', () => {
-            const sound = document.getElementById('startSound');
-            sound.volume = 0.4;
-            // Try play first
-            sound.play().catch(() => {
-                // If blocked, play on first click anywhere
-                document.addEventListener('click', () => sound.play(), { once: true });
-            });
-        });
-
-        // === MATRIX ANIMATION ===
-        const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
-        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*()<>/{}[]';
-        const charArray = chars.split('');
-        let fontSize, columns, drops;
-
-        function initMatrix() {
-            fontSize = window.innerWidth < 600 ? 13 : 16;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            columns = Math.floor(canvas.width / fontSize);
-            drops = Array(columns).fill(0).map(() => Math.random() * -100);
-        }
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 11, 24, 0.07)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = charArray[Math.floor(Math.random() * charArray.length)];
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
-                ctx.fillStyle = '#ffffff';
-                ctx.shadowColor = getComputedStyle(document.documentElement).getPropertyValue('--neon-main');
-                ctx.shadowBlur = 10;
-                ctx.fillText(text, x, y);
-                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--neon-main');
-                ctx.shadowBlur = 5;
-                if ((drops[i]-1)*fontSize > 0) ctx.fillText(charArray[Math.floor(Math.random()*charArray.length)], x, (drops[i]-1)*fontSize);
-                if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-            ctx.shadowBlur = 0;
-        }
-        initMatrix();
-        setInterval(drawMatrix, 55);
-        window.addEventListener('resize', initMatrix);
-
-        const btn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            btn.classList.toggle('show', window.scrollY > 300);
-        });
-    </script>
+// MATRIX RAIN
+const c=document.getElementById('matrix'),ctx=c.getContext('2d');
+const chars='アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*()<>/{}[]';
+const arr=chars.split('');
+let fSize,cols,drops;
+function init(){
+fSize=window.innerWidth<600?12:15;
+c.width=window.innerWidth;c.height=window.innerHeight;
+cols=Math.floor(c.width/fSize);
+drops=Array(cols).fill(0).map(()=>Math.random()*-50);
+}
+function draw(){
+ctx.fillStyle='rgba(5,11,24,.07)';ctx.fillRect(0,0,c.width,c.height);
+ctx.font=fSize+'px monospace';
+for(let i=0;i<drops.length;i++){
+const t=arr[Math.floor(Math.random()*arr.length)];
+const x=i*fSize,y=drops[i]*fSize;
+ctx.fillStyle='#fff';ctx.shadowColor='#00d4ff';ctx.shadowBlur=8;ctx.fillText(t,x,y);
+ctx.fillStyle='#00d4ff';ctx.shadowBlur=4;
+if((drops[i]-1)*fSize>0)ctx.fillText(arr[Math.floor(Math.random()*arr.length)],x,(drops[i]-1)*fSize);
+if(y>c.height&&Math.random()>.975)drops[i]=0;
+drops[i]++;
+}
+ctx.shadowBlur=0;
+}
+init();setInterval(draw,55);window.addEventListener('resize',init);
+</script>
 </body>
 </html>
