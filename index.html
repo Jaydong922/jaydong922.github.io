@@ -11,7 +11,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         :root {
-            /* ✨ NEON LIGHT BLUE THEME */
             --neon-main: #00d4ff;
             --neon-glow: rgba(0, 212, 255, 0.6);
             --neon-soft: rgba(0, 212, 255, 0.15);
@@ -30,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* === CMATRIX BACKGROUND === */
+        /* === MATRIX BACKGROUND (JAPANESE CHARACTERS RESTORED) === */
         #matrix-bg {
             position: fixed;
             top: 0; left: 0;
@@ -274,7 +273,7 @@
                 </div>
             </section>
 
-            <!-- MY JOURNEY -->
+            <!-- MY JOURNEY / TIMELINE -->
             <section>
                 <h2>My Journey</h2>
                 <div class="card">
@@ -316,6 +315,18 @@
                             <span class="skill-tag">Python</span>
                             <span class="skill-tag">Bash Scripting</span>
                             <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">Automation</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Web Dev (HTML/CSS/JS)</span><span>100%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Scripting</span><span>75%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
+                        </div>
+                    </div>
+                    <div class class="skill-tag">HTML/CSS</span>
                             <span class="skill-tag">Automation</span>
                         </div>
                         <div class="skill-bar">
@@ -400,7 +411,7 @@
     <!-- BACK TO TOP -->
     <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-    <!-- CMATRIX ANIMATION -->
+    <!-- MATRIX ANIMATION WITH JAPANESE CHARACTERS (RESTORED) -->
     <script>
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
@@ -425,10 +436,10 @@
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
                 ctx.fillStyle = '#ffffff';
-                ctx.shadowColor = var(--neon-main);
+                ctx.shadowColor = getComputedStyle(document.documentElement).getPropertyValue('--neon-main');
                 ctx.shadowBlur = 10;
                 ctx.fillText(text, x, y);
-                ctx.fillStyle = var(--neon-main);
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--neon-main');
                 ctx.shadowBlur = 5;
                 if ((drops[i]-1)*fontSize > 0) ctx.fillText(charArray[Math.floor(Math.random()*charArray.length)], x, (drops[i]-1)*fontSize);
                 if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
