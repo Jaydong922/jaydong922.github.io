@@ -6,21 +6,21 @@
     <meta name="description" content="CyberJayd - Ethical Security Researcher & Developer | Global Portfolio">
     <meta name="keywords" content="Cybersecurity, Ethical Hacking, Software Development, Termux, Bug Bounty, CyberJayd Security Lab">
     <meta name="author" content="Jayd Repoberbio">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
     <title>CyberJayd | Global Security & Development</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         :root {
-            /* === PICK YOUR MATRIX COLOR HERE === */
-            --matrix-color: #0ea5e9;      /* 🔵 CYBER CYAN (matches your brand) */
-            /* --matrix-color: #00ff41; */  /* 🟢 CLASSIC MATRIX GREEN (uncomment to use) */
+            --matrix-color: #0ea5e9;
             --matrix-glow: rgba(14, 165, 233, 0.8);
             --accent: var(--matrix-color);
-            --dark: rgba(15, 23, 42, 0.85);   /* semi-transparent so rain shows through */
+            --dark: rgba(15, 23, 42, 0.85);
             --darker: rgba(2, 6, 23, 0.92);
-            --card: rgba(30, 41, 59, 0.78);   /* cards are see-through */
+            --card: rgba(30, 41, 59, 0.78);
             --text: #e2e8f0;
             --muted: #94a3b8;
             --border: rgba(14, 165, 233, 0.35);
+            --success: #10b981;
         }
         html { scroll-behavior: smooth; }
         body {
@@ -35,12 +35,11 @@
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            z-index: 0;            /* BEHIND everything */
-            pointer-events: none;  /* NEVER blocks clicks/scroll */
+            z-index: 0;
+            pointer-events: none;
             display: block;
         }
 
-        /* === ALL CONTENT SITS ON TOP === */
         .content-wrapper {
             position: relative;
             z-index: 1;
@@ -117,6 +116,90 @@
             color: #020617;
             box-shadow: 0 0 12px var(--matrix-glow);
         }
+
+        /* === SKILL PROGRESS BARS === */
+        .skill-bar {
+            margin: 0.8rem 0;
+        }
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(14, 165, 233, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #38bdf8);
+            border-radius: 4px;
+            box-shadow: 0 0 8px var(--matrix-glow);
+        }
+
+        /* === SERVICES SECTION === */
+        .service-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .service-item:last-child { border: none; }
+        .service-item strong { color: var(--success); }
+
+        /* === TIMELINE / JOURNEY === */
+        .timeline-item {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-item::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* === BADGE === */
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+            margin-right: 0.5rem;
+        }
+
+        /* === BACK TO TOP BUTTON === */
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: #020617;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--matrix-glow);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 2;
+        }
+        #backToTop.show { opacity: 1; }
+        #backToTop:hover { transform: scale(1.1); }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -128,7 +211,6 @@
             z-index: 1;
         }
 
-        /* === MOBILE OPTIMIZATION === */
         @media (max-width: 600px) {
             h1 { font-size: 2.1rem; }
             .container { margin: 2rem auto; }
@@ -138,10 +220,8 @@
 </head>
 <body>
 
-    <!-- CMATRIX RAIN CANVAS -->
     <canvas id="matrix-bg"></canvas>
 
-    <!-- ALL YOUR ORIGINAL CONTENT (ENHANCED) -->
     <div class="content-wrapper">
         <header>
             <h1>🛡️ CyberJayd</h1>
@@ -149,6 +229,7 @@
         </header>
 
         <div class="container">
+            <!-- ORIGINAL: ABOUT ME -->
             <section>
                 <h2>About Me</h2>
                 <div class="card">
@@ -158,6 +239,26 @@
                 </div>
             </section>
 
+            <!-- NEW: MY JOURNEY / TIMELINE -->
+            <section>
+                <h2>My Journey</h2>
+                <div class="card">
+                    <div class="timeline-item">
+                        <div class="timeline-date">July 2026</div>
+                        <p>✅ Launched Official Global Portfolio & CyberJayd Security Lab v1.7.2</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Started</div>
+                        <p>📚 Began self-learning Programming, Web Development & Cybersecurity</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Currently</div>
+                        <p>🎓 BSED English Student | Ethical Security Researcher | Open Source Contributor</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ORIGINAL: CORE SKILLS + ADDED SKILL BARS -->
             <section>
                 <h2>Core Skills</h2>
                 <div class="grid">
@@ -169,6 +270,10 @@
                             <span class="skill-tag">SSRF Testing</span>
                             <span class="skill-tag">Reconnaissance</span>
                         </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Security Analysis</span><span>80%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
+                        </div>
                     </div>
                     <div class="card">
                         <h3>Development</h3>
@@ -177,6 +282,14 @@
                             <span class="skill-tag">Bash Scripting</span>
                             <span class="skill-tag">HTML/CSS</span>
                             <span class="skill-tag">Automation</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Web Dev (HTML/CSS/JS)</span><span>100%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Scripting</span><span>75%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
                         </div>
                     </div>
                     <div class="card">
@@ -187,26 +300,57 @@
                             <span class="skill-tag">GitHub</span>
                             <span class="skill-tag">Cloud Hosting</span>
                         </div>
+                        <div class="skill-bar">
+                            <div class="skill-name"><span>Linux / Termux</span><span>85%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
+            <!-- NEW: SERVICES SECTION -->
+            <section>
+                <h2>Services I Offer</h2>
+                <div class="card">
+                    <div class="service-item">
+                        <strong>🌐 Custom Website Development</strong>
+                        <p>Personal portfolios, business pages, and landing pages — fully responsive and modern design.</p>
+                    </div>
+                    <div class="service-item">
+                        <strong>🔒 Website Security Audit & Hardening</strong>
+                        <p>Basic vulnerability checks and security improvements for your site.</p>
+                    </div>
+                    <div class="service-item">
+                        <strong>⚙️ Automation Scripts & Tools</strong>
+                        <p>Custom Python/Bash scripts to automate tasks and workflows.</p>
+                    </div>
+                    <div class="service-item">
+                        <strong>📱 Termux / Linux Setup & Optimization</strong>
+                        <p>Installation, configuration, and troubleshooting for mobile Linux environments.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ORIGINAL: FEATURED PROJECTS -->
             <section>
                 <h2>Featured Projects</h2>
                 <div class="card">
-                    <h3>🔐 CyberJayd Security Lab v1.7.2</h3>
+                    <h3>🔐 CyberJayd Security Lab v1.7.2 <span class="badge">Active</span></h3>
                     <p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host check, SSRF testing, and full automation workflows.</p>
                     <br>
                     <p><strong>Repository:</strong> <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
                 </div>
             </section>
 
+            <!-- ORIGINAL: GLOBAL CONTACT + ADDED BUTTON -->
             <section>
                 <h2>Global Contact</h2>
                 <div class="card">
                     <p><strong>Email:</strong> repoberbiojayd3@gmail.com</p>
                     <p><strong>Location:</strong> Cebu City, Central Visayas, Philippines 🇵🇭</p>
                     <p><strong>Availability:</strong> Open for collaborations, freelance work, and knowledge sharing.</p>
+                    <br>
+                    <a href="mailto:repoberbiojayd3@gmail.com" style="display:inline-block; padding:0.6rem 1.2rem; background:var(--accent); color:#020617; border-radius:8px; font-weight:bold;">📩 Hire / Contact Me</a>
                 </div>
             </section>
         </div>
@@ -214,68 +358,54 @@
         <footer>© 2026 CyberJayd | All Rights Reserved • Built with passion and ethics</footer>
     </div>
 
-    <!-- === CMATRIX ANIMATION ENGINE (PURE VANILLA JS) === -->
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- CMATRIX ANIMATION SCRIPT -->
     <script>
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
-
-        // Characters used in the rain (Katakana + numbers + symbols = authentic look)
         const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*()<>/{}[]';
         const charArray = chars.split('');
-
         let fontSize, columns, drops;
 
         function initMatrix() {
-            // Responsive font size: smaller on mobile
             fontSize = window.innerWidth < 600 ? 13 : 16;
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             columns = Math.floor(canvas.width / fontSize);
-            drops = [];
-            for (let i = 0; i < columns; i++) {
-                drops[i] = Math.random() * -100; // random starting position
-            }
+            drops = Array(columns).fill(0).map(() => Math.random() * -100);
         }
 
         function drawMatrix() {
-            // Fade effect (creates the trailing look)
             ctx.fillStyle = 'rgba(2, 6, 23, 0.06)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.font = fontSize + 'px monospace';
-
             for (let i = 0; i < drops.length; i++) {
                 const text = charArray[Math.floor(Math.random() * charArray.length)];
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
-
-                // Leading character = bright + glow
                 ctx.fillStyle = '#ffffff';
                 ctx.shadowColor = getComputedStyle(document.documentElement).getPropertyValue('--matrix-color');
                 ctx.shadowBlur = 12;
                 ctx.fillText(text, x, y);
-
-                // Rest of the trail = colored
                 ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--matrix-color');
                 ctx.shadowBlur = 6;
-                const trailY = (drops[i] - 1) * fontSize;
-                if (trailY > 0) {
-                    ctx.fillText(charArray[Math.floor(Math.random() * charArray.length)], x, trailY);
-                }
-
-                // Reset drop when it hits bottom + randomness for staggered look
-                if (y > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if ((drops[i]-1)*fontSize > 0) ctx.fillText(charArray[Math.floor(Math.random()*charArray.length)], x, (drops[i]-1)*fontSize);
+                if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
             ctx.shadowBlur = 0;
         }
-
-        // Start + auto-resize when window changes
         initMatrix();
-        setInterval(drawMatrix, 55); // Lower = faster rain (50-65 is perfect)
+        setInterval(drawMatrix, 55);
         window.addEventListener('resize', initMatrix);
+
+        // Show/Hide Back to Top Button
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            btn.classList.toggle('show', window.scrollY > 300);
+        });
     </script>
 </body>
 </html>
