@@ -27,15 +27,33 @@ body{background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
 #matrix{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 .wrap{position:relative;z-index:1}
 
-header{background:linear-gradient(135deg,rgba(8,16,32,.95),rgba(5,11,24,.9));padding:3rem 1rem;text-align:center;border-bottom:1px solid var(--neon);box-shadow:0 0 30px var(--glow-strong)}
-h1{font-size:2.5rem;color:var(--neon);text-shadow:0 0 15px var(--glow-strong),0 0 30px var(--glow-strong)}
-.tagline{color:var(--muted);margin-top:.5rem}
+/* ✨ FUTURISTIC LOGO (CSS ONLY) */
+.logo-container{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:.5rem}
+.logo-shield{
+    width:55px;height:60px;position:relative;
+    background:linear-gradient(135deg, var(--neon), #0077ff);
+    clip-path:polygon(50% 0%, 100% 15%, 100% 75%, 50% 100%, 0% 75%, 0% 15%);
+    box-shadow:0 0 15px var(--glow-strong), inset 0 0 10px rgba(255,255,255,.2);
+    animation: logoPulse 2.5s ease-in-out infinite alternate;
+}
+.logo-shield::after{
+    content:"⚡";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-size:28px;color:#fff;text-shadow:0 0 8px var(--neon);
+}
+@keyframes logoPulse{
+    from{box-shadow:0 0 15px var(--glow-strong), inset 0 0 10px rgba(255,255,255,.2)}
+    to{box-shadow:0 0 30px var(--glow-strong), inset 0 0 20px rgba(255,255,255,.4)}
+}
+.logo-text{font-size:2.5rem;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,var(--neon),var(--neon-alt),var(--neon));-webkit-background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 8px var(--glow-strong))}
+
+header{background:linear-gradient(135deg,rgba(8,16,32,.95),rgba(5,11,24,.9));padding:2.5rem 1rem;text-align:center;border-bottom:1px solid var(--neon);box-shadow:0 0 30px var(--glow-strong)}
+.tagline{color:var(--muted);margin-top:.5rem;font-size:1rem}
 
 .container{max-width:1000px;margin:2rem auto;padding:0 1rem}
 section{margin-bottom:2.5rem}
 h2{color:var(--neon);border-left:4px solid var(--neon);padding-left:.8rem;text-shadow:0 0 8px var(--glow-strong);margin-bottom:1rem}
 
-/* ✨ LIGHT SABER / ENERGY BORDER EFFECT */
+/* ⚡ LIGHT SABER / ENERGY BORDER EFFECT */
 .card, .service-card{
     background:var(--card);
     padding:1.2rem;
@@ -89,7 +107,10 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.9rem;borde
 a{color:var(--neon);text-decoration:none}
 a:hover{text-shadow:0 0 8px var(--glow-strong)}
 
-@media(max-width:600px){h1{font-size:1.8rem}}
+@media(max-width:600px){
+    .logo-text{font-size:1.8rem}
+    .logo-shield{width:45px;height:50px}
+}
 </style>
 </head>
 <body>
@@ -97,7 +118,10 @@ a:hover{text-shadow:0 0 8px var(--glow-strong)}
 <canvas id="matrix"></canvas>
 <div class="wrap">
 <header>
-<h1>🛡️ CyberJayd</h1>
+<div class="logo-container">
+    <div class="logo-shield"></div>
+    <h1 class="logo-text">CyberJayd</h1>
+</div>
 <p class="tagline">Global Ethical Security Researcher • Software Developer • Affordable Tech Solutions</p>
 </header>
 
