@@ -12,631 +12,659 @@
             font-family: 'Courier New', Courier, monospace;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            background: #050a15;
-            color: #e0faff;
+            background: #05080f;
+            color: #cfefff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ============= MATRIX RAIN BACKGROUND (BLUE + GLOW + CONTINUOUS) ============= */
+        /* ========== MATRIX RAIN BACKGROUND (BLUE GLOW CONTINUOUS) ========== */
         #matrix-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.45;
+            opacity: 0.35;
         }
 
-        /* ============= HERO / LOGO SECTION ============= */
+        /* ========== HERO SECTION + VERTICAL LINES BG ========== */
         .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: linear-gradient(180deg, rgba(0,20,40,0.95) 0%, rgba(5,10,21,0.7) 100%);
-            border-bottom: 2px solid #00ffff;
-            box-shadow: 0 0 40px #00ffff55, inset 0 0 60px #00ffff22;
             position: relative;
+            text-align: center;
+            padding: 70px 20px 50px;
+            background: 
+                repeating-linear-gradient(90deg, rgba(0, 200, 255, 0.06) 0px, rgba(0, 200, 255, 0.06) 1px, transparent 1px, transparent 12px),
+                linear-gradient(180deg, rgba(0,15,30,0.98) 0%, rgba(5,8,15,0.85) 100%);
+            border-bottom: 2px solid #00ffff;
+            box-shadow: 0 0 40px #00ffff44, inset 0 0 80px #00ffff15;
             overflow: hidden;
         }
 
-        /* ============= NEW ENHANCED LOGO: 5 RINGS + COLOR SHIFT + SMOKE TRAIL ============= */
-        .logo-container {
+        /* ========== ORIGINAL RADAR LOGO (EXACT NA GAYA SA SCREENSHOT NIYO) ========== */
+        .logo-wrap {
             position: relative;
-            width: 420px;
-            height: 420px;
-            margin: 0 auto 30px;
+            width: 380px;
+            height: 380px;
+            margin: 0 auto 25px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* BASE RING STYLE */
-        .ring {
+        /* Outer rotating radar ring (CLOCKWISE) */
+        .radar-outer {
             position: absolute;
-            border-radius: 50%;
             width: 100%;
             height: 100%;
+            border-radius: 50%;
+            border: 2px solid #00ffff;
+            box-shadow: 
+                0 0 15px #00ffff, 
+                0 0 30px #00ffff88, 
+                inset 0 0 20px #00ffff44;
+            animation: spin-cw 12s linear infinite;
         }
-
-        /* 5 RINGS: MIXED DIRECTIONS (CW / CCW / CW / CCW / CW) */
-        .ring-1 { animation: rotate-cw 9s linear infinite, color-shift-1 6s linear infinite; } /* BIG - BLUE FIRST */
-        .ring-2 { width: 82%; height: 82%; animation: rotate-ccw 6.5s linear infinite, color-shift-2 6s linear infinite; } /* MED - GREEN FIRST (OPPOSITE) */
-        .ring-3 { width: 64%; height: 64%; animation: rotate-cw 4.5s linear infinite, color-shift-1 6s linear infinite; } /* SMALL - BLUE FIRST */
-        .ring-4 { width: 46%; height: 46%; animation: rotate-ccw 3s linear infinite, color-shift-2 6s linear infinite; } /* TINY - GREEN FIRST (OPPOSITE) */
-        .ring-5 { width: 30%; height: 30%; animation: rotate-cw 1.8s linear infinite, color-shift-1 6s linear infinite; } /* MICRO - BLUE FIRST */
-
-        /* BASE SEGMENT STYLE */
-        .segment {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 50px;
-            background: #00aaff;
-            animation: segment-glow 1.5s ease-in-out infinite alternate;
-        }
-
-        /* SMOKE / WATER TRAIL EFFECT (NAIIWAN KULAY NA PARANG USOK/TUBIG) */
-        .segment::after {
+        .radar-outer::before, .radar-outer::after {
             content: '';
             position: absolute;
-            left: 50%;
-            top: 100%;
+            background: #00ffff;
+            box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
+            border-radius: 3px;
+        }
+        /* 4 BIG TICKS (UP / DOWN / LEFT / RIGHT) */
+        .radar-outer::before {
+            width: 14px; height: 36px;
+            top: -10px; left: 50%;
             transform: translateX(-50%);
-            width: 100%;
-            height: 220%;
-            border-radius: 50px;
-            background: linear-gradient(to bottom, currentColor 0%, transparent 100%);
-            filter: blur(6px);
-            opacity: 0.55;
-            pointer-events: none;
+        }
+        .radar-outer::after {
+            width: 36px; height: 14px;
+            top: 50%; right: -10px;
+            transform: translateY(-50%);
+        }
+        .radar-outer .tick-bottom {
+            position: absolute;
+            width: 14px; height: 36px;
+            bottom: -10px; left: 50%;
+            transform: translateX(-50%);
+            background: #00ffff;
+            box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
+            border-radius: 3px;
+        }
+        .radar-outer .tick-left {
+            position: absolute;
+            width: 36px; height: 14px;
+            top: 50%; left: -10px;
+            transform: translateY(-50%);
+            background: #00ffff;
+            box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
+            border-radius: 3px;
         }
 
-        /* RING 1: BIG - 10 SEGMENTS */
-        .ring-1 .segment { width: 11px; height: 42px; transform-origin: 50% 210px; }
-        .ring-1 .s1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-1 .s2 { transform: translateX(-50%) rotate(36deg); }
-        .ring-1 .s3 { transform: translateX(-50%) rotate(72deg); }
-        .ring-1 .s4 { transform: translateX(-50%) rotate(108deg); }
-        .ring-1 .s5 { transform: translateX(-50%) rotate(144deg); }
-        .ring-1 .s6 { transform: translateX(-50%) rotate(180deg); }
-        .ring-1 .s7 { transform: translateX(-50%) rotate(216deg); }
-        .ring-1 .s8 { transform: translateX(-50%) rotate(252deg); }
-        .ring-1 .s9 { transform: translateX(-50%) rotate(288deg); }
-        .ring-1 .s10 { transform: translateX(-50%) rotate(324deg); }
+        /* Middle ring - GREEN (COUNTER CLOCKWISE) */
+        .radar-mid {
+            position: absolute;
+            width: 72%;
+            height: 72%;
+            border-radius: 50%;
+            border: 2px solid #39ff14;
+            box-shadow: 
+                0 0 12px #39ff14, 
+                0 0 25px #39ff1488, 
+                inset 0 0 15px #39ff1444;
+            animation: spin-ccw 9s linear infinite;
+        }
+        .radar-mid .tick-1, .radar-mid .tick-2 {
+            position: absolute;
+            background: #ff3366;
+            box-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366;
+            border-radius: 3px;
+        }
+        .radar-mid .tick-1 {
+            width: 10px; height: 26px;
+            top: -7px; left: 50%;
+            transform: translateX(-50%) rotate(35deg);
+            transform-origin: 50% calc(50% + 7px + 137px);
+        }
+        .radar-mid .tick-2 {
+            width: 26px; height: 10px;
+            top: 50%; right: -7px;
+            transform: translateY(-50%) rotate(35deg);
+        }
 
-        /* RING 2: MEDIUM - 8 SEGMENTS */
-        .ring-2 .segment { width: 9px; height: 34px; transform-origin: 50% 172px; }
-        .ring-2 .s1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-2 .s2 { transform: translateX(-50%) rotate(45deg); }
-        .ring-2 .s3 { transform: translateX(-50%) rotate(90deg); }
-        .ring-2 .s4 { transform: translateX(-50%) rotate(135deg); }
-        .ring-2 .s5 { transform: translateX(-50%) rotate(180deg); }
-        .ring-2 .s6 { transform: translateX(-50%) rotate(225deg); }
-        .ring-2 .s7 { transform: translateX(-50%) rotate(270deg); }
-        .ring-2 .s8 { transform: translateX(-50%) rotate(315deg); }
+        /* Inner ring - PINK (CLOCKWISE) */
+        .radar-inner {
+            position: absolute;
+            width: 48%;
+            height: 48%;
+            border-radius: 50%;
+            border: 2px solid #ff00ff;
+            box-shadow: 
+                0 0 10px #ff00ff, 
+                0 0 20px #ff00ff88, 
+                inset 0 0 12px #ff00ff44;
+            animation: spin-cw 6s linear infinite;
+        }
+        .radar-inner::before {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 40%;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, #00ffffaa 0%, #00ffff33 50%, transparent 70%);
+            box-shadow: 0 0 25px #00ffff;
+        }
 
-        /* RING 3: SMALL - 6 SEGMENTS */
-        .ring-3 .segment { width: 8px; height: 28px; transform-origin: 50% 134px; }
-        .ring-3 .s1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-3 .s2 { transform: translateX(-50%) rotate(60deg); }
-        .ring-3 .s3 { transform: translateX(-50%) rotate(120deg); }
-        .ring-3 .s4 { transform: translateX(-50%) rotate(180deg); }
-        .ring-3 .s5 { transform: translateX(-50%) rotate(240deg); }
-        .ring-3 .s6 { transform: translateX(-50%) rotate(300deg); }
+        /* Radar sweep line (parang scanner) */
+        .radar-sweep {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0; left: 50%;
+            transform-origin: 0% 100%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(0,255,255,0.25) 45deg, transparent 60deg);
+            border-radius: 0 100% 0 0;
+            animation: spin-cw 4s linear infinite;
+        }
 
-        /* RING 4: TINY - 8 SEGMENTS */
-        .ring-4 .segment { width: 6px; height: 22px; transform-origin: 50% 96px; }
-        .ring-4 .s1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-4 .s2 { transform: translateX(-50%) rotate(45deg); }
-        .ring-4 .s3 { transform: translateX(-50%) rotate(90deg); }
-        .ring-4 .s4 { transform: translateX(-50%) rotate(135deg); }
-        .ring-4 .s5 { transform: translateX(-50%) rotate(180deg); }
-        .ring-4 .s6 { transform: translateX(-50%) rotate(225deg); }
-        .ring-4 .s7 { transform: translateX(-50%) rotate(270deg); }
-        .ring-4 .s8 { transform: translateX(-50%) rotate(315deg); }
-
-        /* RING 5: MICRO - 4 SEGMENTS */
-        .ring-5 .segment { width: 5px; height: 16px; transform-origin: 50% 63px; }
-        .ring-5 .s1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-5 .s2 { transform: translateX(-50%) rotate(90deg); }
-        .ring-5 .s3 { transform: translateX(-50%) rotate(180deg); }
-        .ring-5 .s4 { transform: translateX(-50%) rotate(270deg); }
-
-        /* LOGO TEXT */
+        /* Logo Text */
         .logo-text {
-            font-size: 84px;
+            position: relative;
+            z-index: 10;
+            font-size: 78px;
             font-weight: 900;
             color: #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff, 0 0 90px #39ff14;
             letter-spacing: 4px;
-            z-index: 10;
-            margin: 0;
-            animation: text-glow 6s linear infinite;
+            text-shadow: 
+                0 0 12px #00ffff, 
+                0 0 25px #00ffff, 
+                0 0 50px #0088ff,
+                0 0 80px #00ffff66;
+            animation: text-pulse 2.5s ease-in-out infinite alternate;
         }
 
         .tagline {
-            color: #a0f0ff;
-            font-size: 22px;
-            letter-spacing: 3px;
-            margin-top: 20px;
+            color: #7fe8ff;
+            font-size: 16px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px #00ffff;
+            margin-top: 15px;
+            text-shadow: 0 0 8px #00ffff88;
         }
 
-        /* ============= ALL ANIMATIONS (LOGO + COLORS + TRAILS) ============= */
-        @keyframes rotate-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes rotate-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-        /* COLOR SHIFT: BLUE → GREEN → BLUE (KADA 3 SEGUNDO) */
-        @keyframes color-shift-1 {
-            0%, 49% { /* FIRST 3S: BLUE */
-                background: #00aaff;
-                color: #00aaff;
-                box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff, 0 0 45px #0088ff;
-            }
-            50%, 100% { /* NEXT 3S: GREEN */
-                background: #39ff14;
-                color: #39ff14;
-                box-shadow: 0 0 14px #39ff14, 0 0 28px #39ff14, 0 0 45px #22cc00;
-            }
+        /* ========== LOGO ANIMATIONS ========== */
+        @keyframes spin-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes text-pulse {
+            from { text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff, 0 0 50px #0088ff; }
+            to { text-shadow: 0 0 18px #00ffff, 0 0 35px #00ffff, 0 0 70px #0088ff, 0 0 100px #ff00ff44; }
         }
 
-        /* OPPOSITE COLOR SHIFT: GREEN → BLUE → GREEN (KABALIGTARAN NG RING 1/3/5) */
-        @keyframes color-shift-2 {
-            0%, 49% { /* FIRST 3S: GREEN */
-                background: #39ff14;
-                color: #39ff14;
-                box-shadow: 0 0 14px #39ff14, 0 0 28px #39ff14, 0 0 45px #22cc00;
-            }
-            50%, 100% { /* NEXT 3S: BLUE */
-                background: #00aaff;
-                color: #00aaff;
-                box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff, 0 0 45px #0088ff;
-            }
-        }
-
-        /* GLOW PULSE PARA MAS BUHAY ANG SEGMENTS */
-        @keyframes segment-glow {
-            from { filter: brightness(1); }
-            to { filter: brightness(1.4); }
-        }
-
-        /* TEXT GLOW SUMASABAY SA COLOR SHIFT NG LOGO */
-        @keyframes text-glow {
-            0%, 49% { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff, 0 0 90px #0055cc; }
-            50%, 100% { text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14, 0 0 60px #22cc00, 0 0 90px #119900; }
-        }
-
-        /* ============= SECTIONS (SUPER LAKI NA NG FONTS!) ============= */
+        /* ========== SECTIONS + BIG FONTS ========== */
         .container {
-            max-width: 1150px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 70px 30px;
+            padding: 55px 25px;
         }
 
         .section-title {
             color: #00ffff;
-            font-size: 46px;
-            margin-bottom: 40px;
-            padding-left: 22px;
-            border-left: 7px solid #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff88;
-            letter-spacing: 3px;
+            font-size: 34px;
             font-weight: 900;
-        }
-
-        /* ============= ABOUT ME ============= */
-        .about-card {
-            background: rgba(0, 15, 30, 0.92);
-            border: 2px solid #00ffff;
-            border-left: 8px solid #00ffff;
-            padding: 40px;
-            border-radius: 14px;
-            box-shadow: 0 0 30px #00ffff66, 0 0 60px #00ffff22, inset 0 0 30px #00ffff11;
-            line-height: 2.1;
-            position: relative;
-        }
-
-        .about-card::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, #00ffff, #39ff14, #00ffff);
-            border-radius: 14px;
-            z-index: -1;
-            filter: blur(15px);
-            opacity: 0.4;
-        }
-
-        .about-intro {
-            font-size: 27px;
-            color: #a0f0ff;
-            margin-bottom: 22px;
-            padding-bottom: 17px;
-            border-bottom: 2px dashed #00ffff66;
-            text-shadow: 0 0 8px #00ffff88;
-        }
-
-        .about-text {
-            color: #e0faff;
-            margin-bottom: 17px;
-            text-align: justify;
-            font-size: 21px;
-        }
-
-        .highlight {
-            color: #00ffff;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00ffff;
-            font-size: 22px;
-        }
-
-        .about-tags {
-            margin-top: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            justify-content: center;
-        }
-
-        .about-tags span {
-            background: rgba(0, 255, 255, 0.08);
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 12px 24px;
-            border-radius: 28px;
-            font-size: 18px;
-            font-weight: 700;
-            box-shadow: 0 0 15px #00ffff44;
-            text-shadow: 0 0 5px #00ffff;
-        }
-
-        /* ============= CORE SKILLS ============= */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
-        }
-
-        .skill-card {
-            background: rgba(0, 15, 30, 0.92);
-            border: 2px solid #ff00ff;
-            border-radius: 14px;
-            padding: 35px 25px;
-            transition: 0.3s;
-            position: relative;
-            box-shadow: 0 0 20px #ff00ff55, inset 0 0 20px #ff00ff11;
-        }
-
-        .skill-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 14px;
-            box-shadow: 0 0 40px #ff00ff88;
-            opacity: 0;
-            transition: 0.3s;
-            pointer-events: none;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: #ff88ff;
-        }
-
-        .skill-card:hover::after { opacity: 1; }
-
-        .skill-card h3 {
-            color: #ff00ff;
-            margin-bottom: 22px;
-            text-align: center;
             letter-spacing: 3px;
-            font-size: 27px;
-            text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff88;
+            margin-bottom: 30px;
+            padding-left: 15px;
+            border-left: 5px solid #00ffff;
+            text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff66;
         }
 
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .skill-tags span {
-            background: rgba(255, 0, 255, 0.1);
-            border: 1.5px solid #ff66ff;
-            color: #ffbbff;
-            padding: 10px 18px;
-            border-radius: 7px;
-            font-size: 18px;
-            font-weight: 600;
-            box-shadow: 0 0 8px #ff00ff33;
-        }
-
-        /* ============= FEATURED PROJECTS (CLICKABLE) ============= */
-        .project-card {
-            background: rgba(0, 15, 30, 0.92);
-            border: 2px solid #39ff14;
-            border-radius: 14px;
-            padding: 35px;
-            margin-bottom: 28px;
-            transition: 0.3s;
-            position: relative;
-            box-shadow: 0 0 20px #39ff1455, inset 0 0 20px #39ff1411;
-        }
-
-        .project-card:hover {
-            transform: translateX(10px);
-            border-color: #77ff55;
-            box-shadow: 0 0 35px #39ff1488;
-        }
-
-        .project-card h3 {
-            color: #39ff14;
-            margin-bottom: 17px;
-            font-size: 27px;
-            text-shadow: 0 0 12px #39ff14, 0 0 24px #39ff1488;
-        }
-
-        .project-card p {
-            color: #d0f0ff;
+        /* ========== ABOUT ME CARD ========== */
+        .about-card {
+            background: rgba(0, 18, 35, 0.92);
+            border: 1.5px solid #00ffff66;
+            border-left: 5px solid #00ffff;
+            border-radius: 10px;
+            padding: 28px;
             line-height: 1.9;
-            margin-bottom: 14px;
-            font-size: 19px;
+            box-shadow: 0 0 25px #00ffff33, inset 0 0 20px #00ffff11;
+        }
+        .about-card p {
+            font-size: 16px;
+            color: #cfefff;
+            margin-bottom: 10px;
+        }
+        .about-card .mission {
+            margin-top: 12px;
+            color: #7fe8ff;
+            font-size: 15px;
         }
 
-        .project-card a {
-            color: #00ffff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 19px;
-            text-shadow: 0 0 8px #00ffff;
-        }
-
-        .project-card a:hover {
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-        }
-
-        /* ============= GLOBAL CONTACT (BAYBAY CITY LEYTE + CLICKABLE EMAILS) ============= */
-        .contact-grid {
+        /* ========== CORE CAPABILITIES (3 CARDS + PROGRESS BARS) ========== */
+        .cap-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 22px;
         }
-
-        .contact-item {
-            background: rgba(0, 15, 30, 0.92);
-            border: 2px solid #00ffff;
-            border-radius: 12px;
-            padding: 32px 22px;
-            text-align: center;
+        .cap-card {
+            background: rgba(0, 18, 35, 0.92);
+            border: 1.5px solid #ff00ff55;
+            border-radius: 10px;
+            padding: 25px 20px;
+            box-shadow: 0 0 20px #ff00ff22;
             transition: 0.3s;
-            box-shadow: 0 0 15px #00ffff44;
         }
-
-        .contact-item:hover {
+        .cap-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 0 30px #00ffff88;
+            box-shadow: 0 0 30px #ff00ff55;
+            border-color: #ff66ff;
+        }
+        .cap-card h3 {
+            color: #ff66ff;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-align: center;
+            text-shadow: 0 0 10px #ff00ff88;
+        }
+        .cap-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .cap-tags span {
+            background: #ff00ff15;
+            border: 1px solid #ff66ff88;
+            color: #ffaaff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .cap-label {
+            color: #7fe8ff;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #001525;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #00ffff44;
+        }
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #39ff14);
+            box-shadow: 0 0 10px #00ffff;
+            border-radius: 10px;
         }
 
-        .contact-item h4 {
+        /* ========== SERVICES & PRICING ========== */
+        .serv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+        .serv-card {
+            background: rgba(0, 18, 35, 0.92);
+            border: 1.5px solid #39ff1455;
+            border-radius: 10px;
+            padding: 25px 20px;
+            box-shadow: 0 0 20px #39ff1422;
+            transition: 0.3s;
+        }
+        .serv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px #39ff1455;
+            border-color: #77ff55;
+        }
+        .serv-card h3 {
+            color: #39ff14;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px #39ff1488;
+        }
+        .serv-desc {
+            color: #a0e8ff;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .serv-price {
             color: #00ffff;
-            margin-bottom: 14px;
-            font-size: 23px;
-            text-shadow: 0 0 8px #00ffff;
-        }
-
-        .contact-item p, .contact-item a {
-            color: #c0f0ff;
-            font-size: 18px;
-            line-height: 1.8;
-            text-decoration: none;
-            display: block;
-            margin: 6px 0;
-            word-break: break-all;
-        }
-
-        .contact-item a:hover {
-            color: #00ffff;
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
             text-shadow: 0 0 10px #00ffff;
         }
-
-        .contact-note {
-            color: #a0f0ff;
-            font-size: 17px;
-            margin-top: 12px;
-            font-style: italic;
-            text-shadow: 0 0 5px #00ffff55;
+        .serv-list {
+            list-style: none;
+            color: #cfefff;
+            font-size: 14px;
+            line-height: 1.8;
         }
 
-        /* ============= RESPONSIVE (MOBILE) ============= */
+        /* ========== FEATURED PROJECT ========== */
+        .proj-card {
+            background: rgba(0, 18, 35, 0.92);
+            border: 1.5px solid #00ffff66;
+            border-radius: 10px;
+            padding: 28px;
+            box-shadow: 0 0 25px #00ffff33;
+        }
+        .proj-card h3 {
+            color: #00ffff;
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .proj-card h3 span {
+            color: #39ff14;
+            font-size: 15px;
+            margin-left: 8px;
+            text-shadow: 0 0 8px #39ff14;
+        }
+        .proj-card p {
+            color: #cfefff;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .proj-card a {
+            color: #ff66ff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            text-shadow: 0 0 8px #ff00ff88;
+        }
+
+        /* ========== CONTACT ========== */
+        .contact-card {
+            background: rgba(0, 18, 35, 0.92);
+            border: 1.5px solid #00ffff66;
+            border-radius: 10px;
+            padding: 28px;
+            box-shadow: 0 0 25px #00ffff33;
+        }
+        .contact-row {
+            color: #cfefff;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .contact-row strong {
+            color: #00ffff;
+            text-shadow: 0 0 6px #00ffff88;
+        }
+        .contact-row a {
+            color: #cfefff;
+            text-decoration: none;
+        }
+        .contact-row a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+        }
+        .legal {
+            color: #ff6666;
+            font-size: 13px;
+            margin: 18px 0;
+            text-shadow: 0 0 5px #ff000055;
+        }
+        .btn-inquiry {
+            background: #00ffff;
+            color: #001525;
+            border: none;
+            padding: 12px 25px;
+            font-size: 15px;
+            font-weight: 900;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #00ffff;
+            letter-spacing: 1px;
+        }
+        .btn-inquiry:hover {
+            background: #7fe8ff;
+            box-shadow: 0 0 25px #00ffff;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            padding: 25px 20px 40px;
+            color: #7fe8ff;
+            font-size: 14px;
+            border-top: 1px solid #00ffff33;
+        }
+        footer .sub {
+            color: #39ff14;
+            margin-top: 6px;
+            text-shadow: 0 0 6px #39ff1488;
+        }
+
+        /* ========== MOBILE RESPONSIVE ========== */
         @media (max-width: 600px) {
-            .logo-container { width: 320px; height: 320px; }
-            .logo-text { font-size: 58px; }
-            .tagline { font-size: 16px; letter-spacing: 1px; }
-            .section-title { font-size: 32px; }
-            .about-text { font-size: 18px; text-align: left; }
-            .about-intro { font-size: 22px; }
-            .hero { padding: 50px 15px 40px; }
-            .container { padding: 45px 18px; }
-            .skill-card h3 { font-size: 23px; }
-            .skill-tags span { font-size: 16px; }
-            .project-card h3 { font-size: 23px; }
-            .project-card p { font-size: 17px; }
-            .contact-item h4 { font-size: 20px; }
-            .contact-item p, .contact-item a { font-size: 16px; }
-            .about-tags span { font-size: 16px; padding: 10px 18px; }
+            .logo-wrap { width: 300px; height: 300px; }
+            .logo-text { font-size: 58px; letter-spacing: 2px; }
+            .tagline { font-size: 12px; letter-spacing: 1px; }
+            .section-title { font-size: 26px; }
+            .container { padding: 40px 18px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- MATRIX RAIN BACKGROUND -->
+    <!-- MATRIX RAIN -->
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- ============== HERO / ENHANCED LOGO ============== -->
+    <!-- ========== HERO + ORIGINAL RADAR LOGO ========== -->
     <div class="hero">
-        <div class="logo-container">
-            <!-- RING 1: BIG → CLOCKWISE → BLUE muna -->
-            <div class="ring ring-1">
-                <span class="segment s1"></span><span class="segment s2"></span>
-                <span class="segment s3"></span><span class="segment s4"></span>
-                <span class="segment s5"></span><span class="segment s6"></span>
-                <span class="segment s7"></span><span class="segment s8"></span>
-                <span class="segment s9"></span><span class="segment s10"></span>
+        <div class="logo-wrap">
+            <!-- Outer Cyan Ring + 4 Big Ticks -->
+            <div class="radar-outer">
+                <div class="tick-bottom"></div>
+                <div class="tick-left"></div>
             </div>
 
-            <!-- RING 2: MED → COUNTER-CLOCKWISE → GREEN muna (OPPOSITE) -->
-            <div class="ring ring-2">
-                <span class="segment s1"></span><span class="segment s2"></span>
-                <span class="segment s3"></span><span class="segment s4"></span>
-                <span class="segment s5"></span><span class="segment s6"></span>
-                <span class="segment s7"></span><span class="segment s8"></span>
+            <!-- Middle Green Ring + Pink Ticks -->
+            <div class="radar-mid">
+                <div class="tick-1"></div>
+                <div class="tick-2"></div>
             </div>
 
-            <!-- RING 3: SMALL → CLOCKWISE → BLUE muna -->
-            <div class="ring ring-3">
-                <span class="segment s1"></span><span class="segment s2"></span>
-                <span class="segment s3"></span><span class="segment s4"></span>
-                <span class="segment s5"></span><span class="segment s6"></span>
-            </div>
+            <!-- Inner Pink Ring + Core Glow -->
+            <div class="radar-inner"></div>
 
-            <!-- RING 4: TINY → COUNTER-CLOCKWISE → GREEN muna (OPPOSITE) -->
-            <div class="ring ring-4">
-                <span class="segment s1"></span><span class="segment s2"></span>
-                <span class="segment s3"></span><span class="segment s4"></span>
-                <span class="segment s5"></span><span class="segment s6"></span>
-                <span class="segment s7"></span><span class="segment s8"></span>
-            </div>
+            <!-- Scanner Sweep -->
+            <div class="radar-sweep"></div>
 
-            <!-- RING 5: MICRO → CLOCKWISE → BLUE muna -->
-            <div class="ring ring-5">
-                <span class="segment s1"></span><span class="segment s2"></span>
-                <span class="segment s3"></span><span class="segment s4"></span>
-            </div>
-
+            <!-- Logo Text -->
             <h1 class="logo-text">CyberJayd</h1>
         </div>
-        <p class="tagline">🛡️ Global Ethical Security Researcher • Software Developer • Mobile Tech Specialist</p>
+
+        <p class="tagline">GLOBAL ETHICAL SECURITY • SOFTWARE DEVELOPMENT • ADVANCED TECH SOLUTIONS</p>
     </div>
 
-    <!-- ============== ABOUT ME ============== -->
+    <!-- ========== ABOUT ME ========== -->
     <div class="container">
         <h2 class="section-title">ABOUT ME</h2>
-        
         <div class="about-card">
-            <p class="about-intro">
-                👋 <strong>Hello! Welcome to my very first Website Project!</strong><br>
-                I hope you enjoy and love exploring every part of it.
-            </p>
-
-            <p class="about-text">
-                First of all, I am <strong>Jayd F. Repoberbio</strong> — the <span class="highlight">Web Developer / Web Engineer</span> behind this entire website.
-            </p>
-
-            <p class="about-text">
-                🎓 I am currently a <strong>First Year College Student</strong> taking up <strong>BSED-ENG</strong> 
-                (<em>Bachelor of Science in Secondary Education Major in English</em>) at 
-                <strong>Franciscan College of the Immaculate Conception (FCIC)</strong>.
-            </p>
-
-            <p class="about-text">
-                💻 Honestly speaking — <strong>I have NO formal background or degree in Information Technology</strong>. 
-                But what I lack in formal training, I make up for with <strong>deep passion, dedication, and non-stop self-study</strong> 
-                when it comes to technology. Everything you see here — from the design, codes, animations, up to the deployment — 
-                I learned all of it by researching, practicing, and pushing myself beyond my limits.
-            </p>
-
-            <p class="about-text">
-                🚀 My mission is simple: <em>To prove that passion is greater than any course or background.</em> 
-                I specialize in building <strong>lightweight, powerful, and mobile-optimized websites</strong>, 
-                creating automation scripts, and exploring the world of <strong>Ethical Cybersecurity</strong>. 
-                I believe that technology should be accessible to everyone — and I am here to make that happen.
-            </p>
-
-            <div class="about-tags">
-                <span>🎯 Self-Taught Technologist</span>
-                <span>📚 FCIC | BSED-ENG 1</span>
-                <span>🇵🇭 Proud Filipino</span>
-                <span>🔥 Passion Over Background</span>
-            </div>
+            <p>I am a BSED English student and self-taught technologist from the Philippines, focused on ethical cybersecurity, automation, and accessible software development. I build powerful, lightweight tools optimized for mobile platforms — making advanced tech accessible to everyone.</p>
+            <p class="mission">My mission: Innovate, secure, and deliver solutions with integrity and global standards.</p>
         </div>
     </div>
 
-    <!-- ============== CORE SKILLS ============== -->
+    <!-- ========== CORE CAPABILITIES ========== -->
     <div class="container">
-        <h2 class="section-title">CORE SKILLS</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h3>🔐 CYBERSECURITY</h3>
-                <div class="skill-tags">
-                    <span>Ethical Hacking</span>
+        <h2 class="section-title">CORE CAPABILITIES</h2>
+        <div class="cap-grid">
+            <!-- CYBERSECURITY -->
+            <div class="cap-card">
+                <h3>CYBERSECURITY</h3>
+                <div class="cap-tags">
+                    <span>Ethical Research</span>
                     <span>Bug Bounty</span>
-                    <span>SSRF Testing</span>
-                    <span>Reconnaissance</span>
                     <span>Vulnerability Assessment</span>
+                    <span>SSRF & Recon</span>
                 </div>
+                <div class="cap-label">Security Analysis</div>
+                <div class="progress"><div class="bar" style="width:80%"></div></div>
             </div>
 
-            <div class="skill-card">
-                <h3>💻 DEVELOPMENT</h3>
-                <div class="skill-tags">
+            <!-- DEVELOPMENT -->
+            <div class="cap-card">
+                <h3>DEVELOPMENT</h3>
+                <div class="cap-tags">
                     <span>Python</span>
-                    <span>Bash Scripting</span>
-                    <span>HTML / CSS</span>
-                    <span>JavaScript</span>
+                    <span>Bash / shell</span>
+                    <span>HTML/CSS/JS</span>
                     <span>Automation</span>
                 </div>
+                <div class="cap-label">Web & Scripting</div>
+                <div class="progress"><div class="bar" style="width:100%"></div></div>
             </div>
 
-            <div class="skill-card">
-                <h3>📱 PLATFORMS</h3>
-                <div class="skill-tags">
+            <!-- PLATFORMS -->
+            <div class="cap-card">
+                <h3>PLATFORMS</h3>
+                <div class="cap-tags">
                     <span>Termux / Linux</span>
-                    <span>Mobile Dev</span>
+                    <span>Mobile Tech</span>
                     <span>GitHub</span>
-                    <span>Cloud Hosting</span>
-                    <span>System Optimization</span>
+                    <span>Cloud Deployment</span>
                 </div>
+                <div class="cap-label">System Optimization</div>
+                <div class="progress"><div class="bar" style="width:85%"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============== FEATURED PROJECTS ============== -->
+    <!-- ========== SERVICES & PRICING ========== -->
     <div class="container">
-        <h2 class="section-title">FEATURED PROJECTS</h2>
+        <h2 class="section-title">SERVICES & PRICING</h2>
+        <div class="serv-grid">
+            <div class="serv-card">
+                <h3>WEB DESIGN</h3>
+                <p class="serv-desc">Modern & responsive sites</p>
+                <p class="serv-price">₱800 – ₱2,000</p>
+                <ul class="serv-list">
+                    <li>Portfolio / Business</li>
+                    <li>Mobile Optimized</li>
+                    <li>Free Setup Guide</li>
+                    <li>1 Revision Included</li>
+                </ul>
+            </div>
 
-        <div class="project-card">
-            <h3>🔐 CyberJayd Security Lab v1.7.2</h3>
-            <p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. 
-            Includes subdomain enumeration, live host check, SSRF testing, and full automation workflows.</p>
-            <p>📂 Repository: <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
-        </div>
+            <div class="serv-card">
+                <h3>SECURITY AUDIT</h3>
+                <p class="serv-desc">Find & fix risks</p>
+                <p class="serv-price">₱1,000 – ₱2,500</p>
+                <ul class="serv-list">
+                    <li>Vulnerability Scan</li>
+                    <li>Full Report</li>
+                    <li>Fix Recommendations</li>
+                    <li>Legal & Ethical Only</li>
+                </ul>
+            </div>
 
-        <div class="project-card">
-            <h3>🛒 CyberJayd Shop Marketplace</h3>
-            <p>Full functional marketplace system with Sign Up, Login, Admin Dashboard, Buyer View, Products Management, and Settings — all built from scratch using pure HTML, CSS, and JavaScript.</p>
-            <p>🌐 Live: <a href="https://jaydong922.github.io/cyberjayd-shop" target="_blank">jaydong922.github.io/cyberjayd-shop</a></p>
-        </div>
+            <div class="serv-card">
+                <h3>TERMUX / LINUX</h3>
+                <p class="serv-desc">Full setup & tuning</p>
+                <p class="serv-price">₱300 – ₱800</p>
+                <ul class="serv-list">
+                    <li>Installation & Config</li>
+                    <li>Essential Tools</li>
+                    <li>Performance Boost</li>
+                    <li>Step-by-Step Guide</li>
+                </ul>
+            </div>
 
-        <div class="project-card">
-            <h3>🌐 CyberJayd Services Website</h3>
-            <p>Official business website offering Web Design, Security Audit, Termux/Linux Setup, and Automation services with professional pricing and portfolio display.</p>
-            <p>🌐 Live: <a href="https://jaydong922.github.io/cyberjayd-services.github.io" target="_blank">cyberjayd-services.github.io</a></p>
+            <div class="serv-card">
+                <h3>AUTOMATION</h3>
+                <p class="serv-desc">Scripts & Tools</p>
+                <p class="serv-price">₱500 – ₱1,500</p>
+                <ul class="serv-list">
+                    <li>Python / Bash</li>
+                    <li>Full Source Code</li>
+                    <li>Usage Guide</li>
+                    <li>Minor Updates Free</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <!-- ============== GLOBAL CONTACT (BAYBAY CITY LEYTE!) ============== -->
+    <!-- ========== FEATURED PROJECT ========== -->
     <div class="container">
-        <h2 class="section-title">GLOBAL CONTACT</h2>
-        <div class="contact-grid">
-            <div class="contact-item">
-                <h4>📧 MAIN EMAIL</h4>
-                <a href="mailto:repoberbiojayd3@gmail.com
+        <h2 class="section-title">FEATURED PROJECT</h2>
+        <div class="proj-card">
+            <h3>CyberJayd Security Lab v1.7.2 <span>ACTIVE</span></h3>
+            <p>All-in-one mobile security toolkit: subdomain enumeration, live host detection, SSRF testing, and automation workflows — fully optimized for Android/Termux.</p>
+            <p>Repository: <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
+        </div>
+    </div>
+
+    <!-- ========== CONTACT (BAYBAY CITY LEYTE + CLICKABLE EMAILS) ========== -->
+    <div class="container">
+        <h2 class="section-title">CONTACT</h2>
+        <div class="contact-card">
+            <p class="contact-row"><strong>EMAIL:</strong> <a href="mailto:repoberbiojayd3@gmail.com?subject=Inquiry%20-%20CyberJayd">repoberbiojayd3@gmail.com</a></p>
+            <p class="contact-row"><strong>EMAIL 2:</strong> <a href="mailto:cyberjayd1@gmail.com?subject=For%20More%20Information%20-%20CyberJayd">cyberjayd1@gmail.com</a> <em style="color:#7fe8ff;font-size:13px;">* For more info, message this Gmail</em></p>
+            <p class="contact-row"><strong>LOCATION:</strong> Baybay City, Leyte, Philippines 🇵🇭</p>
+            <p class="contact-row"><strong>HOURS:</strong> Daily 9:00 AM – 9:00 PM</p>
+            
+            <p class="legal">⚠️ All work strictly for LEGAL & ETHICAL PURPOSES ONLY.</p>
+            
+            <a href="mailto:cyberjayd1@gmail.com?subject=Send%20Inquiry%20-%20CyberJayd">
+                <button class="btn-inquiry">SEND INQUIRY</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <p>© 2026 CyberJayd | All Rights Reserved</p>
+        <p class="sub">Built with Passion • Powered by Advanced Technology</p>
+    </footer>
+
+    <!-- ========== MATRIX RAIN SCRIPT ========== -->
+    <script>
+        const c = document.getElementById('matrix-canvas');
+        const ctx = c.getContext('2d');
+        function resize(){ c.width = innerWidth; c.height = innerHeight; }
+        resize(); addEventListener('resize', resize);
+
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF@#$%<>/\\|{}[]';
+        const fs = 16;
+        let cols = Math.floor(c.width / fs);
+        let drops = [];
+        for(let i=0;i<cols;i++) drops[i] = Math.random() * -50;
+
+        function draw(){
+            ctx.fillStyle = 'rgba(5,8,15,0.08)';
+            ctx.fillRect(0,0,c.width,c.height);
+            ctx.fillStyle = '#00ccff';
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 8;
+            ctx.font = fs + 'px monospace';
+
+            for(let i=0;i<cols;i++){
+                const t = chars[Math.floor(Math.random()*chars.length)];
+                const x = i*fs, y = Math.floor(drops[i])*fs;
+                if(Math.random()>0.97){ ctx.fillStyle='#ffffff'; ctx.shadowBlur=14; }
+                else { ctx.fillStyle='#00ccff'; ctx.shadowBlur=8; }
+                ctx.fillText(t, x, y);
+                if(y > c.height && Math.random()>0.985) drops[i] = 0;
+                drops[i] += 0.7 + Math.random()*0.8;
+            }
+        }
+        setInterval(draw, 45);
+        addEventListener('resize', ()=>{ resize(); cols=Math.floor(c.width/fs); for(let i=0;i<cols;i++) drops[i]=Math.random()*-50; });
+    </script>
+
+</body>
+</html>
