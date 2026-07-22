@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYBERJAYD FLAPPY GAME</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
+body{background:#0f1419;overflow:hidden;touch-action:manipulation}
+canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#171e27 0%,#0ea5e9 100%)}
+.info{position:absolute;top:10px;left:50%;transform:translateX(-50%);color:#7dd3fc;font-size:20px;text-shadow:0 0 10px #0ea5e9;z-index:10}
+.back{position:absolute;top:10px;left:10px;color:#cbd5e1;text-decoration:none;font-size:14px;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:4px;z-index:10}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← BACK TO PORTFOLIO</a>
+<div class="info">SCORE: <span id="score">0</span> | TAP SCREEN TO FLY 🚀</div>
+<canvas id="game" width="400" height="600"></canvas>
+
+<script>
+const c = document.getElementById('game');
+const ctx = c.getContext('2d');
+const scoreEl = document.getElementById('score');
+
+let bird = {
+  x: 80,
+  y: 250,
+  w: 30,
+  h: 30,
+  vel: 0,
+  jump: -7,
+  grav: 0.35,
+  color: '#0ea5e9'
+};
+
+let pipes = [];
+let gap = 140;
+let speed = 2.5;
+let frame = 0;
+let score = 0;
+let gameOver = false;
+
+function drawBird(){
+  ctx.fillStyle = bird.color;
+  ctx.shadowColor = '#0ea5e9';
+  ctx.shadowBlur = 15;
+  ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
+  ctx.fillStyle = '#0f1419';
+  ctx.fillRect(bird.x+8, bird.y+8, 6, 6);
+  ctx.fillRect(bird.x+16, bird.y+8, 6, 6);
+  ctx.shadowBlur = 0;
+}
+
+function makePipe(){
+  let h = Math.random() * 250 + 80;
+  pipes.push({
+    x: c.width,
+    top: h,
+    bottom: h + gap,
+    w: 50,
+    passed: false
+  });
+}
+
+function drawPipe(p){
+  ctx.fillStyle = '#38bdf8';
+  ctx.shadowColor = '#0ea5e9';
+  ctx.shadowBlur = 8;
+  ctx.fillRect(p.x, 0, p.w, p.top);
+  ctx.fillRect(p.x, p.bottom, p.w, c.height - p.bottom);
+  ctx.shadowBlur = 0;
+}
+
+function update(){
+  if(gameOver) return;
+  bird.vel += bird.grav;
+  bird.y += bird.vel;
+  if(frame % 100 === 0) makePipe();
+  frame++;
+
+  for(let i = 0; i < pipes.length; i++){
+    let p = pipes[i];
+    p.x -= speed;
+    if(!p.passed && p.x + p.w < bird.x){
+      score++;
+      scoreEl.textContent = score;
+      p.passed = true;
+    }
+    if(bird.x < p.x + p.w && bird.x + bird.w > p.x && (bird.y < p.top || bird.y + bird.h > p.bottom)){
+      gameOver = true;
+    }
+  }
+  pipes = pipes.filter(p => p.x + p.w > 0);
+  if(bird.y + bird.h > c.height || bird.y < 0) gameOver = true;
+}
+
+function jump(){
+  if(gameOver){
+    bird.y = 250; bird.vel = 0; pipes = []; score = 0; frame = 0; gameOver = false; scoreEl.textContent = score;
+  } else {
+    bird.vel = bird.jump;
+  }
+}
+
+document.addEventListener('touchstart', e => {e.preventDefault(); jump();});
+document.addEventListener('mousedown', jump);
+
+function loop(){
+  ctx.clearRect(0,0,c.width,c.height);
+  drawBird();
+  pipes.forEach(drawPipe);
+  update();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
