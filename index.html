@@ -35,124 +35,120 @@ h1,h2,h3,.logo-text{font-family:'Orbitron',sans-serif;letter-spacing:1.5px;font-
 #matrix{position:fixed;inset:0;z-index:0;opacity:.65}
 .wrap{position:relative;z-index:1}
 
-/* 🛡️ ULTIMATE LOGO: MANY GEARS + FAN + ALL EFFECTS */
+/* 🛡️ NEW LOGO DESIGN: NO CIRCLE, ONLY ROTATING BOLD SEGMENTS + TRAIL EFFECT */
 .logo-wrap{text-align:center;padding:2rem 0;position:relative}
-.logo-container{display:inline-block;position:relative;width:min(95%,650px);height:280px}
+.logo-container{display:inline-block;position:relative;width:min(95%,500px);height:320px}
 
-/* ⚙️ 8 PIECES OF ROTATING GEARS (WATCH MECHANISM STYLE) */
-.gear{
+/* BASE RING STYLE */
+.ring{
     position:absolute;
     top:50%;left:50%;transform:translate(-50%,-50%);
     border-radius:50%;
-    border:3px solid;
-    box-shadow:0 0 12px currentColor, inset 0 0 8px rgba(255,255,255,.2);
-}
-.gear::before,.gear::after{
-    content:"";position:absolute;background:currentColor;box-shadow:0 0 6px currentColor
 }
 
-/* Gear 1 - Largest, Slow, Clockwise */
-.gear-1{width:340px;height:340px;animation:rotCW 14s linear infinite;border-color:var(--prime);color:var(--prime)}
-.gear-1::before{width:20px;height:55px;top:-27px;left:50%;transform:translateX(-50%)}
-.gear-1::after{width:20px;height:55px;bottom:-27px;left:50%;transform:translateX(-50%)}
+/* RING 1 - LARGE, CLOCKWISE */
+.ring-1{width:100%;height:100%;animation:rotCW 8s linear infinite}
+.ring-1 .seg{
+    position:absolute;
+    top:0;left:50%;transform:translateX(-50%);
+    width:12px;height:45px;
+    background:var(--prime);
+    box-shadow:0 0 15px var(--prime), 0 0 30px var(--prime);
+    border-radius:6px;
+    transform-origin:50% 160px;
+}
+.ring-1 .seg::after{
+    content:"";
+    position:absolute;
+    left:50%;top:100%;transform:translateX(-50%);
+    width:100%;height:250%;
+    background:linear-gradient(to bottom, var(--prime) 0%, transparent 100%);
+    filter:blur(8px);
+    opacity:0.5;
+    border-radius:6px;
+}
+.ring-1 .s1{transform:translateX(-50%) rotate(0deg)}
+.ring-1 .s2{transform:translateX(-50%) rotate(45deg)}
+.ring-1 .s3{transform:translateX(-50%) rotate(90deg);background:var(--green);box-shadow:0 0 15px var(--green), 0 0 30px var(--green)}
+.ring-1 .s4{transform:translateX(-50%) rotate(135deg)}
+.ring-1 .s5{transform:translateX(-50%) rotate(180deg)}
+.ring-1 .s6{transform:translateX(-50%) rotate(225deg);background:var(--green);box-shadow:0 0 15px var(--green), 0 0 30px var(--green)}
+.ring-1 .s7{transform:translateX(-50%) rotate(270deg)}
+.ring-1 .s8{transform:translateX(-50%) rotate(315deg)}
 
-/* Gear 2 - Big, Medium-Slow, Counter-Clockwise */
-.gear-2{width:260px;height:260px;animation:rotCCW 10s linear infinite;border-color:var(--accent);color:var(--accent)}
-.gear-2::before{width:16px;height:42px;top:-21px;left:50%;transform:translateX(-50%)}
-.gear-2::after{width:16px;height:42px;bottom:-21px;left:50%;transform:translateX(-50%)}
+/* RING 2 - MEDIUM, COUNTER CLOCKWISE */
+.ring-2{width:70%;height:70%;animation:rotCCW 6s linear infinite}
+.ring-2 .seg{
+    position:absolute;
+    top:0;left:50%;transform:translateX(-50%);
+    width:9px;height:35px;
+    background:var(--purple);
+    box-shadow:0 0 12px var(--purple), 0 0 25px var(--purple);
+    border-radius:5px;
+    transform-origin:50% 112px;
+}
+.ring-2 .seg::after{
+    content:"";
+    position:absolute;
+    left:50%;top:100%;transform:translateX(-50%);
+    width:100%;height:220%;
+    background:linear-gradient(to bottom, var(--purple) 0%, transparent 100%);
+    filter:blur(6px);
+    opacity:0.45;
+    border-radius:5px;
+}
+.ring-2 .s1{transform:translateX(-50%) rotate(0deg)}
+.ring-2 .s2{transform:translateX(-50%) rotate(60deg)}
+.ring-2 .s3{transform:translateX(-50%) rotate(120deg);background:var(--accent);box-shadow:0 0 12px var(--accent), 0 0 25px var(--accent)}
+.ring-2 .s4{transform:translateX(-50%) rotate(180deg)}
+.ring-2 .s5{transform:translateX(-50%) rotate(240deg)}
+.ring-2 .s6{transform:translateX(-50%) rotate(300deg);background:var(--accent);box-shadow:0 0 12px var(--accent), 0 0 25px var(--accent)}
 
-/* Gear 3 - Medium, Fast, Clockwise */
-.gear-3{width:190px;height:190px;animation:rotCW 7s linear infinite;border-color:var(--red);color:var(--red)}
-.gear-3::before{width:12px;height:32px;top:-16px;left:50%;transform:translateX(-50%)}
-.gear-3::after{width:12px;height:32px;bottom:-16px;left:50%;transform:translateX(-50%)}
-
-/* Gear 4 - Medium-Small, Very Fast, Counter-Clockwise */
-.gear-4{width:130px;height:130px;animation:rotCCW 5s linear infinite;border-color:var(--green);color:var(--green)}
-.gear-4::before{width:10px;height:24px;top:-12px;left:50%;transform:translateX(-50%)}
-.gear-4::after{width:10px;height:24px;bottom:-12px;left:50%;transform:translateX(-50%)}
-
-/* Gear 5 - Small, Extra Fast, Clockwise */
-.gear-5{width:90px;height:90px;animation:rotCW 3.5s linear infinite;border-color:var(--purple);color:var(--purple)}
-.gear-5::before{width:8px;height:18px;top:-9px;left:50%;transform:translateX(-50%)}
-.gear-5::after{width:8px;height:18px;bottom:-9px;left:50%;transform:translateX(-50%)}
-
-/* Gear 6 - Tiny, Fastest, Counter-Clockwise */
-.gear-6{width:60px;height:60px;animation:rotCCW 2.5s linear infinite;border-color:var(--orange);color:var(--orange)}
-.gear-6::before{width:6px;height:12px;top:-6px;left:50%;transform:translateX(-50%)}
-.gear-6::after{width:6px;height:12px;bottom:-6px;left:50%;transform:translateX(-50%)}
-
-/* Gear 7 - Extra Small, Slow Reverse */
-.gear-7{width:110px;height:110px;animation:rotCCW 8s linear infinite;border-color:#a8dadc;color:#a8dadc}
-.gear-7::before{width:9px;height:20px;top:-10px;left:50%;transform:translateX(-50%)}
-.gear-7::after{width:9px;height:20px;bottom:-10px;left:50%;transform:translateX(-50%)}
-
-/* Gear 8 - Micro, Ultra Fast */
-.gear-8{width:45px;height:45px;animation:rotCW 1.8s linear infinite;border-color:#ffd60a;color:#ffd60a}
-.gear-8::before{width:5px;height:10px;top:-5px;left:50%;transform:translateX(-50%)}
-.gear-8::after{width:5px;height:10px;bottom:-5px;left:50%;transform:translateX(-50%)}
+/* RING 3 - SMALL, CLOCKWISE */
+.ring-3{width:45%;height:45%;animation:rotCW 4s linear infinite}
+.ring-3 .seg{
+    position:absolute;
+    top:0;left:50%;transform:translateX(-50%);
+    width:7px;height:25px;
+    background:var(--red);
+    box-shadow:0 0 10px var(--red), 0 0 20px var(--red);
+    border-radius:4px;
+    transform-origin:50% 72px;
+}
+.ring-3 .seg::after{
+    content:"";
+    position:absolute;
+    left:50%;top:100%;transform:translateX(-50%);
+    width:100%;height:200%;
+    background:linear-gradient(to bottom, var(--red) 0%, transparent 100%);
+    filter:blur(5px);
+    opacity:0.4;
+    border-radius:4px;
+}
+.ring-3 .s1{transform:translateX(-50%) rotate(0deg)}
+.ring-3 .s2{transform:translateX(-50%) rotate(90deg)}
+.ring-3 .s3{transform:translateX(-50%) rotate(180deg)}
+.ring-3 .s4{transform:translateX(-50%) rotate(270deg)}
 
 @keyframes rotCW{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 @keyframes rotCCW{from{transform:translate(-50%,-50%) rotate(360deg)}to{transform:translate(-50%,-50%) rotate(0deg)}}
-
-/* 🌀 FAST RGB FAN INSIDE */
-.fan-wrapper{
-    position:absolute;
-    top:50%;left:50%;transform:translate(-50%,-50%);
-    width:100px;height:100px;
-    animation: spinFan 1s linear infinite;
-    z-index:3;
-}
-.fan-blade{
-    position:absolute;
-    top:50%;left:50%;
-    width:8px;height:45px;
-    background:linear-gradient(180deg,var(--prime),var(--accent));
-    transform-origin:center top;
-    border-radius:4px;
-    box-shadow:0 0 10px var(--prime);
-}
-.fan-blade:nth-child(1){transform:rotate(0deg) translateY(-22px)}
-.fan-blade:nth-child(2){transform:rotate(90deg) translateY(-22px)}
-.fan-blade:nth-child(3){transform:rotate(180deg) translateY(-22px)}
-.fan-blade:nth-child(4){transform:rotate(270deg) translateY(-22px)}
-.fan-center{
-    position:absolute;
-    top:50%;left:50%;transform:translate(-50%,-50%);
-    width:22px;height:22px;
-    background:radial-gradient(circle,var(--accent),var(--prime));
-    border-radius:50%;
-    box-shadow:0 0 15px var(--prime);
-}
-@keyframes spinFan{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-
-/* ✨ SPARKS EFFECT */
-.spark{
-    position:absolute;
-    width:4px;height:4px;
-    background:var(--accent);
-    border-radius:50%;
-    box-shadow:0 0 8px var(--accent), 0 0 15px var(--prime);
-    animation: sparkFly 2s ease-in-out infinite;
-    z-index:4;
-}
-.spark:nth-child(1){top:10%;left:15%;animation-delay:0s}
-.spark:nth-child(2){top:20%;right:10%;animation-delay:0.4s}
-.spark:nth-child(3){bottom:15%;left:10%;animation-delay:0.8s}
-.spark:nth-child(4){bottom:10%;right:15%;animation-delay:1.2s}
-.spark:nth-child(5){top:50%;left:5%;animation-delay:1.6s}
-@keyframes sparkFly{0%{opacity:0;transform:scale(0)}25%{opacity:1;transform:scale(1.2)}50%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
 
 /* 🎨 BASE LOGO TEXT */
 .base-logo-text{
     position:absolute;
     top:50%;left:50%;transform:translate(-50%,-50%);
     font-family:'Orbitron',sans-serif;
-    font-size:92px;
+    font-size:88px;
     font-weight:900;
     color:var(--prime);
-    text-shadow:0 0 15px var(--prime), 0 0 30px var(--accent);
+    text-shadow:0 0 15px var(--prime), 0 0 30px var(--accent), 0 0 60px var(--purple);
     z-index:5;
     letter-spacing:2px;
+    animation:textPulse 2.5s ease-in-out infinite alternate;
+}
+@keyframes textPulse{
+    from{text-shadow:0 0 15px var(--prime), 0 0 30px var(--accent)}
+    to{text-shadow:0 0 25px var(--prime), 0 0 50px var(--accent), 0 0 80px var(--purple)}
 }
 
 header{
@@ -257,30 +253,34 @@ a:hover{text-shadow:0 0 8px var(--prime)}
 <header>
 <div class="logo-wrap">
 <div class="logo-container">
-    <!-- 8 GEARS: Malaki, Maliit, Mabilis, Mabagal, Paiba-iba -->
-    <div class="gear gear-1"></div>
-    <div class="gear gear-2"></div>
-    <div class="gear gear-3"></div>
-    <div class="gear gear-4"></div>
-    <div class="gear gear-5"></div>
-    <div class="gear gear-6"></div>
-    <div class="gear gear-7"></div>
-    <div class="gear gear-8"></div>
-    <!-- Fast RGB Fan -->
-    <div class="fan-wrapper">
-        <div class="fan-blade"></div>
-        <div class="fan-blade"></div>
-        <div class="fan-blade"></div>
-        <div class="fan-blade"></div>
-        <div class="fan-center"></div>
+    <!-- RING 1 -->
+    <div class="ring ring-1">
+        <div class="seg s1"></div>
+        <div class="seg s2"></div>
+        <div class="seg s3"></div>
+        <div class="seg s4"></div>
+        <div class="seg s5"></div>
+        <div class="seg s6"></div>
+        <div class="seg s7"></div>
+        <div class="seg s8"></div>
     </div>
-    <!-- Flying Sparks -->
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <!-- Brand Name -->
+    <!-- RING 2 -->
+    <div class="ring ring-2">
+        <div class="seg s1"></div>
+        <div class="seg s2"></div>
+        <div class="seg s3"></div>
+        <div class="seg s4"></div>
+        <div class="seg s5"></div>
+        <div class="seg s6"></div>
+    </div>
+    <!-- RING 3 -->
+    <div class="ring ring-3">
+        <div class="seg s1"></div>
+        <div class="seg s2"></div>
+        <div class="seg s3"></div>
+        <div class="seg s4"></div>
+    </div>
+    <!-- BRAND NAME -->
     <div class="base-logo-text">CyberJayd</div>
 </div>
 </div>
@@ -291,9 +291,15 @@ a:hover{text-shadow:0 0 8px var(--prime)}
 <section>
 <h2>ABOUT ME</h2>
 <div class="card">
-<p>I am a BSED English student and self-taught technologist from the Philippines, focused on ethical cybersecurity, automation, and accessible software development. I build powerful, lightweight tools optimized for mobile platforms — making advanced tech accessible to everyone.</p>
+<p>👋 Hello! Welcome to my very first Website Project! I hope you enjoy and love exploring every part of it.</p>
 <br>
-<p>My mission: Innovate, secure, and deliver solutions with integrity and global standards.</p>
+<p>First of all, I am <strong>Jayd F. Repoberbio</strong> — the <strong>Web Developer / Web Engineer</strong> behind this entire website.</p>
+<br>
+<p>I am currently a <strong>First Year College Student</strong> taking up <strong>BSED-ENG (Bachelor of Science in Secondary Education Major in English)</strong> at Franciscan College of the Immaculate Conception (FCIC).</p>
+<br>
+<p>Honestly speaking — <strong>I have NO formal background or degree in Information Technology</strong>. But what I lack in formal training, I make up for with deep passion, dedication, and non-stop self-study when it comes to technology. Everything you see here — from the design, codes, animations, up to the deployment — I learned all of it by researching, practicing, and pushing myself beyond my limits.</p>
+<br>
+<p>My mission is simple: To prove that passion is greater than any course or background. I specialize in building lightweight, powerful, and mobile-optimized websites, creating automation scripts, and exploring the world of Ethical Cybersecurity. I believe that technology should be accessible to everyone — and I am here to make that happen.</p>
 </div>
 </section>
 
@@ -358,24 +364,45 @@ a:hover{text-shadow:0 0 8px var(--prime)}
 </section>
 
 <section>
-<h2>FEATURED PROJECT</h2>
-<div class="card">
-<h3>CyberJayd Security Lab v1.7.2 <span style="color:var(--accent);font-size:.85rem">ACTIVE</span></h3>
-<p>All-in-one mobile security toolkit: subdomain enumeration, live host detection, SSRF testing, and automation workflows — fully optimized for Android/Termux.</p>
+<h2>FEATURED PROJECTS</h2>
+
+<!-- MAIN PROJECT -->
+<div class="card" style="border-color:var(--accent);box-shadow:0 0 20px var(--accent)44">
+<h3>🔐 CyberJayd Security Lab v1.7.2 <span style="color:var(--accent);font-size:.85rem">ACTIVE</span></h3>
+<p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host check, SSRF testing, and full automation workflows — fully optimized for mobile use.</p>
 <br>
-<p>Repository: <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
+<p>📂 Repository: <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">github.com/Jaydong922/cyberjayd-security-lab</a></p>
 </div>
+<br>
+
+<!-- OTHER PROJECTS -->
+<div class="card">
+<h3>🛒 CyberJayd Shop Marketplace</h3>
+<p>Full functional marketplace system with Sign Up, Login, Admin Dashboard, Buyer View, Products Management, and Settings — all built from scratch using pure HTML, CSS, and JavaScript.</p>
+<br>
+<p>🌐 Live: <a href="https://jaydong922.github.io/cyberjayd-shop" target="_blank">jaydong922.github.io/cyberjayd-shop</a></p>
+</div>
+<br>
+
+<div class="card">
+<h3>🌐 CyberJayd Services Website</h3>
+<p>Official business website offering Web Design, Security Audit, Termux/Linux Setup, and Automation services with professional pricing and portfolio display.</p>
+<br>
+<p>🌐 Live: <a href="https://jaydong922.github.io/cyberjayd-services.github.io" target="_blank">cyberjayd-services.github.io</a></p>
+</div>
+
 </section>
 
 <section>
 <h2>CONTACT</h2>
 <div class="card">
-<p><b>EMAIL:</b> repoberbiojayd3@gmail.com</p>
-<p><b>LOCATION:</b> Baybay / Cebu, Philippines 🇵🇭</p>
-<p><b>HOURS:</b> Daily 9:00 AM – 9:00 PM</p>
+<p><b>📧 MAIN EMAIL:</b> <a href="mailto:repoberbiojayd3@gmail.com?subject=Inquiry%20-%20CyberJayd">repoberbiojayd3@gmail.com</a></p>
+<p><b>📧 BUSINESS EMAIL:</b> <a href="mailto:cyberjayd1@gmail.com?subject=For%20More%20Information%20-%20CyberJayd">cyberjayd1@gmail.com</a> <em style="color:#a0e8ff;font-size:14px;">* For more information, kindly send a message here</em></p>
+<p><b>📍 LOCATION:</b> Baybay City, Leyte, Philippines 🇵🇭</p>
+<p><b>⏰ HOURS:</b> Daily 9:00 AM – 9:00 PM</p>
 <br>
-<p style="color:var(--accent);font-weight:600">All work strictly for LEGAL & ETHICAL PURPOSES ONLY.</p>
-<a href="mailto:repoberbiojayd3@gmail.com?subject=Service Inquiry" class="btn">SEND INQUIRY</a>
+<p style="color:var(--accent);font-weight:600">⚠️ All work strictly for LEGAL & ETHICAL PURPOSES ONLY.</p>
+<a href="mailto:cyberjayd1@gmail.com?subject=Service%20Inquiry" class="btn">SEND INQUIRY</a>
 </div>
 </section>
 </div>
@@ -414,5 +441,6 @@ function draw(){
 }
 init();setInterval(draw,50);window.addEventListener('resize',init);
 </script>
+
 </body>
 </html>
