@@ -45,83 +45,120 @@
             overflow: hidden;
         }
 
-        /* NEW ROTATING LOGO - 3 LAYERS, NO CIRCLE */
+        /* ============= NEW ENHANCED LOGO: 5 RINGS + COLOR SHIFT + SMOKE TRAIL ============= */
         .logo-container {
             position: relative;
-            width: 380px;
-            height: 380px;
+            width: 420px;
+            height: 420px;
             margin: 0 auto 30px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        /* BASE RING STYLE */
         .ring {
             position: absolute;
             border-radius: 50%;
             width: 100%;
             height: 100%;
-            animation: rotate-cw 8s linear infinite;
         }
 
-        .ring-2 {
-            width: 75%;
-            height: 75%;
-            animation: rotate-ccw 5s linear infinite;
-        }
+        /* 5 RINGS: MIXED DIRECTIONS (CW / CCW / CW / CCW / CW) */
+        .ring-1 { animation: rotate-cw 9s linear infinite, color-shift-1 6s linear infinite; } /* BIG - BLUE FIRST */
+        .ring-2 { width: 82%; height: 82%; animation: rotate-ccw 6.5s linear infinite, color-shift-2 6s linear infinite; } /* MED - GREEN FIRST (OPPOSITE) */
+        .ring-3 { width: 64%; height: 64%; animation: rotate-cw 4.5s linear infinite, color-shift-1 6s linear infinite; } /* SMALL - BLUE FIRST */
+        .ring-4 { width: 46%; height: 46%; animation: rotate-ccw 3s linear infinite, color-shift-2 6s linear infinite; } /* TINY - GREEN FIRST (OPPOSITE) */
+        .ring-5 { width: 30%; height: 30%; animation: rotate-cw 1.8s linear infinite, color-shift-1 6s linear infinite; } /* MICRO - BLUE FIRST */
 
-        .ring-3 {
-            width: 50%;
-            height: 50%;
-            animation: rotate-cw 3s linear infinite;
-        }
-
+        /* BASE SEGMENT STYLE */
         .segment {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 11px;
-            height: 40px;
-            background: #00ffff;
-            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 45px #00ffff;
-            border-radius: 5px;
-            transform-origin: 50% 190px;
+            border-radius: 50px;
+            background: #00aaff;
+            animation: segment-glow 1.5s ease-in-out infinite alternate;
         }
 
-        /* RING 1 - 6 SEGMENTS */
-        .ring-1 .seg-1 { transform: translateX(-50%) rotate(0deg); }
-        .ring-1 .seg-2 { transform: translateX(-50%) rotate(60deg); }
-        .ring-1 .seg-3 { transform: translateX(-50%) rotate(120deg); background: #ff00ff; box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff; }
-        .ring-1 .seg-4 { transform: translateX(-50%) rotate(180deg); }
-        .ring-1 .seg-5 { transform: translateX(-50%) rotate(240deg); }
-        .ring-1 .seg-6 { transform: translateX(-50%) rotate(300deg); background: #39ff14; box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14; }
+        /* SMOKE / WATER TRAIL EFFECT (NAIIWAN KULAY NA PARANG USOK/TUBIG) */
+        .segment::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 220%;
+            border-radius: 50px;
+            background: linear-gradient(to bottom, currentColor 0%, transparent 100%);
+            filter: blur(6px);
+            opacity: 0.55;
+            pointer-events: none;
+        }
 
-        /* RING 2 - 8 SEGMENTS */
-        .ring-2 .seg-a { transform: translateX(-50%) rotate(0deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
-        .ring-2 .seg-b { transform: translateX(-50%) rotate(45deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
-        .ring-2 .seg-c { transform: translateX(-50%) rotate(90deg); height: 30px; width: 8px; background: #ff00ff; box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff; transform-origin: 50% 142px; }
-        .ring-2 .seg-d { transform: translateX(-50%) rotate(135deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
-        .ring-2 .seg-e { transform: translateX(-50%) rotate(180deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
-        .ring-2 .seg-f { transform: translateX(-50%) rotate(225deg); height: 30px; width: 8px; background: #39ff14; box-shadow: 0 0 12px #39ff14, 0 0 24px #39ff14; transform-origin: 50% 142px; }
-        .ring-2 .seg-g { transform: translateX(-50%) rotate(270deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
-        .ring-2 .seg-h { transform: translateX(-50%) rotate(315deg); height: 30px; width: 8px; transform-origin: 50% 142px; }
+        /* RING 1: BIG - 10 SEGMENTS */
+        .ring-1 .segment { width: 11px; height: 42px; transform-origin: 50% 210px; }
+        .ring-1 .s1 { transform: translateX(-50%) rotate(0deg); }
+        .ring-1 .s2 { transform: translateX(-50%) rotate(36deg); }
+        .ring-1 .s3 { transform: translateX(-50%) rotate(72deg); }
+        .ring-1 .s4 { transform: translateX(-50%) rotate(108deg); }
+        .ring-1 .s5 { transform: translateX(-50%) rotate(144deg); }
+        .ring-1 .s6 { transform: translateX(-50%) rotate(180deg); }
+        .ring-1 .s7 { transform: translateX(-50%) rotate(216deg); }
+        .ring-1 .s8 { transform: translateX(-50%) rotate(252deg); }
+        .ring-1 .s9 { transform: translateX(-50%) rotate(288deg); }
+        .ring-1 .s10 { transform: translateX(-50%) rotate(324deg); }
 
-        /* RING 3 - 4 SEGMENTS */
-        .ring-3 .seg-i { transform: translateX(-50%) rotate(0deg); height: 24px; width: 7px; transform-origin: 50% 95px; }
-        .ring-3 .seg-j { transform: translateX(-50%) rotate(90deg); height: 24px; width: 7px; background: #ff00ff; box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; transform-origin: 50% 95px; }
-        .ring-3 .seg-k { transform: translateX(-50%) rotate(180deg); height: 24px; width: 7px; transform-origin: 50% 95px; }
-        .ring-3 .seg-l { transform: translateX(-50%) rotate(270deg); height: 24px; width: 7px; background: #39ff14; box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14; transform-origin: 50% 95px; }
+        /* RING 2: MEDIUM - 8 SEGMENTS */
+        .ring-2 .segment { width: 9px; height: 34px; transform-origin: 50% 172px; }
+        .ring-2 .s1 { transform: translateX(-50%) rotate(0deg); }
+        .ring-2 .s2 { transform: translateX(-50%) rotate(45deg); }
+        .ring-2 .s3 { transform: translateX(-50%) rotate(90deg); }
+        .ring-2 .s4 { transform: translateX(-50%) rotate(135deg); }
+        .ring-2 .s5 { transform: translateX(-50%) rotate(180deg); }
+        .ring-2 .s6 { transform: translateX(-50%) rotate(225deg); }
+        .ring-2 .s7 { transform: translateX(-50%) rotate(270deg); }
+        .ring-2 .s8 { transform: translateX(-50%) rotate(315deg); }
 
+        /* RING 3: SMALL - 6 SEGMENTS */
+        .ring-3 .segment { width: 8px; height: 28px; transform-origin: 50% 134px; }
+        .ring-3 .s1 { transform: translateX(-50%) rotate(0deg); }
+        .ring-3 .s2 { transform: translateX(-50%) rotate(60deg); }
+        .ring-3 .s3 { transform: translateX(-50%) rotate(120deg); }
+        .ring-3 .s4 { transform: translateX(-50%) rotate(180deg); }
+        .ring-3 .s5 { transform: translateX(-50%) rotate(240deg); }
+        .ring-3 .s6 { transform: translateX(-50%) rotate(300deg); }
+
+        /* RING 4: TINY - 8 SEGMENTS */
+        .ring-4 .segment { width: 6px; height: 22px; transform-origin: 50% 96px; }
+        .ring-4 .s1 { transform: translateX(-50%) rotate(0deg); }
+        .ring-4 .s2 { transform: translateX(-50%) rotate(45deg); }
+        .ring-4 .s3 { transform: translateX(-50%) rotate(90deg); }
+        .ring-4 .s4 { transform: translateX(-50%) rotate(135deg); }
+        .ring-4 .s5 { transform: translateX(-50%) rotate(180deg); }
+        .ring-4 .s6 { transform: translateX(-50%) rotate(225deg); }
+        .ring-4 .s7 { transform: translateX(-50%) rotate(270deg); }
+        .ring-4 .s8 { transform: translateX(-50%) rotate(315deg); }
+
+        /* RING 5: MICRO - 4 SEGMENTS */
+        .ring-5 .segment { width: 5px; height: 16px; transform-origin: 50% 63px; }
+        .ring-5 .s1 { transform: translateX(-50%) rotate(0deg); }
+        .ring-5 .s2 { transform: translateX(-50%) rotate(90deg); }
+        .ring-5 .s3 { transform: translateX(-50%) rotate(180deg); }
+        .ring-5 .s4 { transform: translateX(-50%) rotate(270deg); }
+
+        /* LOGO TEXT */
         .logo-text {
             font-size: 84px;
             font-weight: 900;
             color: #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff, 0 0 90px #ff00ff;
+            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff, 0 0 90px #39ff14;
             letter-spacing: 4px;
             z-index: 10;
             margin: 0;
-            animation: text-glow 2s ease-in-out infinite alternate;
+            animation: text-glow 6s linear infinite;
         }
 
         .tagline {
@@ -131,6 +168,50 @@
             margin-top: 20px;
             text-transform: uppercase;
             text-shadow: 0 0 10px #00ffff;
+        }
+
+        /* ============= ALL ANIMATIONS (LOGO + COLORS + TRAILS) ============= */
+        @keyframes rotate-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes rotate-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* COLOR SHIFT: BLUE → GREEN → BLUE (KADA 3 SEGUNDO) */
+        @keyframes color-shift-1 {
+            0%, 49% { /* FIRST 3S: BLUE */
+                background: #00aaff;
+                color: #00aaff;
+                box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff, 0 0 45px #0088ff;
+            }
+            50%, 100% { /* NEXT 3S: GREEN */
+                background: #39ff14;
+                color: #39ff14;
+                box-shadow: 0 0 14px #39ff14, 0 0 28px #39ff14, 0 0 45px #22cc00;
+            }
+        }
+
+        /* OPPOSITE COLOR SHIFT: GREEN → BLUE → GREEN (KABALIGTARAN NG RING 1/3/5) */
+        @keyframes color-shift-2 {
+            0%, 49% { /* FIRST 3S: GREEN */
+                background: #39ff14;
+                color: #39ff14;
+                box-shadow: 0 0 14px #39ff14, 0 0 28px #39ff14, 0 0 45px #22cc00;
+            }
+            50%, 100% { /* NEXT 3S: BLUE */
+                background: #00aaff;
+                color: #00aaff;
+                box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff, 0 0 45px #0088ff;
+            }
+        }
+
+        /* GLOW PULSE PARA MAS BUHAY ANG SEGMENTS */
+        @keyframes segment-glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.4); }
+        }
+
+        /* TEXT GLOW SUMASABAY SA COLOR SHIFT NG LOGO */
+        @keyframes text-glow {
+            0%, 49% { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff, 0 0 90px #0055cc; }
+            50%, 100% { text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14, 0 0 60px #22cc00, 0 0 90px #119900; }
         }
 
         /* ============= SECTIONS (SUPER LAKI NA NG FONTS!) ============= */
@@ -151,7 +232,7 @@
             font-weight: 900;
         }
 
-        /* ============= UPDATED ABOUT ME (PINAKAMALAKING FONTS!) ============= */
+        /* ============= ABOUT ME ============= */
         .about-card {
             background: rgba(0, 15, 30, 0.92);
             border: 2px solid #00ffff;
@@ -166,11 +247,8 @@
         .about-card::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #39ff14, #00ffff);
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #39ff14, #00ffff);
             border-radius: 14px;
             z-index: -1;
             filter: blur(15px);
@@ -220,7 +298,7 @@
             text-shadow: 0 0 5px #00ffff;
         }
 
-        /* ============= CORE SKILLS (NEON BOXES + MALALAKING FONTS) ============= */
+        /* ============= CORE SKILLS ============= */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -253,9 +331,7 @@
             border-color: #ff88ff;
         }
 
-        .skill-card:hover::after {
-            opacity: 1;
-        }
+        .skill-card:hover::after { opacity: 1; }
 
         .skill-card h3 {
             color: #ff00ff;
@@ -284,7 +360,7 @@
             box-shadow: 0 0 8px #ff00ff33;
         }
 
-        /* ============= PROJECTS (GREEN NEON + MALALAKING FONTS + CLICKABLE) ============= */
+        /* ============= FEATURED PROJECTS (CLICKABLE) ============= */
         .project-card {
             background: rgba(0, 15, 30, 0.92);
             border: 2px solid #39ff14;
@@ -328,7 +404,7 @@
             text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
         }
 
-        /* ============= CONTACT (CLICKABLE EMAIL + MALALAKING FONTS + BAYBAY CITY) ============= */
+        /* ============= GLOBAL CONTACT (BAYBAY CITY LEYTE + CLICKABLE EMAILS) ============= */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -380,25 +456,9 @@
             text-shadow: 0 0 5px #00ffff55;
         }
 
-        /* ============= ANIMATIONS ============= */
-        @keyframes rotate-cw {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes rotate-ccw {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
-        }
-
-        @keyframes text-glow {
-            from { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #0088ff; }
-            to { text-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff, 0 0 80px #ff00ff, 0 0 120px #ff00ff; }
-        }
-
-        /* ============= RESPONSIVE (MOBILE - MALALAKI PA RIN!) ============= */
+        /* ============= RESPONSIVE (MOBILE) ============= */
         @media (max-width: 600px) {
-            .logo-container { width: 300px; height: 300px; }
+            .logo-container { width: 320px; height: 320px; }
             .logo-text { font-size: 58px; }
             .tagline { font-size: 16px; letter-spacing: 1px; }
             .section-title { font-size: 32px; }
@@ -421,33 +481,47 @@
     <!-- MATRIX RAIN BACKGROUND -->
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- ============== HERO / LOGO ============== -->
+    <!-- ============== HERO / ENHANCED LOGO ============== -->
     <div class="hero">
         <div class="logo-container">
+            <!-- RING 1: BIG → CLOCKWISE → BLUE muna -->
             <div class="ring ring-1">
-                <span class="segment seg-1"></span>
-                <span class="segment seg-2"></span>
-                <span class="segment seg-3"></span>
-                <span class="segment seg-4"></span>
-                <span class="segment seg-5"></span>
-                <span class="segment seg-6"></span>
+                <span class="segment s1"></span><span class="segment s2"></span>
+                <span class="segment s3"></span><span class="segment s4"></span>
+                <span class="segment s5"></span><span class="segment s6"></span>
+                <span class="segment s7"></span><span class="segment s8"></span>
+                <span class="segment s9"></span><span class="segment s10"></span>
             </div>
+
+            <!-- RING 2: MED → COUNTER-CLOCKWISE → GREEN muna (OPPOSITE) -->
             <div class="ring ring-2">
-                <span class="segment seg-a"></span>
-                <span class="segment seg-b"></span>
-                <span class="segment seg-c"></span>
-                <span class="segment seg-d"></span>
-                <span class="segment seg-e"></span>
-                <span class="segment seg-f"></span>
-                <span class="segment seg-g"></span>
-                <span class="segment seg-h"></span>
+                <span class="segment s1"></span><span class="segment s2"></span>
+                <span class="segment s3"></span><span class="segment s4"></span>
+                <span class="segment s5"></span><span class="segment s6"></span>
+                <span class="segment s7"></span><span class="segment s8"></span>
             </div>
+
+            <!-- RING 3: SMALL → CLOCKWISE → BLUE muna -->
             <div class="ring ring-3">
-                <span class="segment seg-i"></span>
-                <span class="segment seg-j"></span>
-                <span class="segment seg-k"></span>
-                <span class="segment seg-l"></span>
+                <span class="segment s1"></span><span class="segment s2"></span>
+                <span class="segment s3"></span><span class="segment s4"></span>
+                <span class="segment s5"></span><span class="segment s6"></span>
             </div>
+
+            <!-- RING 4: TINY → COUNTER-CLOCKWISE → GREEN muna (OPPOSITE) -->
+            <div class="ring ring-4">
+                <span class="segment s1"></span><span class="segment s2"></span>
+                <span class="segment s3"></span><span class="segment s4"></span>
+                <span class="segment s5"></span><span class="segment s6"></span>
+                <span class="segment s7"></span><span class="segment s8"></span>
+            </div>
+
+            <!-- RING 5: MICRO → CLOCKWISE → BLUE muna -->
+            <div class="ring ring-5">
+                <span class="segment s1"></span><span class="segment s2"></span>
+                <span class="segment s3"></span><span class="segment s4"></span>
+            </div>
+
             <h1 class="logo-text">CyberJayd</h1>
         </div>
         <p class="tagline">🛡️ Global Ethical Security Researcher • Software Developer • Mobile Tech Specialist</p>
@@ -535,7 +609,7 @@
         </div>
     </div>
 
-    <!-- ============== FEATURED PROJECTS (CLICKABLE LINKS) ============== -->
+    <!-- ============== FEATURED PROJECTS ============== -->
     <div class="container">
         <h2 class="section-title">FEATURED PROJECTS</h2>
 
@@ -559,116 +633,10 @@
         </div>
     </div>
 
-    <!-- ============== GLOBAL CONTACT (UPDATED TO BAYBAY CITY LEYTE!) ============== -->
+    <!-- ============== GLOBAL CONTACT (BAYBAY CITY LEYTE!) ============== -->
     <div class="container">
         <h2 class="section-title">GLOBAL CONTACT</h2>
         <div class="contact-grid">
             <div class="contact-item">
                 <h4>📧 MAIN EMAIL</h4>
-                <a href="mailto:repoberbiojayd3@gmail.com?subject=Inquiry%20-%20CyberJayd%20Website">repoberbiojayd3@gmail.com</a>
-            </div>
-
-            <div class="contact-item">
-                <h4>📧 BUSINESS / INFO EMAIL</h4>
-                <a href="mailto:cyberjayd1@gmail.com?subject=For%20More%20Information%20-%20CyberJayd">cyberjayd1@gmail.com</a>
-                <p class="contact-note">* For more information, kindly send a message to this Gmail</p>
-            </div>
-
-            <div class="contact-item">
-                <h4>📍 LOCATION</h4>
-                <p>Baybay City, Leyte, Philippines 🇵🇭</p>
-            </div>
-
-            <div class="contact-item">
-                <h4>🤝 AVAILABILITY</h4>
-                <p>Open for collaborations, freelance work, and knowledge sharing.</p>
-            </div>
-
-            <div class="contact-item">
-                <h4>💼 GITHUB</h4>
-                <a href="https://github.com/Jaydong922" target="_blank">github.com/Jaydong922</a>
-            </div>
-        </div>
-    </div>
-
-    <br><br>
-
-    <!-- ============= MATRIX RAIN SCRIPT (BLUE + GLOW + CONTINUOUS) ============= -->
-    <script>
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        // Japanese Katakana + Numbers + Letters
-        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*()<>/\\|{}[]';
-        const fontSize = 20;
-        let columns = Math.floor(canvas.width / fontSize);
-        let drops = [];
-        let speeds = [];
-
-        function initDrops() {
-            columns = Math.floor(canvas.width / fontSize);
-            drops = [];
-            speeds = [];
-            for (let i = 0; i < columns; i++) {
-                drops[i] = Math.random() * -100;
-                speeds[i] = 0.5 + Math.random() * 1.2;
-            }
-        }
-        initDrops();
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 10, 21, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // BLUE + NEON GLOW
-            ctx.fillStyle = '#00aaff';
-            ctx.shadowColor = '#00ccff';
-            ctx.shadowBlur = 14;
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < columns; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                const x = i * fontSize;
-                const y = Math.floor(drops[i]) * fontSize;
-
-                // Bright leading character (white light)
-                if (Math.random() > 0.975) {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.shadowBlur = 22;
-                } else {
-                    ctx.fillStyle = '#00aaff';
-                    ctx.shadowBlur = 14;
-                }
-
-                ctx.fillText(text, x, y);
-
-                // Continuous reset
-                if (y > canvas.height) {
-                    if (Math.random() > 0.985) {
-                        drops[i] = Math.random() * -20;
-                        speeds[i] = 0.5 + Math.random() * 1.2;
-                    }
-                }
-
-                drops[i] += speeds[i];
-            }
-        }
-
-        setInterval(drawMatrix, 40);
-
-        window.addEventListener('resize', () => {
-            resize();
-            initDrops();
-        });
-    </script>
-
-</body>
-</html>
-
+                <a href="mailto:repoberbiojayd3@gmail.com
