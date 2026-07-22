@@ -245,7 +245,7 @@ const c=document.getElementById('matrix'),x=c.getContext('2d');
 const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';const ca=chars.split('');let fs,cols,drops;
 function M(){fs=innerWidth<600?12:16;c.width=innerWidth;c.height=innerHeight;cols=Math.floor(c.width/fs);drops=Array(cols).fill(0).map(()=>Math.random()*-40)}
 function D(){x.fillStyle='rgba(15,20,25,.07)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';
-for(let i=0;i<cols;i++){const t=ca[Math.floor(Math.random()*ca.length)];const X=i*fs,Y=drops[i]*fs;x.fillStyle:var(--gray2);x.shadowColor=var(--blue);x.shadowBlur=10;x.fillText(t,X,Y);x.fillStyle=var(--blue2);x.shadowBlur=5;if((drops[i]-1)*fs>0)x.fillText(ca[Math.floor(Math.random()*ca.length)],X,(drops[i]-1)*fs);if(Y>c.height&&Math.random()>.975)drops[i]=0;drops[i]++}x.shadowBlur=0}
+for(let i=0;i<cols;i++){const t=ca[Math.floor(Math.random()*ca.length)];const X=i*fs,Y=drops[i]*fs;x.fillStyle='#cbd5e1';x.shadowColor='#0ea5e9';x.shadowBlur=10;x.fillText(t,X,Y);x.fillStyle='#38bdf8';x.shadowBlur=5;if((drops[i]-1)*fs>0)x.fillText(ca[Math.floor(Math.random()*ca.length)],X,(drops[i]-1)*fs);if(Y>c.height&&Math.random()>.975)drops[i]=0;drops[i]++}x.shadowBlur=0}
 M();setInterval(D,55);addEventListener('resize',M);
 
 const T=['GLOBAL ETHICAL SECURITY RESEARCHER','SOFTWARE DEVELOPER','MOBILE TECH SPECIALIST','WEB ENGINEER // CLEAN GRID','BUILDING THE FUTURE. ONE LINE AT A TIME.'];
