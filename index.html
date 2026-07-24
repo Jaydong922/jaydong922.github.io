@@ -43,7 +43,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba
 .brand{font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.25rem;color:var(--blue);text-shadow:var(--glowB);letter-spacing:2px}
 .brand span{color:var(--gray2)}
 .nav-links{display:flex;gap:1.1rem;flex-wrap:wrap}
-.nav-links a{color:var(--gray2);text-decoration:none;font-weight:600;font-family:'Orbitron',sans-serif;font-size:.8rem;letter-spacing:1px;padding:.3rem .5rem;border-bottom:2px solid transparent;transition:.25s;position:relative}
+.nav-links a{color:var(--gray2);text-decoration:none;font-weight:600;font-family:'Orbitron',sans-serif;font-size:.8rem;letter-spacing:1px;padding:.3rem .5rem;border-bottom:2px solid transparent;transition:.25s;position:relative;cursor:pointer}
 .nav-links a:hover{color:var(--blue);border-color:var(--blue);text-shadow:var(--glowB2)}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--gray));transition:.3s}
 .nav-links a:hover::after{width:100%}
@@ -134,11 +134,14 @@ footer .disc{margin-top:1rem;font-size:.82rem;color:var(--gray);max-width:800px;
 <nav><div class="nav-inner">
 <div class="brand">CYBER<span>JAYD</span></div>
 <div class="nav-links">
-<a href="#about">ABOUT</a><a href="#why">WHY</a><a href="#skills">SKILLS</a>
-<a href="#services">SERVICES</a><a href="#projects">PROJECTS</a>
-<a href="#" onclick="checkGameAccess();return false;">🎮 PLAY GAME</a>
-<a href="#" onclick="cjOpenAuth();return false;">🔐 ACCOUNT</a>
-<a href="#contact">CONTACT</a>
+<a href="#about" onclick="scrollToSection('about')">ABOUT</a>
+<a href="#why" onclick="scrollToSection('why')">WHY</a>
+<a href="#skills" onclick="scrollToSection('skills')">SKILLS</a>
+<a href="#services" onclick="scrollToSection('services')">SERVICES</a>
+<a href="#projects" onclick="scrollToSection('projects')">PROJECTS</a>
+<a href="javascript:void(0)" onclick="checkGameAccess();return false;">🎮 PLAY GAME</a>
+<a href="javascript:void(0)" onclick="cjOpenAuth();return false;">🔐 ACCOUNT</a>
+<a href="#contact" onclick="scrollToSection('contact')">CONTACT</a>
 </div></div></nav>
 <section class="hero" id="home">
 <div class="hud hud-tl"></div><div class="hud hud-tr"></div>
@@ -147,7 +150,7 @@ footer .disc{margin-top:1rem;font-size:.82rem;color:var(--gray);max-width:800px;
 <div class="glitch" data-text="CYBERJAYD">CYBERJAYD</div>
 <div class="typer"><span id="type"></span><span class="cursor">_</span></div>
 <p class="hero-sub">GLOBAL GRID // SECTOR 7 — ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH. CLEAN DESIGN, MAXIMUM POWER.</p>
-<div class="btn-row"><a href="#projects" class="cbtn">VIEW PROJECTS</a><a href="#contact" class="cbtn m">HIRE ME</a></div>
+<div class="btn-row"><a href="#projects" class="cbtn" onclick="scrollToSection('projects')">VIEW PROJECTS</a><a href="#contact" class="cbtn m" onclick="scrollToSection('contact')">HIRE ME</a></div>
 </div></section>
 <section id="about"><div class="sec-head"><span class="num">01</span><h2>ABOUT_ME.EXE</h2><div class="line"></div></div>
 <div class="card">
@@ -265,6 +268,10 @@ BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025
   </div>
 </div>
 <script>
+function scrollToSection(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
 const SUPA_URL = "https://kkjvjjessvykyveeggfz.supabase.co";
 const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqeXZqamVzcXZ5a3l2ZWVnZ2Z6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NDU0NDQsImV4cCI6MjEwMDMyMTQ0NH0.VCnsshbB86MgOolatcb2s0R45uBgkZ5SEUUS4iQlJ08";
 const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
