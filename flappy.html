@@ -8,230 +8,83 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
 body{background:#0f1419;overflow:hidden;touch-action:manipulation}
 canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#171e27 0%,#0ea5e9 100%)}
-
-/* UI STYLES */
-.info{position:absolute;top:10px;left:50%;transform:translateX(-50%);color:#7dd3fc;font-size:18px;text-shadow:0 0 10px #0ea5e9;z-index:10;display:flex;gap:2rem}
-.back{position:absolute;top:10px;left:10px;color:#cbd5e1;text-decoration:none;font-size:14px;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:4px;z-index:10}
-
-/* GAME OVER SCREEN */
-.gameover{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:20;display:none}
-.gameover h1{font-size:clamp(2.5rem,8vw,4rem);color:#ef4444;text-shadow:0 0 20px #ef4444;margin-bottom:1rem}
-.gameover p{font-size:1.2rem;color:#cbd5e1;margin-bottom:.5rem}
-.gameover .high{color:#facc15;text-shadow:0 0 8px #facc15;font-weight:700}
-.gameover button{font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:2px;padding:.8rem 2rem;font-size:1rem;cursor:pointer;background:transparent;color:#0ea5e9;border:2px solid #0ea5e9;transition:.3s;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
-.gameover button:hover{background:#0ea5e9;color:#0f1419;box-shadow:0 0 15px #0ea5e9}
+.info{position:absolute;top:10px;left:50%;transform:translateX(-50%);color:#fff;font-size:18px;text-shadow:0 0 8px #0ea5e9;z-index:10}
+.over{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;display:none;z-index:20}
+.over h1{font-size:48px;color:#ff4d6d;text-shadow:0 0 15px #ff4d6d}
+.over p{font-size:24px;color:#7dd3fc;margin:15px 0}
+.over button{padding:12px 25px;font-size:18px;background:#0ea5e9;color:#0c1015;border:none;cursor:pointer;font-weight:bold;box-shadow:0 0 15px #0ea5e9}
 </style>
 </head>
 <body>
-<a href="index.html" class="back">← BACK TO PORTFOLIO</a>
-<div class="info">
-  <span>SCORE: <span id="score">0</span></span>
-  <span>🏆 HIGH: <span id="high">0</span></span>
+<div class="info">SCORE: <span id="score">0</span></div>
+<div class="over" id="gameOver">
+<h1>GAME OVER</h1>
+<p>YOUR SCORE: <span id="fscore">0</span></p>
+<button onclick="location.reload()">TRY AGAIN</button>
 </div>
-<canvas id="game" width="400" height="600"></canvas>
-
-<div class="gameover" id="go">
-  <h1>GAME OVER</h1>
-  <p>Your Score: <span id="fs">0</span></p>
-  <p class="high">🏆 Highest Score: <span id="fh">0</span></p>
-  <button onclick="restart()">TRY AGAIN</button>
-</div>
-
+<canvas id="game"></canvas>
 <script>
 const c = document.getElementById('game');
 const ctx = c.getContext('2d');
-const scoreEl = document.getElementById('score');
-const highEl = document.getElementById('high');
-const goScreen = document.getElementById('go');
-const finalScore = document.getElementById('fs');
-const finalHigh = document.getElementById('fh');
+c.width = 400;
+c.height = 600;
 
-// LOAD HIGHEST SCORE
-let highScore = localStorage.getItem('flappyHigh') || 0;
-highEl.textContent = highScore;
-
-// ROCKET SETTINGS
-let bird = {
-  x: 80,
-  y: 250,
-  w: 28,
-  h: 36,
-  vel: 0,
-  jump: -4.5, // ⬅️ MAS MAHINA ANG LIPAD
-  grav: 0.32,
-  color: '#0ea5e9',
-  trail: [] // ⬅️ USOK / TRAIL
-};
-
-// PIPES SETTINGS
+let bird = {x:50,y:250,w:30,h:20,vy:0,g:0.4,j:-7};
 let pipes = [];
-let gap = 150;
-let speed = 2.2;
-let frame = 0;
 let score = 0;
 let gameOver = false;
 
-// DRAW ROCKET + SMOKE TRAIL
+function addPipe(){
+  let h = Math.random()*200 + 100;
+  pipes.push({x:c.width,y:h,w:60,space:150});
+}
+setInterval(addPipe, 2000);
+
+function jump(){
+  if(!gameOver) bird.vy = bird.j;
+}
+document.addEventListener('touchstart', jump);
+document.addEventListener('keydown', jump);
+
 function drawBird(){
-  // DRAW SMOKE TRAIL
-  for(let i = 0; i < bird.trail.length; i++){
-    let t = bird.trail[i];
-    ctx.fillStyle = `rgba(255,255,255, ${t.alpha})`;
-    ctx.beginPath();
-    ctx.arc(t.x, t.y, t.size, 0, Math.PI*2);
-    ctx.fill();
-    t.alpha -= 0.02;
-    t.size += 0.15;
-    t.x -= 0.3;
-  }
-  bird.trail = bird.trail.filter(t => t.alpha > 0);
-
-  // DRAW ROCKET BODY
-  ctx.fillStyle = bird.color;
+  ctx.fillStyle = '#38bdf8';
   ctx.shadowColor = '#0ea5e9';
-  ctx.shadowBlur = 12;
-  // Body
+  ctx.shadowBlur = 10;
   ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
-  // Nose
-  ctx.beginPath();
-  ctx.moveTo(bird.x + bird.w/2, bird.y - 12);
-  ctx.lineTo(bird.x + bird.w, bird.y + 5);
-  ctx.lineTo(bird.x, bird.y + 5);
-  ctx.fill();
-  // Window
-  ctx.fillStyle = '#0f1419';
-  ctx.fillRect(bird.x + 7, bird.y + 10, 14, 10);
-  // Wings
-  ctx.fillStyle = '#38bdf8';
-  ctx.fillRect(bird.x - 6, bird.y + 15, 6, 12);
-  ctx.fillRect(bird.x + bird.w, bird.y + 15, 6, 12);
   ctx.shadowBlur = 0;
 }
 
-// MAKE PIPES
-function makePipe(){
-  let h = Math.random() * 220 + 80;
-  pipes.push({
-    x: c.width,
-    top: h,
-    bottom: h + gap,
-    w: 50,
-    passed: false
-  });
-}
-
-// DRAW PIPES
-function drawPipe(p){
-  ctx.fillStyle = '#38bdf8';
-  ctx.shadowColor = '#0ea5e9';
-  ctx.shadowBlur = 8;
-  ctx.fillRect(p.x, 0, p.w, p.top);
-  ctx.fillRect(p.x, p.bottom, p.w, c.height - p.bottom);
-  // CAPS
-  ctx.fillRect(p.x - 5, p.top - 15, p.w + 10, 15);
-  ctx.fillRect(p.x - 5, p.bottom, p.w + 10, 15);
-  ctx.shadowBlur = 0;
-}
-
-// UPDATE EVERYTHING
-function update(){
-  if(gameOver) return;
-
-  // ROCKET PHYSICS
-  bird.vel += bird.grav;
-  bird.y += bird.vel;
-
-  // ADD SMOKE WHEN FLYING
-  if(bird.vel < 0){
-    bird.trail.push({
-      x: bird.x + bird.w/2,
-      y: bird.y + bird.h,
-      size: 4,
-      alpha: 0.8
-    });
-  }
-
-  // MAKE PIPES
-  if(frame % 110 === 0) makePipe();
-  frame++;
-
-  // MOVE PIPES & CHECK SCORE
-  for(let i = 0; i < pipes.length; i++){
-    let p = pipes[i];
-    p.x -= speed;
-
-    if(!p.passed && p.x + p.w < bird.x){
-      score++;
-      scoreEl.textContent = score;
-      p.passed = true;
-    }
-
-    // COLLISION
+function drawPipes(){
+  pipes.forEach((p,i)=>{
+    ctx.fillStyle = '#0ea5e9';
+    ctx.fillRect(p.x, 0, p.w, p.y);
+    ctx.fillRect(p.x, p.y + p.space, p.w, c.height - p.y - p.space);
+    p.x -= 2;
+    if(p.x + p.w < 0) {pipes.splice(i,1); score++; document.getElementById('score').textContent = score;}
     if(
       bird.x < p.x + p.w &&
       bird.x + bird.w > p.x &&
-      (bird.y < p.top || bird.y + bird.h > p.bottom)
+      (bird.y < p.y || bird.y + bird.h > p.y + p.space)
     ){
-      endGame();
+      gameOver = true;
+      document.getElementById('fscore').textContent = score;
+      document.getElementById('gameOver').style.display = 'block';
     }
-  }
-
-  pipes = pipes.filter(p => p.x + p.w > 0);
-
-  // GROUND / CEILING
-  if(bird.y + bird.h > c.height || bird.y < 0){
-    endGame();
-  }
+  })
 }
 
-// END GAME FUNCTION
-function endGame(){
-  gameOver = true;
-  // UPDATE HIGHEST SCORE
-  if(score > highScore){
-    highScore = score;
-    localStorage.setItem('flappyHigh', highScore);
-  }
-  // SHOW SCREEN
-  finalScore.textContent = score;
-  finalHigh.textContent = highScore;
-  highEl.textContent = highScore;
-  goScreen.style.display = 'block';
-}
-
-// RESTART GAME
-function restart(){
-  bird.y = 250;
-  bird.vel = 0;
-  bird.trail = [];
-  pipes = [];
-  score = 0;
-  frame = 0;
-  gameOver = false;
-  scoreEl.textContent = score;
-  goScreen.style.display = 'none';
-}
-
-// JUMP / CONTROL
-function jump(){
-  if(!gameOver){
-    bird.vel = bird.jump;
-  }
-}
-
-document.addEventListener('touchstart', e => {
-  e.preventDefault();
-  jump();
-});
-document.addEventListener('mousedown', jump);
-
-// GAME LOOP
 function loop(){
   ctx.clearRect(0,0,c.width,c.height);
+  bird.vy += bird.g;
+  bird.y += bird.vy;
+  if(bird.y + bird.h > c.height || bird.y < 0) {
+    gameOver = true;
+    document.getElementById('fscore').textContent = score;
+    document.getElementById('gameOver').style.display = 'block';
+  }
   drawBird();
-  pipes.forEach(drawPipe);
-  update();
-  requestAnimationFrame(loop);
+  drawPipes();
+  if(!gameOver) requestAnimationFrame(loop);
 }
 loop();
 </script>
