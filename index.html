@@ -195,6 +195,7 @@ nav{
   filter:drop-shadow(0 0 60px rgba(0,229,255,.45));
   touch-action:none;
   cursor:grab;
+  background:transparent !important;
 }
 #globeCanvas:active{cursor:grabbing}
 .ring{
@@ -892,9 +893,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
 })();
 
 /* =========================================================
-   ✅ SAFE HOLLYWOOD 3D GLOBE — NO EXTERNAL CALLS, NO TIMEOUT
-   ✅ Math Equations • 2000 Glitters • Sparks • Dots • Connections
-   ✅ Drag to rotate • NO PAGE MOVEMENT
+   ✅ FINAL FIXED 3D GLOBE — NO WHITE ARTIFACTS + MORE MATH
    ========================================================= */
 (function(){
   const canvas=document.getElementById('globeCanvas');
@@ -911,8 +910,13 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   const camera=new THREE.PerspectiveCamera(45,1,.1,1000);
   camera.position.z=4.6;
 
-  const renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
+  const renderer=new THREE.WebGLRenderer({
+    canvas:canvas,alpha:true,antialias:true,
+    premultipliedAlpha:false,
+    preserveDrawingBuffer:false
+  });
   renderer.setPixelRatio(pr);
+  renderer.setClearColor(0x000000,0); // FULLY TRANSPARENT BACKGROUND
   fit();addEventListener('resize',fit);
 
   const R=1.55;
@@ -921,7 +925,39 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
 
   // 1. INNER CORE
   const coreGeo=new THREE.SphereGeometry(R*.85,32,32);
-  const coreMat=new THREE.MeshBasicMaterial({color:0x0088ff,transparent:true,opacity:.18});
+  const coreMat=new THREE.MeshBasicMaterial({color:0x0088ff,transparent:true,opacity:.18,depthWrite:false});
+  globeGroup.add(new THREE.Mesh(coreGeo,coreMat));
+
+  // 2. SURFACE DOTS WITH CONTINENT CLUSTERS
+  const DOT_COUNT=2800;
+  const dotGeo=new THREE.BufferGeometry();
+  const dotPos=new Float32Array(DOT_COUNT*3);
+  const dotBase=new Float32Array(DOT_COUNT*3);
+  const dotSize=new Float32Array(DOT_COUNT);
+  for(let i=0;i<DOT_COUNT;i++){
+    const phi=Math.acos(1-2*(i+.5)/DOT_COUNT);
+    const theta=Math.PI*(1+Math.sqrt(5))*i;
+    const landBoost = (
+      (Math.abs(theta-1.2)<.9 && Math.abs(phi-1.4)<.7) ||
+      (Math.abs(theta+1.8)<.8 && Math.abs(phi-1.5)<.6) ||
+      (Math.abs(theta-.3)<.5 && Math.abs(phi-1..position.z=4.6;
+
+  const renderer=new THREE.WebGLRenderer({
+    canvas:canvas,alpha:true,antialias:true,
+    premultipliedAlpha:false,
+    preserveDrawingBuffer:false
+  });
+  renderer.setPixelRatio(pr);
+  renderer.setClearColor(0x000000,0); // FULLY TRANSPARENT BACKGROUND
+  fit();addEventListener('resize',fit);
+
+  const R=1.55;
+  const globeGroup=new THREE.Group();
+  scene.add(globeGroup);
+
+  // 1. INNER CORE
+  const coreGeo=new THREE.SphereGeometry(R*.85,32,32);
+  const coreMat=new THREE.MeshBasicMaterial({color:0x0088ff,transparent:true,opacity:.18,depthWrite:false});
   globeGroup.add(new THREE.Mesh(coreGeo,coreMat));
 
   // 2. SURFACE DOTS WITH CONTINENT CLUSTERS
@@ -966,7 +1002,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
 
   // 3. WIRE GRID
   const wireGeo=new THREE.SphereGeometry(R*1.005,36,28);
-  const wireMat=new THREE.MeshBasicMaterial({color:0x0088ff,wireframe:true,transparent:true,opacity:.22});
+  const wireMat=new THREE.MeshBasicMaterial({color:0x0088ff,wireframe:true,transparent:true,opacity:.22,depthWrite:false});
   globeGroup.add(new THREE.Mesh(wireGeo,wireMat));
 
   // 4. ATMOSPHERE GLOW
@@ -976,7 +1012,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     uniforms:{c:{value:.55},p:{value:4.4},glowColor:{value:new THREE.Color(0x00e5ff)}},
     vertexShader:`varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
     fragmentShader:`uniform vec3 glowColor;uniform float c;uniform float p;varying vec3 vN;
-    void main(){float i=pow(c-dot(vN,vec3(0.,0.,1.)),p);gl_FragColor=vec4(glowColor,i*.7);}`
+    void main(){float i=pow(c-dot(vN,vec3(0.,0.,1.)),p);gl_FragColor=vec4(glowColor,i*.65);}`
   });
   globeGroup.add(new THREE.Mesh(atmoGeo,atmoMat));
 
@@ -991,57 +1027,83 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,
     uniforms:{lineColor:{value:new THREE.Color(0x00e5ff)}},
     vertexShader:`attribute float alpha;varying float a;void main(){a=alpha;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-    fragmentShader:`uniform vec3 lineColor;varying float a;void main(){if(a<.03)discard;gl_FragColor=vec4(lineColor,a*.75);}`
+    fragmentShader:`uniform vec3 lineColor;varying float a;void main(){if(a<.03)discard;gl_FragColor=vec4(lineColor,a*.7);}`
   });
   const lines=new THREE.LineSegments(lineGeo,lineMat);
   globeGroup.add(lines);
 
-  // 6. FLOATING MATH EQUATIONS / NUMBERS / BINARY
+  // =========================================================
+  // ✅ FIXED MATH EQUATIONS — NO WHITE, 65 PCS, BIGGER, CLOSER
+  // =========================================================
   const EQUATIONS=[
-    'E=mc²','∫f(x)dx','lim h→0','π=3.14159','φ=1.618','∑n=1^∞',
+    'E=mc²','∫f(x)dx','lim h→0','π=3.14159','φ=1.61803','∑n=1^∞',
     '01001010','10110110','00111010','e^(iπ)+1=0','a²+b²=c²','λ=h/p',
     '∇·E=ρ/ε₀','F=ma','PV=nRT','sin²+cos²=1','01101110','11010011',
-    '√2≈1.414','∞','ΔxΔp≥ℏ/2','∂²ψ/∂x²','log₂(8)=3','1010 0101'
+    '√2≈1.4142','∞','ΔxΔp≥ℏ/2','∂²ψ/∂x²','log₂(8)=3','1010 0101',
+    '∮B·dl=μ₀I','c=λf','KE=½mv²','P=IV','V=IR','F=-kx',
+    '01000001','11110000','10101010','00001111','∇×E=-∂B/∂t','Hψ=Eψ',
+    'π²≈9.87','τ=2π','∏n=1^∞','|ψ|²','⟨A⟩=∫ψ*Aψ','0xDEADBEEF',
+    '1337','404','200 OK','42','0.618','3.1415926535'
   ];
-  const COLORS=['#00e5ff','#7c3aed','#ec4899','#ffffff','#00ff88'];
+  const COLORS=['#00e5ff','#7c3aed','#22d3ee','#ffffff','#00ff88','#f472b6'];
   function makeTextSprite(text,color,size){
     const c=document.createElement('canvas');
     const ctx=c.getContext('2d');
-    c.width=512;c.height=128;
+    c.width=1024;c.height=256; // HIGHER RES FOR SHARPER TEXT
+    // ✅ FULLY TRANSPARENT BACKGROUND — NO WHITE!
     ctx.clearRect(0,0,c.width,c.height);
-    ctx.shadowColor=color;ctx.shadowBlur=20;
+    // Strong glow
+    ctx.shadowColor=color;
+    ctx.shadowBlur=30;
     ctx.fillStyle=color;
-    ctx.font='bold 64px "Courier New", monospace';
+    ctx.font='bold 120px "Courier New", "Share Tech Mono", monospace';
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(text,c.width/2,c.height/2);
+    // Extra bright core
+    ctx.shadowBlur=15;
+    ctx.fillText(text,c.width/2,c.height/2);
     const tex=new THREE.CanvasTexture(c);
+    tex.minFilter=THREE.LinearFilter;
+    tex.magFilter=THREE.LinearFilter;
+    tex.generateMipmaps=false;
     tex.needsUpdate=true;
+    // ✅ FIXED MATERIAL — NO WHITE ARTIFACTS
     const mat=new THREE.SpriteMaterial({
-      map:tex,transparent:true,blending:THREE.AdditiveBlending,
-      depthWrite:false,color:0xffffff
+      map:tex,
+      transparent:true,
+      alphaTest:0.08, // Discard fully transparent pixels
+      blending:THREE.NormalBlending, // Normal = no white overlap
+      depthWrite:false,
+      depthTest:true,
+      opacity:1
     });
     const s=new THREE.Sprite(mat);
     s.scale.set(size,size*.28,1);
+    s.renderOrder=5; // Render on top
     return s;
   }
   const eqGroup=new THREE.Group();
   const eqData=[];
-  for(let i=0;i<40;i++){
+  // ✅ 65 EQUATIONS (from 40) — mas marami!
+  for(let i=0;i<65;i++){
     const txt=EQUATIONS[Math.floor(Math.random()*EQUATIONS.length)];
     const col=COLORS[Math.floor(Math.random()*COLORS.length)];
-    const sz=.35+Math.random()*.55;
+    // ✅ BIGGER SIZES — mas nakikita!
+    const sz=.5+Math.random()*.8;
     const sprite=makeTextSprite(txt,col,sz);
-    const radius=R*(1.45+Math.random()*.9);
-    const speed=(.05+Math.random()*.2)*(Math.random()<.5?-1:1);
+    // ✅ CLOSER TO GLOBE — 1.35 to 2.0 (from 1.45-2.35)
+    const radius=R*(1.35+Math.random()*.65);
+    const speed=(.04+Math.random()*.18)*(Math.random()<.5?-1:1);
     const tilt=(Math.random()-.5)*Math.PI;
     const phase=Math.random()*Math.PI*2;
-    const yOffset=(Math.random()-.5)*.8;
-    eqData.push({sprite,radius,speed,tilt,phase,yOffset,baseOpacity:.4+Math.random()*.5});
+    const yOffset=(Math.random()-.5)*.9;
+    // ✅ BRIGHTER OPACITY — mas maliwanag!
+    eqData.push({sprite,radius,speed,tilt,phase,yOffset,baseOpacity:.6+Math.random()*.35});
     eqGroup.add(sprite);
   }
   globeGroup.add(eqGroup);
 
-  // 7. 2000 GLITTER PARTICLES
+  // 7. 2000 GLITTER PARTICLES — LESS WHITE
   const GLITTER_COUNT=2000;
   const gGeo=new THREE.BufferGeometry();
   const gPos=new Float32Array(GLITTER_COUNT*3);
@@ -1062,14 +1124,15 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   gGeo.setAttribute('position',new THREE.BufferAttribute(gPos,3));
   const gMat=new THREE.ShaderMaterial({
     transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,
-    uniforms:{time:{value:0},c1:{value:new THREE.Color(0x00e5ff)},c2:{value:new THREE.Color(0xffffff)}},
+    // ✅ LESS WHITE — more cyan/blue mix
+    uniforms:{time:{value:0},c1:{value:new THREE.Color(0x00e5ff)},c2:{value:new THREE.Color(0x60a5fa)}},
     vertexShader:`uniform float time;attribute float gSpeed;attribute float gPhase;
     varying float vA;
     void main(){
       float tw=0.3+0.7*abs(sin(time*gSpeed+gPhase));
       vA=tw;
       vec4 mv=modelViewMatrix*vec4(position,1.);
-      gl_PointSize=(1.2+tw*2.5)*200./-mv.z;
+      gl_PointSize=(1.+tw*2.)*180./-mv.z;
       gl_Position=projectionMatrix*mv;
     }`,
     fragmentShader:`uniform vec3 c1;uniform vec3 c2;varying float vA;
@@ -1094,15 +1157,15 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     const tilt=(Math.random()-.5)*Math.PI*.9;
     const startAngle=Math.random()*Math.PI*2;
     sparkData.push({radius,speed,tilt,startAngle});
-    sparkSize[i]=.018+Math.random()*.028;
+    sparkSize[i]=.018+Math.random()*.025;
   }
   sparkGeo.setAttribute('position',new THREE.BufferAttribute(sparkPos,3));
   sparkGeo.setAttribute('size',new THREE.BufferAttribute(sparkSize,1));
   const sparkMat=new THREE.ShaderMaterial({
     transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,
     uniforms:{sparkColor:{value:new THREE.Color(0xa78bfa)}},
-    vertexShader:`attribute float size;void main(){vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=size*300./-mv.z;gl_Position=projectionMatrix*mv;}`,
-    fragmentShader:`uniform vec3 sparkColor;void main(){vec2 c=gl_PointCoord-.5;float d=length(c);if(d>.5)discard;float a=smoothstep(.5,.0,d);gl_FragColor=vec4(sparkColor,a*.95);}`
+    vertexShader:`attribute float size;void main(){vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=size*280./-mv.z;gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform vec3 sparkColor;void main(){vec2 c=gl_PointCoord-.5;float d=length(c);if(d>.5)discard;float a=smoothstep(.5,.0,d);gl_FragColor=vec4(sparkColor,a*.9);}`
   });
   const sparks=new THREE.Points(sparkGeo,sparkMat);
   globeGroup.add(sparks);
@@ -1186,7 +1249,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     lineGeo.attributes.position.needsUpdate=true;
     lineGeo.attributes.alpha.needsUpdate=true;
 
-    // Animate equations
+    // ✅ Animate math equations — smooth orbit + twinkle
     eqData.forEach((d,i)=>{
       const a=d.phase+t*d.speed*5;
       const x=d.radius*Math.cos(a);
@@ -1195,7 +1258,11 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
       const y2=y*Math.cos(d.tilt)-z*Math.sin(d.tilt);
       const z2=y*Math.sin(d.tilt)+z*Math.cos(d.tilt);
       d.sprite.position.set(x,y2,z2);
-      d.sprite.material.opacity=d.baseOpacity*(.5+.5*Math.sin(t*2+i));
+      // Smooth opacity pulse
+      d.sprite.material.opacity=d.baseOpacity*(.55+.45*Math.sin(t*2.2+i*.5));
+      // Slight scale pulse
+      const sc=1+Math.sin(t*1.5+i)*.08;
+      d.sprite.scale.set(d.sprite.scale.x*sc,d.sprite.scale.y*sc,1);
     });
 
     // Glitters drift
