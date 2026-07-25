@@ -3,180 +3,1123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAYD F. REPOBERBIO | PORTFOLIO</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<title>JAYD F. REPOBERBIO | Elite Full Stack Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--blue:#00d4ff;--violet:#6366f1;--bg:#070b10;--text:#e6f1ff;--line:rgba(0,212,255,.2)}
-body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-h1,h2{font-family:'Orbitron',sans-serif}
+:root{
+  --cyan:#00e5ff;
+  --blue:#0088ff;
+  --violet:#7c3aed;
+  --pink:#ec4899;
+  --bg:#03060d;
+  --bg2:#071029;
+  --text:#e6f4ff;
+  --muted:#94a3b8;
+  --line:rgba(0,229,255,.2);
+  --glass:rgba(10,20,40,.55);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:radial-gradient(ellipse at top,#071029 0%,#03060d 60%,#000 100%);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
+.mono{font-family:'Share Tech Mono',monospace}
 
-/* Matrix Background */
-#matrix{position:fixed;inset:0;z-index:0;opacity:.15}
-.grid{position:fixed;inset:0;z-index:1;background:linear-gradient(rgba(0,212,255,.05)1px,transparent 1px)0 0/40px 40px}
+/* ===== BACKGROUND LAYERS ===== */
+#matrix{position:fixed;inset:0;z-index:0;opacity:.12}
+.grid-bg{
+  position:fixed;inset:0;z-index:1;
+  background:
+    linear-gradient(rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px,
+    linear-gradient(90deg,rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);
+}
+.glow-orbs{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(100px);opacity:.35;
+  animation:float 18s ease-in-out infinite;
+}
+.orb1{width:500px;height:500px;background:var(--cyan);top:-150px;left:-100px}
+.orb2{width:600px;height:600px;background:var(--violet);bottom:-200px;right:-150px;animation-delay:-6s}
+.orb3{width:400px;height:400px;background:var(--blue);top:40%;left:50%;animation-delay:-12s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(40px,-30px) scale(1.08)}
+  66%{transform:translate(-30px,40px) scale(.95)}
+}
 .wrap{position:relative;z-index:10}
 
-/* Nav */
-nav{position:sticky;top:0;background:rgba(7,11,16,.9);border-bottom:1px solid var(--line);padding:1rem}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap}
-.brand{font-size:1.2rem;font-weight:900;color:var(--blue);text-shadow:0 0 15px var(--blue)}
-.links a{color:#b8c8e0;text-decoration:none;margin:0 .5rem;font-size:.85rem}
-.links a:hover{color:var(--blue)}
+/* ===== NAVIGATION ===== */
+nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(18px);
+  background:rgba(3,6,13,.75);
+  border-bottom:1px solid var(--line);
+  padding:1rem 0;
+}
+.nav-inner{
+  max-width:1300px;margin:0 auto;padding:0 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.brand{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.3rem;font-weight:900;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 25px rgba(0,229,255,.4);
+}
+.brand span{color:var(--cyan);-webkit-text-fill-color:var(--cyan)}
+.links{display:flex;gap:1.4rem;flex-wrap:wrap}
+.links a{
+  color:#cbd5e1;text-decoration:none;font-weight:600;
+  font-size:.95rem;position:relative;padding:.3rem 0;
+  transition:.3s;
+}
+.links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  transition:.3s;
+}
+.links a:hover{color:var(--cyan)}
+.links a:hover::after{width:100%}
 
-/* Hero */
-.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem}
-.title{font-size:clamp(2rem,5vw,3.5rem);background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1rem}
-.sub{font-size:clamp(1rem,2vw,1.4rem);color:var(--blue);margin-bottom:1.5rem}
-.desc{max-width:600px;color:#b8c8e0;font-size:1.1rem;line-height:1.7;margin-bottom:2rem}
-.btn{padding:.8rem 2rem;border:2px solid var(--blue);color:var(--blue);text-decoration:none;font-weight:700;transition:.3s}
-.btn:hover{background:var(--blue);color:var(--bg);box-shadow:0 0 20px var(--blue)}
+/* ===== HERO SECTION ===== */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;
+  align-items:center;
+  max-width:1300px;margin:0 auto;
+  padding:4rem 1.5rem 6rem;
+}
+@media(max-width:900px){.hero{grid-template-columns:1fr;text-align:center;padding-top:3rem}}
+.status{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.4rem 1rem;border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(0,229,255,.06);
+  font-size:.85rem;color:var(--cyan);
+  margin-bottom:1.5rem;
+}
+.dot{
+  width:8px;height:8px;border-radius:50%;background:#10ff8a;
+  box-shadow:0 0 12px #10ff8a;animation:pulse 1.4s infinite;
+}
+@keyframes pulse{50%{opacity:.3;transform:scale(1.4)}}
+.hero h1{
+  font-size:clamp(2.2rem,5.5vw,4.4rem);
+  font-weight:900;line-height:1.05;
+  margin-bottom:1rem;
+}
+.gradient-text{
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 45%,var(--violet) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 25px rgba(0,229,255,.35));
+}
+.hero h2{
+  font-size:clamp(1.1rem,2.2vw,1.6rem);
+  color:var(--cyan);
+  font-weight:600;
+  margin-bottom:1.5rem;
+  text-shadow:0 0 15px rgba(0,229,255,.4);
+}
+.hero p.lead{
+  font-size:1.15rem;color:#cbd5e1;
+  max-width:600px;margin-bottom:2rem;
+}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  margin-bottom:2rem;max-width:520px;
+}
+@media(max-width:900px){.hero-stats{margin:0 auto 2rem}}
+.stat{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:12px;padding:1rem .5rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
+}
+.stat:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 10px 30px rgba(0,229,255,.15)}
+.stat-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.7rem;font-weight:800;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat-label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+@media(max-width:900px){.cta-row{justify-content:center}}
+.btn{
+  padding:.95rem 2rem;border-radius:10px;
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:.3s all;position:relative;overflow:hidden;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#001018;
+  box-shadow:0 8px 30px rgba(0,229,255,.35);
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 40px rgba(0,229,255,.5);
+}
+.btn-outline{
+  background:transparent;color:var(--cyan);
+  border:2px solid var(--cyan);
+}
+.btn-outline:hover{
+  background:var(--cyan);color:#001018;
+  box-shadow:0 0 30px rgba(0,229,255,.4);
+}
 
-/* 3D Earth */
-.earth-box{width:100%;max-width:400px;height:400px;margin:2rem auto}
-#earthCanvas{width:100%;height:100%;display:block}
+/* ===== 3D GLOBE CONTAINER ===== */
+.globe-wrap{
+  position:relative;width:100%;aspect-ratio:1/1;
+  max-width:520px;margin:0 auto;
+}
+@media(max-width:900px){.globe-wrap{max-width:420px}}
+#globeCanvas{
+  width:100%;height:100%;display:block;
+  filter:drop-shadow(0 0 60px rgba(0,229,255,.45));
+}
+.ring{
+  position:absolute;inset:-6%;
+  border:1px dashed rgba(0,229,255,.25);
+  border-radius:50%;
+  animation:spin 30s linear infinite;
+}
+.ring2{inset:-14%;border-color:rgba(124,58,237,.2);animation-duration:45s;animation-direction:reverse}
+.ring3{inset:-22%;border-style:dotted;border-color:rgba(236,72,153,.15);animation-duration:60s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scanline{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  top:50%;opacity:.6;
+  animation:scan 3.5s ease-in-out infinite;
+}
+@keyframes scan{
+  0%,100%{top:10%;opacity:0}
+  50%{top:90%;opacity:.8}
+}
 
-/* Sections */
-section{max-width:1200px;margin:0 auto;padding:3rem 1.2rem}
-.sec-title{font-size:1.5rem;color:var(--blue);border-bottom:1px solid var(--line);padding-bottom:.5rem;margin-bottom:1.5rem}
-.card{background:rgba(10,16,26,.7);border:1px solid var(--line);padding:1.5rem;margin-bottom:1rem;border-radius:4px}
+/* ===== SECTIONS ===== */
+section{max-width:1300px;margin:0 auto;padding:5rem 1.5rem}
+.sec-head{text-align:center;margin-bottom:3.5rem}
+.eyebrow{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.85rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:.8rem;
+}
+.sec-head h2{
+  font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;
+  margin-bottom:.8rem;
+}
+.sec-head p{color:var(--muted);max-width:650px;margin:0 auto;font-size:1.05rem}
 
-/* Footer */
-footer{text-align:center;padding:2rem;color:#8896b0;border-top:1px solid var(--line);margin-top:2rem}
+/* ===== ABOUT ===== */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:2.5rem;align-items:start;
+}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+.id-card{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:18px;padding:2rem;
+  backdrop-filter:blur(14px);
+  position:relative;overflow:hidden;
+}
+.id-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+}
+.avatar{
+  width:110px;height:110px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:900;
+  color:#fff;margin:0 auto 1rem;
+  box-shadow:0 0 40px rgba(0,229,255,.35);
+  border:3px solid rgba(255,255,255,.1);
+}
+.id-name{
+  text-align:center;font-family:'Orbitron',sans-serif;
+  font-size:1.3rem;font-weight:800;margin-bottom:.2rem;
+}
+.id-role{
+  text-align:center;color:var(--cyan);font-size:.9rem;
+  text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.2rem;
+}
+.id-info{display:grid;gap:.6rem;font-size:.95rem}
+.id-info div{
+  display:flex;justify-content:space-between;
+  padding:.5rem 0;border-bottom:1px dashed rgba(0,229,255,.1);
+}
+.id-info span:first-child{color:var(--muted)}
+.id-info span:last-child{color:var(--text);font-weight:600}
+.bio p{margin-bottom:1rem;color:#cbd5e1;font-size:1.05rem}
+.bio p:first-letter{
+  font-family:'Orbitron',sans-serif;font-size:2.4rem;
+  float:left;line-height:1;margin-right:.5rem;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-weight:900;
+}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.tag{
+  padding:.35rem .85rem;border-radius:999px;
+  font-size:.8rem;font-weight:600;
+  background:rgba(0,229,255,.08);
+  border:1px solid var(--line);
+  color:var(--cyan);
+  transition:.25s;
+}
+.tag:hover{background:var(--cyan);color:#001018;transform:translateY(-2px)}
+
+/* ===== SKILLS ===== */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+}
+.skill-card{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:16px;padding:1.8rem;
+  backdrop-filter:blur(12px);
+  transition:.35s;
+}
+.skill-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--cyan);
+  box-shadow:0 20px 40px rgba(0,229,255,.15);
+}
+.skill-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(124,58,237,.2));
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:1rem;
+}
+.skill-card h3{
+  font-size:1.15rem;margin-bottom:.8rem;color:var(--cyan);
+}
+.bar{
+  height:8px;background:rgba(255,255,255,.06);
+  border-radius:999px;overflow:hidden;margin-bottom:1rem;
+  position:relative;
+}
+.fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  box-shadow:0 0 15px rgba(0,229,255,.5);
+  position:relative;
+  animation:grow 2s ease-out forwards;
+  transform-origin:left;transform:scaleX(0);
+}
+@keyframes grow{to{transform:scaleX(1)}}
+.fill::after{
+  content:attr(data-val);
+  position:absolute;right:0;top:-22px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:.75rem;color:var(--cyan);font-weight:700;
+}
+.skill-list{display:grid;gap:.4rem;font-size:.92rem;color:#cbd5e1}
+.skill-list div::before{content:'▸ ';color:var(--cyan);font-weight:700}
+
+/* ===== PROJECTS ===== */
+.projects-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:1.8rem;
+}
+.project{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:18px;overflow:hidden;
+  backdrop-filter:blur(12px);
+  transition:.4s;position:relative;
+}
+.project:hover{
+  transform:translateY(-8px) scale(1.015);
+  border-color:var(--cyan);
+  box-shadow:0 25px 60px rgba(0,136,255,.25);
+}
+.project-preview{
+  height:180px;
+  background:
+    radial-gradient(circle at 30% 30%,rgba(0,229,255,.35),transparent 50%),
+    radial-gradient(circle at 70% 70%,rgba(124,58,237,.35),transparent 55%),
+    linear-gradient(135deg,#05102a,#0a1a3f);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.project-preview::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(rgba(0,229,255,.05)1px,transparent 1px)0 0/20px 20px;
+  opacity:.4;
+}
+.code-icon{
+  font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  z-index:2;
+}
+.project-body{padding:1.6rem}
+.project h3{
+  font-size:1.2rem;margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.project h3::before{
+  content:'➤';color:var(--cyan);
+}
+.project .type{
+  display:inline-block;font-size:.7rem;
+  padding:.2rem .6rem;border-radius:4px;
+  background:rgba(124,58,237,.15);color:#c4b5fd;
+  border:1px solid rgba(124,58,237,.3);
+  margin-left:auto;
+}
+.project p{color:#cbd5e1;margin:.8rem 0 1rem;font-size:.98rem}
+.tech{display:flex;flex-wrap:wrap;gap:.35rem}
+.tech span{
+  font-size:.72rem;padding:.2rem .55rem;border-radius:4px;
+  background:rgba(0,229,255,.08);color:#7dd3fc;
+  border:1px solid rgba(0,229,255,.18);
+  font-family:'Share Tech Mono',monospace;
+}
+
+/* ===== TIMELINE / JOURNEY ===== */
+.timeline{position:relative;max-width:850px;margin:0 auto}
+.timeline::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--cyan),var(--violet),transparent);
+  transform:translateX(-50%);
+}
+@media(max-width:700px){.timeline::before{left:20px}}
+.tl-item{
+  position:relative;width:50%;padding:1rem 2.5rem;
+}
+.tl-item:nth-child(odd){left:0;text-align:right}
+.tl-item:nth-child(even){left:50%}
+@media(max-width:700px){
+  .tl-item{width:100%;left:0!important;text-align:left!important;padding-left:4rem;padding-right:1rem}
+}
+.tl-dot{
+  position:absolute;top:1.5rem;width:18px;height:18px;border-radius:50%;
+  background:var(--cyan);
+  border:4px solid var(--bg);
+  box-shadow:0 0 0 3px var(--cyan),0 0 25px var(--cyan);
+}
+.tl-item:nth-child(odd) .tl-dot{right:-9px}
+.tl-item:nth-child(even) .tl-dot{left:-9px}
+@media(max-width:700px){.tl-dot{left:11px!important;right:auto!important}}
+.tl-card{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:14px;padding:1.3rem 1.5rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
+}
+.tl-card:hover{border-color:var(--cyan);transform:scale(1.03)}
+.tl-date{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:var(--cyan);font-weight:700;
+}
+.tl-card h4{margin:.3rem 0 .4rem;font-size:1.05rem}
+.tl-card p{color:#cbd5e1;font-size:.95rem}
+
+/* ===== CONTACT ===== */
+.contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;max-width:1000px;margin:0 auto;
+}
+.contact-card{
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:16px;padding:2rem;text-align:center;
+  backdrop-filter:blur(12px);
+  transition:.35s;
+}
+.contact-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--cyan);
+  box-shadow:0 15px 40px rgba(0,229,255,.2);
+}
+.cc-icon{
+  width:60px;height:60px;border-radius:50%;
+  margin:0 auto 1rem;
+  background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(124,58,237,.2));
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;
+}
+.contact-card h4{margin-bottom:.4rem}
+.contact-card a,.contact-card p{
+  color:#cbd5e1;text-decoration:none;font-size:1rem;
+  transition:.2s;word-break:break-word;
+}
+.contact-card a:hover{color:var(--cyan)}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;padding:3rem 1.5rem 2rem;
+  border-top:1px solid var(--line);
+  margin-top:4rem;
+  background:rgba(3,6,13,.6);
+}
+footer .brand{font-size:1.5rem;margin-bottom:.5rem}
+footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
+.footer-line{
+  max-width:600px;height:1px;margin:1.2rem auto;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+.signature{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:#64748b;margin-top:1rem;
+}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:all .9s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
+
+<!-- BACKGROUND -->
 <canvas id="matrix"></canvas>
-<div class="grid"></div>
+<div class="grid-bg"></div>
+<div class="glow-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
 <div class="wrap">
 
+<!-- NAV -->
 <nav>
 <div class="nav-inner">
-<div class="brand">JAYD REPOBERBIO</div>
-<div class="links">
-<a href="#home">HOME</a>
-<a href="#about">ABOUT</a>
-<a href="#skills">SKILLS</a>
-<a href="#projects">PROJECTS</a>
-<a href="#contact">CONTACT</a>
-</div>
+  <div class="brand">JAYD<span>.</span>DEV</div>
+  <div class="links">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#journey">JOURNEY</a>
+    <a href="#contact">CONTACT</a>
+  </div>
 </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero" id="home">
-<h1 class="title">FULL STACK DEVELOPER</h1>
-<p class="sub">Built 100% on Android • Termux • Ubuntu</p>
-<p class="desc">
-First Year BSED-English student @ FCIC Baybay City, Leyte. 
-Self-taught coder, game creator, and system builder. 
-No laptop needed — just passion and pure code.
-</p>
-<a href="#projects" class="btn">SEE MY WORK</a>
+  <div class="reveal">
+    <div class="status"><span class="dot"></span> SYSTEM ONLINE • BUILT ON ANDROID</div>
+    <h1>HELLO, I'M <span class="gradient-text">JAYD REPOBERBIO</span></h1>
+    <h2>⚡ FULL STACK DEVELOPER • SYSTEM BUILDER • GAME CREATOR</h2>
+    <p class="lead">
+      First Year BSED-English student from <strong>Franciscan College of the Immaculate Conception</strong>, 
+      Baybay City, Leyte. A self-taught tech virtuoso proving that <strong>skills are greater than equipment</strong> — 
+      crafting world-class websites, games, and security systems entirely from an Android phone using Termux & Linux.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Projects Built</div></div>
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Coding Languages</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Android-Made</div></div>
+    </div>
+    <div class="cta-row">
+      <a href="#projects" class="btn btn-primary">VIEW MY WORK ↓</a>
+      <a href="#contact" class="btn btn-outline">GET IN TOUCH</a>
+    </div>
+  </div>
 
-<div class="earth-box">
-<canvas id="earthCanvas"></canvas>
-</div>
+  <div class="globe-wrap reveal">
+    <div class="ring"></div>
+    <div class="ring ring2"></div>
+    <div class="ring ring3"></div>
+    <div class="scanline"></div>
+    <canvas id="globeCanvas"></canvas>
+  </div>
 </section>
 
+<!-- ABOUT -->
 <section id="about">
-<h2 class="sec-title">ABOUT ME</h2>
-<div class="card">
-<p><strong>🎓</strong> Franciscan College of the Immaculate Conception (FCIC)</p>
-<p><strong>📍</strong> Baybay City, Leyte, Philippines</p>
-<p><strong>💻</strong> HTML5 • CSS3 • JavaScript • Python • Linux • Three.js</p>
-<p><strong>🚀</strong> "Skills > Equipment" — Proving anyone can build global tech.</p>
-</div>
+  <div class="sec-head reveal">
+    <div class="eyebrow">// 01 — IDENTITY</div>
+    <h2>ABOUT <span class="gradient-text">ME</span></h2>
+    <p>The story of a student who turned a simple Android phone into a full-scale development laboratory.</p>
+  </div>
+  <div class="about-grid">
+    <div class="id-card reveal">
+      <div class="avatar">JR</div>
+      <div class="id-name">JAYD F. REPOBERBIO</div>
+      <div class="id-role">Full Stack Developer</div>
+      <div class="id-info">
+        <div><span>📍 Location</span><span>Baybay City, Leyte</span></div>
+        <div><span>🎓 School</span><span>FCIC — BSED-English</span></div>
+        <div><span>📱 Device</span><span>Android + Termux</span></div>
+        <div><span>🌐 Languages</span><span>EN / TL / CEB</span></div>
+        <div><span>💼 Status</span><span style="color:#10ff8a">● Available</span></div>
+      </div>
+    </div>
+    <div class="bio reveal">
+      <p>
+        I am a passionate 1st-year college student with an extraordinary talent for software engineering. 
+        While most developers rely on high-end laptops and desktops, I have mastered the art of 
+        <strong>building professional-grade systems entirely on a mobile device</strong> — turning limitations 
+        into my greatest advantage.
+      </p>
+      <p>
+        My journey began with curiosity and evolved into obsession. From writing my first HTML file to 
+        deploying live websites on GitHub Pages, from experimenting with Python scripts to engineering 
+        interactive 3D visualizations — every line of code was written, tested, and shipped from my phone.
+      </p>
+      <p>
+        I specialize in <strong>Full Stack Web Development</strong>, <strong>Game Development</strong>, 
+        <strong>UI/UX Design</strong>, and <strong>Linux System Administration</strong>. I believe that 
+        true innovation is born not from having the best tools, but from maximizing what you already have.
+      </p>
+      <div class="tags">
+        <span class="tag">🚀 Problem Solver</span>
+        <span class="tag">💡 Fast Learner</span>
+        <span class="tag">🔥 Self-Starter</span>
+        <span class="tag">🌱 Always Growing</span>
+        <span class="tag">🎯 Detail-Oriented</span>
+        <span class="tag">⚡ High Performer</span>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
-<h2 class="sec-title">SKILLS</h2>
-<div class="card">
-<p>✅ Web Development — 99%</p>
-<p>✅ UI/UX Design — 97%</p>
-<p>✅ Game Development — 91%</p>
-<p>✅ Linux / Termux — 88%</p>
-<p>✅ Database & Systems — 85%</p>
-</div>
+  <div class="sec-head reveal">
+    <div class="eyebrow">// 02 — CAPABILITIES</div>
+    <h2>MY <span class="gradient-text">TECHNICAL SKILLS</span></h2>
+    <p>A complete arsenal of modern technologies mastered through relentless practice and real-world projects.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🌐</div>
+      <h3>FRONTEND DEVELOPMENT</h3>
+      <div class="bar"><div class="fill" style="width:99%" data-val="99%"></div></div>
+      <div class="skill-list">
+        <div>HTML5 — Semantic & Accessible</div>
+        <div>CSS3 — Flexbox, Grid, Animations</div>
+        <div>JavaScript (ES6+) — DOM, Async, APIs</div>
+        <div>Three.js — 3D Graphics & WebGL</div>
+        <div>Responsive / Mobile-First Design</div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚙️</div>
+      <h3>BACKEND & SYSTEMS</h3>
+      <div class="bar"><div class="fill" style="width:92%" data-val="92%"></div></div>
+      <div class="skill-list">
+        <div>Python — Automation & Scripting</div>
+        <div>Node.js — Server-side JavaScript</div>
+        <div>Linux / Ubuntu — Command Line Mastery</div>
+        <div>Termux — Android Development Env</div>
+        <div>Git & GitHub — Version Control</div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <h3>UI / UX DESIGN</h3>
+      <div class="bar"><div class="fill" style="width:97%" data-val="97%"></div></div>
+      <div class="skill-list">
+        <div>Premium Glassmorphism Interfaces</div>
+        <div>Cyberpunk / Futuristic Aesthetics</div>
+        <div>Color Theory & Typography</div>
+        <div>Micro-Interactions & Animation</div>
+        <div>User-Centered Design Thinking</div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎮</div>
+      <h3>GAME DEVELOPMENT</h3>
+      <div class="bar"><div class="fill" style="width:91%" data-val="91%"></div></div>
+      <div class="skill-list">
+        <div>Canvas 2D Game Engine</div>
+        <div>Physics & Collision Detection</div>
+        <div>Sprite Animation & Game Loops</div>
+        <div>Scoring, Levels & Progression</div>
+        <div>Flappy Blues & Original Titles</div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔐</div>
+      <h3>CYBERSECURITY</h3>
+      <div class="bar"><div class="fill" style="width:85%" data-val="85%"></div></div>
+      <div class="skill-list">
+        <div>Ethical Hacking Fundamentals</div>
+        <div>Networking & TCP/IP Protocols</div>
+        <div>Security Tooling on Linux</div>
+        <div>System Hardening Practices</div>
+        <div>CyberJayd Security Lab Project</div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗄️</div>
+      <h3>DATABASE & DEVOPS</h3>
+      <div class="bar"><div class="fill" style="width:88%" data-val="88%"></div></div>
+      <div class="skill-list">
+        <div>SQL — Structured Query Language</div>
+        <div>JSON & REST API Architecture</div>
+        <div>GitHub Pages — Live Deployment</div>
+        <div>Build Optimization & Minification</div>
+        <div>CI/CD Concepts & Workflows</div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
-<h2 class="sec-title">PROJECTS</h2>
-<div class="card">
-<h3 style="color:var(--blue);margin-bottom:.5rem;">🔐 CYBERJAYD SECURITY LAB</h3>
-<p>Mobile-optimized ethical testing toolkit.</p>
-</div>
-<div class="card">
-<h3 style="color:var(--blue);margin-bottom:.5rem;">🎮 FLAPPY BLUES GAME</h3>
-<p>Custom browser game with rocket design & scoring.</p>
-</div>
-<div class="card">
-<h3 style="color:var(--blue);margin-bottom:.5rem;">🌐 THIS PORTFOLIO</h3>
-<p>Futuristic design with 3D & animations.</p>
-</div>
+  <div class="sec-head reveal">
+    <div class="eyebrow">// 03 — PORTFOLIO</div>
+    <h2>FEATURED <span class="gradient-text">PROJECTS</span></h2>
+    <p>A selection of my best work — engineered, designed, and deployed entirely from my Android device.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">🌐</div></div>
+      <div class="project-body">
+        <h3>CYBERJAYD SECURITY LAB <span class="type">SECURITY</span></h3>
+        <p>A comprehensive mobile-optimized ethical security testing toolkit featuring network utilities, hash generators, and security analysis modules — built for cybersecurity education.</p>
+        <div class="tech">
+          <span>HTML5</span><span>CSS3</span><span>JS</span><span>Python</span><span>Linux</span>
+        </div>
+      </div>
+    </div>
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">🎮</div></div>
+      <div class="project-body">
+        <h3>FLAPPY BLUES <span class="type">GAME</span></h3>
+        <p>An original browser-based arcade game featuring custom rocket physics, smooth animations, high-score tracking, and progressively challenging gameplay — pure Canvas 2D magic.</p>
+        <div class="tech">
+          <span>Canvas</span><span>JS</span><span>Game Loop</span><span>Physics</span>
+        </div>
+      </div>
+    </div>
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">✨</div></div>
+      <div class="project-body">
+        <h3>PREMIUM PORTFOLIO v4 <span class="type">WEB APP</span></h3>
+        <p>You are looking at it! A world-class developer portfolio featuring particle 3D globe, matrix rain, glassmorphism UI, animated skill bars, and cinematic scroll reveals.</p>
+        <div class="tech">
+          <span>Three.js</span><span>WebGL</span><span>CSS3</span><span>ES6+</span>
+        </div>
+      </div>
+    </div>
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">🤖</div></div>
+      <div class="project-body">
+        <h3>JAYD AI ASSISTANT <span class="type">AUTOMATION</span></h3>
+        <p>Python-powered personal assistant with voice command processing, task automation, web search integration, and smart system control — runs seamlessly on Termux.</p>
+        <div class="tech">
+          <span>Python</span><span>API</span><span>Automation</span><span>NLP</span>
+        </div>
+      </div>
+    </div>
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">🛒</div></div>
+      <div class="project-body">
+        <h3>E-COMMERCE PROTOTYPE <span class="type">FULL STACK</span></h3>
+        <p>Modern shopping platform demo with product catalog, cart system, checkout flow, user authentication, and responsive design — built mobile-first from scratch.</p>
+        <div class="tech">
+          <span>HTML</span><span>CSS</span><span>JS</span><span>JSON</span><span>LocalStorage</span>
+        </div>
+      </div>
+    </div>
+    <div class="project reveal">
+      <div class="project-preview"><div class="code-icon">📊</div></div>
+      <div class="project-body">
+        <h3>DATA VISUALIZATION DASHBOARD <span class="type">ANALYTICS</span></h3>
+        <p>Interactive admin dashboard with real-time charts, animated counters, data grids, and dark-mode interface — transforming raw data into actionable insights.</p>
+        <div class="tech">
+          <span>Charts</span><span>Canvas</span><span>UI/UX</span><span>ES6</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="sec-head reveal">
+    <div class="eyebrow">// 04 — MILESTONES</div>
+    <h2>MY <span class="gradient-text">CODING JOURNEY</span></h2>
+    <p>Key moments that shaped me from a curious beginner into the developer I am today.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">2023 — THE BEGINNING</div>
+        <h4>First Line of Code</h4>
+        <p>Wrote my very first HTML file on an Android text editor. Immediately fell in love with how code turns into visuals.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">EARLY 2024 — TERMUX ERA</div>
+        <h4>Discovered Termux & Linux</h4>
+        <p>Transformed my phone into a real development machine. Mastered the command line, Git, and package management.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">MID 2024 — GAME DEV</div>
+        <h4>Released First Game</h4>
+        <p>Built and published Flappy Blues — my first complete game with physics, scoring, and smooth animations.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">LATE 2024 — FULL STACK</div>
+        <h4>Full Stack Mastery</h4>
+        <p>Completed multiple production websites. Integrated Python, JavaScript, databases, and APIs into cohesive systems.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">2025 — 3D & BEYOND</div>
+        <h4>Three.js & Advanced WebGL</h4>
+        <p>Entered the third dimension. Built particle systems, interactive globes, and cinematic visual experiences.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-date">2026 — PRESENT</div>
+        <h4>Premium Portfolio Launched</h4>
+        <p>You are here! Deploying world-class work globally, proving that an Android phone is all you need to change the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
-<h2 class="sec-title">CONTACT</h2>
-<div class="card">
-<p>📧 cyberjayd1@gmail.com</p>
-<p>📍 Baybay City, Leyte</p>
-<p>⏰ Reply within 24 hours</p>
-</div>
+  <div class="sec-head reveal">
+    <div class="eyebrow">// 05 — CONNECT</div>
+    <h2>LET'S <span class="gradient-text">WORK TOGETHER</span></h2>
+    <p>Have a project in mind or just want to say hi? My inbox is always open — I reply within 24 hours.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <div class="cc-icon">📧</div>
+      <h4>EMAIL</h4>
+      <a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="cc-icon">📍</div>
+      <h4>LOCATION</h4>
+      <p>Baybay City, Leyte<br>Philippines 6521</p>
+    </div>
+    <div class="contact-card reveal">
+      <div class="cc-icon">🌐</div>
+      <h4>WEBSITE</h4>
+      <a href="https://jaydong922.github.io" target="_blank">jaydong922.github.io</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="cc-icon">⏰</div>
+      <h4>AVAILABILITY</h4>
+      <p>Open for Freelance Projects<br>Response Time: ≤ 24 Hours</p>
+    </div>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-<p>© 2026 JAYD F. REPOBERBIO | All Rights Reserved</p>
-<p>Built entirely on Android Mobile</p>
+  <div class="brand">JAYD<span>.</span>DEV</div>
+  <p>⚡ Building the future — one line of code at a time, from a phone in Leyte.</p>
+  <div class="footer-line"></div>
+  <p>© 2026 JAYD F. REPOBERBIO. All Rights Reserved.</p>
+  <p class="signature">// Crafted with ❤️ on Android • Termux • Ubuntu • Pure Determination</p>
 </footer>
 
 </div>
 
 <script>
-// MATRIX EFFECT
-const c = document.getElementById('matrix');
-const ctx = c.getContext('2d');
-c.width = window.innerWidth;
-c.height = window.innerHeight;
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオ';
-const fontSize = 14;
-const cols = c.width / fontSize;
-const drops = Array(Math.floor(cols)).fill(1);
-function draw(){
-  ctx.fillStyle = 'rgba(7,11,16,.05)';
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.fillStyle = '#00d4ff';
-  ctx.font = fontSize + 'px monospace';
-  for(let i=0;i<drops.length;i++){
-    const t = chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(t,i*fontSize,drops[i]*fontSize);
-    if(drops[i]*fontSize>c.height && Math.random()>.975) drops[i]=0;
-    drops[i]++;
-  }
-}
-setInterval(draw,50);
+/* =========================================================
+   MATRIX RAIN BACKGROUND
+   ========================================================= */
+(function(){
+  const c = document.getElementById('matrix');
+  const ctx = c.getContext('2d');
+  function resize(){c.width=innerWidth;c.height=innerHeight}
+  resize();addEventListener('resize',resize);
+  const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEF0123456789';
+  const fs=14;let cols=Math.floor(c.width/fs);let drops=Array(cols).fill(1);
+  addEventListener('resize',()=>{cols=Math.floor(c.width/fs);drops=Array(cols).fill(1)});
+  setInterval(()=>{
+    ctx.fillStyle='rgba(3,6,13,.08)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#00e5ff';
+    ctx.font=fs+'px monospace';
+    for(let i=0;i<cols;i++){
+      const ch=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillText(ch,i*fs,drops[i]*fs);
+      if(drops[i]*fs>c.height&&Math.random()>.975)drops[i]=0;
+      drops[i]++;
+    }
+  },55);
+})();
 
-// 3D EARTH
-const ec = document.getElementById('earthCanvas');
-const scene = new THREE.Scene();
-const cam = new THREE.PerspectiveCamera(45,1,0.1,1000);
-const ren = new THREE.WebGLRenderer({canvas:ec,alpha:true,antialias:true});
-ren.setSize(400,400);
-const geo = new THREE.SphereGeometry(1.8,64,64);
-const mat = new THREE.MeshBasicMaterial({color:0x00d4ff,wireframe:true,transparent:true,opacity:0.6});
-const earth = new THREE.Mesh(geo,mat);
-scene.add(earth);
-const gGeo = new THREE.SphereGeometry(2.2,32,32);
-const gMat = new THREE.MeshBasicMaterial({color:0x6366f1,wireframe:true,transparent:true,opacity:0.2});
-const glow = new THREE.Mesh(gGeo,gMat);
-scene.add(glow);
-cam.position.z = 5;
-function animate(){
-  requestAnimationFrame(animate);
-  earth.rotation.y += 0.005;
-  glow.rotation.y -= 0.003;
-  ren.render(scene,cam);
-}
-animate();
+/* =========================================================
+   3D PARTICLE GLOBE — EXACTLY LIKE YOUR REFERENCE!
+   - Rotating wireframe globe
+   - Thousands of surface points
+   - Auto-connecting lines between close points
+   - Orbiting spark particles
+   - Pulsing atmosphere glow
+   ========================================================= */
+(function(){
+  const canvas=document.getElementById('globeCanvas');
+  const scene=new THREE.Scene();
+  const pr=Math.min(window.devicePixelRatio||1,2);
+
+  function fit(){
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    canvas.width=w*pr;canvas.height=h*pr;
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;camera.updateProjectionMatrix();
+  }
+
+  const camera=new THREE.PerspectiveCamera(45,1,.1,1000);
+  camera.position.z=4.6;
+
+  const renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(pr);
+  fit();addEventListener('resize',fit);
+
+  const R=1.55;
+
+  // ---------- 1. GLOBE POINTS (surface dots) ----------
+  const DOT_COUNT=2200;
+  const dotGeo=new THREE.BufferGeometry();
+  const dotPos=new Float32Array(DOT_COUNT*3);
+  const dotBase=new Float32Array(DOT_COUNT*3);
+  for(let i=0;i<DOT_COUNT;i++){
+    // Fibonacci sphere — perfectly even distribution
+    const phi=Math.acos(1-2*(i+.5)/DOT_COUNT);
+    const theta=Math.PI*(1+Math.sqrt(5))*i;
+    const x=R*Math.sin(phi)*Math.cos(theta);
+    const y=R*Math.sin(phi)*Math.sin(theta);
+    const z=R*Math.cos(phi);
+    dotPos[i*3]=x;dotPos[i*3+1]=y;dotPos[i*3+2]=z;
+    dotBase[i*3]=x;dotBase[i*3+1]=y;dotBase[i*3+2]=z;
+  }
+  dotGeo.setAttribute('position',new THREE.BufferAttribute(dotPos,3));
+  const dotMat=new THREE.PointsMaterial({
+    size:.018,color:0x00e5ff,transparent:true,opacity:.95,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,
+    depthWrite:false
+  });
+  const globeDots=new THREE.Points(dotGeo,dotMat);
+  scene.add(globeDots);
+
+  // ---------- 2. WIRE GRID SPHERE ----------
+  const wireGeo=new THREE.SphereGeometry(R*1.005,32,24);
+  const wireMat=new THREE.MeshBasicMaterial({
+    color:0x0088ff,wireframe:true,transparent:true,opacity:.18
+  });
+  const wireSphere=new THREE.Mesh(wireGeo,wireMat);
+  scene.add(wireSphere);
+
+  // ---------- 3. ATMOSPHERE GLOW ----------
+  const atmoGeo=new THREE.SphereGeometry(R*1.25,64,64);
+  const atmoMat=new THREE.ShaderMaterial({
+    transparent:true,side:THREE.BackSide,depthWrite:false,
+    uniforms:{c:{value:.6},p:{value:3.8},glowColor:{value:new THREE.Color(0x00e5ff)}},
+    vertexShader:`varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`uniform vec3 glowColor;uniform float c;uniform float p;varying vec3 vN;void main(){float i=pow(c-dot(vN,vec3(0.,0.,1.)),p);gl_FragColor=vec4(glowColor,i*.55);}`
+  });
+  scene.add(new THREE.Mesh(atmoGeo,atmoMat));
+
+  // ---------- 4. CONNECTION LINES (close points) ----------
+  const MAX_LINES=900;
+  const lineGeo=new THREE.BufferGeometry();
+  const linePos=new Float32Array(MAX_LINES*6);
+  const lineAlpha=new Float32Array(MAX_LINES*2);
+  lineGeo.setAttribute('position',new THREE.BufferAttribute(linePos,3));
+  lineGeo.setAttribute('alpha',new THREE.BufferAttribute(lineAlpha,1));
+  const lineMat=new THREE.ShaderMaterial({
+    transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,
+    uniforms:{lineColor:{value:new THREE.Color(0x00e5ff)}},
+    vertexShader:`attribute float alpha;varying float a;void main(){a=alpha;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`uniform vec3 lineColor;varying float a;void main(){if(a<.02)discard;gl_FragColor=vec4(lineColor,a*.55);}`
+  });
+  const lines=new THREE.LineSegments(lineGeo,lineMat);
+  scene.add(lines);
+
+  // ---------- 5. ORBITING SPARKS ----------
+  const SPARK_COUNT=180;
+  const sparkGeo=new THREE.BufferGeometry();
+  const sparkPos=new Float32Array(SPARK_COUNT*3);
+  const sparkData=[];
+  for(let i=0;i<SPARK_COUNT;i++){
+    const radius=R*(1.15+Math.random()*.9);
+    const speed=(.15+Math.random()*.6)*(Math.random()<.5?-1:1);
+    const tilt=(Math.random()-.5)*Math.PI;
+    const startAngle=Math.random()*Math.PI*2;
+    sparkData.push({radius,speed,tilt,startAngle});
+  }
+  sparkGeo.setAttribute('position',new THREE.BufferAttribute(sparkPos,3));
+  const sparkMat=new THREE.PointsMaterial({
+    size:.028,color:0x7c3aed,transparent:true,opacity:.9,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,
+    depthWrite:false
+  });
+  const sparks=new THREE.Points(sparkGeo,sparkMat);
+  scene.add(sparks);
+
+  // ---------- 6. OUTER FIELD PARTICLES ----------
+  const FIELD_COUNT=260;
+  const fPos=new Float32Array(FIELD_COUNT*3);
+  const fData=[];
+  for(let i=0;i<FIELD_COUNT;i++){
+    const rr=R*(1.4+Math.random()*1.4);
+    const theta=Math.random()*Math.PI*2;
+    const phi=Math.acos(2*Math.random()-1);
+    fData.push({
+      x:rr*Math.sin(phi)*Math.cos(theta),
+      y:rr*Math.sin(phi)*Math.sin(theta),
+      z:rr*Math.cos(phi),
+      sx:(Math.random()-.5)*.0015,
+      sy:(Math.random()-.5)*.0015,
+      sz:(Math.random()-.5)*.0015
+    });
+    fPos[i*3]=fData[i].x;fPos[i*3+1]=fData[i].y;fPos[i*3+2]=fData[i].z;
+  }
+  const fGeo=new THREE.BufferGeometry();
+  fGeo.setAttribute('position',new THREE.BufferAttribute(fPos,3));
+  const fMat=new THREE.PointsMaterial({
+    size:.012,color:0xffffff,transparent:true,opacity:.5,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,depthWrite:false
+  });
+  scene.add(new THREE.Points(fGeo,fMat));
+
+  // ---------- MOUSE INTERACTION ----------
+  let mx=0,my=0,tx=0,ty=0;
+  addEventListener('mousemove',e=>{
+    tx=(e.clientX/innerWidth-.5)*.6;
+    ty=(e.clientY/innerHeight-.5)*.6;
+  });
+  addEventListener('touchmove',e=>{
+    if(e.touches[0]){
+      tx=(e.touches[0].clientX/innerWidth-.5)*.6;
+      ty=(e.touches[0].clientY/innerHeight-.5)*.6;
+    }
+  },{passive:true});
+
+  // ---------- ANIMATION LOOP ----------
+  const MAX_DIST=.32;
+  let t=0;
+  function animate(){
+    requestAnimationFrame(animate);
+    t+=.005;
+
+    // Smooth mouse parallax
+    mx+=(tx-mx)*.05;my+=(ty-my)*.05;
+
+    // Rotate globe elements
+    globeDots.rotation.y+=.0035;
+    globeDots.rotation.x=my*.4;
+    wireSphere.rotation.y+=.002;
+    wireSphere.rotation.x=my*.4;
+
+    // Pulse dots slightly
+    const pos=dotGeo.attributes.position.array;
+    for(let i=0;i<DOT_COUNT;i++){
+      const ix=i*3,iy=i*3+1,iz=i*3+2;
+      const pulse=1+Math.sin(t*2+i*.05)*.008;
+      pos[ix]=dotBase[ix]*pulse;
+      pos[iy]=dotBase[iy]*pulse;
+      pos[iz]=dotBase[iz]*pulse;
+    }
+    dotGeo.attributes.position.needsUpdate=true;
+
+    // Update connections
+    const lpos=lineGeo.attributes.position.array;
+    const lalp=lineGeo.attributes.alpha.array;
+    let li=0,lc=0;
+    // Sample subset for performance
+    const STEP=18;
+    for(let i=0;i<DOT_COUNT&&lc<MAX_LINES;i+=STEP){
+      for(let j=i+STEP;j<DOT_COUNT&&lc<MAX_LINES;j+=STEP){
+        const ax=pos[i*3],ay=pos[i*3+1],az=pos[i*3+2];
+        const bx=pos[j*3],by=pos[j*3+1],bz=pos[j*3+2];
+        const dx=ax-bx,dy=ay-by,dz=az-bz;
+        const d2=dx*dx+dy*dy+dz*dz;
+        if(d2<MAX_DIST*MAX_DIST){
+          const a=1-Math.sqrt(d2)/MAX_DIST;
+          lpos[li++]=ax;lpos[li++]=ay;lpos[li++]=az;
+          lpos[li++]=bx;lpos[li++]=by;lpos[li++]=bz;
+          lalp[lc]=a;lalp[lc+1]=a;
+          lc++;
+        }
+      }
+    }
+    // Hide unused lines
+    for(let k=li;k<lpos.length;k++)lpos[k]=0;
+    lineGeo.setDrawRange(0,lc*2);
+    lineGeo.attributes.position.needsUpdate=true;
+    lineGeo.attributes.alpha.needsUpdate=true;
+    lines.rotation.y=globeDots.rotation.y;
+    lines.rotation.x=globeDots.rotation.x;
+
+    // Update orbiting sparks
+    const spos=sparkGeo.attributes.position.array;
+    for(let i=0;i<SPARK_COUNT;i++){
+      const s=sparkData[i];
+      const a=s.startAngle+t*s.speed*6;
+      const ct=Math.cos(a),st=Math.sin(a);
+      const ct2=Math.cos(s.tilt),st2=Math.sin(s.tilt);
+      let x=s.radius*ct,y=s.radius*st,z2=0;
+      // Tilt
+      const y2=y*ct2-z2*st2;
+      const z=y*st2+z2*ct2;
+      spos[i*3]=x;spos[i*3+1]=y2;spos[i*3+2]=z;
+    }
+    sparkGeo.attributes.position.needsUpdate=true;
+    sparks.rotation.y+=.0015;
+    sparks.rotation.x=my*.3;
+
+    // Drift outer field
+    for(let i=0;i<FIELD_COUNT;i++){
+      fData[i].x+=fData[i].sx;fData[i].y+=fData[i].sy;fData[i].z+=fData[i].sz;
+      fPos[i*3]=fData[i].x;fPos[i*3+1]=fData[i].y;fPos[i*3+2]=fData[i].z;
+    }
+    fGeo.attributes.position.needsUpdate=true;
+
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+/* =========================================================
+   SCROLL REVEAL ANIMATION
+   ========================================================= */
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
 </script>
 </body>
 </html>
