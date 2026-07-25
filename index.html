@@ -1,0 +1,1083 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JAYD F. REPOBERBIO | Ultimate Premium Portfolio — Web & Game Developer</title>
+<meta name="description" content="Official Portfolio of Jayd F. Repoberbio — BSED-English First Year, Self-Taught Web & Game Developer. Built 100 percent on Android via Termux. Accepting web development, game development, and system setup projects globally.">
+<meta name="keywords" content="Jayd Repoberbio, Portfolio, Web Developer, Game Developer, Android Developer, Termux, FCIC Baybay City, BSED English, Freelance PH, 3D Portfolio">
+<meta name="author" content="Jayd F. Repoberbio">
+<meta property="og:title" content="JAYD F. REPOBERBIO | Ultimate Premium Portfolio">
+<meta property="og:description" content="Self-Taught Web & Game Developer | Built 100 percent on Mobile | Accepting Projects Worldwide">
+<meta property="og:url" content="https://jaydong922.github.io">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<style>
+/* ============================================
+   BASE SYSTEM — 100% PRESERVED + ENHANCED
+   ============================================ */
+:root{
+  --bg:#070b10;--bg2:#0f1620;--bg3:#141d2b;
+  --panel:rgba(14,22,34,.92);--panel-2:rgba(10,16,26,.95);
+  --blue:#00d4ff;--blue-2:#38bdf8;--blue-3:#7dd3fc;--blue-4:#bae6fd;
+  --violet:#6366f1;--violet-2:#8b5cf6;--violet-3:#a78bfa;
+  --cyan:#22d3ee;--green:#10b981;--yellow:#fbbf24;
+  --text:#e6f1ff;--text-2:#b8c8e0;--text-3:#8896b0;--text-4:#5a6580;
+  --line:rgba(0,212,255,.25);--line-2:rgba(99,102,241,.2);
+  --glow:0 0 10px var(--blue),0 0 30px rgba(0,212,255,.45),0 0 60px rgba(0,212,255,.18);
+  --glow-2:0 0 8px var(--blue-2),0 0 22px rgba(56,189,248,.35);
+  --glow-v:0 0 10px var(--violet),0 0 30px rgba(99,102,241,.35);
+  --shadow-3d:0 20px 45px rgba(0,0,0,.55),0 8px 18px rgba(0,212,255,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:
+    radial-gradient(1200px 700px at 85% -10%,rgba(0,212,255,.12),transparent 60%),
+    radial-gradient(900px 600px at -10% 30%,rgba(99,102,241,.10),transparent 55%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg3) 100%);
+  color:var(--text);line-height:1.75;overflow-x:hidden;min-height:100vh;
+}
+h1,h2,h3,h4,h5{font-family:'Orbitron',sans-serif;letter-spacing:1.2px;font-weight:800}
+.mono{font-family:'Share Tech Mono',monospace}
+.exo{font-family:'Exo 2',sans-serif}
+
+/* Matrix Background */
+#matrix{position:fixed;inset:0;z-index:0;opacity:.18}
+.grid-bg{
+  position:fixed;inset:0;z-index:1;
+  background:
+    linear-gradient(rgba(0,212,255,.055)1px,transparent 1px)0 0/44px 44px,
+    linear-gradient(90deg,rgba(136,150,176,.04)1px,transparent 1px)0 0/44px 44px;
+  mask-image:radial-gradient(ellipse at center,black 30%,transparent 85%);
+}
+.scanlines{
+  position:fixed;inset:0;z-index:50;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0 2px,rgba(0,0,0,.22)2px 3px);
+  mix-blend-mode:overlay;animation:scanM 8s linear infinite;
+}
+@keyframes scanM{from{background-position:0 0}to{background-position:0 100vh}}
+.vignette{
+  position:fixed;inset:0;z-index:40;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 40%,rgba(3,6,12,.82)100%);
+}
+.wrap{position:relative;z-index:10}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--blue),var(--violet));
+  border-radius:6px;box-shadow:var(--glow);
+}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--blue-2),var(--violet-2))}
+
+/* Navigation */
+nav{
+  position:sticky;top:0;z-index:1000;
+  backdrop-filter:blur(18px) saturate(140%);
+  background:rgba(7,11,16,.82);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 6px 40px rgba(0,212,255,.12);
+}
+.nav-inner{
+  max-width:1300px;margin:0 auto;padding:1rem 1.4rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.brand{
+  font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.35rem;
+  color:var(--blue);text-shadow:var(--glow);letter-spacing:2.5px;
+}
+.brand span{color:var(--text)}
+.nav-links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.nav-links a{
+  color:var(--text-2);text-decoration:none;font-weight:600;
+  font-family:'Orbitron',sans-serif;font-size:.82rem;letter-spacing:1.2px;
+  padding:.35rem .2rem;border-bottom:2px solid transparent;
+  transition:.25s ease;position:relative;cursor:pointer;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--blue);border-color:var(--blue);text-shadow:var(--glow-2);
+}
+
+/* Section Base */
+section{
+  max-width:1300px;margin:0 auto;padding:6rem 1.4rem;
+  opacity:0;transform:translateY(40px);
+  transition:all .9s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+}
+section.visible{opacity:1;transform:translateY(0)}
+.sec-head{
+  display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;
+  position:relative;
+}
+.sec-head .num{
+  font-family:'Share Tech Mono',monospace;color:var(--violet-3);
+  font-size:1rem;font-weight:700;
+}
+.sec-head h2{
+  font-size:clamp(1.5rem,3vw,2.2rem);margin:0;flex:1;
+  background:linear-gradient(90deg,var(--blue),var(--violet-2),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 30px rgba(0,212,255,.15);
+}
+.sec-head .line{
+  height:2px;flex:1;
+  background:linear-gradient(90deg,var(--blue),var(--violet),transparent);
+  border-radius:2px;
+}
+
+/* Cards Base */
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:2rem;position:relative;overflow:hidden;
+  transition:all .45s cubic-bezier(.2,.8,.2,1);
+  backdrop-filter:blur(10px);
+  border-radius:3px;
+  transform-style:preserve-3d;
+  box-shadow:var(--shadow-3d);
+  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,212,255,.08),transparent 40%,rgba(99,102,241,.06));
+  opacity:0;transition:.4s;pointer-events:none;
+}
+.card::after{
+  content:'';position:absolute;top:0;left:-120%;width:80%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,.14),transparent);
+  transition:.9s ease;pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-10px) rotateX(6deg);
+  border-color:var(--blue-2);
+  box-shadow:0 30px 70px rgba(0,0,0,.6),var(--glow-2);
+}
+.card:hover::before{opacity:1}
+.card:hover::after{left:120%}
+.grid{
+  display:grid;gap:1.5rem;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+}
+
+/* Tags */
+.tag{
+  display:inline-block;margin:.25rem;
+  padding:.3rem .75rem;font-size:.8rem;font-weight:600;
+  color:var(--blue-2);
+  background:rgba(0,212,255,.07);
+  border:1px solid var(--line);
+  border-radius:2px;
+  transition:.25s ease;
+  font-family:'Exo 2',sans-serif;letter-spacing:.5px;
+}
+.tag:hover{
+  background:var(--blue);color:var(--bg);
+  box-shadow:var(--glow);transform:translateY(-2px);
+}
+
+/* Buttons */
+.btn-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:2rem 0}
+.cbtn{
+  display:inline-block;padding:1rem 2.2rem;
+  font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:2px;font-size:.95rem;
+  color:var(--blue);background:transparent;
+  border:2px solid var(--blue);text-decoration:none;cursor:pointer;
+  position:relative;overflow:hidden;transition:.35s ease;
+  clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
+}
+.cbtn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,var(--blue),var(--violet));
+  transform:translateX(-101%);transition:.4s ease;z-index:-1;
+}
+.cbtn:hover{
+  color:var(--bg);border-color:transparent;text-shadow:none;
+  box-shadow:var(--glow),0 10px 30px rgba(0,212,255,.35);
+  transform:translateY(-3px);
+}
+.cbtn:hover::before{transform:translateX(0)}
+.cbtn.secondary{
+  color:var(--text-2);border-color:var(--text-3);
+}
+.cbtn.secondary:hover{
+  color:var(--bg);border-color:transparent;
+  box-shadow:0 10px 30px rgba(136,150,176,.25);
+}
+.cbtn.secondary::before{
+  background:linear-gradient(120deg,var(--text-2),var(--text-3));
+}
+
+/* ============================================
+   HERO — 3D DIGITAL EARTH + ENHANCED
+   ============================================ */
+.hero{
+  min-height:100vh;display:grid;
+  grid-template-columns:1.2fr 1fr;gap:3rem;
+  align-items:center;padding:3rem 1.4rem 6rem;
+  max-width:1300px;margin:0 auto;
+  position:relative;overflow:visible;
+}
+.hero-left{text-align:left;position:relative;z-index:5}
+.hero-kicker{
+  display:inline-block;padding:.35rem 1rem;margin-bottom:1.5rem;
+  font-family:'Share Tech Mono',monospace;font-size:.8rem;letter-spacing:2px;
+  color:var(--cyan);
+  border:1px solid var(--line);
+  background:rgba(34,211,238,.06);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+}
+.glitch{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.05;
+  background:linear-gradient(180deg,var(--blue-4),var(--blue) 40%,var(--violet-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 40px rgba(0,212,255,.35);
+  position:relative;margin-bottom:1.2rem;letter-spacing:1.5px;
+  animation:glowP 3.5s ease-in-out infinite;
+}
+@keyframes glowP{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+.glitch-sub{
+  font-family:'Exo 2',sans-serif;font-weight:600;
+  font-size:clamp(1.1rem,2.5vw,1.6rem);
+  color:var(--blue-2);margin-bottom:1.5rem;line-height:1.5;
+}
+.hero-desc{
+  color:var(--text-2);font-size:1.1rem;line-height:1.9;
+  max-width:620px;margin-bottom:2rem;
+}
+.hero-desc strong{color:var(--blue-3);font-weight:700}
+.hero-desc .accent-v{color:var(--violet-3);font-weight:700}
+.hero-desc .accent-y{color:var(--yellow);font-weight:700}
+
+/* 3D Earth Container */
+.hero-right{
+  position:relative;height:520px;perspective:1200px;
+  display:flex;align-items:center;justify-content:center;
+}
+.earth-wrap{
+  position:relative;width:100%;max-width:460px;aspect-ratio:1/1;
+  transform-style:preserve-3d;
+  animation:floatY 7s ease-in-out infinite;
+}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.earth-ring{
+  position:absolute;inset:-12%;
+  border:1px dashed rgba(0,212,255,.35);border-radius:50%;
+  animation:spinR 22s linear infinite;
+}
+.earth-ring.r2{inset:-22%;border-color:rgba(99,102,241,.25);animation-duration:32s;animation-direction:reverse}
+.earth-ring.r3{inset:-32%;border-color:rgba(34,211,238,.18);animation-duration:45s}
+@keyframes spinR{to{transform:rotate(360deg)}}
+#earthCanvas{
+  width:100%;height:100%;display:block;
+  filter:drop-shadow(0 0 30px rgba(0,212,255,.55)) drop-shadow(0 0 60px rgba(99,102,241,.25));
+}
+.earth-label{
+  position:absolute;bottom:-2rem;left:50%;transform:translateX(-50%);
+  font-family:'Share Tech Mono',monospace;font-size:.75rem;letter-spacing:2.5px;
+  color:var(--text-3);white-space:nowrap;
+}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  margin-top:3rem;padding-top:2rem;
+  border-top:1px solid var(--line);
+}
+.stat{text-align:left}
+.stat-num{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:clamp(1.5rem,3vw,2.3rem);
+  background:linear-gradient(90deg,var(--blue),var(--violet-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:block;line-height:1;
+}
+.stat-label{
+  font-size:.78rem;color:var(--text-3);
+  font-family:'Exo 2',sans-serif;letter-spacing:1.2px;
+  text-transform:uppercase;font-weight:600;margin-top:.3rem;
+}
+
+/* HUD Corners */
+.hud{
+  position:absolute;width:70px;height:70px;
+  border:2px solid var(--blue);box-shadow:var(--glow);
+  pointer-events:none;z-index:6;
+}
+.hud.tl{top:2rem;left:1rem;border-right:none;border-bottom:none}
+.hud.tr{top:2rem;right:1rem;border-left:none;border-bottom:none}
+.hud.bl{bottom:2rem;left:1rem;border-right:none;border-top:none}
+.hud.br{bottom:2rem;right:1rem;border-left:none;border-top:none}
+
+/* Hex Particles */
+.hex-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.hex{
+  position:absolute;width:40px;height:46px;opacity:.12;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  animation:hexFloat 14s linear infinite;
+}
+@keyframes hexFloat{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+  10%{opacity:.18}
+  90%{opacity:.18}
+  100%{transform:translateY(-20vh) rotate(360deg);opacity:0}
+}
+
+/* ============================================
+   NEW — TECH STACK HEX GRID
+   ============================================ */
+.hex-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
+  padding:2rem 0;
+}
+.hex-card{
+  width:130px;height:150px;position:relative;
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(99,102,241,.12));
+  border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:.4s ease;cursor:default;text-align:center;padding:.5rem;
+}
+.hex-card:hover{
+  transform:translateY(-8px) scale(1.06);
+  background:linear-gradient(135deg,rgba(0,212,255,.3),rgba(99,102,241,.22));
+  box-shadow:var(--glow);border-color:var(--blue-2);
+}
+.hex-icon{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:1.6rem;color:var(--blue-3);margin-bottom:.4rem;
+  text-shadow:var(--glow-2);
+}
+.hex-name{
+  font-size:.78rem;font-weight:700;color:var(--text);
+  font-family:'Exo 2',sans-serif;letter-spacing:.8px;
+}
+.hex-level{
+  font-family:'Share Tech Mono',monospace;font-size:.65rem;
+  color:var(--violet-3);margin-top:.2rem;
+}
+
+/* ============================================
+   NEW — MY PROCESS 3D STEPS
+   ============================================ */
+.process{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:1.5rem;position:relative;padding:2rem 0;
+}
+.step{
+  position:relative;padding:2.5rem 1.5rem 1.5rem;text-align:center;
+}
+.step-num{
+  position:absolute;top:-1.5rem;left:50%;transform:translateX(-50%);
+  width:55px;height:55px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:var(--bg);display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.3rem;
+  box-shadow:var(--glow);
+}
+.step h4{
+  font-size:1.05rem;color:var(--blue-2);margin:1rem 0 .5rem;
+  font-family:'Exo 2',sans-serif;letter-spacing:1px;
+}
+.step p{color:var(--text-2);font-size:.98rem;line-height:1.7}
+
+/* ============================================
+   SKILLS — PROGRESS BARS ENHANCED
+   ============================================ */
+.skill-wrap{margin-bottom:1.8rem}
+.skill-head{
+  display:flex;justify-content:space-between;margin-bottom:.6rem;font-weight:600;
+}
+.skill-name{color:var(--text-2);font-family:'Exo 2',sans-serif;font-size:1rem}
+.skill-percent{
+  color:var(--blue);font-family:'Share Tech Mono',monospace;font-weight:700;
+}
+.skill-bar{
+  height:12px;background:rgba(136,150,176,.08);
+  border-radius:3px;overflow:hidden;
+  border:1px solid var(--line);
+  position:relative;
+}
+.skill-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--violet),var(--cyan));
+  border-radius:3px;box-shadow:var(--glow);
+  transition:width 1.8s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+}
+.skill-fill::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  animation:shine 2.5s ease-in-out infinite;
+}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* ============================================
+   TIMELINE ENHANCED
+   ============================================ */
+.timeline{position:relative;max-width:950px;margin:0 auto;padding-left:2.5rem}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--blue),var(--violet),var(--cyan));
+  box-shadow:var(--glow);border-radius:2px;
+}
+.tl-item{position:relative;margin-bottom:3rem;padding-left:2rem}
+.tl-item::before{
+  content:'';position:absolute;left:-2.85rem;top:.4rem;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--blue);
+  box-shadow:var(--glow);
+}
+.tl-item:hover::before{background:var(--blue);transform:scale(1.2)}
+.tl-date{
+  font-family:'Share Tech Mono',monospace;
+  color:var(--violet-3);font-size:.88rem;font-weight:700;
+  letter-spacing:1.5px;margin-bottom:.4rem;
+}
+.tl-title{
+  font-size:1.25rem;color:var(--blue-2);
+  font-weight:700;margin-bottom:.5rem;
+  font-family:'Exo 2',sans-serif;letter-spacing:.5px;
+}
+.tl-desc{color:var(--text-2);line-height:1.8;font-size:1rem}
+
+/* ============================================
+   PRICING — 3D TIERS
+   ============================================ */
+.pricing{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem}
+.price-card{text-align:center;padding:3rem 1.8rem;position:relative}
+.price-card.featured{
+  transform:scale(1.05);
+  border-color:var(--violet);
+  background:linear-gradient(180deg,rgba(99,102,241,.12),var(--panel));
+}
+.price-card.featured:hover{transform:scale(1.05) translateY(-10px);box-shadow:var(--glow-v)}
+.price-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  color:var(--bg);padding:.3rem 1.2rem;
+  font-size:.75rem;font-weight:900;
+  font-family:'Orbitron',sans-serif;letter-spacing:1.5px;
+  box-shadow:var(--glow);
+}
+.price-name{
+  font-size:1.15rem;color:var(--blue-2);
+  font-family:'Orbitron',sans-serif;letter-spacing:2px;margin-bottom:.5rem;
+}
+.price-amount{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:3.2rem;margin:1.2rem 0;line-height:1;
+  background:linear-gradient(180deg,var(--blue-4),var(--violet-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.price-amount span{font-size:1rem;color:var(--text-3);font-weight:500}
+.price-list{list-style:none;margin:1.8rem 0 2rem;text-align:left}
+.price-list li{
+  padding:.65rem 0;border-bottom:1px dashed var(--line);
+  color:var(--text-2);font-size:.98rem;display:flex;gap:.6rem;align-items:flex-start;
+}
+.price-list li::before{
+  content:'';flex-shrink:0;margin-top:.55rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 8px var(--green);
+}
+
+/* ============================================
+   PROJECTS — 3D CARDS
+   ============================================ */
+.project-card{padding:0;overflow:hidden}
+.project-img{
+  height:210px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 30%,rgba(0,212,255,.35),transparent 50%),
+    radial-gradient(circle at 70% 70%,rgba(99,102,241,.35),transparent 50%),
+    linear-gradient(135deg,var(--bg2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;
+  color:var(--blue-4);text-shadow:var(--glow);
+}
+.project-img::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(0,212,255,.1)1px,transparent 1px)0 0/20px 20px,
+    linear-gradient(90deg,rgba(99,102,241,.08)1px,transparent 1px)0 0/20px 20px;
+  opacity:.5;
+}
+.project-body{padding:2rem}
+.project-body h3{
+  font-size:
+<a href="#home">HOME</a>
+<a href="#about">ABOUT</a>
+<a href="#stack">STACK</a>
+<a href="#journey">JOURNEY</a>
+<a href="#skills">SKILLS</a>
+<a href="#process">PROCESS</a>
+<a href="#services">SERVICES</a>
+<a href="#projects">PROJECTS</a>
+<a href="#faq">FAQ</a>
+<a href="#contact">CONTACT</a>
+</div></div></nav>
+
+<!-- HERO WITH 3D DIGITAL EARTH -->
+<section class="hero visible" id="home">
+<div class="hud tl"></div><div class="hud tr"></div>
+<div class="hud bl"></div><div class="hud br"></div>
+<div class="hero-left">
+<div class="hero-kicker">// SYSTEM ONLINE · GLOBAL ACCESS · PORTFOLIO v4.0</div>
+<h1 class="glitch">JAYD F. REPOBERBIO<br><span style="font-size:.6em;font-weight:700">FULL STACK DEVELOPER & GAME CREATOR</span></h1>
+<p class="glitch-sub">Forging World-Class Digital Products — 100% Built on Android Mobile</p>
+<p class="hero-desc">
+Hello and warmly greetings to you — welcome to my official portfolio. I am <strong>Jayd F. Repoberbio</strong>, a <span class="accent-v">First Year College student</span> taking <strong>Bachelor of Secondary Education Major in English</strong> at <strong>Franciscan College of the Immaculate Conception (FCIC), Baybay City, Leyte</strong>.<br><br>
+Through <span class="accent-y">countless nights of pure self-study, discipline, and unbreakable dedication</span>, I mastered modern web development, game engineering, and system architecture using <em>only an Android phone, Termux, and Ubuntu Linux</em> — no expensive laptops, no formal coding bootcamps, just raw passion. This portfolio is living proof that <strong>your skills will always outweigh your equipment</strong>.
+</p>
+<div class="btn-row">
+<a href="#services" class="cbtn">VIEW MY SERVICES</a>
+<a href="#projects" class="cbtn secondary">SEE MY WORK</a>
+</div>
+<div class="hero-stats">
+<div class="stat"><span class="stat-num" data-target="100">0</span><span class="stat-label">% Mobile-Built</span></div>
+<div class="stat"><span class="stat-num" data-target="24">0</span><span class="stat-label">+ Projects</span></div>
+<div class="stat"><span class="stat-num" data-target="3000">0</span><span class="stat-label">+ Study Hours</span></div>
+<div class="stat"><span class="stat-num" data-target="12">0</span><span class="stat-label">Core Tech</span></div>
+</div>
+</div>
+<div class="hero-right">
+<div class="earth-wrap">
+<div class="earth-ring"></div>
+<div class="earth-ring r2"></div>
+<div class="earth-ring r3"></div>
+<canvas id="earthCanvas"></canvas>
+<div class="earth-label">● DIGITAL EARTH · LIVE ORBIT · SECTOR 07</div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT ME (EXPANDED) -->
+<section id="about"><div class="sec-head"><span class="num">01</span><h2>ABOUT ME · FULL SYSTEM PROFILE</h2><div class="line"></div></div>
+<div class="card">
+<p class="mono" style="color:var(--green)">> LOADING USER_PROFILE.exe .......... COMPLETE</p>
+<p class="mono" style="color:var(--cyan)">> USER_ID: JAYD-001 · CLEARANCE: ELITE · STATUS: ACTIVE · LOCATION: PHILIPPINES</p><br>
+<p><strong>FULL LEGAL NAME:</strong> Jayd F. Repoberbio</p>
+<p><strong>EDUCATION:</strong> Bachelor of Secondary Education — Major in English · Franciscan College of the Immaculate Conception (FCIC) · Baybay City, Leyte · First Year Standing</p>
+<p><strong>PROFESSIONAL TITLE:</strong> Full-Stack Web Engineer · Game Developer · System Architecture Specialist · Mobile-First Development Pioneer</p>
+<p><strong>CORE PHILOSOPHY:</strong> <em>"Greatness is never defined by the tools you hold — it is defined by the skill you build, the discipline you keep, and the problems you solve."</em></p>
+<p><strong>MY MISSION:</strong> To deliver premium, enterprise-grade digital solutions that exceed every client expectation — while inspiring thousands of young, resource-limited Filipinos that they too can become world-class developers with nothing but a cheap phone, internet, and iron will.</p>
+<p><strong>LANGUAGES I COMMAND:</strong> English (Professional / Business Proficiency), Filipino (Native), Cebuano (Native)</p>
+<p><strong>DEVICES & ENVIRONMENT:</strong> Android Smartphone · Termux Emulator · Ubuntu Linux · Git & GitHub · Cloud IDEs · Zero Laptop Dependency</p>
+<p><strong>AVAILABILITY:</strong> Open for Freelance · Full-Time Projects · Collaborations · Student Discounts Available</p>
+</div></section>
+
+<!-- TECH STACK · HEX GRID -->
+<section id="stack"><div class="sec-head"><span class="num">02</span><h2>MY TECH STACK · HEX CORE MATRIX</h2><div class="line"></div></div>
+<div class="hex-grid">
+<div class="hex-card"><div class="hex-icon">H5</div><div class="hex-name">HTML 5</div><div class="hex-level">99%</div></div>
+<div class="hex-card"><div class="hex-icon">C3</div><div class="hex-name">CSS 3</div><div class="hex-level">98%</div></div>
+<div class="hex-card"><div class="hex-icon">JS</div><div class="hex-name">JAVASCRIPT</div><div class="hex-level">94%</div></div>
+<div class="hex-card"><div class="hex-icon">PY</div><div class="hex-name">PYTHON</div><div class="hex-level">82%</div></div>
+<div class="hex-card"><div class="hex-icon">SH</div><div class="hex-name">BASH / LINUX</div><div class="hex-level">88%</div></div>
+<div class="hex-card"><div class="hex-icon">GV</div><div class="hex-name">GIT / GITHUB</div><div class="hex-level">92%</div></div>
+<div class="hex-card"><div class="hex-icon">3JS</div><div class="hex-name">THREE.JS</div><div class="hex-level">78%</div></div>
+<div class="hex-card"><div class="hex-icon">SB</div><div class="hex-name">SUPABASE</div><div class="hex-level">85%</div></div>
+<div class="hex-card"><div class="hex-icon">UI</div><div class="hex-name">UI / UX DESIGN</div><div class="hex-level">96%</div></div>
+<div class="hex-card"><div class="hex-icon">SEO</div><div class="hex-name">SEO</div><div class="hex-level">84%</div></div>
+<div class="hex-card"><div class="hex-icon">CAN</div><div class="hex-name">CANVAS API</div><div class="hex-level">90%</div></div>
+<div class="hex-card"><div class="hex-icon">RX</div><div class="hex-name">RESPONSIVE</div><div class="hex-level">100%</div></div>
+</div></section>
+
+<!-- JOURNEY TIMELINE -->
+<section id="journey"><div class="sec-head"><span class="num">03</span><h2>MY SELF-STUDY JOURNEY · ORIGIN STORY</h2><div class="line"></div></div>
+<div class="timeline">
+<div class="tl-item"><div class="tl-date">EARLY 2025 · CHAPTER 01</div><div class="tl-title">The Spark — Discovered My Passion for Code</div><div class="tl-desc">I wrote my very first line of HTML inside a free mobile text editor. I had zero background in technology, zero mentors, zero budget — but the moment I saw my code render into a real webpage, I knew I had found my calling. I spent every waking minute learning, skipping games and social media just to understand how the web works.</div></div>
+<div class="tl-item"><div class="tl-date">MID 2025 · CHAPTER 02</div><div class="tl-title">Termux Revolution — Turned My Phone Into a PC</div><div class="tl-desc">I discovered Termux and installed a full Ubuntu Linux environment directly on my Android. Suddenly, my cheap smartphone became a complete development machine: Git, Python, Node.js, Apache, local servers — everything ran perfectly. This was the turning point where I stopped being a "coder on a phone" and became a real engineer.</div></div>
+<div class="tl-item"><div class="tl-date">LATE 2025 · CHAPTER 03</div><div class="tl-title">Mastered Full Stack & Built My First Portfolio</div><div class="tl-desc">I completed my first fully responsive portfolio, built multiple browser games from scratch (including the hit Flappy Blues), integrated real databases like Supabase, and mastered advanced JavaScript: DOM manipulation, ES6+, Canvas animations, API integration, async operations, and modern UI/UX principles.</div></div>
+<div class="tl-item"><div class="tl-date">EARLY 2026 · CHAPTER 04</div><div class="tl-title">Launched Premium Portfolio & Opened Freelance</div><div class="tl-desc">I engineered this very portfolio — my magnum opus — complete with 3D animations, enterprise-grade design system, SEO optimization, and production-ready code. I officially opened my doors to global clients, proving that world-class work truly can come from the most humble beginnings.</div></div>
+<div class="tl-item"><div class="tl-date">NOW · CHAPTER 05</div><div class="tl-title">Expanding Into 3D, AI & Enterprise Systems</div><div class="tl-desc">Today I continue to push my limits: mastering Three.js 3D graphics, exploring AI integration, building larger systems, and accepting bigger, more ambitious client projects. My journey has only just begun — and I am ready to build the future with you.</div></div>
+</div></section>
+
+<!-- SKILLS WITH ADVANCED PROGRESS BARS -->
+<section id="skills"><div class="sec-head"><span class="num">04</span><h2>SKILLS & MASTERY LEVELS</h2><div class="line"></div></div>
+<div class="grid">
+<div class="card"><h3 style="color:var(--blue-2);margin-bottom:1rem">FRONTEND DEVELOPMENT</h3>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">HTML5 · Semantic Markup · Accessibility · SEO</span><span class="skill-percent">99%</span></div><div class="skill-bar"><div class="skill-fill" data-width="99"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">CSS3 · Animations · Grid · Flexbox · Responsive</span><span class="skill-percent">98%</span></div><div class="skill-bar"><div class="skill-fill" data-width="98"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">JavaScript ES6+ · DOM · Async · OOP</span><span class="skill-percent">94%</span></div><div class="skill-bar"><div class="skill-fill" data-width="94"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">UI / UX Design · Cyber / Futuristic Aesthetics</span><span class="skill-percent">97%</span></div><div class="skill-bar"><div class="skill-fill" data-width="97"></div></div></div>
+</div>
+<div class="card"><h3 style="color:var(--blue-2);margin-bottom:1rem">BACKEND & SYSTEMS</h3>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Game Development · Canvas · Physics Engine</span><span class="skill-percent">91%</span></div><div class="skill-bar"><div class="skill-fill" data-width="91"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Three.js · 3D Graphics · WebGL</span><span class="skill-percent">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Linux / Termux · Server · Bash Scripting</span><span class="skill-percent">88%</span></div><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Database · Supabase · Authentication · API</span><span class="skill-percent">86%</span></div><div class="skill-bar"><div class="skill-fill" data-width="86"></div></div></div>
+</div>
+<div class="card"><h3 style="color:var(--blue-2);margin-bottom:1rem">PROFESSIONAL SKILLS</h3>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Professional English Communication</span><span class="skill-percent">98%</span></div><div class="skill-bar"><div class="skill-fill" data-width="98"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Project Management · Deadlines · Updates</span><span class="skill-percent">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">Problem Solving · Debugging · Optimization</span><span class="skill-percent">93%</span></div><div class="skill-bar"><div class="skill-fill" data-width="93"></div></div></div>
+<div class="skill-wrap"><div class="skill-head"><span class="skill-name">SEO · Performance · Speed Optimization</span><span class="skill-percent">87%</span></div><div class="skill-bar"><div class="skill-fill" data-width="87"></div></div></div>
+</div>
+</div></section>
+
+<!-- MY PROCESS · 3D STEPS -->
+<section id="process"><div class="sec-head"><span class="num">05</span><h2>HOW I WORK · MY 5-STEP ELITE PROCESS</h2><div class="line"></div></div>
+<div class="process">
+<div class="card step"><div class="step-num">01</div><h4>DISCOVERY</h4><p>We talk deeply about your vision, goals, target audience, and every detail you want. No assumptions — just perfect understanding.</p></div>
+<div class="card step"><div class="step-num">02</div><h4>PLANNING</h4><p>I create a complete blueprint: structure, features, timeline, and design direction. You approve everything before any code is written.</p></div>
+<div class="card step"><div class="step-num">03</div><h4>DESIGN & BUILD</h4><p>I engineer your project with clean, fast, premium code — with constant updates so you see every step of the progress.</p></div>
+<div class="card step"><div class="step-num">04</div><h4>TESTING & REVISION</h4><p>Every feature is tested on 10+ devices. Unlimited revisions until your project is absolutely perfect.</p></div>
+<div class="card step"><div class="step-num">05</div><h4>DELIVER & SUPPORT</h4><p>You receive the final product + full source files + free post-launch support. Your success is my guarantee.</p></div>
+</div></section>
+
+<!-- SERVICES + PREMIUM PRICING -->
+<section id="services"><div class="sec-head"><span class="num">06</span><h2>SERVICES I OFFER · PREMIUM PACKAGES</h2><div class="line"></div></div>
+<div class="grid">
+<div class="card"><h3 style="color:var(--blue-2)">WEBSITE DEVELOPMENT</h3><p>Premium, blazing-fast, fully responsive websites for portfolios, businesses, landing pages, e-commerce, schools, and organizations — with enterprise SEO and cyber-futuristic design.</p></div>
+<div class="card"><h3 style="color:var(--blue-2)">GAME DEVELOPMENT</h3><p>Original browser games with custom physics, scoring systems, leaderboards, animations, and unique branded mechanics — perfect for promotions, NFTs, or personal projects.</p></div>
+<div class="card"><h3 style="color:var(--blue-2)">SYSTEM SETUP & CONFIG</h3><p>Professional Termux / Ubuntu / Linux environment setup for Android users — turn your phone into a complete coding machine with one automated install.</p></div>
+<div class="card"><h3 style="color:var(--blue-2)">UI / UX DESIGN & REDESIGN</h3><p>Modernize old websites, fix layouts, improve speed, add animations, and transform basic pages into stunning, premium-grade user experiences.</p></div>
+<div class="card"><h3 style="color:var(--blue-2)">DATABASE & AUTH SYSTEMS</h3><p>Secure login, registration, user dashboards, data storage, and API integration — built with industry-standard security practices.</p></div>
+<div class="card"><h3 style="color:var(--blue-2)">CUSTOM DIGITAL SOLUTIONS</h3><p>Any coding project you can imagine: scripts, automations, tools, portfolios, galleries, calculators — if it runs on the web, I can build it.</p></div>
+</div>
+<p style="text-align:center;margin:3rem 0 1rem;font-size:1.2rem;color:var(--blue-2);font-weight:700;font-family:'Exo 2',sans-serif">INVESTMENT PACKAGES · ALL PRICES IN PHP · NEGOTIABLE FOR STUDENTS</p>
+<div class="grid pricing">
+<div class="card price-card">
+<div class="price-name">STARTER</div>
+<div class="price-amount">₱999<span> / project</span></div>
+<ul class="price-list">
+<li>1-Page Premium Responsive Website</li>
+<li>Cyber-Futuristic Custom Design</li>
+<li>Mobile + Desktop + Tablet Optimized</li>
+<li>Basic SEO + Meta Tags Setup</li>
+<li>3 Rounds of Revisions</li>
+<li>3-Day Fast Delivery</li>
+<li>Free 1-Week Support</li>
+</ul>
+<a href="#contact" class="cbtn" style="width:100%;display:block;text-align:center">CHOOSE STARTER</a>
+</div>
+<div class="card price-card featured">
+<div class="price-badge">BEST VALUE</div>
+<div class="price-name">PROFESSIONAL</div>
+<div class="price-amount">₱2,999<span> / project</span></div>
+<ul class="price-list">
+<li>1–5 Page Complete Website</li>
+<li>Advanced 3D Animations & Effects</li>
+<li>Full SEO Optimization + Speed Audit</li>
+<li>Working Contact Form + Emails</li>
+<li>Database / Login System (if needed)</li>
+<li>Unlimited Revisions for 14 Days</li>
+<li>5-Day Delivery + 1-Month Free Support</li>
+<li>Free Source Files + Hosting Guide</li>
+</ul>
+<a href="#contact" class="cbtn" style="width:100%;display:block;text-align:center;background:linear-gradient(90deg,var(--blue),var(--violet));border-color:transparent;color:var(--bg)">CHOOSE PROFESSIONAL</a>
+</div>
+<div class="card price-card">
+<div class="price-name">ELITE / GAME DEV</div>
+<div class="price-amount">₱5,999<span> +</span></div>
+<ul class="price-list">
+<li>Full Multi-Page Website OR Complete Game</li>
+<li>Complex Features · Custom Systems</li>
+<li>Premium UI/UX + 3D Elements</li>
+<li>Full Database + API Integration</li>
+<li>Priority 24/7 Direct Support</li>
+<li>2 Months Free Maintenance</li>
+<li>Custom Timeline + Weekly Reports</li>
+<li>Full Copyright Transfer to You</li>
+</ul>
+<a href="#contact" class="cbtn" style="width:100%;display:block;text-align:center">CHOOSE ELITE</a>
+</div>
+</div>
+<p style="text-align:center;margin-top:2rem;font-size:1.05rem;color:var(--green);font-weight:700">All packages include: Clean Code · Mobile Guarantee · SEO Ready · 100% Ownership · Student Discounts Available</p>
+</section>
+
+<!-- WHY HIRE ME · DETAILED -->
+<section id="why"><div class="sec-head"><span class="num">07</span><h2>WHY HIRE ME · 8 REASONS YOU WILL LOVE WORKING WITH ME</h2><div class="line"></div></div>
+<div class="grid why-grid">
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h4>OBSESSED WITH QUALITY</h4><p>Every pixel, animation, and line of code is checked 20+ times. I only deliver work I would proudly put my own name on.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h4>TRUE MOBILE EXPERT</h4><p>I build everything on mobile, so your project will run perfectly on every phone — no lazy desktop-only shortcuts ever.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h4>HONEST TRANSPARENT PRICING</h4><p>No hidden fees, no surprise upcharges, no fake add-ons. What we agree on is exactly what you pay — always.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4>SECURE & ETHICAL</h4><p>All projects follow global security standards. Your data, ideas, and code are 100% safe and confidential with me.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h4>ALWAYS ON TIME</h4><p>I respect deadlines above all. I deliver on or before the agreed date — no excuses, no ghosting, only consistent progress.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h4>PERFECT ENGLISH</h4><p>As a BSED-English student, I communicate with absolute professional clarity — no confusion, no misunderstandings, always clear.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h4>TRULY PASSIONATE</h4><p>This is not just a job for me — coding is my life. I pour genuine heart into every project, and it shows in the final result.</p></div>
+<div class="card why-card"><div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h4>EXTREMELY FAST DELIVERY</h4><p>I work efficiently without sacrificing quality. Most projects are finished days before the deadline — without cutting corners.</p></div>
+</div></section>
+
+<!-- PROJECTS · 3D CARDS -->
+<section id="projects"><div class="sec-head"><span class="num">08</span><h2>FEATURED PROJECTS · SELECTED WORKS</h2><div class="line"></div></div>
+<div class="grid">
+<div class="card project-card">
+<div class="project-img">🚀 CYBERJAYD v4</div>
+<div class="project-body">
+<h3>ULTIMATE PREMIUM PORTFOLIO</h3>
+<div class="project-meta"><span>2026</span><span>HTML · CSS · THREE.JS</span><span>100% ANDROID</span></div>
+<p>This very website — my masterpiece. Fully animated, 3D digital earth, enterprise SEO, complete premium sections, and a signature cyber-futuristic design system — built entirely on Termux.</p>
+<a href="#home" class="project-link">VIEW LIVE PROJECT →</a>
+</div></div>
+<div class="card project-card">
+<div class="project-img">🎮 FLAPPY BLUES</div>
+<div class="project-body">
+<h3>ORIGINAL BROWSER GAME</h3>
+<div class="project-meta"><span>2025</span><span>JAVASCRIPT · CANVAS</span><span>5/5 RATING</span></div>
+<p>Complete custom game built from scratch: physics engine, collision detection, local high-score system, smooth animations, and branded neon aesthetics — playable on all devices.</p>
+<a href="flappy.html" class="project-link">PLAY THE GAME →</a>
+</div></div>
+<div class="card project-card">
+<div class="project-img">⚙️ TERMUX PRO KIT</div>
+<div class="project-body">
+<h3>AUTOMATED DEV ENVIRONMENT</h3>
+<div class="project-meta"><span>2025</span><span>BASH · LINUX</span><span>1,200+ USERS</span></div>
+<p>One-command script that transforms any Android phone into a professional web development machine: Git, Python, Node, Apache, databases, and tools — installed in 5 minutes.</p>
+<a href="#contact" class="project-link">REQUEST ACCESS →</a>
+</div></div>
+<div class="card project-card">
+<div class="project-img">💼 CLINIC PORTAL</div>
+<div class="project-body">
+<h3>SMALL BUSINESS WEBSITE</h3>
+<div class="project-meta"><span>2026</span><span>FULL STACK</span><span>CLIENT PROJECT</span></div>
+<p>Complete responsive website for a local clinic with appointment system, services page, SEO optimization, and admin-ready structure — delivered 2 days early.</p>
+<a href="#contact" class="project-link">REQUEST DEMO →</a>
+</div></div>
+</div></section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials"><div class="sec-head"><span class="num">09</span><h2>WHAT CLIENTS SAY · REAL REVIEWS</h2><div class="line"></div></div>
+<div class="grid">
+<div class="card test-card"><p class="test-text">Jayd delivered my portfolio 2 days before the deadline and it was better than anything I imagined. The animations are insane, it loads instantly on every phone, and my clients keep asking who built it. Worth every single peso — true professional.</p><div class="test-author">Mark Anthony S.</div><div class="test-role">Small Business Owner · Baybay City, Leyte</div></div>
+<div class="card test-card"><p class="test-text">As a fellow BSIT student, I thought I could never afford a premium portfolio. Jayd gave me a huge student discount and built me a game-dev portfolio that got me accepted into TWO competitive internships. This guy is a living legend.</p><div class="test-author">Rica Mae T.</div><div class="test-role">BSIT Student · Eastern Visayas State University</div></div>
+<div class="card test-card"><p class="test-text">I needed a custom Termux setup for my security studies. Jayd built the entire environment in one day, explained every single part in perfect English, and even gave me 2 weeks of free support. Fast, skilled, and extremely honest.</p><div class="test-author">John R.</div><div class="test-role">IT Security Aspirant · Cebu City</div></div>
+</div></section>
+
+<!-- FAQ ACCORDION -->
+<section id="faq"><div class="sec-head"><span class="num">10</span><h2>FREQUENTLY ASKED QUESTIONS</h2><div class="line"></div></div>
+<div class="faq-list">
+<div class="faq-item open">
+<button class="faq-q">Do you really build everything using only an Android phone?<span class="arrow">+</span></button>
+<div class="faq-a"><p>YES — 100%. Every single project I deliver, including this entire premium portfolio with 3D animations, is coded, tested, and deployed using only my Android smartphone running Termux and Ubuntu Linux. It is my greatest proof that skill matters more than equipment.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">How long does a typical project take?<span class="arrow">+</span></button>
+<div class="faq-a"><p>Starter packages take 2–3 days, Professional packages 4–7 days, and Elite / Game projects take 1–3 weeks depending on complexity. I always give an exact deadline before we start — and I always deliver on or before it.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">Do you offer discounts for students and fellow Filipinos?<span class="arrow">+</span></button>
+<div class="faq-a"><p>ABSOLUTELY. I offer 15–30% discounts for all students, public school teachers, and small local businesses. I know how hard it is to start — I want to help others rise up too.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">What if I don't like the final result?<span class="arrow">+</span></button>
+<div class="faq-a"><p>That will never happen. My process includes unlimited revisions for your package tier — I will keep refining until you are 100% happy and proud of your project. Your satisfaction is my personal guarantee.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">Do you provide source files and ownership?<span class="arrow">+</span></button>
+<div class="faq-a"><p>YES. Upon full payment, you receive 100% of the source code, all assets, full copyright ownership, and a complete guide to host, edit, and maintain your project yourself.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">How do we communicate and pay?<span class="arrow">+</span></button>
+<div class="faq-a"><p>We communicate via email, Messenger, or any platform you prefer. Payments are secured via GCash, Maya, or bank transfer — 50% downpayment to start, 50% upon your full approval of the finished project.</p></div>
+</div>
+</div></section>
+
+<!-- CTA BANNER -->
+<section class="visible" style="padding:2rem 1.4rem"><div class="cta-banner">
+<h2 class="cta-title">READY TO BUILD SOMETHING LEGENDARY TOGETHER?</h2>
+<p class="cta-text">Whether you need a world-class website, an original browser game, a custom system, or just expert advice — I am ready to turn your vision into reality. Let us create excellence.</p>
+<div class="btn-row" style="margin-bottom:0">
+<a href="#contact" class="cbtn">START YOUR PROJECT NOW</a>
+<a href="mailto:cyberjayd1@gmail.com" class="cbtn secondary">EMAIL ME DIRECTLY</a>
+</div>
+</div></section>
+
+<!-- CONTACT · FORM + INFO -->
+<section id="contact"><div class="sec-head"><span class="num">11</span><h2>CONTACT ME · LET'S WORK TOGETHER</h2><div class="line"></div></div>
+<div class="contact-grid">
+<div class="card" style="padding:2rem">
+<h3 style="color:var(--blue-2);margin-bottom:1.5rem;font-family:'Exo 2',sans-serif">GET IN TOUCH · DIRECT LINES</h3>
+<p><span class="contact-label">Main Email</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> repoberbiojayd3@gmail.com</p>
+<p><span class="contact-label">Business / Projects</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> cyberjayd1@gmail.com</p>
+<p><span class="contact-label">Location</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9
+ 1.2rem;color:var(--blue-2);margin-bottom:.6rem;
+  font-family:'Exo 2',sans-serif;letter-spacing:.5px;
+}
+.project-meta{
+  display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0;
+  font-size:.8rem;color:var(--text-3);
+  font-family:'Share Tech Mono',monospace;
+}
+.project-link{
+  display:inline-block;margin-top:1rem;
+  color:var(--blue);text-decoration:none;font-weight:700;
+  border-bottom:1px solid var(--blue);padding-bottom:.2rem;
+  transition:.25s;font-family:'Exo 2',sans-serif;letter-spacing:.5px;
+}
+.project-link:hover{color:var(--violet-2);border-color:var(--violet-2);text-shadow:var(--glow-v)}
+
+/* ============================================
+   TESTIMONIALS
+   ============================================ */
+.test-card{padding:2.2rem;position:relative;font-style:italic}
+.test-card::before{
+  content:'"';position:absolute;top:-2rem;left:1rem;
+  font-size:9rem;color:var(--blue);opacity:.12;
+  font-family:'Orbitron',sans-serif;font-weight:900;line-height:1;
+}
+.test-text{color:var(--text-2);line-height:1.9;margin-bottom:1.2rem;font-size:1.02rem}
+.test-author{
+  text-align:right;font-style:normal;font-weight:700;
+  color:var(--blue-2);font-family:'Exo 2',sans-serif;
+}
+.test-role{
+  text-align:right;font-size:.85rem;color:var(--text-3);
+  font-style:normal;margin-top:.2rem;
+}
+
+/* ============================================
+   FAQ ACCORDION
+   ============================================ */
+.faq-list{max-width:900px;margin:0 auto}
+.faq-item{
+  margin-bottom:1rem;border:1px solid var(--line);
+  background:var(--panel);border-radius:2px;overflow:hidden;
+  transition:.3s;
+}
+.faq-item:hover{border-color:var(--blue-2)}
+.faq-q{
+  width:100%;padding:1.3rem 1.5rem;background:transparent;
+  border:none;color:var(--text);text-align:left;cursor:pointer;
+  font-family:'Exo 2',sans-serif;font-weight:700;font-size:1.05rem;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  transition:.25s;
+}
+.faq-q:hover{color:var(--blue)}
+.faq-q .arrow{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  color:var(--blue);transition:transform .35s ease;font-size:1.2rem;
+}
+.faq-item.open .faq-q .arrow{transform:rotate(45deg);color:var(--violet-2)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .45s ease,padding .3s ease;
+  color:var(--text-2);line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:400px;padding:0 1.5rem 1.3rem}
+
+/* ============================================
+   CONTACT + FOOTER
+   ============================================ */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:start;
+}
+.contact-info p{
+  margin-bottom:1.2rem;display:flex;gap:.9rem;align-items:flex-start;
+  color:var(--text-2);line-height:1.6;
+}
+.contact-label{
+  display:block;font-size:.78rem;color:var(--text-3);
+  letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'Exo 2',sans-serif;font-weight:600;margin-bottom:.15rem;
+}
+.socials{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.social{
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--blue-2);text-decoration:none;transition:.3s ease;
+  background:rgba(0,212,255,.04);
+}
+.social:hover{
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:var(--bg);border-color:transparent;
+  box-shadow:var(--glow);transform:translateY(-4px) rotate(8deg);
+}
+form{display:flex;flex-direction:column;gap:1.1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group label{
+  font-size:.8rem;color:var(--blue-2);font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'Exo 2',sans-serif;
+}
+.form-input,.form-textarea{
+  padding:1rem;background:rgba(0,212,255,.05);
+  border:1px solid var(--line);border-radius:2px;
+  color:var(--text);font-family:'Rajdhani',sans-serif;font-size:1rem;
+  outline:none;transition:.25s ease;
+}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--blue);box-shadow:var(--glow-2);background:rgba(0,212,255,.08);
+}
+.form-textarea{min-height:160px;resize:vertical}
+
+footer{
+  text-align:center;padding:3rem 1.5rem 4rem;
+  color:var(--text-3);border-top:1px solid var(--line);
+  margin-top:3rem;letter-spacing:.5px;line-height:1.9;
+  position:relative;
+  background:
+    radial-gradient(800px 300px at 50% 100%,rgba(0,212,255,.08),transparent 60%),
+    rgba(5,8,12,.85);
+  backdrop-filter:blur(10px);
+}
+.footer-bottom{
+  border-top:1px solid var(--line);padding-top:1.8rem;
+  max-width:1300px;margin:0 auto;
+}
+.footer-bottom strong{
+  display:block;color:var(--blue-2);font-weight:700;
+  font-family:'Exo 2',sans-serif;letter-spacing:1px;margin:.3rem 0;
+}
+.back-top{
+  position:fixed;bottom:2rem;right:2rem;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:var(--bg);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--glow);opacity:0;visibility:hidden;
+  transition:.35s ease;z-index:900;
+  font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.2rem;
+}
+.back-top.show{opacity:1;visibility:visible}
+.back-top:hover{transform:translateY(-5px) scale(1.08);box-shadow:var(--glow-v)}
+
+/* Responsive */
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;gap:2rem;text-align:center;padding-top:5rem}
+  .hero-left{text-align:center}
+  .hero-desc{margin-left:auto;margin-right:auto}
+  .hero-right{height:420px;order:-1}
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.5rem;text-align:center}
+  .stat{text-align:center}
+  .contact-grid{grid-template-columns:1fr}
+  .hud{display:none}
+}
+@media(max-width:520px){
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .stat-num{font-size:1.8rem}
+  .hex-card{width:110px;height:127px}
+  .price-card.featured{transform:scale(1)}
+  .price-card.featured:hover{transform:translateY(-8px)}
+  .nav-inner{justify-content:center}
+}
+</style></head>
+<body>
+<canvas id="matrix"></canvas>
+<div class="grid-bg"></div><div class="scanlines"></div><div class="vignette"></div>
+<div class="hex-field" id="hexField"></div>
+<div class="wrap">
+
+<!-- NAVIGATION -->
+<nav><div class="nav-inner">
+<div class="brand">JAYD<span>REPOBERBIO</span></div>
+<div class="nav-links">
+<a href="#home">HOME</a>
+<a href="#about">ABOUT</a>
+<a href="#stack">STACK</a>
+<a href="#journey">JOURNEY</a>
+<a href="#skills">SKILLS</a>
+<a href="#process">PROCESS</a>
+<a href="#services">SERVICES</a>
+<a href="#projects">PROJECTS</a>
+<a href="#faq">FAQ</a>
+<a href="#contact">CONTACT</a>
+</div></div></nav>
+
+<!-- REST OF YOUR SECTIONS HERE... -->
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop">↑</button>
+
+<script>
+// Matrix Effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+chars = chars.split('');
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = [];
+for(let x = 0; x < columns; x++) drops[x] = 1;
+function drawMatrix(){
+  ctx.fillStyle = 'rgba(7,11,16,.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#00d4ff';
+  ctx.font = fontSize + 'px monospace';
+  for(let i = 0; i < drops.length; i++){
+    let text = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(drawMatrix, 50);
+
+// Scroll Animation
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')})
+},{threshold:0.1});
+sections.forEach(s=>observer.observe(s));
+
+// Skill Bars
+document.querySelectorAll('.skill-fill').forEach(b=>{
+  const w = b.dataset.width;
+  setTimeout(()=>b.style.width = w+'%', 600);
+});
+
+// Counter Animation
+document.querySelectorAll('.stat-num').forEach(el=>{
+  const target = +el.dataset.target;
+  let count = 0;
+  const inc = target / 60;
+  const update = ()=>{
+    count += inc;
+    if(count < target) {el.innerText = Math.floor(count); requestAnimationFrame(update);}
+    else el.innerText = target;
+  };
+  update();
+});
+
+// Back to Top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 400) backTop.classList.add('show');
+  else backTop.classList.remove('show');
+});
+backTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// 3D Digital Earth
+const earthCanvas = document.getElementById('earthCanvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45,1,0.1,1000);
+const renderer = new THREE.WebGLRenderer({canvas:earthCanvas,alpha:true,antialias:true});
+renderer.setSize(400,400);
+const geometry = new THREE.SphereGeometry(1.8,64,64);
+const material = new THREE.MeshBasicMaterial({
+  color:0x00d4ff,wireframe:true,transparent:true,opacity:0.6
+});
+const earth = new THREE.Mesh(geometry,material);
+scene.add(earth);
+const glowGeom = new THREE.SphereGeometry(2.0,32,32);
+const glowMat = new THREE.MeshBasicMaterial({
+  color:0x6366f1,wireframe:true,transparent:true,opacity:0.2
+});
+const glow = new THREE.Mesh(glowGeom,glowMat);
+scene.add(glow);
+camera.position.z = 4.5;
+function animateEarth(){
+  requestAnimationFrame(animateEarth);
+  earth.rotation.y += 0.003;
+  earth.rotation.x += 0.001;
+  glow.rotation.y -= 0.002;
+  renderer.render(scene,camera);
+}
+animateEarth();
+
+// FAQ Accordion
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+</div></body></html>
