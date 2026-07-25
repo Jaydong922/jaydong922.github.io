@@ -182,7 +182,7 @@ nav{
   box-shadow:0 0 30px rgba(0,229,255,.4);
 }
 
-/* ===== 3D GLOBE CONTAINER — FIXED NO SCREEN MOVEMENT ===== */
+/* ===== 3D GLOBE CONTAINER ===== */
 .globe-wrap{
   position:relative;width:100%;aspect-ratio:1/1;
   max-width:520px;margin:0 auto;
@@ -403,7 +403,7 @@ section{max-width:1300px;margin:0 auto;padding:5rem 1.5rem;width:100%}
   font-family:'Share Tech Mono',monospace;
 }
 
-/* ===== TIMELINE / JOURNEY ===== */
+/* ===== TIMELINE ===== */
 .timeline{position:relative;max-width:850px;margin:0 auto}
 .timeline::before{
   content:'';position:absolute;left:50%;top:0;bottom:0;
@@ -494,7 +494,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   font-size:.8rem;color:#64748b;margin-top:1rem;
 }
 
-/* ===== REVEAL ANIMATION ===== */
+/* ===== REVEAL ===== */
 .reveal{
   opacity:0;transform:translateY(40px);
   transition:all .9s cubic-bezier(.2,.8,.2,1);
@@ -724,8 +724,8 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     <div class="project reveal">
       <div class="project-preview"><div class="code-icon">✨</div></div>
       <div class="project-body">
-        <h3>PREMIUM PORTFOLIO v4 <span class="type">WEB APP</span></h3>
-        <p>You are looking at it! A world-class developer portfolio featuring particle 3D globe, matrix rain, glassmorphism UI, animated skill bars, and cinematic scroll reveals.</p>
+        <h3>PREMIUM PORTFOLIO v5 <span class="type">WEB APP</span></h3>
+        <p>You are looking at it! A world-class developer portfolio featuring Hollywood-style 3D globe, floating math equations, 2000+ glitters, matrix rain, and cinematic effects.</p>
         <div class="tech">
           <span>Three.js</span><span>WebGL</span><span>CSS3</span><span>ES6+</span>
         </div>
@@ -867,7 +867,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
 
 <script>
 /* =========================================================
-   MATRIX RAIN BACKGROUND
+   MATRIX RAIN
    ========================================================= */
 (function(){
   const c = document.getElementById('matrix');
@@ -892,12 +892,9 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
 })();
 
 /* =========================================================
-   🔥 HOLLYWOOD 3D EARTH — COUNTRY BORDERS + MATH EQUATIONS + GLITTERS
-   ✅ Pure code, no images
-   ✅ 195 real country borders
-   ✅ Floating math equations / numbers / binary
-   ✅ 2000+ glitter particles with twinkle
-   ✅ Drag to rotate, auto-spin, NO PAGE MOVEMENT
+   ✅ SAFE HOLLYWOOD 3D GLOBE — NO EXTERNAL CALLS, NO TIMEOUT
+   ✅ Math Equations • 2000 Glitters • Sparks • Dots • Connections
+   ✅ Drag to rotate • NO PAGE MOVEMENT
    ========================================================= */
 (function(){
   const canvas=document.getElementById('globeCanvas');
@@ -922,12 +919,12 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   const globeGroup=new THREE.Group();
   scene.add(globeGroup);
 
-  // ========== 1. INNER GLOWING CORE ==========
+  // 1. INNER CORE
   const coreGeo=new THREE.SphereGeometry(R*.85,32,32);
   const coreMat=new THREE.MeshBasicMaterial({color:0x0088ff,transparent:true,opacity:.18});
   globeGroup.add(new THREE.Mesh(coreGeo,coreMat));
 
-  // ========== 2. SURFACE PARTICLES WITH CONTINENT CLUSTERS ==========
+  // 2. SURFACE DOTS WITH CONTINENT CLUSTERS
   const DOT_COUNT=2800;
   const dotGeo=new THREE.BufferGeometry();
   const dotPos=new Float32Array(DOT_COUNT*3);
@@ -967,12 +964,12 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   });
   globeGroup.add(new THREE.Points(dotGeo,dotMat));
 
-  // ========== 3. WIRE GRID ==========
+  // 3. WIRE GRID
   const wireGeo=new THREE.SphereGeometry(R*1.005,36,28);
   const wireMat=new THREE.MeshBasicMaterial({color:0x0088ff,wireframe:true,transparent:true,opacity:.22});
   globeGroup.add(new THREE.Mesh(wireGeo,wireMat));
 
-  // ========== 4. ATMOSPHERE GLOW ==========
+  // 4. ATMOSPHERE GLOW
   const atmoGeo=new THREE.SphereGeometry(R*1.32,64,64);
   const atmoMat=new THREE.ShaderMaterial({
     transparent:true,side:THREE.BackSide,depthWrite:false,
@@ -983,62 +980,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   });
   globeGroup.add(new THREE.Mesh(atmoGeo,atmoMat));
 
-  // ========== 5. REAL COUNTRY BORDERS (195 NATIONS) ==========
-  const borderGroup=new THREE.Group();
-  globeGroup.add(borderGroup);
-  function latLonToVec3(lat,lon,r){
-    const phi=(90-lat)*Math.PI/180;
-    const theta=(lon+180)*Math.PI/180;
-    return new THREE.Vector3(
-      -r*Math.sin(phi)*Math.cos(theta),
-      r*Math.cos(phi),
-      r*Math.sin(phi)*Math.sin(theta)
-    );
-  }
-  // Load lightweight world borders (110m = ~100KB, perfect for mobile)
-  const loader=new THREE.FileLoader();
-  loader.load('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',(data)=>{
-    try{
-      const geojson=JSON.parse(data);
-      const objects=geojson.objects.countries;
-      const arcs=geojson.arcs;
-      function arcToPoints(arcIdx){
-        const arc=arcs[arcIdx<0?~arcIdx:arcIdx];
-        let x=0,y=0;
-        const pts=[];
-        for(let i=0;i<arc.length;i++){
-          x+=arc[i][0];y+=arc[i][1];
-          pts.push([x/10,y/10]); // world-atlas uses delta-encoded ints
-        }
-        return arcIdx<0?pts.reverse():pts;
-      }
-      Object.values(objects.geometries).forEach(geo=>{
-        const rings=[];
-        if(geo.type==='Polygon')rings.push(geo.coordinates);
-        else if(geo.type==='MultiPolygon')geo.coordinates.forEach(r=>rings.push(r));
-        rings.forEach(ring=>{
-          ring.forEach(arcIndices=>{
-            const allPts=[];
-            arcIndices.forEach(ai=>allPts.push(...arcToPoints(ai)));
-            const pts=new Float32Array(allPts.length*3);
-            for(let i=0;i<allPts.length;i++){
-              const v=latLonToVec3(allPts[i][1],allPts[i][0],R*1.012);
-              pts[i*3]=v.x;pts[i*3+1]=v.y;pts[i*3+2]=v.z;
-            }
-            const g=new THREE.BufferGeometry();
-            g.setAttribute('position',new THREE.BufferAttribute(pts,3));
-            const m=new THREE.LineBasicMaterial({
-              color:0x00ffff,transparent:true,opacity:.85,
-              blending:THREE.AdditiveBlending
-            });
-            borderGroup.add(new THREE.Line(g,m));
-          });
-        });
-      });
-    }catch(e){console.warn('Borders load failed, skipping')}
-  });
-
-  // ========== 6. CONNECTION LINES ==========
+  // 5. CONNECTION LINES
   const MAX_LINES=1200;
   const lineGeo=new THREE.BufferGeometry();
   const linePos=new Float32Array(MAX_LINES*6);
@@ -1054,7 +996,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   const lines=new THREE.LineSegments(lineGeo,lineMat);
   globeGroup.add(lines);
 
-  // ========== 7. FLOATING MATH EQUATIONS / NUMBERS / BINARY ==========
+  // 6. FLOATING MATH EQUATIONS / NUMBERS / BINARY
   const EQUATIONS=[
     'E=mc²','∫f(x)dx','lim h→0','π=3.14159','φ=1.618','∑n=1^∞',
     '01001010','10110110','00111010','e^(iπ)+1=0','a²+b²=c²','λ=h/p',
@@ -1067,7 +1009,6 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     const ctx=c.getContext('2d');
     c.width=512;c.height=128;
     ctx.clearRect(0,0,c.width,c.height);
-    // Glow effect
     ctx.shadowColor=color;ctx.shadowBlur=20;
     ctx.fillStyle=color;
     ctx.font='bold 64px "Courier New", monospace';
@@ -1090,7 +1031,6 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     const col=COLORS[Math.floor(Math.random()*COLORS.length)];
     const sz=.35+Math.random()*.55;
     const sprite=makeTextSprite(txt,col,sz);
-    // Random orbit
     const radius=R*(1.45+Math.random()*.9);
     const speed=(.05+Math.random()*.2)*(Math.random()<.5?-1:1);
     const tilt=(Math.random()-.5)*Math.PI;
@@ -1101,7 +1041,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   }
   globeGroup.add(eqGroup);
 
-  // ========== 8. GLITTER / SPARKLE PARTICLES (2000 TOTAL) ==========
+  // 7. 2000 GLITTER PARTICLES
   const GLITTER_COUNT=2000;
   const gGeo=new THREE.BufferGeometry();
   const gPos=new Float32Array(GLITTER_COUNT*3);
@@ -1142,7 +1082,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   gGeo.setAttribute('gPhase',new THREE.BufferAttribute(gPhase,1));
   globeGroup.add(new THREE.Points(gGeo,gMat));
 
-  // ========== 9. ORBITING SPARKS ==========
+  // 8. ORBITING SPARKS
   const SPARK_COUNT=250;
   const sparkGeo=new THREE.BufferGeometry();
   const sparkPos=new Float32Array(SPARK_COUNT*3);
@@ -1167,7 +1107,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   const sparks=new THREE.Points(sparkGeo,sparkMat);
   globeGroup.add(sparks);
 
-  // ========== INTERACTION — ONLY GLOBE MOVES, PAGE STAYS ==========
+  // ========== INTERACTION — ONLY GLOBE MOVES ==========
   let targetRotY=0,targetRotX=0;
   let curRotY=0,curRotX=0;
   let isDragging=false;
@@ -1189,7 +1129,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
   },{passive:true});
   canvas.addEventListener('touchmove',e=>{
     if(!isDragging||e.touches.length!==1)return;
-    e.preventDefault();e.stopPropagation(); // ✅ NO PAGE MOVEMENT!
+    e.preventDefault();e.stopPropagation();
     targetRotY+=(e.touches[0].clientX-lastX)*.005;
     targetRotX+=(e.touches[0].clientY-lastY)*.005;
     targetRotX=Math.max(-.8,Math.min(.8,targetRotX));
@@ -1206,7 +1146,6 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     dotMat.uniforms.time.value=t;
     gMat.uniforms.time.value=t;
 
-    // Smooth rotation
     if(!isDragging)targetRotY+=AUTO_SPEED;
     curRotY+=(targetRotY-curRotY)*.08;
     curRotX+=(targetRotX-curRotX)*.08;
@@ -1223,15 +1162,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     }
     dotGeo.attributes.position.needsUpdate=true;
 
-    // Borders pulse brighter when facing camera
-    borderGroup.children.forEach(line=>{
-      const center=new THREE.Vector3().fromBufferAttribute(line.geometry,'position',0);
-      center.applyQuaternion(globeGroup.quaternion);
-      const facing=Math.max(0,center.normalize().z);
-      line.material.opacity=.2+facing*.8;
-    });
-
-    // Update connections
+    // Connections
     const lpos=lineGeo.attributes.position.array;
     const lalp=lineGeo.attributes.alpha.array;
     let li=0,lc=0;
@@ -1255,20 +1186,19 @@ footer p{color:var(--muted);font-size:.95rem;margin:.2rem 0}
     lineGeo.attributes.position.needsUpdate=true;
     lineGeo.attributes.alpha.needsUpdate=true;
 
-    // Animate equations — orbit + twinkle
+    // Animate equations
     eqData.forEach((d,i)=>{
       const a=d.phase+t*d.speed*5;
       const x=d.radius*Math.cos(a);
       const z=d.radius*Math.sin(a);
       const y=d.yOffset+Math.sin(a*1.3)*.25;
-      // Apply tilt
       const y2=y*Math.cos(d.tilt)-z*Math.sin(d.tilt);
       const z2=y*Math.sin(d.tilt)+z*Math.cos(d.tilt);
       d.sprite.position.set(x,y2,z2);
       d.sprite.material.opacity=d.baseOpacity*(.5+.5*Math.sin(t*2+i));
     });
 
-    // Glitters drift + twinkle
+    // Glitters drift
     const gp=gGeo.attributes.position.array;
     for(let i=0;i<GLITTER_COUNT;i++){
       gp[i*3]  =gBase[i*3]  +Math.sin(t*gSpeed[i]+gPhase[i])*.03;
