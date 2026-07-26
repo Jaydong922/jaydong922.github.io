@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -38,9 +37,9 @@ header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(18
 .nav-links{display:flex;gap:1.2rem;flex-wrap:wrap}
 .nav-links a{font-weight:600;font-size:1.1rem}
 
-/* HERO WITH 3D ASTRONAUT */
-.hero{position:relative;z-index:2;padding:3rem 5%;text-align:center}
-#astronaut-container{width:100%;height:420px;margin:0 auto 2rem;border-radius:8px;overflow:hidden;border:1px solid var(--light);box-shadow:var(--glow)}
+/* HERO WITH 3D FLOATING ASTRONAUT */
+.hero{position:relative;z-index:2;padding:0 5% 3rem;text-align:center}
+#astronaut-container{width:100%;height:400px;margin:0 auto 1rem;border-radius:8px;overflow:hidden;border:1px solid var(--light);box-shadow:var(--glow);background:transparent}
 .hero h1{font-size:clamp(2.5rem,6vw,4rem);margin-bottom:1rem;background:linear-gradient(90deg,var(--prime),var(--accent));-webkit-background-clip:text;color:transparent}
 .hero p{font-size:clamp(1.1rem,3vw,1.4rem);max-width:850px;margin:0 auto 2rem;color:var(--muted);line-height:1.7}
 .hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
@@ -96,6 +95,7 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
 </header>
 
 <section class="hero">
+    <!-- 3D FLOATING ASTRONAUT HERE -->
     <div id="astronaut-container"></div>
     <h1>JAYD F. REPOBERBIO</h1>
     <p>Warmly greetings to you, you're now visiting my portfolio. I am Jayd Repoberbio. I built this website when I was first year student taking BSED major in English by self studying about the development of website. I have successfully created this and I am also accepting offers like creating Web Development, Operating System, Game Development, and many more related to this field.</p>
@@ -219,55 +219,53 @@ function draw(){
 setInterval(draw,40);
 </script>
 
-<!-- 3D ASTRONAUT ANIMATION -->
+<!-- 3D FLOATING ASTRONAUT ANIMATION -->
 <script>
 const container = document.getElementById('astronaut-container');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(renderer.domElement);
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0x404060, 0.8);
+// LIGHTING
+const ambientLight = new THREE.AmbientLight(0x404080, 0.7);
 scene.add(ambientLight);
-const dirLight = new THREE.DirectionalLight(0x00d9ff, 1.2);
-dirLight.position.set(5, 10, 7);
-scene.add(dirLight);
+const pointLight = new THREE.PointLight(0x00d9ff, 1.5, 100);
+pointLight.position.set(0, 3, 5);
+scene.add(pointLight);
 
-// Astronaut Body
-const bodyGeo = new THREE.CapsuleGeometry(1.2, 2.5, 8, 16);
-const bodyMat = new THREE.MeshStandardMaterial({color:0xffffff, metalness:0.3, roughness:0.4});
+// ASTRONAUT PARTS
+const bodyGeo = new THREE.CapsuleGeometry(1, 2.2, 8, 16);
+const bodyMat = new THREE.MeshStandardMaterial({color:0xf0f8ff, metalness:0.4, roughness:0.3});
 const body = new THREE.Mesh(bodyGeo, bodyMat);
 scene.add(body);
 
-// Helmet
-const helmetGeo = new THREE.SphereGeometry(1.1, 32, 32);
-const helmetMat = new THREE.MeshStandardMaterial({color:0x00d9ff, transparent:true, opacity:0.6, metalness:0.8, roughness:0.1});
+const helmetGeo = new THREE.SphereGeometry(0.9, 32, 32);
+const helmetMat = new THREE.MeshStandardMaterial({color:0x00d9ff, transparent:true, opacity:0.5, metalness:0.9, roughness:0.1});
 const helmet = new THREE.Mesh(helmetGeo, helmetMat);
-helmet.position.y = 2.2;
+helmet.position.y = 2;
 scene.add(helmet);
 
-// Backpack
-const packGeo = new THREE.BoxGeometry(1.5, 2, 0.8);
-const packMat = new THREE.MeshStandardMaterial({color:0x1a2440, metalness:0.5, roughness:0.3});
+const packGeo = new THREE.BoxGeometry(1.2, 1.8, 0.6);
+const packMat = new THREE.MeshStandardMaterial({color:0x1a2440, metalness:0.5, roughness:0.4});
 const pack = new THREE.Mesh(packGeo, packMat);
-pack.position.z = -1;
-pack.position.y = 0.5;
+pack.position.z = -0.8;
+pack.position.y = 0.4;
 scene.add(pack);
 
-// Floating Animation
-camera.position.z = 6;
-function animateAstronaut(){
-    requestAnimationFrame(animateAstronaut);
-    body.rotation.y += 0.005;
-    helmet.rotation.y += 0.005;
-    body.position.y = Math.sin(Date.now()*0.001)*0.3;
-    helmet.position.y = 2.2 + Math.sin(Date.now()*0.001)*0.3;
+// FLOATING & ROTATING ANIMATION
+camera.position.z = 5;
+function animate(){
+    requestAnimationFrame(animate);
+    body.rotation.y += 0.006;
+    helmet.rotation.y += 0.006;
+    body.position.y = Math.sin(Date.now()*0.0012)*0.25;
+    helmet.position.y = 2 + Math.sin(Date.now()*0.0012)*0.25;
     renderer.render(scene, camera);
 }
-animateAstronaut();
+animate();
 
 window.addEventListener('resize',()=>{
     camera.aspect = container.clientWidth / container.clientHeight;
