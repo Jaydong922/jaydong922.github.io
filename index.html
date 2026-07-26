@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | Global Grid — Ethical Security & Development</title>
+<title>CYBERJAYD | Professional Web & Security Solutions</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -34,8 +34,7 @@ body{
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
 .mono{font-family:'Share Tech Mono',monospace}
 
-/* BACKGROUND LAYERS */
-#matrix{position:fixed;inset:0;z-index:0;opacity:.16}
+#matrix{position:fixed;inset:0;z-index:0;opacity:.12}
 .grid-bg{
   position:fixed;inset:0;z-index:1;
   background:
@@ -50,13 +49,12 @@ h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
 }
 .wrap{position:relative;z-index:10;width:100%}
 
-/* === 3D EARTH CONTAINER — CENTERED & TOUCHABLE === */
 #earth-container{
   position:fixed;
   top:50%;left:50%;
   transform:translate(-50%,-50%);
-  width:min(550px,90vw);
-  height:min(550px,90vw);
+  width:min(600px,92vw);
+  height:min(600px,92vw);
   z-index:2;
   touch-action:none;
   user-select:none;
@@ -65,10 +63,9 @@ h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
 #earth-container:active{cursor:grabbing}
 #earth-canvas{
   width:100%;height:100%;
-  filter:drop-shadow(0 0 80px rgba(0,217,255,0.4));
+  filter:drop-shadow(0 0 100px rgba(0,217,255,0.5));
 }
 
-/* === NAVIGATION === */
 nav{
   position:sticky;top:0;z-index:100;
   background:rgba(5,7,16,.9);
@@ -100,7 +97,6 @@ nav{
 .nav-links a:hover{color:var(--prime);text-shadow:0 0 10px var(--prime)}
 .nav-links a:hover::after{width:100%}
 
-/* === HERO === */
 .hero{
   min-height:92vh;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -149,7 +145,6 @@ nav{
 .btn-outline{background:transparent;color:var(--prime)}
 .btn-outline:hover{background:var(--prime);color:#020205;box-shadow:0 0 30px rgba(0,217,255,.5)}
 
-/* === SECTIONS === */
 section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position:relative;z-index:15}
 .sec-head{
   display:flex;align-items:baseline;gap:1rem;
@@ -167,7 +162,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-/* === ABOUT === */
 .about-card{
   background:var(--glass);
   border:1px solid var(--border);
@@ -186,7 +180,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
   color:var(--accent);font-weight:700;
 }
 
-/* === WHY CHOOSE === */
 .why-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.2rem;
@@ -206,7 +199,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 }
 .why-card p{color:#b8d4e6;font-size:.98rem}
 
-/* === SKILLS === */
 .skills-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:1.4rem;
@@ -242,7 +234,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
   font-size:.8rem;color:var(--accent);font-weight:700;
 }
 
-/* === SERVICES === */
 .services-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.4rem;
@@ -258,7 +249,7 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 }
 .service-card:hover{transform:translateY(-6px);border-color:var(--prime);box-shadow:0 18px 45px rgba(0,217,255,.2)}
 .service-card.best::before{
-  content:'BEST SELLER';
+  content:'MOST POPULAR';
   position:absolute;top:18px;right:-35px;
   background:linear-gradient(90deg,var(--accent),var(--prime));
   color:#020205;font-size:.7rem;font-weight:900;
@@ -278,7 +269,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 .service-list{display:grid;gap:.45rem;color:#c5ddee;font-size:.98rem}
 .service-list div::before{content:'✓ ';color:var(--prime);font-weight:700}
 
-/* === PROJECTS === */
 .projects-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:1.5rem;
@@ -330,7 +320,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 }
 .project-links a:hover{color:var(--accent);text-shadow:0 0 8px var(--accent)}
 
-/* === FLAPPY BLUES === */
 .flappy-card{
   border:2px solid var(--accent);
   box-shadow:0 0 35px rgba(0,255,213,.3);
@@ -345,7 +334,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 }
 .flappy-card .project-head h3{color:var(--accent)}
 
-/* === CONTACT === */
 .contact-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.2rem;
@@ -370,7 +358,6 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position
 .contact-value a{color:var(--prime);text-decoration:none;transition:.2s}
 .contact-value a:hover{color:var(--accent)}
 
-/* === FOOTER === */
 footer{
   text-align:center;padding:2.5rem 1.5rem 1.8rem;
   border-top:1px solid var(--border);
@@ -390,54 +377,54 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   font-size:.8rem;color:#5a8098;margin-top:.8rem;
   letter-spacing:.05em;
 }
+.footer-desc{
+  max-width:700px;margin:0 auto 1rem;
+  font-size:1rem;color:#a0c8e0;
+  line-height:1.7;
+}
 
-/* === RESPONSIVE === */
 @media(max-width:600px){
   .nav-inner{justify-content:center}
   .hero{min-height:85vh;padding-top:2rem}
   section{padding:3.5rem 1.2rem}
-  #earth-container{width:85vw;height:85vw}
+  #earth-container{width:90vw;height:90vw}
 }
 </style>
 </head>
 <body>
 
-<!-- BACKGROUND -->
 <div id="galaxy-bg"></div>
 <canvas id="matrix"></canvas>
 <div class="grid-bg"></div>
 
-<!-- 3D EARTH + ORBITAL ELEMENTS -->
 <div id="earth-container">
   <canvas id="earth-canvas"></canvas>
 </div>
 
 <div class="wrap">
 
-<!-- NAV -->
 <nav>
 <div class="nav-inner">
   <div class="logo">CYBERJAYD</div>
   <div class="nav-links">
     <a href="#about">ABOUT</a>
-    <a href="#why">WHY</a>
+    <a href="#why">WHY US</a>
     <a href="#skills">SKILLS</a>
     <a href="#services">SERVICES</a>
-    <a href="#projects">PROJECTS 🎮</a>
+    <a href="#projects">PROJECTS</a>
     <a href="flappy.html">PLAY GAME</a>
     <a href="#contact">CONTACT</a>
   </div>
 </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-num">01</div>
   <h1>CYBERJAYD</h1>
   <hr>
   <p class="hero-sub">
-    GLOBAL GRID // SECTOR 7 — ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH.<br>
-    CLEAN DESIGN, MAXIMUM POWER.
+    GLOBAL GRID // SECTOR 7 — ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECHNOLOGY.<br>
+    CLEAN DESIGN, MAXIMUM PERFORMANCE.
   </p>
   <div class="hero-buttons">
     <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
@@ -445,128 +432,123 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="sec-head">
     <span class="sec-num">01</span>
-    <h2>ABOUT_ME.EXE</h2>
+    <h2>ABOUT ME</h2>
   </div>
   <div class="about-card">
-    <p><span class="mono">> INITIALIZING USER PROFILE...</span></p>
-    <p>👋 <strong>IDENTITY:</strong> JAYD F. REPOBERBIO — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
-    <p>🎓 <strong>STATUS:</strong> First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. <strong>100% SELF-TAUGHT</strong>. Every skill earned through 3AM grind, relentless research, and refusing limits.</p>
-    <p>⚡ <strong>SPECIALIZATION:</strong> Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on Android / Termux — advanced tech for everyone.</p>
-    <p>🌍 <strong>MISSION:</strong> Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p>
-    <p class="about-status">> STATUS: ONLINE • ACCEPTING NEW CONTRACTS WORLDWIDE • RESPONSE < 24H</p>
+    <p>I am <strong>Jayd F. Repoberbio</strong>, a dedicated Web Engineer and Ethical Security Researcher. I specialize in creating high-quality, lightweight digital solutions optimized for mobile devices and all platforms.</p>
+    <p>Currently a first-year college student pursuing a Bachelor of Secondary Education in English at FCIC Baybay City, Leyte. I am entirely self-taught in information technology and programming, having built my skills through continuous learning, research, and hands-on practice.</p>
+    <p>My focus is on delivering modern, secure, and efficient websites, automation tools, and security assessments. I aim to provide world-class services while remaining accessible and professional.</p>
+    <p>I believe that passion, hard work, and attention to detail can overcome any barrier. I am committed to every project I take on, ensuring quality and client satisfaction.</p>
+    <p class="about-status">> STATUS: ONLINE • ACCEPTING PROJECTS WORLDWIDE • RESPONSE TIME: UNDER 24 HOURS</p>
   </div>
 </section>
 
-<!-- WHY CHOOSE -->
 <section id="why">
   <div class="sec-head">
     <span class="sec-num">02</span>
-    <h2>WHY_CHOOSE_CYBERJAYD</h2>
+    <h2>WHY CHOOSE CYBERJAYD</h2>
   </div>
   <div class="why-grid">
-    <div class="why-card"><h3>💡 OBSESSED WITH QUALITY</h3><p>No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
-    <div class="why-card"><h3>📱 MOBILE IS FIRST</h3><p>70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
-    <div class="why-card"><h3>💰 HONEST PRICING</h3><p>What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
-    <div class="why-card"><h3>⚖️ ETHICAL BY DEFAULT</h3><p>Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
-    <div class="why-card"><h3>⚡ REAL-TIME SUPPORT</h3><p>Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
-    <div class="why-card"><h3>🌍 GLOBAL STANDARD</h3><p>Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
+    <div class="why-card"><h3>✅ HIGH QUALITY STANDARDS</h3><p>Every project is crafted with precision, tested thoroughly, and built to last. I treat your work as my own.</p></div>
+    <div class="why-card"><h3>📱 MOBILE-FIRST DESIGN</h3><p>Designed and tested primarily on mobile devices to ensure perfect performance on phones and tablets.</p></div>
+    <div class="why-card"><h3>💲 FAIR & TRANSPARENT PRICING</h3><p>Clear pricing with no hidden fees or extra charges. You get exactly what you pay for.</p></div>
+    <div class="why-card"><h3>🛡️ FULLY ETHICAL PRACTICES</h3><p>All security services follow legal and ethical guidelines strictly. Your safety and privacy are always prioritized.</p></div>
+    <div class="why-card"><h3>⚡ FAST & RELIABLE SUPPORT</h3><p>Quick response times and dedicated support until your project is fully completed and working.</p></div>
+    <div class="why-card"><h3>🌍 GLOBAL-LEVEL EXPERTISE</h3><p>Delivering professional results that match international standards, right here from the Philippines.</p></div>
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="sec-head">
     <span class="sec-num">03</span>
-    <h2>CORE_CAPABILITIES</h2>
+    <h2>CORE SKILLS & EXPERTISE</h2>
   </div>
   <div class="skills-grid">
     <div class="skill-card">
       <h3>🔐 CYBERSECURITY</h3>
       <div class="skill-list">
-        <div>Ethical Research</div>
-        <div>Bug Bounty</div>
-        <div>Vuln Assessment</div>
-        <div>SSRF & Recon</div>
-        <div>Security Analysis</div>
+        <div>Ethical Security Research</div>
+        <div>Vulnerability Assessment</div>
+        <div>Bug Bounty Testing</div>
+        <div>Network & Web Analysis</div>
+        <div>Security Reporting</div>
       </div>
       <div class="skill-bar"><div class="skill-fill" style="width:80%" data-val="80%"></div></div>
     </div>
     <div class="skill-card">
-      <h3>💻 DEVELOPMENT</h3>
+      <h3>💻 SOFTWARE DEVELOPMENT</h3>
       <div class="skill-list">
-        <div>Python</div>
-        <div>Bash / Shell</div>
-        <div>HTML/CSS/JS</div>
-        <div>Automation</div>
-        <div>Web & Scripting</div>
+        <div>Python Scripting</div>
+        <div>Shell & Bash Automation</div>
+        <div>HTML / CSS / JavaScript</div>
+        <div>Responsive Web Design</div>
+        <div>Custom Tool Creation</div>
       </div>
       <div class="skill-bar"><div class="skill-fill" style="width:100%" data-val="100%"></div></div>
     </div>
     <div class="skill-card">
-      <h3>📡 PLATFORMS</h3>
+      <h3>📡 PLATFORM & SYSTEMS</h3>
       <div class="skill-list">
-        <div>Termux / Linux</div>
-        <div>Mobile Tech</div>
-        <div>GitHub</div>
-        <div>Cloud Deploy</div>
-        <div>System Optimization</div>
+        <div>Linux & Termux Setup</div>
+        <div>Mobile Optimization</div>
+        <div>Version Control (GitHub)</div>
+        <div>Cloud Deployment</div>
+        <div>System Performance Tuning</div>
       </div>
       <div class="skill-bar"><div class="skill-fill" style="width:85%" data-val="85%"></div></div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
   <div class="sec-head">
     <span class="sec-num">04</span>
-    <h2>SERVICES_&_PRICING</h2>
+    <h2>SERVICES & PRICING</h2>
   </div>
   <div class="services-grid">
     <div class="service-card best">
-      <h3>🌐 WEB DESIGN</h3>
-      <p style="color:var(--muted);font-size:.9rem">Clean • Professional • Cyber-Grade</p>
+      <h3>🌐 PROFESSIONAL WEB DESIGN</h3>
+      <p style="color:var(--muted);font-size:.9rem">Clean, modern, and secure designs</p>
       <div class="service-price">₱800 – ₱2,000</div>
       <div class="service-list">
-        <div>Portfolio / Business Sites</div>
+        <div>Portfolio or Business Websites</div>
         <div>Mobile-First Optimization</div>
         <div>Free Deployment Guide</div>
-        <div>1 Free Revision Included</div>
+        <div>One Free Revision Included</div>
       </div>
     </div>
     <div class="service-card">
-      <h3>🔒 SECURITY AUDIT</h3>
-      <p style="color:var(--muted);font-size:.9rem">Find risks before attackers do</p>
+      <h3>🔒 SECURITY AUDIT & TESTING</h3>
+      <p style="color:var(--muted);font-size:.9rem">Identify risks before attackers do</p>
       <div class="service-price">₱1,000 – ₱2,500</div>
       <div class="service-list">
-        <div>Automated + Manual Scan</div>
-        <div>Full Vulnerability Report</div>
-        <div>Fix Recommendations</div>
-        <div>100% Legal & Ethical</div>
+        <div>Automated & Manual Scanning</div>
+        <div>Complete Vulnerability Report</div>
+        <div>Step-by-Step Fix Guide</div>
+        <div>100% Legal & Ethical Service</div>
       </div>
     </div>
     <div class="service-card">
-      <h3>📱 TERMUX / LINUX</h3>
-      <p style="color:var(--muted);font-size:.9rem">Full setup • Tuned for speed</p>
+      <h3>📱 TERMUX & LINUX SETUP</h3>
+      <p style="color:var(--muted);font-size:.9rem">Full installation and configuration</p>
       <div class="service-price">₱300 – ₱800</div>
       <div class="service-list">
-        <div>Clean Install & Config</div>
-        <div>Essential Toolkit Preloaded</div>
-        <div>RAM / Performance Boost</div>
-        <div>Step-by-Step Guide</div>
+        <div>Fresh Installation & Setup</div>
+        <div>Essential Tools Pre-installed</div>
+        <div>Performance & Speed Boost</div>
+        <div>Complete User Guide</div>
       </div>
     </div>
     <div class="service-card">
-      <h3>⚙️ AUTOMATION</h3>
-      <p style="color:var(--muted);font-size:.9rem">Scripts that work while you sleep</p>
+      <h3>⚙️ AUTOMATION SCRIPTS</h3>
+      <p style="color:var(--muted);font-size:.9rem">Work efficiently while you rest</p>
       <div class="service-price">₱500 – ₱1,500</div>
       <div class="service-list">
-        <div>Python / Bash Source Code</div>
-        <div>Full Commented Source</div>
+        <div>Python or Bash Source Code</div>
+        <div>Fully Commented & Explained</div>
         <div>Usage Documentation</div>
         <div>Free Minor Updates</div>
       </div>
@@ -574,49 +556,47 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="sec-head">
     <span class="sec-num">05</span>
-    <h2>FEATURED_PROJECTS</h2>
+    <h2>FEATURED PROJECTS</h2>
   </div>
   <div class="projects-grid">
     <a href="flappy.html" class="project-card flappy-card" target="_blank">
       <div class="project-head">
-        <h3>🚀 FLAPPY BLUES — ROCKET EDITION <span class="project-tag">🎮 PLAY NOW</span></h3>
+        <h3>🚀 FLAPPY BLUES — ROCKET EDITION <span class="project-tag">PLAY NOW</span></h3>
       </div>
       <div class="project-body">
-        <p><strong>UPDATED PHYSICS:</strong> Jump height adjusted — sakto lang, hindi na sobrang taas!</p>
-        <p style="margin-top:.5rem">✨ Features: Custom rocket character, 🔥 flame thruster, 💨 smoke trails, smooth gravity, score + high score.</p>
+        <p><strong>Improved Physics:</strong> Jump height balanced perfectly — not too high, not too low.</p>
+        <p style="margin-top:.5rem">✨ Features: Custom rocket design, realistic engine flames, smooth smoke effects, accurate gravity, and high score tracking.</p>
         <div class="project-links">
-          <a href="flappy.html" target="_blank">▶ CLICK TO PLAY →</a>
+          <a href="flappy.html" target="_blank">▶ CLICK TO PLAY</a>
         </div>
       </div>
     </a>
     <a href="https://github.com/Jaydong922/cyberjayd-security-lab" class="project-card" target="_blank">
       <div class="project-head">
-        <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2 <span class="project-tag">FLAGSHIP ACTIVE</span></h3>
+        <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2 <span class="project-tag">FLAGSHIP PROJECT</span></h3>
       </div>
       <div class="project-body">
-        <p>All-in-one fully configured security toolkit designed to run perfectly on Android via Termux. Includes subdomain enumeration, live host detection, SSRF testing, and full automation.</p>
+        <p>An all-in-one security toolkit designed to run smoothly on Android devices via Termux. Includes subdomain scanning, host detection, vulnerability testing, and full automation capabilities.</p>
         <div class="project-links">
-          <a href="https://jaydong922.github.io/cyberjayd-security-lab" target="_blank">🌐 LIVE SITE</a>
-          <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">📂 SOURCE</a>
+          <a href="https://jaydong922.github.io/cyberjayd-security-lab" target="_blank">🌐 LIVE DEMO</a>
+          <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">📂 SOURCE CODE</a>
         </div>
       </div>
     </a>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="sec-head">
     <span class="sec-num">06</span>
-    <h2>CONTACT_&_CONNECT</h2>
+    <h2>CONTACT INFORMATION</h2>
   </div>
   <div class="contact-grid">
     <div class="contact-item">
-      <div class="contact-label">EMAIL</div>
+      <div class="contact-label">EMAIL ADDRESS</div>
       <div class="contact-value"><a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div>
     </div>
     <div class="contact-item">
@@ -630,58 +610,57 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="logo">CYBERJAYD</div>
   <div class="footer-line"></div>
-  <p>Global Ethical Security • Software Development • Mobile Tech Solutions</p>
-  <p class="footer-sig">© 2026 JAYD F. REPOBERBIO | Built 100% on Android • Termux • Ubuntu</p>
+  <div class="footer-desc">
+    Providing professional web development, ethical security testing, and technical solutions for individuals and businesses worldwide. Quality, security, and client satisfaction are our top priorities.
+  </div>
+  <p>© 2026 Jayd F. Repoberbio | All Rights Reserved</p>
+  <p class="footer-sig">Designed & Developed 100% on Android • Termux • Ubuntu</p>
 </footer>
 
 </div>
 
-<!-- ENHANCED MATRIX -->
 <script>
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>+-=*/?@#$%^&';
-const fontSize = 15;
+const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>+-=*/?@#$%^&';
+const fontSize = 14;
 const columns = canvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
-const speeds = Array.from({length:drops.length},()=>Math.random()*0.8+0.2);
+const speeds = Array.from({length:drops.length},()=>Math.random()*0.7+0.3);
 
 function drawMatrix() {
-  ctx.fillStyle = 'rgba(1,1,8,0.06)';
+  ctx.fillStyle = 'rgba(1,1,8,0.07)';
   ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.font = fontSize + 'px "Share Tech Mono", monospace';
   for(let i=0;i<drops.length;i++){
     const text = chars[Math.floor(Math.random()*chars.length)];
-    const alpha = Math.min(1, drops[i]/20);
-    ctx.fillStyle = `rgba(0,217,255,${alpha*0.8})`;
+    const alpha = Math.min(1, drops[i]/25);
+    ctx.fillStyle = `rgba(0,217,255,${alpha*0.7})`;
     ctx.fillText(text, i*fontSize, drops[i]*fontSize);
     if(drops[i]*fontSize > canvas.height && Math.random()>0.98) drops[i] = 0;
     drops[i] += speeds[i];
   }
 }
-setInterval(drawMatrix, 40);
+setInterval(drawMatrix, 45);
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
 </script>
 
-<!-- === PERFECTED 3D EARTH ENGINE === -->
 <script>
 const earthCanvas = document.getElementById('earth-canvas');
 const eCtx = earthCanvas.getContext('2d');
 const container = document.getElementById('earth-container');
 
-// Resize
 function resizeEarth(){
-  const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.92;
   earthCanvas.width = size * 2;
   earthCanvas.height = size * 2;
   container.style.width = size + 'px';
@@ -690,21 +669,19 @@ function resizeEarth(){
 resizeEarth();
 window.addEventListener('resize', resizeEarth);
 
-// MOTION SETTINGS — FASTER & SMOOTHER
 let rotationX = 0.2;
 let rotationY = 0;
 let autoRotate = true;
 let lastX = 0, lastY = 0;
 let isDragging = false;
-const dragSensitivity = 0.008; // Mas mabilis ang pag-ikot pag-swipe
-const autoSpeed = 0.012; // Mas mabilis na auto-rotate
+let dragVelocity = {x:0, y:0};
+const dragSensitivity = 0.01;
+const autoSpeed = 0.015;
 
-// === DETAILED EARTH DATA ===
 const elements = [];
-const latSteps = 24;
-const lonSteps = 40;
+const latSteps = 32;
+const lonSteps = 48;
 
-// 1. Earth surface points (mas detalyado)
 for(let lat=0; lat<latSteps; lat++){
   const theta = (lat / latSteps) * Math.PI;
   const sinT = Math.sin(theta);
@@ -717,59 +694,77 @@ for(let lat=0; lat<latSteps; lat++){
     const y = cosT;
     const z = sinT * sinP;
     
-    // Mas detalyadong kulay: dagat, lupa, yelo
     let type = 'ocean';
-    const rand = Math.random();
-    if(rand > 0.78) type = 'land';
-    if((lat<4 || lat>latSteps-4) && rand>0.6) type = 'ice';
+    const noise = Math.random();
+    if(
+      (lat>8 && lat<18 && lon>10 && lon<25) ||
+      (lat>5 && lat<15 && lon>25 && lon<40) ||
+      (lat>8 && lat<20 && lon>45 && lon<60) ||
+      (lat>10 && lat<25 && lon>65 && lon<85) ||
+      (lat>15 && lat<22 && lon>88 && lon<100) ||
+      (lat>20 && lat<28 && lon>105 && lon<120)
+    ) type = 'land';
+    if(lat<3 || lat>latSteps-3) type = 'ice';
+    if(noise>0.85) type = 'cloud';
     
-    elements.push({x,y,z, type, size: 1.2 + Math.random()*0.8});
+    elements.push({x,y,z, type, size: 1.0 + Math.random()*1.2});
   }
 }
 
-// 2. Floating Math & Data (SUMUSUNOD SA IKOT NG EARTH)
-const mathFormulas = [
-  '∫f(x)dx = F(x)+C', 'E=mc²', 'a²+b²=c²', '∇·E = ρ/ε₀',
-  'lim(x→∞) f(x)', '∑ₙ=1^∞ 1/n²', 'F=ma', '∂²u/∂t² = c²∇²u',
-  'v = u + at', 'P=VI', 'logₐ(b) = ln(b)/ln(a)'
-];
-mathFormulas.forEach((txt,i)=>{
-  const ang = (i/mathFormulas.length) * Math.PI*2;
-  const r = 1.4 + Math.random()*0.4;
+const shipCount = 12;
+for(let i=0;i<shipCount;i++){
+  const ang = (i/shipCount) * Math.PI*2;
+  const orbitRadius = 1.5 + Math.random()*0.6;
   elements.push({
-    x: Math.cos(ang)*r, y: (Math.random()-0.5)*1.2, z: Math.sin(ang)*r,
-    type: 'math', text: txt, size: 0.7, rotOffset: Math.random()*Math.PI*2
-  });
-});
-
-// 3. Orbiting Satellites & Glitters
-for(let i=0;i<20;i++){
-  const ang = Math.random()*Math.PI*2;
-  const r = 1.6 + Math.random()*0.6;
-  elements.push({
-    x: Math.cos(ang)*r, y: (Math.random()-0.5)*0.8, z: Math.sin(ang)*r,
-    type: 'satellite', size: 0.4 + Math.random()*0.6,
-    speed: 0.5 + Math.random()*1.5, phase: Math.random()*Math.PI*2
+    x: Math.cos(ang)*orbitRadius,
+    y: (Math.random()-0.5)*1.0,
+    z: Math.sin(ang)*orbitRadius,
+    type: 'spaceship',
+    size: 1.8 + Math.random()*1.2,
+    baseSpeed: 0.6 + Math.random()*1.2,
+    phase: Math.random()*Math.PI*2,
+    enginePower: 0,
+    lastRotY: 0
   });
 }
 
-// 4. Orbit Rings
-for(let i=0;i<80;i++){
-  const ang = (i/80)*Math.PI*2;
-  const r = 2.0;
+for(let i=0;i<350;i++){
+  const ang = Math.random()*Math.PI*2;
+  const r = 1.2 + Math.random()*2.0;
+  elements.push({
+    x: Math.cos(ang)*r,
+    y: (Math.random()-0.5)*1.8,
+    z: Math.sin(ang)*r,
+    type: 'star',
+    size: 0.2 + Math.random()*0.5,
+    twinkle: Math.random()*Math.PI*2
+  });
+}
+
+for(let i=0;i<100;i++){
+  const ang = (i/100)*Math.PI*2;
+  const r = 2.1;
   elements.push({
     x: Math.cos(ang)*r, y: 0, z: Math.sin(ang)*r,
-    type: 'ring', size: 0.3
+    type: 'ring', size: 0.35
+  });
+}
+for(let i=0;i<15;i++){
+  const ang = Math.random()*Math.PI*2;
+  const r = 1.8 + Math.random()*0.5;
+  elements.push({
+    x: Math.cos(ang)*r, y: (Math.random()-0.5)*0.6, z: Math.sin(ang)*r,
+    type: 'satellite', size: 0.6 + Math.random()*0.6
   });
 }
 
-// === SWIPE/DRAG CONTROLS — GUMAGANA NA 100% ===
 function startDrag(e){
   isDragging = true;
   autoRotate = false;
   const touch = e.touches ? e.touches[0] : e;
   lastX = touch.clientX;
   lastY = touch.clientY;
+  dragVelocity = {x:0, y:0};
 }
 function moveDrag(e){
   if(!isDragging) return;
@@ -777,6 +772,8 @@ function moveDrag(e){
   const touch = e.touches ? e.touches[0] : e;
   const dx = (touch.clientX - lastX) * dragSensitivity;
   const dy = (touch.clientY - lastY) * dragSensitivity;
+  dragVelocity.x = dx;
+  dragVelocity.y = dy;
   rotationY += dx;
   rotationX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotationX + dy));
   lastX = touch.clientX;
@@ -784,7 +781,7 @@ function moveDrag(e){
 }
 function endDrag(){
   isDragging = false;
-  setTimeout(()=>autoRotate = true, 6000); // Bumalik sa auto-rotate pag matagal di nagalaw
+  setTimeout(()=>autoRotate = true, 8000);
 }
 
 container.addEventListener('mousedown', startDrag);
@@ -795,15 +792,14 @@ container.addEventListener('touchstart', startDrag, {passive:false});
 container.addEventListener('touchmove', moveDrag, {passive:false});
 container.addEventListener('touchend', endDrag);
 
-// === PROJECTION & ROTATION ===
 function project(x,y,z){
-  const scale = earthCanvas.width / 2.2;
-  const perspective = 3.2;
+  const scale = earthCanvas.width / 2.0;
+  const perspective = 3.0;
   const factor = perspective / (perspective + z);
   return {
     x: earthCanvas.width/2 + x * scale * factor,
     y: earthCanvas.height/2 + y * scale * factor,
-    size: Math.max(0.3, factor)
+    size: Math.max(0.2, factor)
   };
 }
 
@@ -816,96 +812,1126 @@ function rotatePoint(p, rx, ry){
   return {x, y:newY, z:newZ};
 }
 
-// === RENDER LOOP ===
 function renderEarth(){
   eCtx.clearRect(0,0,earthCanvas.width,earthCanvas.height);
   
-  // Auto-rotate
   if(autoRotate) rotationY += autoSpeed;
+  if(!isDragging){
+    rotationY += dragVelocity.x * 0.85;
+    rotationX += dragVelocity.y * 0.85;
+    dragVelocity.x *= 0.92;
+    dragVelocity.y *= 0.92;
+  }
 
-  // Update & sort elements
   const now = Date.now()/1000;
   const sorted = elements.map(p=>{
     let px = p.x, py = p.y, pz = p.z;
-    // Satellites orbit
-    if(p.type === 'satellite'){
-      const ang = now * p.speed + p.phase;
+    let speedFactor = 1;
+
+    if(p.type === 'spaceship'){
+      const ang = now * p.baseSpeed + p.phase;
       px = Math.cos(ang)*Math.sqrt(p.x*p.x + p.z*p.z);
       pz = Math.sin(ang)*Math.sqrt(p.x*p.x + p.z*p.z);
+      
+      const currentRot = rotationY;
+      const rotDiff = Math.abs(currentRot - p.lastRotY);
+      speedFactor = Math.min(2.2, 0.8 + rotDiff * 40);
+      p.enginePower = Math.max(0, Math.min(1, speedFactor * 0.6));
+      p.lastRotY = currentRot;
     }
-    // Math slight float wobble
-    if(p.type === 'math'){
-      py += Math.sin(now*1.5 + p.rotOffset)*0.05;
+
+    if(p.type === 'star'){
+      py += Math.sin(now*2 + p.twinkle)*0.02;
     }
+
     const rp = rotatePoint({x:px,y:py,z:pz}, rotationX, rotationY);
-    return { ...rp, orig:p };
+    return { ...rp, orig:p, speedFactor };
   }).sort((a,b)=>a.z - b.z);
 
-  // Draw all elements
   sorted.forEach(p=>{
     const proj = project(p.x, p.y, p.z);
     if(proj.x < 0 || proj.x > earthCanvas.width || proj.y < 0 || proj.y > earthCanvas.height) return;
-    if(p.z < -1.5) return; // Itago kung nasa likod na
+    if(p.z < -1.6) return;
 
-    const light = Math.max(0.2, Math.min(1, p.z * 0.7 + 0.6));
+    const light = Math.max(0.15, Math.min(1, p.z * 0.7 + 0.65));
 
-    // Earth surface
     if(p.orig.type === 'ocean'){
-      eCtx.fillStyle = `rgba(0, ${Math.floor(120*light)}, ${Math.floor(200*light)}, ${light*0.9})`;
-      eCtx.shadowColor = '#00d9ff';
-      eCtx.shadowBlur = 4*proj.size;
+      eCtx.fillStyle = `rgba(0, ${Math.floor(100*light)}, ${Math.floor(200*light)}, ${light*0.9})`;
+      eCtx.shadowColor = '#0099ff';
+      eCtx.shadowBlur = 3*proj.size;
       eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
     } else if(p.orig.type === 'land'){
-      eCtx.fillStyle = `rgba(0, ${Math.floor(150*light)}, ${Math.floor(80*light)}, ${light*0.9})`;
-      eCtx.shadowColor = '#00ffd5';
-      eCtx.shadowBlur = 5*proj.size;
+      eCtx.fillStyle = `rgba(20, ${Math.floor(140*light)}, ${Math.floor(70*light)}, ${light*0.95})`;
+      eCtx.shadowColor = '#00ff88';
+      eCtx.shadowBlur = 4*proj.size;
       eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
     } else if(p.orig.type === 'ice'){
-      eCtx.fillStyle = `rgba(220, 240, 255, ${light*0.8})`;
+      eCtx.fillStyle = `rgba(240, 250, 255, ${light*0.85})`;
       eCtx.shadowColor = '#ffffff';
       eCtx.shadowBlur = 3*proj.size;
       eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
+    } else if(p.orig.type === 'cloud'){
+      eCtx.fillStyle = `rgba(255, 255, 255, ${light*0.35})`;
+      eCtx.shadowBlur = 0;
+      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size*1.3, 0, Math.PI*2); eCtx.fill();
     }
 
-    // Math Formulas
-    if(p.orig.type === 'math'){
-      eCtx.font = `${14*proj.size}px "Share Tech Mono"`;
-      eCtx.fillStyle = `rgba(0,255,213,${light*0.7})`;
-      eCtx.shadowColor = '#00ffd5';
-      eCtx.shadowBlur = 8*proj.size;
-      eCtx.fillText(p.orig.text, proj.x, proj.y);
-    }
+    if(p.orig.type === 'spaceship'){
+      const s = proj.size * proj.size * 12;
+      const engine = p.orig.enginePower;
 
-    // Satellites / Glitters
-    if(p.orig.type === 'satellite'){
-      eCtx.fillStyle = `rgba(0,217,255,${light*0.9})`;
+      eCtx.fillStyle = `rgba(180, 220, 255, ${light})`;
       eCtx.shadowColor = '#00d9ff';
-      eCtx.shadowBlur = 10*proj.size;
-      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size*0.5, 0, Math.PI*2); eCtx.fill();
+      eCtx.shadowBlur = 8*proj.size;
+      eCtx.beginPath();
+      eCtx.moveTo(proj.x + s*0.8, proj.y);
+      eCtx.lineTo(proj.x - s*0.4, proj.y - s*0.3);
+      eCtx.lineTo(proj.x - s*0.4, proj.y + s*0.3);
+      eCtx.closePath();
+      eCtx.fill();
+
+      if(engine > 0.1){
+        const flameLen = s * (0.5 + engine * 1.5);
+        const grad = eCtx.createLinearGradient(proj.x - s*0.4, proj.y, proj.x - s*0.4 - flameLen, proj.y);
+        grad.addColorStop(0, `rgba(255, 255, 200, ${engine * light})`);
+        grad.addColorStop(0.4, `rgba(255, 120, 50, ${engine * light * 0.8})`);
+        grad.addColorStop(1, `rgba(255, 50, 0, 0)`);
+
+        eCtx.fillStyle = grad;
+        eCtx.beginPath();
+        eCtx.moveTo(proj.x - s*0.4, proj.y - s*0.15);
+        eCtx.lineTo(proj.x - s*0.4 - flameLen, proj.y);
+        eCtx.lineTo(proj.x - s*0.4, proj.y + s*0.15);
+        eCtx.closePath();
+        eCtx.fill();
+
+        if(engine > 0.3){
+          for(let sm=0; sm<3; sm++){
+            const smokeX = proj.x - s*0.5 - Math.random()*flameLen*0.6;
+            const smokeY = proj.y + (Math.random()-0.5)*s*0.4;
+            const smokeSize = (0.2 + Math.random()*0.4) * proj.size;
+            const smokeAlpha = engine * 0.3 * (1 - Math.random()*0.5);
+            eCtx.fillStyle = `rgba(200, 220, 255, ${smokeAlpha})`;
+            eCtx.beginPath();
+            eCtx.arc(smokeX, smokeY, smokeSize, 0, Math.PI*2);
+            eCtx.fill();
+          }
+        }
+      }
     }
 
-    // Orbit Rings
+    if(p.orig.type === 'star'){
+      const twinkle = 0.5 + Math.sin(now * 3 + p.orig.twinkle) * 0.5;
+      eCtx.fillStyle = `rgba(220, 240, 255, ${light * twinkle * 0.9})`;
+      eCtx.shadowColor = '#ffffff';
+      eCtx.shadowBlur = 6 * proj.size;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size * 0.8, 0, Math.PI*2);
+      eCtx.fill();
+    }
+
     if(p.orig.type === 'ring'){
-      eCtx.fillStyle = `rgba(0,217,255,${light*0.3})`;
-      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
+      eCtx.fillStyle = `rgba(0, 217, 255, ${light * 0.35})`;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size, 0, Math.PI*2);
+      eCtx.fill();
+    }
+
+    if(p.orig.type === 'satellite'){
+      eCtx.fillStyle = `rgba(0, 255, 213, ${light * 0.9})`;
+      eCtx.shadowColor = '#00ffd5';
+      eCtx.shadowBlur = 10 * proj.size;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size * 0.6, 0, Math.PI*2);
+      eCtx.fill();
     }
   });
 
-  // Atmosphere glow
-  const grad = eCtx.createRadialGradient(
+  const atmGrad = eCtx.createRadialGradient(
     earthCanvas.width/2, earthCanvas.height/2, 0,
-    earthCanvas.width/2, earthCanvas.height/2, earthCanvas.width/2
-  );
-  grad.addColorStop(0, 'rgba(0,217,255,0)');
-  grad.addColorStop(0.6, 'rgba(0,255,213,0.1)');
-  grad.addColorStop(1, 'rgba(0,217,255,0)');
-  eCtx.fillStyle = grad;
-  eCtx.fillRect(0,0,earthCanvas.width,earthCanvas.height);
+   
+earthCanvas.width/2, earthCanvas.height/2, earthCanvas.width/1.8
+);
+atmGrad.addColorStop(0, 'rgba(0, 217, 255, 0)');
+atmGrad.addColorStop(0.55, 'rgba(0, 255, 213, 0.12)');
+atmGrad.addColorStop(1, 'rgba(0, 217, 255, 0)');
+eCtx.fillStyle = atmGrad;
+eCtx.fillRect(0, 0, earthCanvas.width, earthCanvas.height);
 
-  requestAnimationFrame(renderEarth);
+requestAnimationFrame(renderEarth);
 }
 renderEarth();
 </script>
 
 </body>
 </html>
+
+cat > index.html << 'FINALFIXED'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CYBERJAYD | Professional Web & Security Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --prime:#00d9ff;
+  --accent:#00ffd5;
+  --dark:#050710;
+  --darker:#020205;
+  --glass:rgba(10,15,30,0.75);
+  --border:rgba(0,217,255,0.3);
+  --text:#e0f7ff;
+  --muted:#7aa8c8;
+  --space-dark:#010108;
+  --nebula-1:rgba(0,180,255,0.18);
+  --nebula-2:rgba(120,0,255,0.12);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%,var(--nebula-1),transparent 55%),
+    radial-gradient(circle at 85% 80%,var(--nebula-2),transparent 55%),
+    linear-gradient(180deg,var(--space-dark) 0%,var(--darker) 100%);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
+.mono{font-family:'Share Tech Mono',monospace}
+
+#matrix{position:fixed;inset:0;z-index:0;opacity:.12}
+.grid-bg{
+  position:fixed;inset:0;z-index:1;
+  background:
+    linear-gradient(var(--border) 1px,transparent 1px) 0 0/50px 50px,
+    linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/50px 50px;
+  opacity:.06;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);
+}
+#galaxy-bg{
+  position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(10,20,40,0) 0%,rgba(0,0,5,0.9) 100%);
+}
+.wrap{position:relative;z-index:10;width:100%}
+
+#earth-container{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(600px,92vw);
+  height:min(600px,92vw);
+  z-index:2;
+  touch-action:none;
+  user-select:none;
+  cursor:grab;
+}
+#earth-container:active{cursor:grabbing}
+#earth-canvas{
+  width:100%;height:100%;
+  filter:drop-shadow(0 0 100px rgba(0,217,255,0.5));
+}
+
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,7,16,.9);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:.9rem 0;
+  width:100%;
+}
+.nav-inner{
+  max-width:1250px;margin:0 auto;padding:0 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.5rem;font-weight:900;
+  color:var(--prime);
+  text-shadow:0 0 25px rgba(0,217,255,.7);
+  letter-spacing:1px;
+}
+.nav-links{display:flex;gap:1.3rem;flex-wrap:wrap;align-items:center}
+.nav-links a{
+  color:#b8d8ee;text-decoration:none;font-weight:600;
+  font-size:.98rem;transition:.25s;position:relative;padding:.25rem 0;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--prime),var(--accent));transition:.25s;
+}
+.nav-links a:hover{color:var(--prime);text-shadow:0 0 10px var(--prime)}
+.nav-links a:hover::after{width:100%}
+
+.hero{
+  min-height:92vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:3rem 1.5rem;
+  position:relative;
+}
+.hero-num{
+  font-family:'Share Tech Mono',monospace;
+  color:var(--muted);font-size:.85rem;letter-spacing:.2em;
+  margin-bottom:1rem;
+}
+.hero h1{
+  font-size:clamp(2.8rem,7vw,5rem);
+  font-weight:900;
+  background:linear-gradient(135deg,var(--prime) 0%,var(--accent) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(0,217,255,.5));
+  margin-bottom:.8rem;
+  line-height:1.05;
+}
+.hero hr{
+  width:120px;height:2px;border:none;
+  background:linear-gradient(90deg,transparent,var(--prime),transparent);
+  margin:1rem auto;opacity:.7;
+}
+.hero-sub{
+  font-size:clamp(1rem,2.2vw,1.35rem);
+  color:#9fc8e0;
+  letter-spacing:1px;
+  max-width:900px;
+  margin-bottom:2rem;
+}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn{
+  padding:.85rem 1.9rem;border-radius:8px;
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;
+  text-decoration:none;cursor:pointer;border:1px solid var(--prime);
+  transition:.3s all;position:relative;overflow:hidden;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--prime),var(--accent));
+  color:#020205;
+  box-shadow:0 0 25px rgba(0,217,255,.5);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,217,255,.7)}
+.btn-outline{background:transparent;color:var(--prime)}
+.btn-outline:hover{background:var(--prime);color:#020205;box-shadow:0 0 30px rgba(0,217,255,.5)}
+
+section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position:relative;z-index:15}
+.sec-head{
+  display:flex;align-items:baseline;gap:1rem;
+  margin-bottom:2.5rem;
+  border-bottom:1px solid var(--border);
+  padding-bottom:.8rem;
+}
+.sec-num{
+  font-family:'Share Tech Mono',monospace;
+  font-size:1.1rem;color:var(--accent);font-weight:700;
+}
+.sec-head h2{
+  font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(90deg,var(--text),var(--prime));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.about-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:2rem;
+  backdrop-filter:blur(14px);
+  line-height:1.85;
+  font-size:1.05rem;
+  box-shadow:0 0 25px rgba(0,217,255,0.08);
+}
+.about-card p{margin-bottom:1rem;color:#cfe8f5}
+.about-card strong{color:var(--prime)}
+.about-status{
+  margin-top:1.2rem;padding-top:1rem;
+  border-top:1px dashed var(--border);
+  font-family:'Share Tech Mono',monospace;
+  color:var(--accent);font-weight:700;
+}
+
+.why-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;
+}
+.why-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+  backdrop-filter:blur(12px);
+  transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
+}
+.why-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 15px 35px rgba(0,217,255,.18)}
+.why-card h3{
+  font-size:1.1rem;color:var(--prime);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.why-card p{color:#b8d4e6;font-size:.98rem}
+
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.4rem;
+}
+.skill-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:1.6rem;
+  backdrop-filter:blur(12px);
+  transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
+}
+.skill-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 15px 35px rgba(0,217,255,.18)}
+.skill-card h3{
+  font-size:1.2rem;color:var(--prime);margin-bottom:1rem;
+}
+.skill-list{display:grid;gap:.5rem;margin-bottom:1rem;color:#cfe0ee}
+.skill-list div::before{content:'▸ ';color:var(--accent);font-weight:700}
+.skill-bar{
+  height:8px;background:rgba(255,255,255,.08);
+  border-radius:4px;overflow:hidden;margin-top:.5rem;
+}
+.skill-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--prime),var(--accent));
+  box-shadow:0 0 15px rgba(0,217,255,.6);
+  position:relative;
+}
+.skill-fill::after{
+  content:attr(data-val);
+  position:absolute;right:8px;top:-1.3rem;
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:var(--accent);font-weight:700;
+}
+
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.4rem;
+}
+.service-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:1.7rem;
+  backdrop-filter:blur(12px);
+  transition:.3s;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
+}
+.service-card:hover{transform:translateY(-6px);border-color:var(--prime);box-shadow:0 18px 45px rgba(0,217,255,.2)}
+.service-card.best::before{
+  content:'MOST POPULAR';
+  position:absolute;top:18px;right:-35px;
+  background:linear-gradient(90deg,var(--accent),var(--prime));
+  color:#020205;font-size:.7rem;font-weight:900;
+  padding:.25rem 2.5rem;transform:rotate(40deg);
+  font-family:'Orbitron',sans-serif;letter-spacing:1px;
+}
+.service-card h3{
+  font-size:1.2rem;color:var(--text);margin-bottom:.5rem;
+}
+.service-price{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  color:var(--accent);
+  margin:.8rem 0 1rem;
+  text-shadow:0 0 15px rgba(0,255,213,.45);
+}
+.service-list{display:grid;gap:.45rem;color:#c5ddee;font-size:.98rem}
+.service-list div::before{content:'✓ ';color:var(--prime);font-weight:700}
+
+.projects-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;
+}
+.project-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(12px);
+  transition:.35s all;
+  text-decoration:none;color:inherit;
+  display:block;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
+}
+.project-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  border-color:var(--prime);
+  box-shadow:0 25px 55px rgba(0,217,255,.25);
+}
+.project-head{
+  padding:1.4rem;
+  background:linear-gradient(135deg,rgba(0,217,255,.18),rgba(0,255,213,.1));
+  border-bottom:1px solid var(--border);
+}
+.project-head h3{
+  font-size:1.1rem;color:var(--prime);
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+}
+.project-tag{
+  margin-left:auto;
+  font-size:.7rem;font-family:'Share Tech Mono',monospace;
+  padding:.2rem .6rem;border-radius:4px;
+  background:rgba(0,255,213,.15);color:var(--accent);
+  border:1px solid rgba(0,255,213,.3);
+  font-weight:700;
+}
+.project-body{padding:1.4rem}
+.project-body p{color:#c2daea;font-size:1rem}
+.project-links{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  margin-top:1rem;padding-top:1rem;
+  border-top:1px dashed var(--border);
+}
+.project-links a{
+  color:var(--prime);text-decoration:none;
+  font-weight:600;font-size:.95rem;
+  transition:.2s;
+}
+.project-links a:hover{color:var(--accent);text-shadow:0 0 8px var(--accent)}
+
+.flappy-card{
+  border:2px solid var(--accent);
+  box-shadow:0 0 35px rgba(0,255,213,.3);
+  animation:flappyGlow 2.5s ease-in-out infinite;
+}
+@keyframes flappyGlow{
+  0%,100%{box-shadow:0 0 30px rgba(0,255,213,.25)}
+  50%{box-shadow:0 0 50px rgba(0,255,213,.5)}
+}
+.flappy-card .project-head{
+  background:linear-gradient(135deg,rgba(0,255,213,.25),rgba(0,217,255,.18));
+}
+.flappy-card .project-head h3{color:var(--accent)}
+
+.contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;
+  margin-bottom:2rem;
+}
+.contact-item{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.3rem;
+  backdrop-filter:blur(12px);
+  transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
+}
+.contact-item:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,217,255,.15)}
+.contact-label{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.15em;
+  margin-bottom:.3rem;
+}
+.contact-value{font-size:1.05rem;font-weight:600;color:var(--text)}
+.contact-value a{color:var(--prime);text-decoration:none;transition:.2s}
+.contact-value a:hover{color:var(--accent)}
+
+footer{
+  text-align:center;padding:2.5rem 1.5rem 1.8rem;
+  border-top:1px solid var(--border);
+  margin-top:3rem;
+  background:rgba(2,2,5,.7);
+  width:100%;
+  backdrop-filter:blur(8px);
+}
+footer .logo{font-size:1.6rem;margin-bottom:.5rem}
+footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
+.footer-line{
+  max-width:500px;height:1px;margin:1rem auto;
+  background:linear-gradient(90deg,transparent,var(--prime),transparent);
+}
+.footer-sig{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:#5a8098;margin-top:.8rem;
+  letter-spacing:.05em;
+}
+.footer-desc{
+  max-width:700px;margin:0 auto 1rem;
+  font-size:1rem;color:#a0c8e0;
+  line-height:1.7;
+}
+
+@media(max-width:600px){
+  .nav-inner{justify-content:center}
+  .hero{min-height:85vh;padding-top:2rem}
+  section{padding:3.5rem 1.2rem}
+  #earth-container{width:90vw;height:90vw}
+}
+</style>
+</head>
+<body>
+
+<div id="galaxy-bg"></div>
+<canvas id="matrix"></canvas>
+<div class="grid-bg"></div>
+
+<div id="earth-container">
+  <canvas id="earth-canvas"></canvas>
+</div>
+
+<div class="wrap">
+
+<nav>
+<div class="nav-inner">
+  <div class="logo">CYBERJAYD</div>
+  <div class="nav-links">
+    <a href="#about">ABOUT</a>
+    <a href="#why">WHY US</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#services">SERVICES</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="flappy.html">PLAY GAME</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-num">01</div>
+  <h1>CYBERJAYD</h1>
+  <hr>
+  <p class="hero-sub">
+    GLOBAL GRID // SECTOR 7 — ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECHNOLOGY.<br>
+    CLEAN DESIGN, MAXIMUM PERFORMANCE.
+  </p>
+  <div class="hero-buttons">
+    <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
+    <a href="#contact" class="btn btn-outline">HIRE ME</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>ABOUT ME</h2>
+  </div>
+  <div class="about-card">
+    <p>I am <strong>Jayd F. Repoberbio</strong>, a dedicated Web Engineer and Ethical Security Researcher. I specialize in creating high-quality, lightweight digital solutions optimized for mobile devices and all platforms.</p>
+    <p>Currently a first-year college student pursuing a Bachelor of Secondary Education in English at FCIC Baybay City, Leyte. I am entirely self-taught in information technology and programming, having built my skills through continuous learning, research, and hands-on practice.</p>
+    <p>My focus is on delivering modern, secure, and efficient websites, automation tools, and security assessments. I aim to provide world-class services while remaining accessible and professional.</p>
+    <p>I believe that passion, hard work, and attention to detail can overcome any barrier. I am committed to every project I take on, ensuring quality and client satisfaction.</p>
+    <p class="about-status">> STATUS: ONLINE • ACCEPTING PROJECTS WORLDWIDE • RESPONSE TIME: UNDER 24 HOURS</p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>WHY CHOOSE CYBERJAYD</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><h3>✅ HIGH QUALITY STANDARDS</h3><p>Every project is crafted with precision, tested thoroughly, and built to last. I treat your work as my own.</p></div>
+    <div class="why-card"><h3>📱 MOBILE-FIRST DESIGN</h3><p>Designed and tested primarily on mobile devices to ensure perfect performance on phones and tablets.</p></div>
+    <div class="why-card"><h3>💲 FAIR & TRANSPARENT PRICING</h3><p>Clear pricing with no hidden fees or extra charges. You get exactly what you pay for.</p></div>
+    <div class="why-card"><h3>🛡️ FULLY ETHICAL PRACTICES</h3><p>All security services follow legal and ethical guidelines strictly. Your safety and privacy are always prioritized.</p></div>
+    <div class="why-card"><h3>⚡ FAST & RELIABLE SUPPORT</h3><p>Quick response times and dedicated support until your project is fully completed and working.</p></div>
+    <div class="why-card"><h3>🌍 GLOBAL-LEVEL EXPERTISE</h3><p>Delivering professional results that match international standards, right here from the Philippines.</p></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>CORE SKILLS & EXPERTISE</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>🔐 CYBERSECURITY</h3>
+      <div class="skill-list">
+        <div>Ethical Security Research</div>
+        <div>Vulnerability Assessment</div>
+        <div>Bug Bounty Testing</div>
+        <div>Network & Web Analysis</div>
+        <div>Security Reporting</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%" data-val="80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <h3>💻 SOFTWARE DEVELOPMENT</h3>
+      <div class="skill-list">
+        <div>Python Scripting</div>
+        <div>Shell & Bash Automation</div>
+        <div>HTML / CSS / JavaScript</div>
+        <div>Responsive Web Design</div>
+        <div>Custom Tool Creation</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:100%" data-val="100%"></div></div>
+    </div>
+    <div class="skill-card">
+      <h3>📡 PLATFORM & SYSTEMS</h3>
+      <div class="skill-list">
+        <div>Linux & Termux Setup</div>
+        <div>Mobile Optimization</div>
+        <div>Version Control (GitHub)</div>
+        <div>Cloud Deployment</div>
+        <div>System Performance Tuning</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%" data-val="85%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>SERVICES & PRICING</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card best">
+      <h3>🌐 PROFESSIONAL WEB DESIGN</h3>
+      <p style="color:var(--muted);font-size:.9rem">Clean, modern, and secure designs</p>
+      <div class="service-price">₱800 – ₱2,000</div>
+      <div class="service-list">
+        <div>Portfolio or Business Websites</div>
+        <div>Mobile-First Optimization</div>
+        <div>Free Deployment Guide</div>
+        <div>One Free Revision Included</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <h3>🔒 SECURITY AUDIT & TESTING</h3>
+      <p style="color:var(--muted);font-size:.9rem">Identify risks before attackers do</p>
+      <div class="service-price">₱1,000 – ₱2,500</div>
+      <div class="service-list">
+        <div>Automated & Manual Scanning</div>
+        <div>Complete Vulnerability Report</div>
+        <div>Step-by-Step Fix Guide</div>
+        <div>100% Legal & Ethical Service</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <h3>📱 TERMUX & LINUX SETUP</h3>
+      <p style="color:var(--muted);font-size:.9rem">Full installation and configuration</p>
+      <div class="service-price">₱300 – ₱800</div>
+      <div class="service-list">
+        <div>Fresh Installation & Setup</div>
+        <div>Essential Tools Pre-installed</div>
+        <div>Performance & Speed Boost</div>
+        <div>Complete User Guide</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <h3>⚙️ AUTOMATION SCRIPTS</h3>
+      <p style="color:var(--muted);font-size:.9rem">Work efficiently while you rest</p>
+      <div class="service-price">₱500 – ₱1,500</div>
+      <div class="service-list">
+        <div>Python or Bash Source Code</div>
+        <div>Fully Commented & Explained</div>
+        <div>Usage Documentation</div>
+        <div>Free Minor Updates</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>FEATURED PROJECTS</h2>
+  </div>
+  <div class="projects-grid">
+    <a href="flappy.html" class="project-card flappy-card" target="_blank">
+      <div class="project-head">
+        <h3>🚀 FLAPPY BLUES — ROCKET EDITION <span class="project-tag">PLAY NOW</span></h3>
+      </div>
+      <div class="project-body">
+        <p><strong>Improved Physics:</strong> Jump height balanced perfectly — not too high, not too low.</p>
+        <p style="margin-top:.5rem">✨ Features: Custom rocket design, realistic engine flames, smooth smoke effects, accurate gravity, and high score tracking.</p>
+        <div class="project-links">
+          <a href="flappy.html" target="_blank">▶ CLICK TO PLAY</a>
+        </div>
+      </div>
+    </a>
+    <a href="https://github.com/Jaydong922/cyberjayd-security-lab" class="project-card" target="_blank">
+      <div class="project-head">
+        <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2 <span class="project-tag">FLAGSHIP PROJECT</span></h3>
+      </div>
+      <div class="project-body">
+        <p>An all-in-one security toolkit designed to run smoothly on Android devices via Termux. Includes subdomain scanning, host detection, vulnerability testing, and full automation capabilities.</p>
+        <div class="project-links">
+          <a href="https://jaydong922.github.io/cyberjayd-security-lab" target="_blank">🌐 LIVE DEMO</a>
+          <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">📂 SOURCE CODE</a>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>CONTACT INFORMATION</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-label">EMAIL ADDRESS</div>
+      <div class="contact-value"><a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">LOCATION</div>
+      <div class="contact-value">Baybay City, Leyte, Philippines</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">RESPONSE TIME</div>
+      <div class="contact-value">Within 24 Hours</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">CYBERJAYD</div>
+  <div class="footer-line"></div>
+  <div class="footer-desc">
+    Providing professional web development, ethical security testing, and technical solutions for individuals and businesses worldwide. Quality, security, and client satisfaction are our top priorities.
+  </div>
+  <p>© 2026 Jayd F. Repoberbio | All Rights Reserved</p>
+  <p class="footer-sig">Designed & Developed 100% on Android • Termux • Ubuntu</p>
+</footer>
+
+</div>
+
+<script>
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>+-=*/?@#$%^&';
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+const speeds = Array.from({length:drops.length},()=>Math.random()*0.7+0.3);
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(1,1,8,0.07)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.font = fontSize + 'px "Share Tech Mono", monospace';
+  for(let i=0;i<drops.length;i++){
+    const text = chars[Math.floor(Math.random()*chars.length)];
+    const alpha = Math.min(1, drops[i]/25);
+    ctx.fillStyle = `rgba(0,217,255,${alpha*0.7})`;
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+    if(drops[i]*fontSize > canvas.height && Math.random()>0.98) drops[i] = 0;
+    drops[i] += speeds[i];
+  }
+}
+setInterval(drawMatrix, 45);
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+<script>
+const earthCanvas = document.getElementById('earth-canvas');
+const eCtx = earthCanvas.getContext('2d');
+const container = document.getElementById('earth-container');
+
+function resizeEarth(){
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.92;
+  earthCanvas.width = size * 2;
+  earthCanvas.height = size * 2;
+  container.style.width = size + 'px';
+  container.style.height = size + 'px';
+}
+resizeEarth();
+window.addEventListener('resize', resizeEarth);
+
+let rotationX = 0.2;
+let rotationY = 0;
+let autoRotate = true;
+let lastX = 0, lastY = 0;
+let isDragging = false;
+let dragVelocity = {x:0, y:0};
+const dragSensitivity = 0.01;
+const autoSpeed = 0.015;
+
+const elements = [];
+const latSteps = 32;
+const lonSteps = 48;
+
+for(let lat=0; lat<latSteps; lat++){
+  const theta = (lat / latSteps) * Math.PI;
+  const sinT = Math.sin(theta);
+  const cosT = Math.cos(theta);
+  for(let lon=0; lon<lonSteps; lon++){
+    const phi = (lon / lonSteps) * Math.PI * 2;
+    const sinP = Math.sin(phi);
+    const cosP = Math.cos(phi);
+    const x = sinT * cosP;
+    const y = cosT;
+    const z = sinT * sinP;
+    
+    let type = 'ocean';
+    const noise = Math.random();
+    if(
+      (lat>8 && lat<18 && lon>10 && lon<25) ||
+      (lat>5 && lat<15 && lon>25 && lon<40) ||
+      (lat>8 && lat<20 && lon>45 && lon<60) ||
+      (lat>10 && lat<25 && lon>65 && lon<85) ||
+      (lat>15 && lat<22 && lon>88 && lon<100) ||
+      (lat>20 && lat<28 && lon>105 && lon<120)
+    ) type = 'land';
+    if(lat<3 || lat>latSteps-3) type = 'ice';
+    if(noise>0.85) type = 'cloud';
+    
+    elements.push({x,y,z, type, size: 1.0 + Math.random()*1.2});
+  }
+}
+
+const shipCount = 12;
+for(let i=0;i<shipCount;i++){
+  const ang = (i/shipCount) * Math.PI*2;
+  const orbitRadius = 1.5 + Math.random()*0.6;
+  elements.push({
+    x: Math.cos(ang)*orbitRadius,
+    y: (Math.random()-0.5)*1.0,
+    z: Math.sin(ang)*orbitRadius,
+    type: 'spaceship',
+    size: 1.8 + Math.random()*1.2,
+    baseSpeed: 0.6 + Math.random()*1.2,
+    phase: Math.random()*Math.PI*2,
+    enginePower: 0,
+    lastRotY: 0
+  });
+}
+
+for(let i=0;i<350;i++){
+  const ang = Math.random()*Math.PI*2;
+  const r = 1.2 + Math.random()*2.0;
+  elements.push({
+    x: Math.cos(ang)*r,
+    y: (Math.random()-0.5)*1.8,
+    z: Math.sin(ang)*r,
+    type: 'star',
+    size: 0.2 + Math.random()*0.5,
+    twinkle: Math.random()*Math.PI*2
+  });
+}
+
+for(let i=0;i<100;i++){
+  const ang = (i/100)*Math.PI*2;
+  const r = 2.1;
+  elements.push({
+    x: Math.cos(ang)*r, y: 0, z: Math.sin(ang)*r,
+    type: 'ring', size: 0.35
+  });
+}
+for(let i=0;i<15;i++){
+  const ang = Math.random()*Math.PI*2;
+  const r = 1.8 + Math.random()*0.5;
+  elements.push({
+    x: Math.cos(ang)*r, y: (Math.random()-0.5)*0.6, z: Math.sin(ang)*r,
+    type: 'satellite', size: 0.6 + Math.random()*0.6
+  });
+}
+
+function startDrag(e){
+  isDragging = true;
+  autoRotate = false;
+  const touch = e.touches ? e.touches[0] : e;
+  lastX = touch.clientX;
+  lastY = touch.clientY;
+  dragVelocity = {x:0, y:0};
+}
+function moveDrag(e){
+  if(!isDragging) return;
+  e.preventDefault();
+  const touch = e.touches ? e.touches[0] : e;
+  const dx = (touch.clientX - lastX) * dragSensitivity;
+  const dy = (touch.clientY - lastY) * dragSensitivity;
+  dragVelocity.x = dx;
+  dragVelocity.y = dy;
+  rotationY += dx;
+  rotationX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotationX + dy));
+  lastX = touch.clientX;
+  lastY = touch.clientY;
+}
+function endDrag(){
+  isDragging = false;
+  setTimeout(()=>autoRotate = true, 8000);
+}
+
+container.addEventListener('mousedown', startDrag);
+container.addEventListener('mousemove', moveDrag);
+container.addEventListener('mouseup', endDrag);
+container.addEventListener('mouseleave', endDrag);
+container.addEventListener('touchstart', startDrag, {passive:false});
+container.addEventListener('touchmove', moveDrag, {passive:false});
+container.addEventListener('touchend', endDrag);
+
+function project(x,y,z){
+  const scale = earthCanvas.width / 2.0;
+  const perspective = 3.0;
+  const factor = perspective / (perspective + z);
+  return {
+    x: earthCanvas.width/2 + x * scale * factor,
+    y: earthCanvas.height/2 + y * scale * factor,
+    size: Math.max(0.2, factor)
+  };
+}
+
+function rotatePoint(p, rx, ry){
+  let x = p.x * Math.cos(ry) - p.z * Math.sin(ry);
+  let z = p.x * Math.sin(ry) + p.z * Math.cos(ry);
+  let y = p.y;
+  const newY = y * Math.cos(rx) - z * Math.sin(rx);
+  const newZ = y * Math.sin(rx) + z * Math.cos(rx);
+  return {x, y:newY, z:newZ};
+}
+
+function renderEarth(){
+  eCtx.clearRect(0,0,earthCanvas.width,earthCanvas.height);
+  
+  if(autoRotate) rotationY += autoSpeed;
+  if(!isDragging){
+    rotationY += dragVelocity.x * 0.85;
+    rotationX += dragVelocity.y * 0.85;
+    dragVelocity.x *= 0.92;
+    dragVelocity.y *= 0.92;
+  }
+
+  const now = Date.now()/1000;
+  const sorted = elements.map(p=>{
+    let px = p.x, py = p.y, pz = p.z;
+    let speedFactor = 1;
+
+    if(p.type === 'spaceship'){
+      const ang = now * p.baseSpeed + p.phase;
+      px = Math.cos(ang)*Math.sqrt(p.x*p.x + p.z*p.z);
+      pz = Math.sin(ang)*Math.sqrt(p.x*p.x + p.z*p.z);
+      
+      const currentRot = rotationY;
+      const rotDiff = Math.abs(currentRot - p.lastRotY);
+      speedFactor = Math.min(2.2, 0.8 + rotDiff * 40);
+      p.enginePower = Math.max(0, Math.min(1, speedFactor * 0.6));
+      p.lastRotY = currentRot;
+    }
+
+    if(p.type === 'star'){
+      py += Math.sin(now*2 + p.twinkle)*0.02;
+    }
+
+    const rp = rotatePoint({x:px,y:py,z:pz}, rotationX, rotationY);
+    return { ...rp, orig:p, speedFactor };
+  }).sort((a,b)=>a.z - b.z);
+
+  sorted.forEach(p=>{
+    const proj = project(p.x, p.y, p.z);
+    if(proj.x < 0 || proj.x > earthCanvas.width || proj.y < 0 || proj.y > earthCanvas.height) return;
+    if(p.z < -1.6) return;
+
+    const light = Math.max(0.15, Math.min(1, p.z * 0.7 + 0.65));
+
+    if(p.orig.type === 'ocean'){
+      eCtx.fillStyle = `rgba(0, ${Math.floor(100*light)}, ${Math.floor(200*light)}, ${light*0.9})`;
+      eCtx.shadowColor = '#0099ff';
+      eCtx.shadowBlur = 3*proj.size;
+      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
+    } else if(p.orig.type === 'land'){
+      eCtx.fillStyle = `rgba(20, ${Math.floor(140*light)}, ${Math.floor(70*light)}, ${light*0.95})`;
+      eCtx.shadowColor = '#00ff88';
+      eCtx.shadowBlur = 4*proj.size;
+      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
+    } else if(p.orig.type === 'ice'){
+      eCtx.fillStyle = `rgba(240, 250, 255, ${light*0.85})`;
+      eCtx.shadowColor = '#ffffff';
+      eCtx.shadowBlur = 3*proj.size;
+      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size, 0, Math.PI*2); eCtx.fill();
+    } else if(p.orig.type === 'cloud'){
+      eCtx.fillStyle = `rgba(255, 255, 255, ${light*0.35})`;
+      eCtx.shadowBlur = 0;
+      eCtx.beginPath(); eCtx.arc(proj.x, proj.y, proj.size*proj.size*1.3, 0, Math.PI*2); eCtx.fill();
+    }
+
+    if(p.orig.type === 'spaceship'){
+      const s = proj.size * proj.size * 12;
+      const engine = p.orig.enginePower;
+
+      eCtx.fillStyle = `rgba(180, 220, 255, ${light})`;
+      eCtx.shadowColor = '#00d9ff';
+      eCtx.shadowBlur = 8*proj.size;
+      eCtx.beginPath();
+      eCtx.moveTo(proj.x + s*0.8, proj.y);
+      eCtx.lineTo(proj.x - s*0.4, proj.y - s*0.3);
+      eCtx.lineTo(proj.x - s*0.4, proj.y + s*0.3);
+      eCtx.closePath();
+      eCtx.fill();
+
+      if(engine > 0.1){
+        const flameLen = s * (0.5 + engine * 1.5);
+        const grad = eCtx.createLinearGradient(proj.x - s*0.4, proj.y, proj.x - s*0.4 - flameLen, proj.y);
+        grad.addColorStop(0, `rgba(255, 255, 200, ${engine * light})`);
+        grad.addColorStop(0.4, `rgba(255, 120, 50, ${engine * light * 0.8})`);
+        grad.addColorStop(1, `rgba(255, 50, 0, 0)`);
+
+        eCtx.fillStyle = grad;
+        eCtx.beginPath();
+        eCtx.moveTo(proj.x - s*0.4, proj.y - s*0.15);
+        eCtx.lineTo(proj.x - s*0.4 - flameLen, proj.y);
+        eCtx.lineTo(proj.x - s*0.4, proj.y + s*0.15);
+        eCtx.closePath();
+        eCtx.fill();
+
+        if(engine > 0.3){
+          for(let sm=0; sm<3; sm++){
+            const smokeX = proj.x - s*0.5 - Math.random()*flameLen*0.6;
+            const smokeY = proj.y + (Math.random()-0.5)*s*0.4;
+            const smokeSize = (0.2 + Math.random()*0.4) * proj.size;
+            const smokeAlpha = engine * 0.3 * (1 - Math.random()*0.5);
+            eCtx.fillStyle = `rgba(200, 220, 255, ${smokeAlpha})`;
+            eCtx.beginPath();
+            eCtx.arc(smokeX, smokeY, smokeSize, 0, Math.PI*2);
+            eCtx.fill();
+          }
+        }
+      }
+    }
+
+    if(p.orig.type === 'star'){
+      const twinkle = 0.5 + Math.sin(now * 3 + p.orig.twinkle) * 0.5;
+      eCtx.fillStyle = `rgba(220, 240, 255, ${light * twinkle * 0.9})`;
+      eCtx.shadowColor = '#ffffff';
+      eCtx.shadowBlur = 6 * proj.size;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size * 0.8, 0, Math.PI*2);
+      eCtx.fill();
+    }
+
+    if(p.orig.type === 'ring'){
+      eCtx.fillStyle = `rgba(0, 217, 255, ${light * 0.35})`;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size, 0, Math.PI*2);
+      eCtx.fill();
+    }
+
+    if(p.orig.type === 'satellite'){
+      eCtx.fillStyle = `rgba(0, 255, 213, ${light * 0.9})`;
+      eCtx.shadowColor = '#00ffd5';
+      eCtx.shadowBlur = 10 * proj.size;
+      eCtx.beginPath();
+      eCtx.arc(proj.x, proj.y, proj.size * proj.size * 0.6, 0, Math.PI*2);
+      eCtx.fill();
+    }
+  });
+
+  const atmGrad = eCtx.createRadialGradient(
+    earthCanvas.width/2, earthCanvas.height/2, 0,
+   
+earthCanvas.width/2, earthCanvas.height/2, earthCanvas.width/1.8
+);
+atmGrad.addColorStop(0, 'rgba(0, 217, 255, 0)');
+atmGrad.addColorStop(0.55, 'rgba(0, 255, 213, 0.12)');
+atmGrad.addColorStop(1, 'rgba(0, 217, 255, 0)');
+eCtx.fillStyle = atmGrad;
+eCtx.fillRect(0, 0, earthCanvas.width, earthCanvas.height);
+
+requestAnimationFrame(renderEarth);
+}
+renderEarth();
+</script>
+
+</body>
+</html>
+
