@@ -16,14 +16,17 @@
   --border:rgba(0,217,255,0.28);
   --text:#e0f7ff;
   --muted:#7aa8c8;
+  --space-dark:#010108;
+  --nebula-1:rgba(0,180,255,0.15);
+  --nebula-2:rgba(120,0,255,0.1);
 }
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   font-family:'Rajdhani',sans-serif;
   background:
-    radial-gradient(circle at 20% 10%,rgba(0,217,255,0.12),transparent 50%),
-    radial-gradient(circle at 80% 90%,rgba(0,255,213,0.10),transparent 55%),
-    linear-gradient(180deg,#050816 0%,#020205 100%);
+    radial-gradient(circle at 15% 20%,var(--nebula-1),transparent 55%),
+    radial-gradient(circle at 85% 80%,var(--nebula-2),transparent 55%),
+    linear-gradient(180deg,var(--space-dark) 0%,var(--darker) 100%);
   color:var(--text);
   overflow-x:hidden;
   line-height:1.6;
@@ -31,23 +34,80 @@ body{
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
 .mono{font-family:'Share Tech Mono',monospace}
 
-/* BACKGROUND LAYERS */
-#matrix{position:fixed;inset:0;z-index:0;opacity:.14}
+/* === ENHANCED BACKGROUND LAYERS === */
+#matrix{position:fixed;inset:0;z-index:0;opacity:.18}
 .grid-bg{
   position:fixed;inset:0;z-index:1;
   background:
-    linear-gradient(var(--border) 1px,transparent 1px) 0 0/45px 45px,
-    linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/45px 45px;
-  opacity:.08;
-  mask-image:radial-gradient(ellipse at center,#000 40%,transparent 85%);
+    linear-gradient(var(--border) 1px,transparent 1px) 0 0/50px 50px,
+    linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/50px 50px;
+  opacity:.06;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);
+}
+/* Galaxy star field */
+#galaxy-bg{
+  position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(10,20,40,0) 0%,rgba(0,0,5,0.9) 100%);
 }
 .wrap{position:relative;z-index:10;width:100%}
 
-/* NAVIGATION — ORIGINAL */
+/* === 3D EARTH CONTAINER === */
+#earth-container{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(500px,85vw);
+  height:min(500px,85vw);
+  z-index:2;
+  pointer-events:auto;
+  touch-action:none;
+  user-select:none;
+}
+#earth-canvas{
+  width:100%;height:100%;
+  filter:drop-shadow(0 0 60px rgba(0,217,255,0.35));
+}
+/* Floating math equations */
+.math-float{
+  position:absolute;
+  font-family:'Share Tech Mono',monospace;
+  color:rgba(0,255,213,0.7);
+  font-size:clamp(0.8rem,2vw,1.1rem);
+  font-weight:600;
+  text-shadow:0 0 8px rgba(0,255,213,0.4);
+  pointer-events:none;
+  animation:floatMath 18s linear infinite;
+  white-space:nowrap;
+}
+@keyframes floatMath{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  10%{opacity:0.8}
+  90%{opacity:0.8}
+  100%{transform:translateY(-120px) rotate(360deg);opacity:0}
+}
+/* Orbiting glitter particles */
+.orbit-particle{
+  position:absolute;
+  width:3px;height:3px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 10px var(--accent),0 0 20px var(--prime);
+  pointer-events:none;
+  animation:orbitRotate 25s linear infinite;
+}
+@keyframes orbitRotate{
+  0%{transform:rotate(0deg) translateX(180px) rotate(0deg);opacity:0.9}
+  50%{opacity:0.4}
+  100%{transform:rotate(360deg) translateX(180px) rotate(-360deg);opacity:0.9}
+}
+.orbit-particle.small{width:2px;height:2px;animation-duration:18s;opacity:0.7}
+.orbit-particle.bright{width:4px;height:4px;background:var(--prime);animation-duration:32s}
+
+/* === NAVIGATION — ORIGINAL PRESERVED === */
 nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(5,7,16,.85);
-  backdrop-filter:blur(14px);
+  background:rgba(5,7,16,.88);
+  backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
   padding:.9rem 0;
   width:100%;
@@ -60,7 +120,7 @@ nav{
   font-family:'Orbitron',sans-serif;
   font-size:1.5rem;font-weight:900;
   color:var(--prime);
-  text-shadow:0 0 18px rgba(0,217,255,.6);
+  text-shadow:0 0 22px rgba(0,217,255,.7);
   letter-spacing:1px;
 }
 .nav-links{display:flex;gap:1.3rem;flex-wrap:wrap;align-items:center}
@@ -72,10 +132,10 @@ nav{
   content:'';position:absolute;left:0;bottom:0;width:0;height:2px;
   background:linear-gradient(90deg,var(--prime),var(--accent));transition:.25s;
 }
-.nav-links a:hover{color:var(--prime);text-shadow:0 0 8px var(--prime)}
+.nav-links a:hover{color:var(--prime);text-shadow:0 0 10px var(--prime)}
 .nav-links a:hover::after{width:100%}
 
-/* HERO — ORIGINAL */
+/* === HERO — ORIGINAL PRESERVED === */
 .hero{
   min-height:92vh;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -92,7 +152,7 @@ nav{
   font-weight:900;
   background:linear-gradient(135deg,var(--prime) 0%,var(--accent) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 25px rgba(0,217,255,.4));
+  filter:drop-shadow(0 0 30px rgba(0,217,255,.5));
   margin-bottom:.8rem;
   line-height:1.05;
 }
@@ -118,14 +178,14 @@ nav{
 .btn-primary{
   background:linear-gradient(135deg,var(--prime),var(--accent));
   color:#020205;
-  box-shadow:0 0 22px rgba(0,217,255,.45);
+  box-shadow:0 0 25px rgba(0,217,255,.5);
 }
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,217,255,.6)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,217,255,.7)}
 .btn-outline{background:transparent;color:var(--prime)}
-.btn-outline:hover{background:var(--prime);color:#020205;box-shadow:0 0 25px rgba(0,217,255,.45)}
+.btn-outline:hover{background:var(--prime);color:#020205;box-shadow:0 0 30px rgba(0,217,255,.5)}
 
-/* SECTIONS — ORIGINAL LAYOUT */
-section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
+/* === SECTIONS — ORIGINAL LAYOUT PRESERVED === */
+section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%;position:relative;z-index:15}
 .sec-head{
   display:flex;align-items:baseline;gap:1rem;
   margin-bottom:2.5rem;
@@ -142,14 +202,15 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-/* ABOUT — ORIGINAL FULL TEXT */
+/* === ABOUT — ORIGINAL FULL TEXT === */
 .about-card{
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:14px;padding:2rem;
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(14px);
   line-height:1.85;
   font-size:1.05rem;
+  box-shadow:0 0 25px rgba(0,217,255,0.08);
 }
 .about-card p{margin-bottom:1rem;color:#cfe8f5}
 .about-card strong{color:var(--prime)}
@@ -160,7 +221,7 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   color:var(--accent);font-weight:700;
 }
 
-/* WHY CHOOSE — ORIGINAL 6 POINTS */
+/* === WHY CHOOSE — ORIGINAL 6 POINTS === */
 .why-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.2rem;
@@ -169,17 +230,18 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:12px;padding:1.4rem;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
 }
-.why-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 10px 30px rgba(0,217,255,.15)}
+.why-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 15px 35px rgba(0,217,255,.18)}
 .why-card h3{
   font-size:1.1rem;color:var(--prime);margin-bottom:.5rem;
   display:flex;align-items:center;gap:.5rem;
 }
 .why-card p{color:#b8d4e6;font-size:.98rem}
 
-/* SKILLS — ORIGINAL 3 CATEGORIES */
+/* === SKILLS — ORIGINAL 3 CATEGORIES === */
 .skills-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:1.4rem;
@@ -188,10 +250,11 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:14px;padding:1.6rem;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
 }
-.skill-card:hover{transform:translateY(-5px);border-color:var(--accent)}
+.skill-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 15px 35px rgba(0,217,255,.18)}
 .skill-card h3{
   font-size:1.2rem;color:var(--prime);margin-bottom:1rem;
 }
@@ -204,7 +267,7 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
 .skill-fill{
   height:100%;
   background:linear-gradient(90deg,var(--prime),var(--accent));
-  box-shadow:0 0 12px rgba(0,217,255,.5);
+  box-shadow:0 0 15px rgba(0,217,255,.6);
   position:relative;
 }
 .skill-fill::after{
@@ -214,7 +277,7 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   font-size:.8rem;color:var(--accent);font-weight:700;
 }
 
-/* SERVICES — ORIGINAL 4 WITH PRICES */
+/* === SERVICES — ORIGINAL 4 WITH PRICES === */
 .services-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.4rem;
@@ -223,11 +286,12 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:14px;padding:1.7rem;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:.3s;
   position:relative;overflow:hidden;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
 }
-.service-card:hover{transform:translateY(-5px);border-color:var(--prime);box-shadow:0 15px 40px rgba(0,217,255,.18)}
+.service-card:hover{transform:translateY(-6px);border-color:var(--prime);box-shadow:0 18px 45px rgba(0,217,255,.2)}
 .service-card.best::before{
   content:'BEST SELLER';
   position:absolute;top:18px;right:-35px;
@@ -244,12 +308,12 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   font-size:1.5rem;font-weight:800;
   color:var(--accent);
   margin:.8rem 0 1rem;
-  text-shadow:0 0 12px rgba(0,255,213,.35);
+  text-shadow:0 0 15px rgba(0,255,213,.45);
 }
 .service-list{display:grid;gap:.45rem;color:#c5ddee;font-size:.98rem}
 .service-list div::before{content:'✓ ';color:var(--prime);font-weight:700}
 
-/* PROJECTS — ✅ ENHANCED: ALL CLICKABLE + FLAPPY HIGHLIGHT */
+/* === PROJECTS — ENHANCED PRESERVED === */
 .projects-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:1.5rem;
@@ -258,16 +322,17 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:14px;overflow:hidden;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:.35s all;
   text-decoration:none;color:inherit;
   display:block;
   cursor:pointer;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
 }
 .project-card:hover{
-  transform:translateY(-7px) scale(1.015);
+  transform:translateY(-8px) scale(1.02);
   border-color:var(--prime);
-  box-shadow:0 20px 50px rgba(0,217,255,.22);
+  box-shadow:0 25px 55px rgba(0,217,255,.25);
 }
 .project-head{
   padding:1.4rem;
@@ -298,24 +363,24 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   font-weight:600;font-size:.95rem;
   transition:.2s;
 }
-.project-links a:hover{color:var(--accent);text-shadow:0 0 6px var(--accent)}
+.project-links a:hover{color:var(--accent);text-shadow:0 0 8px var(--accent)}
 
-/* ✅ FLAPPY BLUES SPECIAL ROCKET HIGHLIGHT */
+/* === FLAPPY BLUES SPECIAL HIGHLIGHT === */
 .flappy-card{
   border:2px solid var(--accent);
-  box-shadow:0 0 30px rgba(0,255,213,.25);
+  box-shadow:0 0 35px rgba(0,255,213,.3);
   animation:flappyGlow 2.5s ease-in-out infinite;
 }
 @keyframes flappyGlow{
-  0%,100%{box-shadow:0 0 25px rgba(0,255,213,.2)}
-  50%{box-shadow:0 0 45px rgba(0,255,213,.45)}
+  0%,100%{box-shadow:0 0 30px rgba(0,255,213,.25)}
+  50%{box-shadow:0 0 50px rgba(0,255,213,.5)}
 }
 .flappy-card .project-head{
   background:linear-gradient(135deg,rgba(0,255,213,.25),rgba(0,217,255,.18));
 }
 .flappy-card .project-head h3{color:var(--accent)}
 
-/* CONTACT — ORIGINAL FULL */
+/* === CONTACT — ORIGINAL FULL === */
 .contact-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.2rem;
@@ -325,10 +390,11 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
   background:var(--glass);
   border:1px solid var(--border);
   border-radius:12px;padding:1.3rem;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:.3s;
+  box-shadow:0 0 15px rgba(0,217,255,0.05);
 }
-.contact-item:hover{border-color:var(--accent);transform:translateY(-3px)}
+.contact-item:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,217,255,.15)}
 .contact-label{
   font-family:'Share Tech Mono',monospace;
   font-size:.8rem;color:var(--muted);
@@ -340,13 +406,14 @@ section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
 .contact-value a:hover{color:var(--accent)}
 .transmit-btn{text-align:center;margin-top:1rem}
 
-/* FOOTER — ORIGINAL */
+/* === FOOTER — ORIGINAL === */
 footer{
   text-align:center;padding:2.5rem 1.5rem 1.8rem;
   border-top:1px solid var(--border);
   margin-top:3rem;
-  background:rgba(2,2,5,.6);
+  background:rgba(2,2,5,.7);
   width:100%;
+  backdrop-filter:blur(8px);
 }
 footer .logo{font-size:1.6rem;margin-bottom:.5rem}
 footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
@@ -360,19 +427,45 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   letter-spacing:.05em;
 }
 
-/* RESPONSIVE */
+/* === RESPONSIVE FIXES === */
 @media(max-width:600px){
   .nav-inner{justify-content:center}
   .hero{min-height:85vh;padding-top:2rem}
   section{padding:3.5rem 1.2rem}
+  #earth-container{width:75vw;height:75vw}
+  .math-float{font-size:0.75rem}
 }
 </style>
 </head>
 <body>
 
-<!-- BACKGROUND -->
+<!-- BACKGROUND LAYERS -->
+<div id="galaxy-bg"></div>
 <canvas id="matrix"></canvas>
 <div class="grid-bg"></div>
+
+<!-- 3D INTERACTIVE EARTH + ORBITAL ELEMENTS -->
+<div id="earth-container">
+  <canvas id="earth-canvas"></canvas>
+  <!-- Floating Math Equations -->
+  <div class="math-float" style="left:10%;animation-delay:0s">∫f(x)dx = F(x)+C</div>
+  <div class="math-float" style="left:80%;animation-delay:3s">E=mc²</div>
+  <div class="math-float" style="left:25%;animation-delay:6s">a²+b²=c²</div>
+  <div class="math-float" style="left:70%;animation-delay:9s">∇·E = ρ/ε₀</div>
+  <div class="math-float" style="left:5%;animation-delay:12s">lim(x→∞) f(x)</div>
+  <div class="math-float" style="left:90%;animation-delay:15s">∑ₙ=1^∞ 1/n²</div>
+  <div class="math-float" style="left:45%;animation-delay:18s">F=ma</div>
+  <div class="math-float" style="left:55%;animation-delay:21s">∂²u/∂t² = c²∇²u</div>
+  <!-- Orbiting Glitter Particles -->
+  <div class="orbit-particle" style="animation-delay:0s"></div>
+  <div class="orbit-particle small" style="animation-delay:2s"></div>
+  <div class="orbit-particle bright" style="animation-delay:4s"></div>
+  <div class="orbit-particle" style="animation-delay:6s"></div>
+  <div class="orbit-particle small" style="animation-delay:8s"></div>
+  <div class="orbit-particle bright" style="animation-delay:10s"></div>
+  <div class="orbit-particle" style="animation-delay:12s"></div>
+  <div class="orbit-particle small" style="animation-delay:14s"></div>
+</div>
 
 <div class="wrap">
 
@@ -536,7 +629,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   </div>
 </section>
 
-<!-- 05 PROJECTS — ✅ ALL CLICKABLE + FLAPPY ROCKET EDITION -->
+<!-- 05 PROJECTS — ENHANCED -->
 <section id="projects">
   <div class="sec-head">
     <span class="sec-num">05</span>
@@ -544,7 +637,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
   </div>
   <div class="projects-grid">
 
-    <!-- ✅ CLICKABLE FLAPPY BLUES — ROCKET EDITION -->
+    <!-- CLICKABLE FLAPPY BLUES -->
     <a href="flappy.html" class="project-card flappy-card" target="_blank">
       <div class="project-head">
         <h3>🚀 FLAPPY BLUES — ROCKET EDITION <span class="project-tag">🎮 PLAY NOW</span></h3>
@@ -558,7 +651,7 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
       </div>
     </a>
 
-    <!-- ✅ CLICKABLE SECURITY LAB -->
+    <!-- CLICKABLE SECURITY LAB -->
     <a href="https://github.com/Jaydong922/cyberjayd-security-lab" class="project-card" target="_blank">
       <div class="project-head">
         <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2 <span class="project-tag">FLAGSHIP ACTIVE</span></h3>
@@ -607,35 +700,194 @@ footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
 
 </div>
 
-<!-- MATRIX BACKGROUND -->
+<!-- === ENHANCED JAPANESE MATRIX BACKGROUND === -->
 <script>
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const fontSize = 14;
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>+-=*/?@#$%^&';
+const fontSize = 15;
 const columns = canvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
+const speeds = Array.from({length:drops.length},()=>Math.random()*0.7+0.3);
 
 function drawMatrix() {
-  ctx.fillStyle = 'rgba(2,2,5,0.05)';
+  ctx.fillStyle = 'rgba(1,1,8,0.06)';
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = '#00d9ff';
-  ctx.font = fontSize + 'px monospace';
+  ctx.font = fontSize + 'px "Share Tech Mono", monospace';
   for(let i=0;i<drops.length;i++){
     const text = chars[Math.floor(Math.random()*chars.length)];
+    const alpha = Math.min(1, drops[i]/20);
+    ctx.fillStyle = `rgba(0,217,255,${alpha*0.8})`;
     ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-    if(drops[i]*fontSize > canvas.height && Math.random()>0.975) drops[i] = 0;
-    drops[i]++;
+    if(drops[i]*fontSize > canvas.height && Math.random()>0.985) drops[i] = 0;
+    drops[i] += speeds[i];
   }
 }
-setInterval(drawMatrix, 50);
+setInterval(drawMatrix, 45);
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
+</script>
+
+<!-- === INTERACTIVE 3D EARTH ENGINE === -->
+<script>
+const earthCanvas = document.getElementById('earth-canvas');
+const eCtx = earthCanvas.getContext('2d');
+const container = document.getElementById('earth-container');
+
+// Set high-res canvas
+function resizeEarth(){
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+  earthCanvas.width = size * 2;
+  earthCanvas.height = size * 2;
+  container.style.width = size + 'px';
+  container.style.height = size + 'px';
+}
+resizeEarth();
+window.addEventListener('resize', resizeEarth);
+
+// 3D Parameters
+let rotationX = 0.3;
+let rotationY = 0;
+let autoRotate = true;
+let lastX = 0, lastY = 0;
+let isDragging = false;
+
+// Earth texture points (continents + grid)
+const points = [];
+const latSteps = 20;
+const lonSteps = 32;
+
+// Generate sphere points
+for(let lat=0; lat<latSteps; lat++){
+  const theta = (lat / latSteps) * Math.PI;
+  const sinT = Math.sin(theta);
+  const cosT = Math.cos(theta);
+  for(let lon=0; lon<lonSteps; lon++){
+    const phi = (lon / lonSteps) * Math.PI * 2;
+    const sinP = Math.sin(phi);
+    const cosP = Math.cos(phi);
+    // 3D coordinates
+    const x = sinT * cosP;
+    const y = cosT;
+    const z = sinT * sinP;
+    // Color: blue oceans, green/white land
+    const isLand = Math.random() > 0.72;
+    const brightness = 0.4 + Math.random() * 0.6;
+    points.push({x,y,z, isLand, brightness});
+  }
+}
+
+// Touch/Mouse controls
+function startDrag(e){
+  isDragging = true;
+  autoRotate = false;
+  const touch = e.touches ? e.touches[0] : e;
+  lastX = touch.clientX;
+  lastY = touch.clientY;
+}
+function moveDrag(e){
+  if(!isDragging) return;
+  const touch = e.touches ? e.touches[0] : e;
+  const dx = (touch.clientX - lastX) * 0.005;
+  const dy = (touch.clientY - lastY) * 0.005;
+  rotationY += dx;
+  rotationX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotationX + dy));
+  lastX = touch.clientX;
+  lastY = touch.clientY;
+}
+function endDrag(){
+  isDragging = false;
+  setTimeout(()=>autoRotate = true, 5000);
+}
+
+container.addEventListener('mousedown', startDrag);
+container.addEventListener('mousemove', moveDrag);
+container.addEventListener('mouseup', endDrag);
+container.addEventListener('mouseleave', endDrag);
+container.addEventListener('touchstart', startDrag, {passive:true});
+container.addEventListener('touchmove', moveDrag, {passive:true});
+container.addEventListener('touchend', endDrag);
+
+// Projection function
+function project(x,y,z){
+  const scale = earthCanvas.width / 2.2;
+  const perspective = 3;
+  const factor = perspective / (perspective + z);
+  return {
+    x: earthCanvas.width/2 + x * scale * factor,
+    y: earthCanvas.height/2 + y * scale * factor,
+    size: Math.max(0.5, factor * 2)
+  };
+}
+
+// Rotation matrix
+function rotatePoint(p, rx, ry){
+  // Rotate Y
+  let x = p.x * Math.cos(ry) - p.z * Math.sin(ry);
+  let z = p.x * Math.sin(ry) + p.z * Math.cos(ry);
+  let y = p.y;
+  // Rotate X
+  const newY = y * Math.cos(rx) - z * Math.sin(rx);
+  const newZ = y * Math.sin(rx) + z * Math.cos(rx);
+  return {x, y:newY, z:newZ};
+}
+
+// Render loop
+function renderEarth(){
+  eCtx.clearRect(0,0,earthCanvas.width,earthCanvas.height);
+  
+  // Auto-rotate
+  if(autoRotate) rotationY += 0.004;
+
+  // Sort points by depth
+  const sorted = points.map(p=>{
+    const rp = rotatePoint(p, rotationX, rotationY);
+    return { ...rp, orig:p };
+  }).sort((a,b)=>a.z - b.z);
+
+  // Draw points
+  sorted.forEach(p=>{
+    const proj = project(p.x, p.y, p.z);
+    if(proj.x < 0 || proj.x > earthCanvas.width || proj.y < 0 || proj.y > earthCanvas.height) return;
+    
+    // Lighting
+    const light = Math.max(0.15, Math.min(1, p.z * 0.8 + 0.6));
+    let color;
+    if(p.orig.isLand){
+      const g = Math.floor(80 * light * p.orig.brightness);
+      color = `rgba(0, ${g+70}, ${g+30}, ${light})`;
+    } else {
+      const b = Math.floor(150 * light * p.orig.brightness);
+      color = `rgba(0, ${b+40}, ${b+120}, ${light})`;
+    }
+    
+    eCtx.fillStyle = color;
+    eCtx.shadowColor = p.orig.isLand ? '#00ffd5' : '#00d9ff';
+    eCtx.shadowBlur = 6 * proj.size;
+    eCtx.beginPath();
+    eCtx.arc(proj.x, proj.y, proj.size * 1.2, 0, Math.PI*2);
+    eCtx.fill();
+  });
+
+  // Atmosphere glow
+  const grad = eCtx.createRadialGradient(
+    earthCanvas.width/2, earthCanvas.height/2, 0,
+    earthCanvas.width/2, earthCanvas.height/2, earthCanvas.width/2
+  );
+  grad.addColorStop(0, 'rgba(0,217,255,0)');
+  grad.addColorStop(0.7, 'rgba(0,255,213,0.08)');
+  grad.addColorStop(1, 'rgba(0,217,255,0)');
+  eCtx.fillStyle = grad;
+  eCtx.fillRect(0,0,earthCanvas.width,earthCanvas.height);
+
+  requestAnimationFrame(renderEarth);
+}
+renderEarth();
 </script>
 
 </body>
