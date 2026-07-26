@@ -51,18 +51,34 @@ function makePipe(){
 }
 function drawBird(){
   c.save(); c.translate(60, birdY); c.rotate(birdV*0.05);
-  c.fillStyle='#00e5ff'; c.beginPath(); c.moveTo(20,0); c.lineTo(-15,-12); c.lineTo(-15,12); c.closePath(); c.fill();
-  c.fillStyle='#ffaa3c'; c.beginPath(); c.arc(22,0,6,0,Math.PI*2); c.fill();
+  // Buong rocket design
+  c.fillStyle='#00e5ff'; c.beginPath(); c.moveTo(22,0); c.lineTo(-18,-14); c.lineTo(-18,14); c.closePath(); c.fill();
+  c.fillStyle='#ffaa3c'; c.beginPath(); c.arc(24,0,7,0,Math.PI*2); c.fill();
+  c.fillStyle='#ff6600'; c.beginPath(); c.arc(24,0,4,0,Math.PI*2); c.fill();
+  // Buong usok/afterburner
   c.fillStyle='rgba(255,170,60,0.4)';
-  for(let i=1;i<=4;i++){ c.beginPath(); c.arc(-15-i*8,0,7-i,0,Math.PI*2); c.fill(); }
+  for(let i=1;i<=6;i++){ 
+    c.beginPath(); 
+    c.arc(-18-i*9,0,8-i,0,Math.PI*2); 
+    c.fill(); 
+  }
+  c.fillStyle='rgba(255,100,0,0.3)';
+  for(let i=1;i<=4;i++){ 
+    c.beginPath(); 
+    c.arc(-22-i*7,0,6-i,0,Math.PI*2); 
+    c.fill(); 
+  }
   c.restore();
 }
 function drawPipes(){
   pipes.forEach(p=>{
+    // Buong at makapal na kulay ng pipe
     c.fillStyle='#0088ff'; c.fillRect(p.x,0,pipe.w,p.topH);
     c.fillStyle='#00aaff'; c.fillRect(p.x+4,0,pipe.w-8,p.topH);
+    c.fillStyle='#00ccff'; c.fillRect(p.x+8,0,pipe.w-16,p.topH);
     c.fillStyle='#0088ff'; c.fillRect(p.x,p.botY,pipe.w,H-p.botY);
     c.fillStyle='#00aaff'; c.fillRect(p.x+4,p.botY,pipe.w-8,H-p.botY);
+    c.fillStyle='#00ccff'; c.fillRect(p.x+8,p.botY,pipe.w-16,H-p.botY);
   });
 }
 function update(){

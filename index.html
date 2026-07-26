@@ -6,6 +6,7 @@
 <title>JAYD F. REPOBERBIO | Full Stack Developer Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--cyan:#00e5ff;--blue:#0088ff;--violet:#7c3aed;--pink:#ec4899;--bg:#03060d;--text:#e6f4ff;--muted:#94a3b8;--line:rgba(0,229,255,.2);--glass:rgba(10,20,40,.55)}
@@ -53,7 +54,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 .btn-outline:hover{background:var(--cyan);color:#001018;box-shadow:0 0 30px rgba(0,229,255,.4)}
 .globe-wrap{position:relative;width:100%;aspect-ratio:1/1;max-width:520px;margin:0 auto;touch-action:none;overscroll-behavior:contain;min-height:300px}
 @media(max-width:900px){.globe-wrap{max-width:420px}}
-#globeCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 70px rgba(0,229,255,.55));touch-action:none;cursor:grab;background:transparent !important}
+#globeCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 70px rgba(0,229,255,.55));touch-action:grab;background:transparent !important}
 #globeCanvas:active{cursor:grabbing}
 .ring{position:absolute;inset:-6%;border:1px dashed rgba(0,229,255,.25);border-radius:50%;animation:spin 30s linear infinite;pointer-events:none}
 .ring2{inset:-14%;border-color:rgba(124,58,237,.2);animation-duration:45s;animation-direction:reverse}
@@ -258,22 +259,22 @@ setInterval(drawMatrix, 50);
 
 // SPACE STARS & DUST
 const spaceLayer = document.getElementById('spaceLayer');
-const starCount = 120, dustCount = 60;
+const starCount = 150, dustCount = 80;
 for(let i=0;i<starCount;i++){
   const s=document.createElement('div');
   s.className='star';
   s.style.setProperty('--sz', `${Math.random()*2+1}px`);
-  s.style.setProperty('--gl', `${Math.random()*6+2}px`);
-  s.style.setProperty('--c', `rgba(0,229,255,${Math.random()*0.6+0.2})`);
-  s.style.setProperty('--sd', `${Math.random()*25+15}s`);
+  s.style.setProperty('--gl', `${Math.random()*8+2}px`);
+  s.style.setProperty('--c', `rgba(0,229,255,${Math.random()*0.7+0.2})`);
+  s.style.setProperty('--sd', `${Math.random()*30+15}s`);
   s.style.setProperty('--sdel', `${Math.random()*15}s`);
-  s.style.setProperty('--op', `${Math.random()*0.5+0.3}`);
-  s.style.setProperty('--mx1', `${Math.random()*40-20}px`);
-  s.style.setProperty('--my1', `${Math.random()*40-20}px`);
-  s.style.setProperty('--mx2', `${Math.random()*60-30}px`);
-  s.style.setProperty('--my2', `${Math.random()*60-30}px`);
-  s.style.setProperty('--mx3', `${Math.random()*30-15}px`);
-  s.style.setProperty('--my3', `${Math.random()*30-15}px`);
+  s.style.setProperty('--op', `${Math.random()*0.6+0.3}`);
+  s.style.setProperty('--mx1', `${Math.random()*50-25}px`);
+  s.style.setProperty('--my1', `${Math.random()*50-25}px`);
+  s.style.setProperty('--mx2', `${Math.random()*70-35}px`);
+  s.style.setProperty('--my2', `${Math.random()*70-35}px`);
+  s.style.setProperty('--mx3', `${Math.random()*40-20}px`);
+  s.style.setProperty('--my3', `${Math.random()*40-20}px`);
   s.style.left = `${Math.random()*100}%`;
   s.style.top = `${Math.random()*100}%`;
   spaceLayer.appendChild(s);
@@ -281,10 +282,10 @@ for(let i=0;i<starCount;i++){
 for(let i=0;i<dustCount;i++){
   const d=document.createElement('div');
   d.className='space-dust';
-  d.style.setProperty('--dd', `${Math.random()*20+10}s`);
+  d.style.setProperty('--dd', `${Math.random()*25+10}s`);
   d.style.setProperty('--ddel', `${Math.random()*20}s`);
-  d.style.setProperty('--dx', `${Math.random()*200-100}px`);
-  d.style.setProperty('--dy', `${Math.random()*200-100}px`);
+  d.style.setProperty('--dx', `${Math.random()*250-125}px`);
+  d.style.setProperty('--dy', `${Math.random()*250-125}px`);
   d.style.left = `${Math.random()*100}%`;
   d.style.top = `${Math.random()*100}%`;
   spaceLayer.appendChild(d);
@@ -292,20 +293,21 @@ for(let i=0;i<dustCount;i++){
 
 // MATH ORBIT TAGS
 const mathLayer = document.getElementById('mathLayer');
-const mathTags = ['E=mc²','∫f(x)dx','∑n=1','π≈3.1416','√2≈1.414','a²+b²=c²','∂/∂x','∇·F','λ=v/f','F=ma','V=IR','P=NP','0x00','0xFF','101011','2^64','log₂(n)','sin²+cos²=1','limₓ→∞','∀x','∃y','i²=-1','ℝ','ℕ','⊕','⊗','→','⇒','⇔','≠','≤','≥','∈','∉','⊂','⊃','∪','∩','∅','∀','∃','∀n','∑k','∫₀¹','∭','∇×','∇²','Δt','Δx','Δv','σ','μ','α','β','γ','δ','ε','θ','λ','ρ','τ','φ','ω'];
+const mathTags = ['E=mc²','∫f(x)dx','∑n=1','π≈3.1416','√2≈1.414','a²+b²=c²','∂/∂x','∇·F','λ=v/f','F=ma','V=IR','P=NP','0x00','0xFF','101011','2^64','log₂(n)','sin²+cos²=1','limₓ→∞','∀x','∃y','i²=-1','ℝ','ℕ','⊕','⊗','→','⇒','⇔','≠','≤','≥','∈','∉','⊂','⊃','∪','∩','∅','∀','∃','∀n','∑k','∫₀¹','∭','∇×','∇²','Δt','Δx','Δv','σ','μ','α','β','γ','δ','ε','θ','λ','ρ','τ','φ','ω','∑','∏','∫∫','∂²/∂x²','∇²ψ','e^iπ+1=0','F=GmM/r²','c=λf','E=hf','Z=V/I','P=I²R'];
 const orbitTypes = ['mathOrbitA','mathOrbitB','mathOrbitC','mathOrbitD'];
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
   const t=document.createElement('div');
   t.className='math-tag';
+  if(Math.random()>0.7) t.classList.add('mo');
+  else if(Math
   if(Math.random()>0.7) t.classList.add('mo');
   else if(Math.random()>0.5) t.classList.add('mv');
   if(Math.random()>0.8) t.classList.add('tiny');
   if(Math.random()>0.9) t.classList.add('big');
   t.textContent = mathTags[Math.floor(Math.random()*mathTags.length)];
-  t.style.setProperty('--dur', `${Math.random()*25+15}s`);
-  t.style.setProperty('--del', `${Math.random()*15}s`);
- 
-  const r = Math.random()*220+80;
+  t.style.setProperty('--dur', `${Math.random()*28+12}s`);
+  t.style.setProperty('--del', `${Math.random()*18}s`);
+  const r = Math.random()*240+90;
   const ang = Math.random()*Math.PI*2;
   t.style.setProperty('--rx', `${r*Math.cos(ang)}px`);
   t.style.setProperty('--ry', `${r*Math.sin(ang)}px`);
@@ -313,51 +315,68 @@ for(let i=0;i<80;i++){
   mathLayer.appendChild(t);
 }
 
-// 3D GLOBE WITH GRID & REGIONS
+// 3D GLOBE — FULL DETAILS + TOUCH/SWIPE CONTROL
 const canvas = document.getElementById('globeCanvas');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth/canvas.clientHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-const globeGeo = new THREE.SphereGeometry(1.8, 64, 64);
-const globeMat = new THREE.MeshBasicMaterial({color:0x00c8ff, wireframe:false, transparent:true, opacity:0.15});
+
+// Buong at detalyadong globo
+const globeGeo = new THREE.SphereGeometry(1.8, 80, 80);
+const globeMat = new THREE.MeshBasicMaterial({color:0x00c8ff, wireframe:false, transparent:true, opacity:0.18});
 const globe = new THREE.Mesh(globeGeo, globeMat);
 scene.add(globe);
-const gridGeo = new THREE.SphereGeometry(1.82, 32, 32);
-const gridMat = new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.25});
+
+// Mas siksik at malinaw na grid
+const gridGeo = new THREE.SphereGeometry(1.83, 40, 40);
+const gridMat = new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.3});
 const grid = new THREE.Mesh(gridGeo, gridMat);
 scene.add(grid);
-const atmosGeo = new THREE.SphereGeometry(1.9, 64, 64);
-const atmosMat = new THREE.MeshBasicMaterial({color:0x00aaff, transparent:true, opacity:0.08, side:THREE.BackSide});
+
+// Atmosphere at glow
+const atmosGeo = new THREE.SphereGeometry(1.92, 80, 80);
+const atmosMat = new THREE.MeshBasicMaterial({color:0x00aaff, transparent:true, opacity:0.09, side:THREE.BackSide});
 const atmos = new THREE.Mesh(atmosGeo, atmosMat);
 scene.add(atmos);
-const regionColors = [0x00ffd5, 0x0088ff, 0x7c3aed, 0xec4899, 0xffaa3c];
-for(let i=0;i<12;i++){
-  const rGeo = new THREE.SphereGeometry(0.12, 16, 16);
-  const rMat = new THREE.MeshBasicMaterial({color:regionColors[i%regionColors.length], transparent:true, opacity:0.7});
+
+// Detalyadong rehiyon/marka
+const regionColors = [0x00ffd5, 0x0088ff, 0x7c3aed, 0xec4899, 0xffaa3c, 0x39ff14];
+for(let i=0;i<16;i++){
+  const rGeo = new THREE.SphereGeometry(0.14, 20, 20);
+  const rMat = new THREE.MeshBasicMaterial({color:regionColors[i%regionColors.length], transparent:true, opacity:0.75});
   const reg = new THREE.Mesh(rGeo, rMat);
-  const phi = Math.acos(-1 + (2*i)/12);
-  const theta = Math.sqrt(12*Math.PI)*phi;
-  reg.position.set(1.95*Math.cos(theta)*Math.sin(phi), 1.95*Math.sin(theta)*Math.sin(phi), 1.95*Math.cos(phi));
+  const phi = Math.acos(-1 + (2*i)/16);
+  const theta = Math.sqrt(16*Math.PI)*phi;
+  reg.position.set(1.96*Math.cos(theta)*Math.sin(phi), 1.96*Math.sin(theta)*Math.sin(phi), 1.96*Math.cos(phi));
   scene.add(reg);
 }
-camera.position.z = 4.5;
+
+// ✅ TOUCH / SWIPE CONTROL — PWEDE NA IGALAW!
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enableZoom = false;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.4;
+
+camera.position.z = 4.6;
+
 function animateGlobe(){
   requestAnimationFrame(animateGlobe);
-  globe.rotation.y += 0.002;
-  grid.rotation.y += 0.002;
-  atmos.rotation.y += 0.001;
+  controls.update();
   renderer.render(scene, camera);
 }
 animateGlobe();
+
 window.addEventListener('resize', ()=>{
   camera.aspect = canvas.clientWidth/canvas.clientHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 });
 
-// SCROLL REVEAL
+// SCROLL ANIMATION
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
