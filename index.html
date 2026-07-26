@@ -1,12 +1,16 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CYBERJAYD | GLOBAL GRID 3D — ETHICAL SECURITY • SOFTWARE DEVELOPMENT</title>
-<meta name="description" content="Official Portfolio of Jayd F. Repoberbio — BSED-English First Year, Self-Taught Web & Game Developer. Built 100% on Android via Termux. Accepting projects globally.">
-<meta name="keywords" content="Jayd Repoberbio, Portfolio, Web Developer, Game Developer, Termux, FCIC Baybay City, BSED English, Freelance PH">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CYBERJAYD | ULTIMATE PREMIUM PORTFOLIO</title>
+<meta name="description" content="Jayd F. Repoberbio — BSED-English First Year, Self-Taught Web & Game Developer. Built 100% on Android via Termux.">
 <meta name="author" content="Jayd F. Repoberbio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -17,7 +21,7 @@
     --light:#1a2440;
     --text:#e0f7ff;
     --muted:#8aa2c0;
-    --glow:0 0 15px rgba(0,217,255,0.4);
+    --glow:0 0 18px rgba(0,217,255,0.5);
 }
 body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif}
@@ -25,7 +29,7 @@ a{color:var(--prime);text-decoration:none;transition:all 0.3s}
 a:hover{color:var(--accent);text-shadow:var(--glow)}
 
 /* MATRIX BACKGROUND */
-#matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.15}
+#matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.18}
 
 /* HEADER */
 header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(180deg,rgba(5,8,20,0.95) 0%,transparent 100%)}
@@ -34,14 +38,15 @@ header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(18
 .nav-links{display:flex;gap:1.2rem;flex-wrap:wrap}
 .nav-links a{font-weight:600;font-size:1.1rem}
 
-/* HERO */
-.hero{position:relative;z-index:2;padding:4rem 5%;text-align:center}
+/* HERO WITH 3D ASTRONAUT */
+.hero{position:relative;z-index:2;padding:3rem 5%;text-align:center}
+#astronaut-container{width:100%;height:420px;margin:0 auto 2rem;border-radius:8px;overflow:hidden;border:1px solid var(--light);box-shadow:var(--glow)}
 .hero h1{font-size:clamp(2.5rem,6vw,4rem);margin-bottom:1rem;background:linear-gradient(90deg,var(--prime),var(--accent));-webkit-background-clip:text;color:transparent}
-.hero p{font-size:clamp(1.1rem,3vw,1.4rem);max-width:800px;margin:0 auto 2rem;color:var(--muted)}
+.hero p{font-size:clamp(1.1rem,3vw,1.4rem);max-width:850px;margin:0 auto 2rem;color:var(--muted);line-height:1.7}
 .hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn{padding:0.8rem 1.8rem;border:2px solid var(--prime);border-radius:4px;font-weight:700;letter-spacing:0.5px}
+.btn{padding:0.8rem 1.8rem;border:2px solid var(--prime);border-radius:4px;font-weight:700;letter-spacing:0.5px;transition:all 0.3s}
 .btn.primary{background:var(--prime);color:var(--dark)}
-.btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn.primary:hover{background:var(--accent);border-color:var(--accent);box-shadow:var(--glow)}
 .btn.secondary{background:transparent;color:var(--prime)}
 .btn.secondary:hover{background:rgba(0,217,255,0.1)}
 
@@ -54,6 +59,10 @@ section{position:relative;z-index:2;padding:3rem 5%;max-width:1200px;margin:0 au
 .card h3{color:var(--accent);margin-bottom:0.8rem}
 .card p{color:var(--muted);line-height:1.6}
 
+/* GAME LINK */
+.game-card{background:linear-gradient(135deg,#0a1a30,#050814);border:2px solid var(--prime)}
+.game-card a{display:block;padding:1rem;text-align:center;font-size:1.3rem;font-weight:700}
+
 /* CONTACT */
 .contact-box{background:var(--mid);border:1px solid var(--light);border-radius:6px;padding:2rem;text-align:center}
 .contact-item{margin:1rem 0;font-size:1.2rem}
@@ -62,13 +71,11 @@ section{position:relative;z-index:2;padding:3rem 5%;max-width:1200px;margin:0 au
 /* FOOTER */
 footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(--muted);font-size:0.9rem;border-top:1px solid var(--light);margin-top:3rem}
 
-/* 3D EARTH CONTAINER */
-#earth-container{width:100%;height:350px;margin:2rem 0;border-radius:8px;overflow:hidden;border:1px solid var(--light)}
-
 /* RESPONSIVE */
 @media(max-width:600px){
     .nav-links{justify-content:center}
     .hero h1{font-size:2rem}
+    #astronaut-container{height:300px}
 }
 </style>
 </head>
@@ -83,14 +90,15 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
             <a href="#skills">SKILLS</a>
             <a href="#services">SERVICES</a>
             <a href="#projects">PROJECTS</a>
-            <a href="https://jaydong922.github.io/earth/" target="_blank">🎮 PLAY GAME</a>
+            <a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
         </nav>
     </div>
 </header>
 
 <section class="hero">
-    <h1>GLOBAL GRID // SECTOR 7</h1>
-    <p>ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH<br>Clean Design, Maximum Power — Built 100% on Android</p>
+    <div id="astronaut-container"></div>
+    <h1>JAYD F. REPOBERBIO</h1>
+    <p>Warmly greetings to you, you're now visiting my portfolio. I am Jayd Repoberbio. I built this website when I was first year student taking BSED major in English by self studying about the development of website. I have successfully created this and I am also accepting offers like creating Web Development, Operating System, Game Development, and many more related to this field.</p>
     <div class="hero-buttons">
         <a href="#projects" class="btn primary">VIEW PROJECTS</a>
         <a href="#contact" class="btn secondary">HIRE ME</a>
@@ -159,9 +167,9 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
             <h3>🛒 CYBERJAYD SHOP</h3>
             <p>Full marketplace with Sign Up, Login, Admin Dashboard — pure HTML/CSS/JS.</p>
         </div>
-        <div class="card">
-            <h3>🎮 GALAXY WAR</h3>
-            <p>Continuous space battle animation — lasers, explosions, debris.<br><a href="https://jaydong922.github.io/earth/" target="_blank">▶ PLAY NOW</a></p>
+        <div class="card game-card">
+            <h3>🎮 FLAPPY BLUES</h3>
+            <p>Original custom game — rocket design, smoke effects, score tracking.<br><a href="flappy.html" target="_blank">▶ PLAY NOW</a></p>
         </div>
     </div>
 </section>
@@ -183,7 +191,7 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
     <p>© 2077 CYBERJAYD SYSTEMS • ALL RIGHTS RESERVED<br>DESIGNED & FORGED BY JAYD F. REPOBERBIO<br>BUILT WITH PASSION • POWERED BY PURE CODE</p>
 </footer>
 
-<!-- MATRIX ANIMATION -->
+<!-- MATRIX BACKGROUND -->
 <script>
 const canvas = document.getElementById('matrix-bg');
 const ctx = canvas.getContext('2d');
@@ -209,6 +217,63 @@ function draw(){
     }
 }
 setInterval(draw,40);
+</script>
+
+<!-- 3D ASTRONAUT ANIMATION -->
+<script>
+const container = document.getElementById('astronaut-container');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+container.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0x404060, 0.8);
+scene.add(ambientLight);
+const dirLight = new THREE.DirectionalLight(0x00d9ff, 1.2);
+dirLight.position.set(5, 10, 7);
+scene.add(dirLight);
+
+// Astronaut Body
+const bodyGeo = new THREE.CapsuleGeometry(1.2, 2.5, 8, 16);
+const bodyMat = new THREE.MeshStandardMaterial({color:0xffffff, metalness:0.3, roughness:0.4});
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+scene.add(body);
+
+// Helmet
+const helmetGeo = new THREE.SphereGeometry(1.1, 32, 32);
+const helmetMat = new THREE.MeshStandardMaterial({color:0x00d9ff, transparent:true, opacity:0.6, metalness:0.8, roughness:0.1});
+const helmet = new THREE.Mesh(helmetGeo, helmetMat);
+helmet.position.y = 2.2;
+scene.add(helmet);
+
+// Backpack
+const packGeo = new THREE.BoxGeometry(1.5, 2, 0.8);
+const packMat = new THREE.MeshStandardMaterial({color:0x1a2440, metalness:0.5, roughness:0.3});
+const pack = new THREE.Mesh(packGeo, packMat);
+pack.position.z = -1;
+pack.position.y = 0.5;
+scene.add(pack);
+
+// Floating Animation
+camera.position.z = 6;
+function animateAstronaut(){
+    requestAnimationFrame(animateAstronaut);
+    body.rotation.y += 0.005;
+    helmet.rotation.y += 0.005;
+    body.position.y = Math.sin(Date.now()*0.001)*0.3;
+    helmet.position.y = 2.2 + Math.sin(Date.now()*0.001)*0.3;
+    renderer.render(scene, camera);
+}
+animateAstronaut();
+
+window.addEventListener('resize',()=>{
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+});
 </script>
 </body>
 </html>
