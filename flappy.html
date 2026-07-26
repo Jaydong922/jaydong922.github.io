@@ -2,103 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>FLAPPY BLUES 🚀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FLAPPY BLUES 🚀 ROCKET EDITION</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
-body{background:#03060d;overflow:hidden;touch-action:manipulation}
-canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#05102a 0%,#0088ff 100%);border:2px solid #00e5ff;box-shadow:0 0 50px rgba(0,229,255,.4)}
-.ui{position:absolute;top:15px;left:50%;transform:translateX(-50%);color:#fff;text-align:center;z-index:10}
-.score{font-size:2rem;font-weight:900;color:#00e5ff;text-shadow:0 0 20px #00e5ff}
-.high{font-size:1rem;color:#ffaa3c;margin-top:.5rem}
-.overlay{position:absolute;inset:0;background:rgba(3,6,13,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:20}
-.overlay h2{font-size:2.5rem;color:#ff4d6d;margin-bottom:1rem}
-.overlay p{font-size:1.2rem;margin-bottom:1.5rem;color:#cbd5e1}
-.btn-game{padding:.8rem 1.8rem;background:linear-gradient(135deg,#00e5ff,#0088ff);color:#001018;border:none;border-radius:8px;font-weight:700;cursor:pointer;transition:.3s}
-.btn-game:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(0,229,255,.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020510;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Orbitron',sans-serif}
+canvas{border:2px solid #00d9ff;box-shadow:0 0 40px rgba(0,217,255,0.4);border-radius:12px}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="ui"><div class="score">SCORE: <span id="sc">0</span></div><div class="high">HIGH: <span id="hs">0</span></div></div>
 <canvas id="game" width="400" height="600"></canvas>
-<div class="overlay" id="ov"><h2>FLAPPY BLUES</h2><p>Tap or Press Space to Launch</p><button class="btn-game" onclick="startGame()">START GAME</button></div>
 <script>
-const c=document.getElementById('game').getContext('2d');
-const W=400, H=600;
-let birdY=H/2, birdV=0, score=0, high=localStorage.getItem('flappyHS')||0, gameOn=false;
-let pipes=[], frame=0;
-const bird={w:40,h:25,up:-2.2,grav:0.18};
-const pipe={w:60,gap:180,speed:2.2};
-document.getElementById('hs').textContent=high;
-function startGame(){
-  score=0; birdY=H/2; birdV=0; pipes=[]; frame=0; gameOn=true;
-  document.getElementById('sc').textContent=score;
-  document.getElementById('ov').style.display='none';
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+// GAME SETTINGS
+let gameState = 'start';
+let score = 0;
+let highScore = localStorage.getItem('flappyHigh') || 0;
+let gravity = 0.4;
+let jumpForce = -8;
+let speed = 3;
+
+// ROCKET
+const rocket = {
+  x: 80,
+  y: canvas.height/2,
+  w: 40,
+  h: 30,
+  vy: 0,
+  color: '#00d9ff',
+  flame: 0
+};
+
+// PIPES
+let pipes = [];
+const pipeW = 60;
+const gap = 150;
+
+// BACKGROUND
+const bgGrad = ctx.createLinearGradient(0,0,0,canvas.height);
+bgGrad.addColorStop(0,'#001530');
+bgGrad.addColorStop(1,'#000510');
+
+// DRAW ROCKET
+function drawRocket(){
+  // Body
+  ctx.fillStyle = rocket.color;
+  ctx.shadowColor = '#00d9ff';
+  ctx.shadowBlur = 15;
+  ctx.beginPath();
+  ctx.moveTo(rocket.x+rocket.w, rocket.y+rocket.h/2);
+  ctx.lineTo(rocket.x, rocket.y);
+  ctx.lineTo(rocket.x+10, rocket.y+rocket.h/2);
+  ctx.lineTo(rocket.x, rocket.y+rocket.h);
+  ctx.closePath();
+  ctx.fill();
+  // Flame
+  rocket.flame = Math.min(rocket.flame+0.2, 1);
+  ctx.fillStyle = `rgba(0,255,213,${rocket.flame})`;
+  ctx.shadowColor = '#00ffd5';
+  ctx.shadowBlur = 20;
+  ctx.beginPath();
+  ctx.moveTo(rocket.x, rocket.y+rocket.h/2-5);
+  ctx.lineTo(rocket.x-15*rocket.flame, rocket.y+rocket.h/2);
+  ctx.lineTo(rocket.x, rocket.y+rocket.h/2+5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.shadowBlur = 0;
 }
-function endGame(){
-  gameOn=false;
-  if(score>high){ high=score; localStorage.setItem('flappyHS',high); document.getElementById('hs').textContent=high; }
-  document.getElementById('ov').innerHTML=`<h2>GAME OVER</h2><p>SCORE: ${score} | HIGH: ${high}</p><button class="btn-game" onclick="startGame()">TRY AGAIN</button>`;
-  document.getElementById('ov').style.display='flex';
-}
-function jump(){ if(gameOn) birdV=bird.up; }
-document.addEventListener('keydown',e=>{if(e.code==='Space')jump()});
-document.addEventListener('touchstart',jump);
-document.addEventListener('mousedown',jump);
-function makePipe(){
-  const top=Math.random()*(H-pipe.gap-120)+60;
-  pipes.push({x:W, topH:top, botY:top+pipe.gap, passed:false});
-}
-function drawBird(){
-  c.save(); c.translate(60, birdY); c.rotate(birdV*0.05);
-  // Buong rocket design
-  c.fillStyle='#00e5ff'; c.beginPath(); c.moveTo(22,0); c.lineTo(-18,-14); c.lineTo(-18,14); c.closePath(); c.fill();
-  c.fillStyle='#ffaa3c'; c.beginPath(); c.arc(24,0,7,0,Math.PI*2); c.fill();
-  c.fillStyle='#ff6600'; c.beginPath(); c.arc(24,0,4,0,Math.PI*2); c.fill();
-  // Buong usok/afterburner
-  c.fillStyle='rgba(255,170,60,0.4)';
-  for(let i=1;i<=6;i++){ 
-    c.beginPath(); 
-    c.arc(-18-i*9,0,8-i,0,Math.PI*2); 
-    c.fill(); 
-  }
-  c.fillStyle='rgba(255,100,0,0.3)';
-  for(let i=1;i<=4;i++){ 
-    c.beginPath(); 
-    c.arc(-22-i*7,0,6-i,0,Math.PI*2); 
-    c.fill(); 
-  }
-  c.restore();
-}
+
+// DRAW PIPES
 function drawPipes(){
-  pipes.forEach(p=>{
-    // Buong at makapal na kulay ng pipe
-    c.fillStyle='#0088ff'; c.fillRect(p.x,0,pipe.w,p.topH);
-    c.fillStyle='#00aaff'; c.fillRect(p.x+4,0,pipe.w-8,p.topH);
-    c.fillStyle='#00ccff'; c.fillRect(p.x+8,0,pipe.w-16,p.topH);
-    c.fillStyle='#0088ff'; c.fillRect(p.x,p.botY,pipe.w,H-p.botY);
-    c.fillStyle='#00aaff'; c.fillRect(p.x+4,p.botY,pipe.w-8,H-p.botY);
-    c.fillStyle='#00ccff'; c.fillRect(p.x+8,p.botY,pipe.w-16,H-p.botY);
+  pipes.forEach(p => {
+    const grad = ctx.createLinearGradient(p.x,0,p.x+pipeW,0);
+    grad.addColorStop(0,'#0077ff');
+    grad.addColorStop(1,'#00d9ff');
+    ctx.fillStyle = grad;
+    ctx.shadowColor = '#00d9ff';
+    ctx.shadowBlur = 10;
+    // Top
+    ctx.fillRect(p.x,0,pipeW,p.top);
+    // Bottom
+    ctx.fillRect(p.x,p.top+gap,pipeW,canvas.height-p.top-gap);
+    ctx.shadowBlur = 0;
   });
 }
+
+// SPAWN PIPE
+function spawnPipe(){
+  const top = Math.random()*(canvas.height-gap-100)+50;
+  pipes.push({x:canvas.width, top, passed:false});
+}
+
+// UPDATE GAME
 function update(){
-  if(!gameOn) return;
-  frame++; birdV += bird.grav; birdY += birdV;
-  if(frame%100===0) makePipe();
-  pipes.forEach((p,i)=>{
-    p.x -= pipe.speed;
-    if(!p.passed && p.x+pipe.w<60){ score++; p.passed=true; document.getElementById('sc').textContent=score; }
-    if(p.x+pipe.w<0) pipes.splice(i,1);
-    if(60+bird.w>p.x && 60<p.x+pipe.w && (birdY-bird.h/2<p.topH || birdY+bird.h/2>p.botY)) endGame();
+  if(gameState !== 'play') return;
+  // Rocket physics
+  rocket.vy += gravity;
+  rocket.y += rocket.vy;
+  rocket.flame = Math.max(rocket.flame-0.05, 0.2);
+  // Pipes
+  pipes.forEach((p,i) => {
+    p.x -= speed;
+    if(!p.passed && p.x+pipeW < rocket.x){
+      score++;
+      p.passed = true;
+    }
+    if(p.x+pipeW < 0) pipes.splice(i,1);
+    // Collision
+    if(rocket.x+rocket.w > p.x && rocket.x < p.x+pipeW && (rocket.y < p.top || rocket.y+rocket.h > p.top+gap)){
+      gameOver();
+    }
   });
-  if(birdY-bird.h/2<0 || birdY+bird.h/2>H) endGame();
+  // Spawn new pipe
+  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width-200) spawnPipe();
+  // Bounds
+  if(rocket.y < 0 || rocket.y+rocket.h > canvas.height) gameOver();
 }
+
+// GAME OVER
+function gameOver(){
+  gameState = 'over';
+  if(score > highScore){
+    highScore = score;
+    localStorage.setItem('flappyHigh', highScore);
+  }
+}
+
+// JUMP
+function jump(){
+  if(gameState === 'start'){
+    gameState = 'play';
+    pipes = [];
+    score = 0;
+    rocket.y = canvas.height/2;
+    rocket.vy = jumpForce;
+  } else if(gameState === 'play'){
+    rocket.vy = jumpForce;
+    rocket.flame = 1;
+  } else if(gameState === 'over'){
+    gameState = 'start';
+  }
+}
+
+// DRAW EVERYTHING
+function draw(){
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  drawPipes();
+  drawRocket();
+  // UI
+  ctx.fillStyle = '#00d9ff';
+  ctx.font = '20px Orbitron';
+  ctx.textAlign = 'center';
+  ctx.fillText(`SCORE: ${score}`, canvas.width/2, 30);
+  ctx.fillText(`HIGH: ${highScore}`, canvas.width/2, 55);
+  if(gameState === 'start'){
+    ctx.fillStyle = '#00ffd5';
+    ctx.font = '24px Orbitron';
+    ctx.fillText('TAP TO START', canvas.width/2, canvas.height/2);
+  } else if(gameState === 'over'){
+    ctx.fillStyle = '#ff4d6d';
+    ctx.font = '28px Orbitron';
+    ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2-20);
+    ctx.font = '20px Orbitron';
+    ctx.fillText('TAP TO TRY AGAIN', canvas.width/2, canvas.height/2+20);
+  }
+}
+
+// LOOP
 function loop(){
-  c.clearRect(0,0,W,H);
-  drawPipes(); drawBird(); update();
+  update();
+  draw();
   requestAnimationFrame(loop);
 }
 loop();
+
+// CONTROLS
+document.addEventListener('touchstart', jump);
+document.addEventListener('mousedown', jump);
+document.addEventListener('keydown', e => {if(e.code === 'Space') jump()});
 </script>
 </body>
 </html>
