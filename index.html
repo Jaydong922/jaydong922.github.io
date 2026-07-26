@@ -13,6 +13,7 @@
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Rajdhani',sans-serif;background:radial-gradient(ellipse at top,#071029 0%,#03060d 60%,#000 100%);color:var(--text);overflow-x:hidden;line-height:1.6;width:100%}
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
+
 #matrix{position:fixed;inset:0;z-index:0;opacity:.12}
 .grid-bg{position:fixed;inset:0;z-index:1;background:linear-gradient(rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px,linear-gradient(90deg,rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
 .glow-orbs{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
@@ -52,6 +53,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,229,255,.5)}
 .btn-outline{background:transparent;color:var(--cyan);border:2px solid var(--cyan)}
 .btn-outline:hover{background:var(--cyan);color:#001018;box-shadow:0 0 30px rgba(0,229,255,.4)}
+
 .globe-wrap{position:relative;width:100%;aspect-ratio:1/1;max-width:520px;margin:0 auto;touch-action:none;overscroll-behavior:contain;min-height:300px}
 @media(max-width:900px){.globe-wrap{max-width:420px}}
 #globeCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 70px rgba(0,229,255,.55));touch-action:grab;background:transparent !important}
@@ -75,6 +77,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 @keyframes starFloat{0%,100%{transform:translate(0,0) scale(1);opacity:var(--op)}25%{transform:translate(var(--mx1),var(--my1)) scale(1.1)}50%{transform:translate(var(--mx2),var(--my2)) scale(.9);opacity:calc(var(--op) * 0.6)}75%{transform:translate(var(--mx3),var(--my3)) scale(1.05)}}
 .space-dust{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(180,220,255,.6);animation:dustDrift var(--dd) linear infinite;animation-delay:var(--ddel)}
 @keyframes dustDrift{0%{transform:translate(0,0) rotate(0deg);opacity:0}10%{opacity:.8}90%{opacity:.8}100%{transform:translate(var(--dx),var(--dy)) rotate(360deg);opacity:0}}
+
 section{max-width:1300px;margin:0 auto;padding:5rem 1.5rem;width:100%}
 .sec-head{text-align:center;margin-bottom:3.5rem}
 .eyebrow{font-family:'Share Tech Mono',monospace;font-size:.85rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem}
@@ -229,7 +232,6 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 </footer>
 </div>
 <script>
-// MATRIX BACKGROUND
 const matrixCanvas = document.getElementById('matrix');
 const mctx = matrixCanvas.getContext('2d');
 matrixCanvas.width = window.innerWidth;
@@ -257,7 +259,6 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 50);
 
-// SPACE STARS & DUST
 const spaceLayer = document.getElementById('spaceLayer');
 const starCount = 150, dustCount = 80;
 for(let i=0;i<starCount;i++){
@@ -291,15 +292,12 @@ for(let i=0;i<dustCount;i++){
   spaceLayer.appendChild(d);
 }
 
-// MATH ORBIT TAGS
 const mathLayer = document.getElementById('mathLayer');
 const mathTags = ['E=mc²','∫f(x)dx','∑n=1','π≈3.1416','√2≈1.414','a²+b²=c²','∂/∂x','∇·F','λ=v/f','F=ma','V=IR','P=NP','0x00','0xFF','101011','2^64','log₂(n)','sin²+cos²=1','limₓ→∞','∀x','∃y','i²=-1','ℝ','ℕ','⊕','⊗','→','⇒','⇔','≠','≤','≥','∈','∉','⊂','⊃','∪','∩','∅','∀','∃','∀n','∑k','∫₀¹','∭','∇×','∇²','Δt','Δx','Δv','σ','μ','α','β','γ','δ','ε','θ','λ','ρ','τ','φ','ω','∑','∏','∫∫','∂²/∂x²','∇²ψ','e^iπ+1=0','F=GmM/r²','c=λf','E=hf','Z=V/I','P=I²R'];
 const orbitTypes = ['mathOrbitA','mathOrbitB','mathOrbitC','mathOrbitD'];
 for(let i=0;i<100;i++){
   const t=document.createElement('div');
   t.className='math-tag';
-  if(Math.random()>0.7) t.classList.add('mo');
-  else if(Math
   if(Math.random()>0.7) t.classList.add('mo');
   else if(Math.random()>0.5) t.classList.add('mv');
   if(Math.random()>0.8) t.classList.add('tiny');
@@ -310,50 +308,18 @@ for(let i=0;i<100;i++){
   const r = Math.random()*240+90;
   const ang = Math.random()*Math.PI*2;
   t.style.setProperty('--rx', `${r*Math.cos(ang)}px`);
-  t.style.setProperty('--ry', `${r*Math.sin(ang)}px`);
+  t.style.setProperty r*Math.sin(ang)}px`;
   t.style.animationName = orbitTypes[Math.floor(Math.random()*orbitTypes.length)];
   mathLayer.appendChild(t);
 }
 
-// 3D GLOBE — FULL DETAILS + TOUCH/SWIPE CONTROL
 const canvas = document.getElementById('globeCanvas');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth/canvas.clientHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// Buong at detalyadong globo
-const globeGeo = new THREE.SphereGeometry(1.8, 80, 80);
-const globeMat = new THREE.MeshBasicMaterial({color:0x00c8ff, wireframe:false, transparent:true, opacity:0.18});
-const globe = new THREE.Mesh(globeGeo, globeMat);
-scene.add(globe);
-
-// Mas siksik at malinaw na grid
-const gridGeo = new THREE.SphereGeometry(1.83, 40, 40);
-const gridMat = new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.3});
-const grid = new THREE.Mesh(gridGeo, gridMat);
-scene.add(grid);
-
-// Atmosphere at glow
-const atmosGeo = new THREE.SphereGeometry(1.92, 80, 80);
-const atmosMat = new THREE.MeshBasicMaterial({color:0x00aaff, transparent:true, opacity:0.09, side:THREE.BackSide});
-const atmos = new THREE.Mesh(atmosGeo, atmosMat);
-scene.add(atmos);
-
-// Detalyadong rehiyon/marka
-const regionColors = [0x00ffd5, 0x0088ff, 0x7c3aed, 0xec4899, 0xffaa3c, 0x39ff14];
-for(let i=0;i<16;i++){
-  const rGeo = new THREE.SphereGeometry(0.14, 20, 20);
-  const rMat = new THREE.MeshBasicMaterial({color:regionColors[i%regionColors.length], transparent:true, opacity:0.75});
-  const reg = new THREE.Mesh(rGeo, rMat);
-  const phi = Math.acos(-1 + (2*i)/16);
-  const theta = Math.sqrt(16*Math.PI)*phi;
-  reg.position.set(1.96*Math.cos(theta)*Math.sin(phi), 1.96*Math.sin(theta)*Math.sin(phi), 1.96*Math.cos(phi));
-  scene.add(reg);
-}
-
-// ✅ TOUCH / SWIPE CONTROL — PWEDE NA IGALAW!
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -361,113 +327,59 @@ controls.enableZoom = false;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 0.4;
 
-camera.position.z = 4.6;
-
-function animateGlobe(){
-  requestAnimationFrame(animateGlobe);
-  controls.update();
-  renderer.render(scene, camera);
-}
-animateGlobe();
-
-window.addEventListener('resize', ()=>{
-  camera.aspect = canvas.clientWidth/canvas.clientHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+const globeGeo = new THREE.SphereGeometry(5, 64, 64);
+const globeMat = new THREE.MeshBasicMaterial({
+  color: 0x00d9ff,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.25
 });
-
-// SCROLL ANIMATION
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-    }
-  });
-}, {threshold:0.1});
-document.querySelectorAll('.skill-card, .project, .tl-card, .contact-card').forEach(el=>{
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(25px)';
-  el.style.transition = 'all 0.6s ease-out';
-  observer.observe(el);
-});
-// 3D GLOBE — FULL DETAILS + TOUCH/SWIPE CONTROL
-const canvas = document.getElementById('globeCanvas');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth/canvas.clientHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-
-// Buong at detalyadong globo
-const globeGeo = new THREE.SphereGeometry(1.8, 80, 80);
-const globeMat = new THREE.MeshBasicMaterial({color:0x00c8ff, wireframe:false, transparent:true, opacity:0.18});
 const globe = new THREE.Mesh(globeGeo, globeMat);
 scene.add(globe);
 
-// Mas siksik at malinaw na grid
-const gridGeo = new THREE.SphereGeometry(1.83, 40, 40);
-const gridMat = new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.3});
-const grid = new THREE.Mesh(gridGeo, gridMat);
-scene.add(grid);
+const solidGeo = new THREE.SphereGeometry(4.8, 48, 48);
+const solidMat = new THREE.MeshBasicMaterial({
+  color: 0x001a33,
+  transparent: true,
+  opacity: 0.7
+});
+const solidGlobe = new THREE.Mesh(solidGeo, solidMat);
+scene.add(solidGlobe);
 
-// Atmosphere at glow
-const atmosGeo = new THREE.SphereGeometry(1.92, 80, 80);
-const atmosMat = new THREE.MeshBasicMaterial({color:0x00aaff, transparent:true, opacity:0.09, side:THREE.BackSide});
-const atmos = new THREE.Mesh(atmosGeo, atmosMat);
-scene.add(atmos);
+const dotsGeo = new THREE.SphereGeometry(0.08, 8, 8);
+const dotsMat = new THREE.MeshBasicMaterial({color: 0x00ffff});
+const locations = [
+  {lat: 11.25, lon: 125.0}, {lat: 14.6, lon: 121.0}, {lat: 40.7, lon: -74.0},
+  {lat: 51.5, lon: -0.1}, {lat: 35.7, lon: 139.7}, {lat: -33.8, lon: 151.2},
+  {lat: 30.0, lon: 31.2}, {lat: -23.5, lon: -46.6}
+];
+locations.forEach(loc => {
+  const dot = new THREE.Mesh(dotsGeo, dotsMat);
+  const phi = (90 - loc.lat) * (Math.PI / 180);
+  const theta = (loc.lon + 180) * (Math.PI / 180);
+  const x = -5 * Math.sin(phi) * Math.cos(theta);
+  const y = 5 * Math.cos(phi);
+  const z = 5 * Math.sin(phi) * Math.sin(theta);
+  dot.position.set(x, y, z);
+  scene.add(dot);
+});
 
-// Detalyadong rehiyon/marka
-const regionColors = [0x00ffd5, 0x0088ff, 0x7c3aed, 0xec4899, 0xffaa3c, 0x39ff14];
-for(let i=0;i<16;i++){
-  const rGeo = new THREE.SphereGeometry(0.14, 20, 20);
-  const rMat = new THREE.MeshBasicMaterial({color:regionColors[i%regionColors.length], transparent:true, opacity:0.75});
-  const reg = new THREE.Mesh(rGeo, rMat);
-  const phi = Math.acos(-1 + (2*i)/16);
-  const theta = Math.sqrt(16*Math.PI)*phi;
-  reg.position.set(1.96*Math.cos(theta)*Math.sin(phi), 1.96*Math.sin(theta)*Math.sin(phi), 1.96*Math.cos(phi));
-  scene.add(reg);
-}
+camera.position.set(0, 0, 12);
 
-// ✅ TOUCH / SWIPE CONTROL — PWEDE NA IGALAW!
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
-controls.enableZoom = false;
-controls.autoRotate = true;
-controls.autoRotateSpeed = 0.4;
+window.addEventListener('resize', () => {
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
 
-camera.position.z = 4.6;
-
-function animateGlobe(){
-  requestAnimationFrame(animateGlobe);
+function animate() {
+  requestAnimationFrame(animate);
+  globe.rotation.y += 0.0015;
+  solidGlobe.rotation.y += 0.0015;
   controls.update();
   renderer.render(scene, camera);
 }
-animateGlobe();
-
-window.addEventListener('resize', ()=>{
-  camera.aspect = canvas.clientWidth/canvas.clientHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-});
-
-// SCROLL ANIMATION
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-    }
-  });
-}, {threshold:0.1});
-document.querySelectorAll('.skill-card, .project, .tl-card, .contact-card').forEach(el=>{
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(25px)';
-  el.style.transition = 'all 0.6s ease-out';
-  observer.observe(el);
-});
+animate();
 </script>
-</body>
-</html>
-
