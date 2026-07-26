@@ -391,6 +391,83 @@ document.querySelectorAll('.skill-card, .project, .tl-card, .contact-card').forE
   el.style.transition = 'all 0.6s ease-out';
   observer.observe(el);
 });
+// 3D GLOBE — FULL DETAILS + TOUCH/SWIPE CONTROL
+const canvas = document.getElementById('globeCanvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth/canvas.clientHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+// Buong at detalyadong globo
+const globeGeo = new THREE.SphereGeometry(1.8, 80, 80);
+const globeMat = new THREE.MeshBasicMaterial({color:0x00c8ff, wireframe:false, transparent:true, opacity:0.18});
+const globe = new THREE.Mesh(globeGeo, globeMat);
+scene.add(globe);
+
+// Mas siksik at malinaw na grid
+const gridGeo = new THREE.SphereGeometry(1.83, 40, 40);
+const gridMat = new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.3});
+const grid = new THREE.Mesh(gridGeo, gridMat);
+scene.add(grid);
+
+// Atmosphere at glow
+const atmosGeo = new THREE.SphereGeometry(1.92, 80, 80);
+const atmosMat = new THREE.MeshBasicMaterial({color:0x00aaff, transparent:true, opacity:0.09, side:THREE.BackSide});
+const atmos = new THREE.Mesh(atmosGeo, atmosMat);
+scene.add(atmos);
+
+// Detalyadong rehiyon/marka
+const regionColors = [0x00ffd5, 0x0088ff, 0x7c3aed, 0xec4899, 0xffaa3c, 0x39ff14];
+for(let i=0;i<16;i++){
+  const rGeo = new THREE.SphereGeometry(0.14, 20, 20);
+  const rMat = new THREE.MeshBasicMaterial({color:regionColors[i%regionColors.length], transparent:true, opacity:0.75});
+  const reg = new THREE.Mesh(rGeo, rMat);
+  const phi = Math.acos(-1 + (2*i)/16);
+  const theta = Math.sqrt(16*Math.PI)*phi;
+  reg.position.set(1.96*Math.cos(theta)*Math.sin(phi), 1.96*Math.sin(theta)*Math.sin(phi), 1.96*Math.cos(phi));
+  scene.add(reg);
+}
+
+// ✅ TOUCH / SWIPE CONTROL — PWEDE NA IGALAW!
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enableZoom = false;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.4;
+
+camera.position.z = 4.6;
+
+function animateGlobe(){
+  requestAnimationFrame(animateGlobe);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animateGlobe();
+
+window.addEventListener('resize', ()=>{
+  camera.aspect = canvas.clientWidth/canvas.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+});
+
+// SCROLL ANIMATION
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, {threshold:0.1});
+document.querySelectorAll('.skill-card, .project, .tl-card, .contact-card').forEach(el=>{
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(25px)';
+  el.style.transition = 'all 0.6s ease-out';
+  observer.observe(el);
+});
 </script>
 </body>
 </html>
+
