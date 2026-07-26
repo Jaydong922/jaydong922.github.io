@@ -9,18 +9,22 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--cyan:#00e5ff;--blue:#0088ff;--violet:#7c3aed;--pink:#ec4899;--bg:#03060d;--text:#e6f4ff;--muted:#94a3b8;--line:rgba(0,229,255,.2);--glass:rgba(10,20,40,.55)}
+:root{--cyan:#00e5ff;--blue:#0088ff;--deepblue:#0044aa;--violet:#7c3aed;--pink:#ec4899;--green:#00ff9d;--bg:#03060d;--text:#e6f4ff;--muted:#94a3b8;--line:rgba(0,229,255,.2);--glass:rgba(10,20,40,.55)}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Rajdhani',sans-serif;background:radial-gradient(ellipse at top,#071029 0%,#03060d 60%,#000 100%);color:var(--text);overflow-x:hidden;line-height:1.6;width:100%}
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
 
-#matrix{position:fixed;inset:0;z-index:0;opacity:.12}
+/* ENHANCED CMATRIX BACKGROUND */
+#matrix{position:fixed;inset:0;z-index:0;opacity:.18}
+#matrix::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(0,229,255,0.08) 50%,transparent 100%)}
+
 .grid-bg{position:fixed;inset:0;z-index:1;background:linear-gradient(rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px,linear-gradient(90deg,rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
 .glow-orbs{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.35;animation:float 18s ease-in-out infinite}
 .orb1{width:500px;height:500px;background:var(--cyan);top:-150px;left:-100px}
 .orb2{width:600px;height:600px;background:var(--violet);bottom:-200px;right:-150px;animation-delay:-6s}
 .orb3{width:400px;height:400px;background:var(--blue);top:40%;left:50%;animation-delay:-12s}
+.orb4{width:350px;height:350px;background:var(--green);top:10%;right:20%;animation-delay:-8s}
 @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,40px) scale(.95)}}
 .wrap{position:relative;z-index:10;width:100%}
 nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba(3,6,13,.75);border-bottom:1px solid var(--line);padding:1rem 0;width:100%}
@@ -54,6 +58,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 .btn-outline{background:transparent;color:var(--cyan);border:2px solid var(--cyan)}
 .btn-outline:hover{background:var(--cyan);color:#001018;box-shadow:0 0 30px rgba(0,229,255,.4)}
 
+/* ENHANCED GLOBE CONTAINER */
 .globe-wrap{position:relative;width:100%;aspect-ratio:1/1;max-width:520px;margin:0 auto;touch-action:none;overscroll-behavior:contain;min-height:300px}
 @media(max-width:900px){.globe-wrap{max-width:420px}}
 #globeCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 70px rgba(0,229,255,.55));touch-action:grab;background:transparent !important}
@@ -61,6 +66,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 .ring{position:absolute;inset:-6%;border:1px dashed rgba(0,229,255,.25);border-radius:50%;animation:spin 30s linear infinite;pointer-events:none}
 .ring2{inset:-14%;border-color:rgba(124,58,237,.2);animation-duration:45s;animation-direction:reverse}
 .ring3{inset:-22%;border-style:dotted;border-color:rgba(236,72,153,.15);animation-duration:60s}
+.ring4{inset:-30%;border:1px solid rgba(0,255,157,.12);animation-duration:75s;animation-delay:-15s}
 @keyframes spin{to{transform:rotate(360deg)}}
 .math-layer{position:absolute;inset:-30%;pointer-events:none;z-index:5}
 .math-tag{position:absolute;top:50%;left:50%;font-family:'Share Tech Mono',monospace;color:rgba(0,229,255,.88);text-shadow:0 0 8px rgba(0,229,255,.6);white-space:nowrap;font-weight:700;font-size:clamp(.65rem,1.1vw,.85rem);transform-origin:center;animation:mathOrbitA var(--dur) linear infinite;animation-delay:var(--del)}
@@ -155,7 +161,7 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 <body>
 <canvas id="matrix"></canvas>
 <div class="grid-bg"></div>
-<div class="glow-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<div class="glow-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div></div>
 <div class="wrap">
 <nav><div class="nav-inner"><div class="brand">JAYD.DEV</div><div class="links"><a href="#home">HOME</a><a href="#about">ABOUT</a><a href="#skills">SKILLS</a><a href="#projects">PROJECTS</a><a href="#journey">JOURNEY</a><a href="#contact">CONTACT</a></div></div></nav>
 <section class="hero" id="home">
@@ -168,7 +174,7 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 <div class="cta-row"><a href="#projects" class="btn btn-primary">VIEW MY WORK ↓</a><a href="#contact" class="btn btn-outline">GET IN TOUCH</a></div>
 </div>
 <div class="globe-wrap">
-<div class="ring"></div><div class="ring ring2"></div><div class="ring ring3"></div>
+<div class="ring"></div><div class="ring ring2"></div><div class="ring ring3"></div><div class="ring ring4"></div>
 <div class="space-layer" id="spaceLayer"></div>
 <div class="math-layer" id="mathLayer"></div>
 <canvas id="globeCanvas"></canvas>
@@ -232,6 +238,7 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 </footer>
 </div>
 <script>
+// ENHANCED CMATRIX
 const matrixCanvas = document.getElementById('matrix');
 const mctx = matrixCanvas.getContext('2d');
 matrixCanvas.width = window.innerWidth;
@@ -240,42 +247,44 @@ window.addEventListener('resize', () => {
   matrixCanvas.width = window.innerWidth;
   matrixCanvas.height = window.innerHeight;
 });
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンϕ∑∏∫∬∭∂∇√πλμσρτφω';
 const charArr = chars.split('');
-const fontSize = 14;
+const fontSize = 15;
 const columns = matrixCanvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
+const speeds = Array(Math.floor(columns)).fill(0).map(() => Math.random() * 2 + 0.5);
 function drawMatrix() {
-  mctx.fillStyle = 'rgba(3,6,13,0.05)';
+  mctx.fillStyle = 'rgba(3,6,13,0.04)';
   mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-  mctx.fillStyle = '#00e5ff';
-  mctx.font = fontSize + 'px monospace';
   for(let i = 0; i < drops.length; i++) {
     const text = charArr[Math.floor(Math.random() * charArr.length)];
+    const bright = Math.random() > 0.85;
+    mctx.fillStyle = bright ? '#00ffff' : '#0099aa';
+    mctx.font = fontSize + 'px monospace';
     mctx.fillText(text, i * fontSize, drops[i] * fontSize);
     if(drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
+    drops[i] += speeds[i];
   }
 }
-setInterval(drawMatrix, 50);
+setInterval(drawMatrix, 45);
 
 const spaceLayer = document.getElementById('spaceLayer');
-const starCount = 150, dustCount = 80;
+const starCount = 220, dustCount = 120;
 for(let i=0;i<starCount;i++){
   const s=document.createElement('div');
   s.className='star';
-  s.style.setProperty('--sz', `${Math.random()*2+1}px`);
-  s.style.setProperty('--gl', `${Math.random()*8+2}px`);
-  s.style.setProperty('--c', `rgba(0,229,255,${Math.random()*0.7+0.2})`);
-  s.style.setProperty('--sd', `${Math.random()*30+15}s`);
-  s.style.setProperty('--sdel', `${Math.random()*15}s`);
-  s.style.setProperty('--op', `${Math.random()*0.6+0.3}`);
-  s.style.setProperty('--mx1', `${Math.random()*50-25}px`);
-  s.style.setProperty('--my1', `${Math.random()*50-25}px`);
-  s.style.setProperty('--mx2', `${Math.random()*70-35}px`);
-  s.style.setProperty('--my2', `${Math.random()*70-35}px`);
-  s.style.setProperty('--mx3', `${Math.random()*40-20}px`);
-  s.style.setProperty('--my3', `${Math.random()*40-20}px`);
+  s.style.setProperty('--sz', `${Math.random()*2.5+0.8}px`);
+  s.style.setProperty('--gl', `${Math.random()*12+3}px`);
+  s.style.setProperty('--c', `rgba(0,229,255,${Math.random()*0.8+0.2})`);
+  s.style.setProperty('--sd', `${Math.random()*35+10}s`);
+  s.style.setProperty('--sdel', `${Math.random()*20}s`);
+  s.style.setProperty('--op', `${Math.random()*0.7+0.2}`);
+  s.style.setProperty('--mx1', `${Math.random()*60-30}px`);
+  s.style.setProperty('--my1', `${Math.random()*60-30}px`);
+  s.style.setProperty('--mx2', `${Math.random()*80-40}px`);
+  s.style.setProperty('--my2', `${Math.random()*80-40}px`);
+  s.style.setProperty('--mx3', `${Math.random()*50-25}px`);
+  s.style.setProperty('--my3', `${Math.random()*50-25}px`);
   s.style.left = `${Math.random()*100}%`;
   s.style.top = `${Math.random()*100}%`;
   spaceLayer.appendChild(s);
@@ -283,19 +292,20 @@ for(let i=0;i<starCount;i++){
 for(let i=0;i<dustCount;i++){
   const d=document.createElement('div');
   d.className='space-dust';
-  d.style.setProperty('--dd', `${Math.random()*25+10}s`);
-  d.style.setProperty('--ddel', `${Math.random()*20}s`);
-  d.style.setProperty('--dx', `${Math.random()*250-125}px`);
-  d.style.setProperty('--dy', `${Math.random()*250-125}px`);
+  d.style.setProperty('--dd', `${Math.random()*30+12}s`);
+  d.style.setProperty('--ddel', `${Math.random()*25}s`);
+  d.style.setProperty('--dx', `${Math.random()*300-150}px`);
+  d.style.setProperty('--dy', `${Math.random()*300-150}px`);
   d.style.left = `${Math.random()*100}%`;
   d.style.top = `${Math.random()*100}%`;
   spaceLayer.appendChild(d);
 }
 
 const mathLayer = document.getElementById('mathLayer');
-const mathTags = ['E=mc²','∫f(x)dx','∑n=1','π≈3.1416','√2≈1.414','a²+b²=c²','∂/∂x','∇·F','λ=v/f','F=ma','V=IR','P=NP','0x00','0xFF','101011','2^64','log₂(n)','sin²+cos²=1','limₓ→∞','∀x','∃y','i²=-1','ℝ','ℕ','⊕','⊗','→','⇒','⇔','≠','≤','≥','∈','∉','⊂','⊃','∪','∩','∅','∀','∃','∀n','∑k','∫₀¹','∭','∇×','∇²','Δt','Δx','Δv','σ','μ','α','β','γ','δ','ε','θ','λ','ρ','τ','φ','ω','∑','∏','∫∫','∂²/∂x²','∇²ψ','e^iπ+1=0','F=GmM/r²','c=λf','E=hf','Z=V/I','P=I²R'];
+const mathTags = ['E=mc²','∫f(x)dx','∑n=1','π≈3.1416','√2≈1.414','a²+b²=c²','∂/∂x','∇·F','λ=v/f','F=ma','V=IR','P=NP','0x00','0xFF','101011','2^64','log₂(n)','sin²+cos²=1','limₓ→∞','∀x','∃y','i²=-1','ℝ','ℕ','⊕','⊗','→','⇒','⇔','≠','≤','≥','∈','∉','⊂','⊃','∪','∩','∅','∀','∃','∀n','∑k','∫₀¹','∭','∇×','∇²','Δt','Δx','Δv','σ','μ','α','β','γ','δ','ε','θ','λ','
+ρ','τ','φ','ω','∑','∏','∫∫','∂²/∂x²','∇²ψ','e^iπ+1=0','F=GmM/r²','c=λf','E=hf','Z=V/I','P=I²R','H₂O','CO₂','O₂','N₂','CH₄','C₆H₁₂O₆','NaCl','Fe₂O₃','SiO₂','Al₂O₃','CaCO₃','AgNO₃','KMnO₄','H₂SO₄','HCl','NaOH','NH₃','CH₃COOH','C₂H₅OH','C₈H₁₀N₄O₂','C₁₀H₁₄N₂','C₁₇H₂₁NO₄','C₂₁H₂₆N₂O₂','C₁₉H₂₈O₂','C₂₇H₄₆O','C₃₉H₅₄O₆','C₅₅H₉₈O₆','C₆H₁₂O₆+6O₂→6CO₂+6H₂O','2H₂+O₂→2H₂O','2Na+Cl₂→2NaCl','Fe+CuSO₄→FeSO₄+Cu','CaCO₃→CaO+CO₂↑','2H₂O₂→2H₂O+O₂↑','CH₄+2O₂→CO₂+2H₂O','C₂H₄+3O₂→2CO₂+2H₂O','C₆H₁₂O₆→2C₂H₅OH+2CO₂↑','nCH₂=CH₂→-(CH₂-CH₂)n-','nC₆H₁₀O₅→-(C₆H₁₀O₅)n-','∆G=∆H-T∆S','∆S=q_rev/T','∆H=∆U+P∆V','PV=nRT','k=Ae^(-Ea/RT)','E=E°-(RT/nF)lnQ','∆G°=-nFE°','K=e^(-∆G°/RT)','v=k[A]^m[B]^n','t₁/₂=ln2/k','[A]=[A]₀e^(-kt)','c=λν','E=hν','p=h/λ','λ=h/mv','∆x∆p≥h/4π','Eₙ=-13.6/n² eV','L=√(l(l+1))ℏ','mₗ=-l,…,0,…,+l','mₛ=±½','ψ²dV=probability','∇²ψ+(8π²m/h²)(E-V)ψ=0','F=q(E+v×B)','∇·E=ρ/ε₀','∇×E=-∂B/∂t','∇·B=0','∇×B=μ₀J+μ₀ε₀∂E/∂t','c=1/√(μ₀ε₀)','E=mc²','E²=(pc)²+(mc²)²','v=u+at','s=ut+½at²','v²=u²+2as','F=ma','W=Fs','P=W/t','Ek=½mv²','Ep=mgh','p=mv','I=Ft','τ=r×F','L=r×p','ω=2πf','T=1/f','a=v²/r','F=mv²/r','F=Gm₁m₂/r²','T²∝r³','ρ=m/V','P=F/A','P=ρgh','A₁v₁=A₂v₂','P+½ρv²+ρgh=constant','γ=Cp/Cv','PV^γ=constant','Q=mc∆T','Q=mL','∆U=Q-W','η=W/Qₕ','η=1-Tc/Th','T=2π√(l/g)','T=2π√(m/k)','v=√(T/μ)','v=√(γP/ρ)','fₙ=nv/(2L)','fₙ=nv/(4L)','λ=2L/n','f'=f(v+v₀)/(v-vₛ)','I=I₀cos²θ','d sinθ=nλ','a sinθ=(n+½)λ','∆x=λL/d','∆θ=λ/d','1/f=1/u+1/v','m=h'/h','n₁sinθ₁=n₂sinθ₂','sinC=n₂/n₁','∆E=hf','hf=Φ+Ek_max','λ=h/p','N=N₀e^(-λt)','T₁/₂=ln2/λ','A=λN','E=mc²','Z=A-N','N=Z','A=Z+N','U=qV','I=Q/t','V=IR','R=ρL/A','P=VI=I²R=V²/R','Rₛ=R₁+R₂+…','1/Rₚ=1/R₁+1/R₂+…','C=Q/V','C=ε₀A/d','τ=RC','X_L=2πfL','X_C=1/(2πfC)','Z=√(R²+(X_L-X_C)²)','tanφ=(X_L-X_C)/R','Vₛ=√(V_R²+(V_L-V_C)²)','Iₘₐₓ=Vₛ/Z','f₀=1/(2π√(LC))','v=fλ','c=3×10⁸ m/s','G=6.67×10⁻¹¹ Nm²/kg²','k=9×10⁹ Nm²/C²','ε₀=8.85×10⁻¹² F/m','μ₀=4π×10⁻⁷ H/m','h=6.63×10⁻³⁴ Js','e=1.6×10⁻¹⁹ C','mₑ=9.1×10⁻³¹ kg','mₚ=1.67×10⁻²⁷ kg','g=9.8 m/s²','π≈3.141592653589793','e≈2.718281828459045','ln2≈0.693147180559945','log₁₀2≈0.301029995663981','√2≈1.414213562373095','√3≈1.732050807568877','φ≈1.618033988749895','γ≈0.577215664901533'];
 const orbitTypes = ['mathOrbitA','mathOrbitB','mathOrbitC','mathOrbitD'];
-for(let i=0;i<100;i++){
+for(let i=0;i<120;i++){
   const t=document.createElement('div');
   t.className='math-tag';
   if(Math.random()>0.7) t.classList.add('mo');
@@ -303,16 +313,17 @@ for(let i=0;i<100;i++){
   if(Math.random()>0.8) t.classList.add('tiny');
   if(Math.random()>0.9) t.classList.add('big');
   t.textContent = mathTags[Math.floor(Math.random()*mathTags.length)];
-  t.style.setProperty('--dur', `${Math.random()*28+12}s`);
-  t.style.setProperty('--del', `${Math.random()*18}s`);
-  const r = Math.random()*240+90;
+  t.style.setProperty('--dur', `${Math.random()*32+10}s`);
+  t.style.setProperty('--del', `${Math.random()*20}s`);
+  const r = Math.random()*260+80;
   const ang = Math.random()*Math.PI*2;
   t.style.setProperty('--rx', `${r*Math.cos(ang)}px`);
-  t.style.setProperty r*Math.sin(ang)}px`;
+  t.style.setProperty('--ry', `${r*Math.sin(ang)}px`);
   t.style.animationName = orbitTypes[Math.floor(Math.random()*orbitTypes.length)];
   mathLayer.appendChild(t);
 }
 
+// ENHANCED 3D EARTH
 const canvas = document.getElementById('globeCanvas');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
@@ -322,41 +333,86 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.dampingFactor = 0.05;
+controls.dampingFactor = 0.04;
 controls.enableZoom = false;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 0.4;
+controls.autoRotateSpeed = 0.5;
+controls.enablePan = false;
 
-const globeGeo = new THREE.SphereGeometry(5, 64, 64);
+// Main Globe
+const globeGeo = new THREE.SphereGeometry(5, 80, 80);
 const globeMat = new THREE.MeshBasicMaterial({
-  color: 0x00d9ff,
+  color: 0x00bfff,
   wireframe: true,
   transparent: true,
-  opacity: 0.25
+  opacity: 0.3
 });
 const globe = new THREE.Mesh(globeGeo, globeMat);
 scene.add(globe);
 
-const solidGeo = new THREE.SphereGeometry(4.8, 48, 48);
+// Solid Inner Globe
+const solidGeo = new THREE.SphereGeometry(4.7, 64, 64);
 const solidMat = new THREE.MeshBasicMaterial({
   color: 0x001a33,
   transparent: true,
-  opacity: 0.7
+  opacity: 0.75
 });
 const solidGlobe = new THREE.Mesh(solidGeo, solidMat);
 scene.add(solidGlobe);
 
-const dotsGeo = new THREE.SphereGeometry(0.08, 8, 8);
-const dotsMat = new THREE.MeshBasicMaterial({color: 0x00ffff});
+// Atmosphere Glow Layer
+const atmosGeo = new THREE.SphereGeometry(5.3, 64, 64);
+const atmosMat = new THREE.MeshBasicMaterial({
+  color: 0x00ffff,
+  transparent: true,
+  opacity: 0.08,
+  side: THREE.BackSide
+});
+const atmos = new THREE.Mesh(atmosGeo, atmosMat);
+scene.add(atmos);
+
+// Latitude & Longitude Lines
+const lineMat = new THREE.LineBasicMaterial({color: 0x0088ff, transparent: true, opacity: 0.2});
+for(let lat=-80; lat<=80; lat+=20){
+  const pts = [];
+  for(let lon=0; lon<=360; lon+=10){
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = lon * Math.PI / 180;
+    pts.push(new THREE.Vector3(5.1 * Math.sin(phi)*Math.cos(theta), 5.1 * Math.cos(phi), 5.1 * Math.sin(phi)*Math.sin(theta)));
+  }
+  const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+  scene.add(new THREE.Line(lineGeo, lineMat));
+}
+for(let lon=0; lon<360; lon+=30){
+  const pts = [];
+  for(let lat=-90; lat<=90; lat+=10){
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = lon * Math.PI / 180;
+    pts.push(new THREE.Vector3(5.1 * Math.sin(phi)*Math.cos(theta), 5.1 * Math.cos(phi), 5.1 * Math.sin(phi)*Math.sin(theta)));
+  }
+  const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+  scene.add(new THREE.Line(lineGeo, lineMat));
+}
+
+// City/Country Markers
+const dotGeo = new THREE.SphereGeometry(0.09, 12, 12);
 const locations = [
-  {lat: 11.25, lon: 125.0}, {lat: 14.6, lon: 121.0}, {lat: 40.7, lon: -74.0},
-  {lat: 51.5, lon: -0.1}, {lat: 35.7, lon: 139.7}, {lat: -33.8, lon: 151.2},
-  {lat: 30.0, lon: 31.2}, {lat: -23.5, lon: -46.6}
+  {lat: 11.25, lon: 125.0, col:0x00ff9d}, // Leyte
+  {lat: 14.6, lon: 121.0, col:0x00d9ff}, // Manila
+  {lat: 40.7, lon: -74.0, col:0xff4d6d}, // New York
+  {lat: 51.5, lon: -0.1, col:0x7c3aed}, // London
+  {lat: 35.7, lon: 139.7, col:0xffd700}, // Tokyo
+  {lat: -33.8, lon: 151.2, col:0x00ffd5}, // Sydney
+  {lat: 30.0, lon: 31.2, col:0xff9933}, // Cairo
+  {lat: -23.5, lon: -46.6, col:0x39ff14}, // São Paulo
+  {lat: 55.7, lon: 37.6, col:0x9966ff}, // Moscow
+  {lat: 1.3, lon: 103.8, col:0x00ccff}  // Singapore
 ];
 locations.forEach(loc => {
-  const dot = new THREE.Mesh(dotsGeo, dotsMat);
-  const phi = (90 - loc.lat) * (Math.PI / 180);
-  const theta = (loc.lon + 180) * (Math.PI / 180);
+  const dotMat = new THREE.MeshBasicMaterial({color: loc.col});
+  const dot = new THREE.Mesh(dotGeo, dotMat);
+  const phi = (90 - loc.lat) * Math.PI / 180;
+  const theta = (loc.lon + 180) * Math.PI / 180;
   const x = -5 * Math.sin(phi) * Math.cos(theta);
   const y = 5 * Math.cos(phi);
   const z = 5 * Math.sin(phi) * Math.sin(theta);
@@ -364,7 +420,19 @@ locations.forEach(loc => {
   scene.add(dot);
 });
 
-camera.position.set(0, 0, 12);
+// Orbit Rings Animation
+const ringGeo = new THREE.TorusGeometry(5.8, 0.015, 16, 100);
+const ringMat1 = new THREE.MeshBasicMaterial({color: 0x00d9ff, transparent: true, opacity: 0.25});
+const ringMat2 = new THREE.MeshBasicMaterial({color: 0x7c3aed, transparent: true, opacity: 0.2});
+const ring1 = new THREE.Mesh(ringGeo, ringMat1);
+ring1.rotation.x = Math.PI / 6;
+scene.add(ring1);
+const ring2 = new THREE.Mesh(ringGeo, ringMat2);
+ring2.rotation.x = -Math.PI / 4;
+ring2.rotation.z = Math.PI / 3;
+scene.add(ring2);
+
+camera.position.set(0, 0, 13);
 
 window.addEventListener('resize', () => {
   const w = canvas.clientWidth;
@@ -376,8 +444,11 @@ window.addEventListener('resize', () => {
 
 function animate() {
   requestAnimationFrame(animate);
-  globe.rotation.y += 0.0015;
-  solidGlobe.rotation.y += 0.0015;
+  globe.rotation.y += 0.0018;
+  solidGlobe.rotation.y += 0.0018;
+  atmos.rotation.y += 0.0012;
+  ring1.rotation.z += 0.002;
+  ring2.rotation.z -= 0.0015;
   controls.update();
   renderer.render(scene, camera);
 }
