@@ -3,11 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FLAPPY BLUES 🚀 ULTIMATE NEXT-GEN</title>
+<title>FLAPPY BLUES 🚀 3D ULTIMATE</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#00000a;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Orbitron',sans-serif}
-canvas{border:3px solid #00f8ff;box-shadow:0 0 80px rgba(0,248,255,0.6);border-radius:20px}
+body{
+  background:#000012;
+  overflow:hidden;
+  display:flex;justify-content:center;align-items:center;
+  min-height:100vh;
+  font-family:'Orbitron',sans-serif;
+}
+canvas{
+  border:2px solid #00f8ff;
+  box-shadow:0 0 100px rgba(0,248,255,0.5), inset 0 0 50px rgba(0,248,255,0.1);
+  border-radius:24px;
+  background:radial-gradient(circle at 50% 30%, #001030 0%, #000012 70%);
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
@@ -20,52 +31,95 @@ const ctx = canvas.getContext('2d');
 let state = 'start';
 let score = 0;
 let best = localStorage.getItem('flappyBest') || 0;
-let gravity = 0.35;
-let jumpPower = -7;
-let speed = 3;
+let gravity = 0.32;
+let jumpPower = -7.2;
+let speed = 3.1;
 
-const rocket = {x:100,y:canvas.height/2,w:50,h:35,vy:0,power:0,tilt:0};
+const rocket = {x:100,y:canvas.height/2,w:55,h:38,vy:0,power:0,tilt:0,glow:0};
 let pipes = [];
-const pipeW = 70;
-const gapH = 170;
+const pipeW = 72;
+const gapH = 175;
 
+// Background Gradient (Malinis at Walang Grid)
 const bg = ctx.createLinearGradient(0,0,0,canvas.height);
 bg.addColorStop(0,'#001540');
-bg.addColorStop(0.5,'#000a20');
-bg.addColorStop(1,'#00000a');
+bg.addColorStop(0.4,'#000a25');
+bg.addColorStop(1,'#000012');
+
+// 3D STAR PARTICLES
+const stars = [];
+for(let i=0;i<80;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*1.5+0.5,
+    speed:Math.random()*0.5+0.1,
+    alpha:Math.random()*0.6+0.2
+  });
+}
+
+function drawStars(){
+  stars.forEach(s => {
+    ctx.fillStyle = `rgba(0,248,255,${s.alpha})`;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+    ctx.fill();
+    s.y += s.speed;
+    if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}
+  });
+}
 
 function drawRocket(){
   rocket.power = Math.min(rocket.power+0.3, 1);
-  rocket.tilt = Math.max(-0.4, Math.min(0.4, rocket.vy*0.05));
+  rocket.glow = Math.sin(Date.now()*0.005)*0.3 + 0.7;
+  rocket.tilt = Math.max(-0.45, Math.min(0.45, rocket.vy*0.055));
   
   ctx.save();
   ctx.translate(rocket.x+rocket.w/2, rocket.y+rocket.h/2);
   ctx.rotate(rocket.tilt);
   
-  // Main Body
-  ctx.fillStyle = '#00f8ff';
+  // OUTER GLOW (3D EFFECT)
   ctx.shadowColor = '#00f8ff';
-  ctx.shadowBlur = 25;
+  ctx.shadowBlur = 40 * rocket.glow;
+  
+  // MAIN BODY
+  const bodyGrad = ctx.createLinearGradient(-rocket.w/2, 0, rocket.w/2, 0);
+  bodyGrad.addColorStop(0,'#00a8cc');
+  bodyGrad.addColorStop(0.5,'#00f8ff');
+  bodyGrad.addColorStop(1,'#0066ff');
+  ctx.fillStyle = bodyGrad;
   ctx.beginPath();
   ctx.moveTo(rocket.w/2, 0);
-  ctx.lineTo(-rocket.w/2, -rocket.h/2+5);
+  ctx.lineTo(-rocket.w/2, -rocket.h/2+6);
   ctx.lineTo(-rocket.w/4, 0);
-  ctx.lineTo(-rocket.w/2, rocket.h/2-5);
+  ctx.lineTo(-rocket.w/2, rocket.h/2-6);
   ctx.closePath();
   ctx.fill();
   
-  // Cockpit
-  ctx.fillStyle = '#00a8cc';
-  ctx.fillRect(-rocket.w/4+5, -rocket.h/4, 15, 20);
+  // COCKPIT GLASS
+  const glassGrad = ctx.createLinearGradient(0, -rocket.h/4, 0, rocket.h/4);
+  glassGrad.addColorStop(0,'#80ffff');
+  glassGrad.addColorStop(1,'#00a8cc');
+  ctx.fillStyle = glassGrad;
+  ctx.fillRect(-rocket.w/4+6, -rocket.h/4+3, 18, 22);
   
-  // Energy Trail
-  ctx.fillStyle = `rgba(0,255,213,${rocket.power})`;
+  // WINGS
+  ctx.fillStyle = '#0055ff';
+  ctx.fillRect(-rocket.w/2-2, -rocket.h/3, 10, 6);
+  ctx.fillRect(-rocket.w/2-2, rocket.h/3-6, 10, 6);
+  
+  // ENERGY TRAIL (3D FIRE EFFECT)
+  const trailGrad = ctx.createLinearGradient(-rocket.w/2, 0, -rocket.w/2-30*rocket.power, 0);
+  trailGrad.addColorStop(0,'rgba(0,255,213,0.9)');
+  trailGrad.addColorStop(0.5,'rgba(0,248,255,0.6)');
+  trailGrad.addColorStop(1,'rgba(0,85,255,0)');
+  ctx.fillStyle = trailGrad;
   ctx.shadowColor = '#00ffd5';
-  ctx.shadowBlur = 35;
+  ctx.shadowBlur = 50 * rocket.power;
   ctx.beginPath();
-  ctx.moveTo(-rocket.w/2, -8);
-  ctx.lineTo(-rocket.w/2-25*rocket.power, 0);
-  ctx.lineTo(-rocket.w/2, 8);
+  ctx.moveTo(-rocket.w/2, -10);
+  ctx.lineTo(-rocket.w/2-30*rocket.power, 0);
+  ctx.lineTo(-rocket.w/2, 10);
   ctx.closePath();
   ctx.fill();
   
@@ -75,30 +129,36 @@ function drawRocket(){
 
 function drawPipes(){
   pipes.forEach(p => {
-    const grad = ctx.createLinearGradient(p.x,0,p.x+pipeW,0);
-    grad.addColorStop(0,'#0055ff');
-    grad.addColorStop(1,'#00f8ff');
-    ctx.fillStyle = grad;
+    // PIPE 3D GRADIENT
+    const pipeGrad = ctx.createLinearGradient(p.x,0,p.x+pipeW,0);
+    pipeGrad.addColorStop(0,'#0055ff');
+    pipeGrad.addColorStop(0.5,'#00f8ff');
+    pipeGrad.addColorStop(1,'#00a8cc');
+    ctx.fillStyle = pipeGrad;
     ctx.shadowColor = '#00f8ff';
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 25;
     
-    // Top Pipe
+    // TOP PIPE WITH CAP
     ctx.fillRect(p.x,0,pipeW,p.top);
-    ctx.fillStyle = '#00a8cc';
-    ctx.fillRect(p.x-5,p.top-20,pipeW+10,20);
+    ctx.fillStyle = '#00ffd5';
+    ctx.fillRect(p.x-6,p.top-22,pipeW+12,22);
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillRect(p.x+2,p.top-20,pipeW+8,4);
     
-    // Bottom Pipe
-    ctx.fillStyle = grad;
+    // BOTTOM PIPE WITH CAP
+    ctx.fillStyle = pipeGrad;
     ctx.fillRect(p.x,p.top+gapH,pipeW,canvas.height-p.top-gapH);
-    ctx.fillStyle = '#00a8cc';
-    ctx.fillRect(p.x-5,p.top+gapH,pipeW+10,20);
+    ctx.fillStyle = '#00ffd5';
+    ctx.fillRect(p.x-6,p.top+gapH,pipeW+12,22);
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillRect(p.x+2,p.top+gapH+2,pipeW+8,4);
     
     ctx.shadowBlur = 0;
   });
 }
 
 function spawnPipe(){
-  const top = Math.random()*(canvas.height-gapH-150)+75;
+  const top = Math.random()*(canvas.height-gapH-160)+80;
   pipes.push({x:canvas.width, top, passed:false});
 }
 
@@ -107,27 +167,27 @@ function update(){
   
   rocket.vy += gravity;
   rocket.y += rocket.vy;
-  rocket.power = Math.max(rocket.power-0.07, 0.2);
+  rocket.power = Math.max(rocket.power-0.07, 0.25);
   
   pipes.forEach((p,i) => {
     p.x -= speed;
     if(!p.passed && p.x+pipeW < rocket.x){score++;p.passed=true;}
     if(p.x+pipeW < 0) pipes.splice(i,1);
     
-    // Collision Check
-    if(rocket.x+rocket.w-10 > p.x && rocket.x+10 < p.x+pipeW){
-      if(rocket.y+rocket.h-10 < p.top || rocket.y+10 > p.top+gapH){gameOver();}
+    // COLLISION DETECTION
+    if(rocket.x+rocket.w-12 > p.x && rocket.x+12 < p.x+pipeW){
+      if(rocket.y+rocket.h-12 < p.top || rocket.y+12 > p.top+gapH){gameOver();}
     }
   });
   
-  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width-250) spawnPipe();
+  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width-260) spawnPipe();
   
   if(rocket.y < 0 || rocket.y+rocket.h > canvas.height) gameOver();
 }
 
 function gameOver(){
   state = 'over';
-  if(  if(score > best){
+  if(score > best){
     best = score;
     localStorage.setItem('flappyBest', best);
   }
@@ -152,33 +212,36 @@ function jump(){
 }
 
 function drawUI(){
+  // SCORE WITH 3D GLOW
   ctx.fillStyle = '#00f8ff';
-  ctx.font = 'bold 26px Orbitron';
+  ctx.font = 'bold 28px Orbitron';
   ctx.textAlign = 'center';
   ctx.shadowColor = '#00f8ff';
-  ctx.shadowBlur = 20;
-  ctx.fillText(`SCORE: ${score}`, canvas.width/2, 50);
-  ctx.fillText(`BEST: ${best}`, canvas.width/2, 90);
+  ctx.shadowBlur = 25;
+  ctx.fillText(`SCORE: ${score}`, canvas.width/2, 55);
+  ctx.fillText(`BEST: ${best}`, canvas.width/2, 95);
   ctx.shadowBlur = 0;
 
   if(state === 'start'){
     ctx.fillStyle = '#00ffd5';
-    ctx.font = 'bold 32px Orbitron';
+    ctx.font = 'bold 34px Orbitron';
     ctx.shadowColor = '#00ffd5';
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 35;
     ctx.fillText('TAP TO LAUNCH', canvas.width/2, canvas.height/2);
     ctx.font = '18px Orbitron';
-    ctx.fillText('FLAPPY BLUES • ULTIMATE EDITION', canvas.width/2, canvas.height/2 + 50);
+    ctx.fillStyle = '#a0e8ff';
+    ctx.fillText('FLAPPY BLUES • 3D EDITION', canvas.width/2, canvas.height/2 + 55);
   }
   else if(state === 'over'){
     ctx.fillStyle = '#ff4d6d';
-    ctx.font = 'bold 36px Orbitron';
+    ctx.font = 'bold 38px Orbitron';
     ctx.shadowColor = '#ff4d6d';
-    ctx.shadowBlur = 35;
-    ctx.fillText('SYSTEM FAILURE', canvas.width/2, canvas.height/2 - 40);
-    ctx.font = '22px Orbitron';
+    ctx.shadowBlur = 40;
+    ctx.fillText('SYSTEM FAILURE', canvas.width/2, canvas.height/2 - 45);
+    ctx.font = '24px Orbitron';
+    ctx.fillStyle = '#ff8fa3';
     ctx.fillText(`FINAL SCORE: ${score}`, canvas.width/2, canvas.height/2 + 10);
-    ctx.fillText('TAP TO REBOOT', canvas.width/2, canvas.height/2 + 50);
+    ctx.fillText('TAP TO REBOOT', canvas.width/2, canvas.height/2 + 60);
   }
   ctx.shadowBlur = 0;
 }
@@ -186,6 +249,7 @@ function drawUI(){
 function loop(){
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawStars();
   drawPipes();
   drawRocket();
   drawUI();
@@ -194,7 +258,7 @@ function loop(){
 }
 loop();
 
-// Controls
+// CONTROLS
 document.addEventListener('touchstart', e => {e.preventDefault(); jump()});
 document.addEventListener('mousedown', jump);
 document.addEventListener('keydown', e => {
