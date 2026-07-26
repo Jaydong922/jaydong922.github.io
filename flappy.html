@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>FLAPPY BLUES 🚀</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
+body{background:#03060d;overflow:hidden;touch-action:manipulation}
+canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#05102a 0%,#0088ff 100%);border:2px solid #00e5ff;box-shadow:0 0 50px rgba(0,229,255,.4)}
+.ui{position:absolute;top:15px;left:50%;transform:translateX(-50%);color:#fff;text-align:center;z-index:10}
+.score{font-size:2rem;font-weight:900;color:#00e5ff;text-shadow:0 0 20px #00e5ff}
+.high{font-size:1rem;color:#ffaa3c;margin-top:.5rem}
+.overlay{position:absolute;inset:0;background:rgba(3,6,13,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:20}
+.overlay h2{font-size:2.5rem;color:#ff4d6d;margin-bottom:1rem}
+.overlay p{font-size:1.2rem;margin-bottom:1.5rem;color:#cbd5e1}
+.btn-game{padding:.8rem 1.8rem;background:linear-gradient(135deg,#00e5ff,#0088ff);color:#001018;border:none;border-radius:8px;font-weight:700;cursor:pointer;transition:.3s}
+.btn-game:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(0,229,255,.5)}
+</style>
+</head>
+<body>
+<div class="ui"><div class="score">SCORE: <span id="sc">0</span></div><div class="high">HIGH: <span id="hs">0</span></div></div>
+<canvas id="game" width="400" height="600"></canvas>
+<div class="overlay" id="ov"><h2>FLAPPY BLUES</h2><p>Tap or Press Space to Launch</p><button class="btn-game" onclick="startGame()">START GAME</button></div>
+<script>
+const c=document.getElementById('game').getContext('2d');
+const W=400, H=600;
+let birdY=H/2, birdV=0, score=0, high=localStorage.getItem('flappyHS')||0, gameOn=false;
+let pipes=[], frame=0;
+const bird={w:40,h:25,up:-2.2,grav:0.18};
+const pipe={w:60,gap:180,speed:2.2};
+document.getElementById('hs').textContent=high;
+function startGame(){
+  score=0; birdY=H/2; birdV=0; pipes=[]; frame=0; gameOn=true;
+  document.getElementById('sc').textContent=score;
+  document.getElementById('ov').style.display='none';
+}
+function endGame(){
+  gameOn=false;
+  if(score>high){ high=score; localStorage.setItem('flappyHS',high); document.getElementById('hs').textContent=high; }
+  document.getElementById('ov').innerHTML=`<h2>GAME OVER</h2><p>SCORE: ${score} | HIGH: ${high}</p><button class="btn-game" onclick="startGame()">TRY AGAIN</button>`;
+  document.getElementById('ov').style.display='flex';
+}
+function jump(){ if(gameOn) birdV=bird.up; }
+document.addEventListener('keydown',e=>{if(e.code==='Space')jump()});
+document.addEventListener('touchstart',jump);
+document.addEventListener('mousedown',jump);
+function makePipe(){
+  const top=Math.random()*(H-pipe.gap-120)+60;
+  pipes.push({x:W, topH:top, botY:top+pipe.gap, passed:false});
+}
+function drawBird(){
+  c.save(); c.translate(60, birdY); c.rotate(birdV*0.05);
+  c.fillStyle='#00e5ff'; c.beginPath(); c.moveTo(20,0); c.lineTo(-15,-12); c.lineTo(-15,12); c.closePath(); c.fill();
+  c.fillStyle='#ffaa3c'; c.beginPath(); c.arc(22,0,6,0,Math.PI*2); c.fill();
+  c.fillStyle='rgba(255,170,60,0.4)';
+  for(let i=1;i<=4;i++){ c.beginPath(); c.arc(-15-i*8,0,7-i,0,Math.PI*2); c.fill(); }
+  c.restore();
+}
+function drawPipes(){
+  pipes.forEach(p=>{
+    c.fillStyle='#0088ff'; c.fillRect(p.x,0,pipe.w,p.topH);
+    c.fillStyle='#00aaff'; c.fillRect(p.x+4,0,pipe.w-8,p.topH);
+    c.fillStyle='#0088ff'; c.fillRect(p.x,p.botY,pipe.w,H-p.botY);
+    c.fillStyle='#00aaff'; c.fillRect(p.x+4,p.botY,pipe.w-8,H-p.botY);
+  });
+}
+function update(){
+  if(!gameOn) return;
+  frame++; birdV += bird.grav; birdY += birdV;
+  if(frame%100===0) makePipe();
+  pipes.forEach((p,i)=>{
+    p.x -= pipe.speed;
+    if(!p.passed && p.x+pipe.w<60){ score++; p.passed=true; document.getElementById('sc').textContent=score; }
+    if(p.x+pipe.w<0) pipes.splice(i,1);
+    if(60+bird.w>p.x && 60<p.x+pipe.w && (birdY-bird.h/2<p.topH || birdY+bird.h/2>p.botY)) endGame();
+  });
+  if(birdY-bird.h/2<0 || birdY+bird.h/2>H) endGame();
+}
+function loop(){
+  c.clearRect(0,0,W,H);
+  drawPipes(); drawBird(); update();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
