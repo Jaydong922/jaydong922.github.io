@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🚀 FLAPPY BLUES | JAYD.DEV</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#020208;font-family:'Orbitron',sans-serif}
+#game{display:block;margin:0 auto;background:linear-gradient(180deg,#050a1f 0%,#0a1538 50%,#1a0a38 100%);border:2px solid #00e5ff;box-shadow:0 0 40px rgba(0,217,255,.4);max-width:100%;max-height:100vh;touch-action:none;cursor:pointer}
+.ui{position:fixed;top:1rem;left:50%;transform:translateX(-50%);text-align:center;color:#e0f7ff;z-index:10;pointer-events:none}
+.score{font-size:2.5rem;font-weight:900;color:#00ffd5;text-shadow:0 0 15px #00ffd5}
+.best{font-family:'Share Tech Mono',monospace;font-size:.9rem;color:#7aa8c8;margin-top:.2rem}
+.overlay{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(2,2,8,.85);color:#fff;z-index:20;text-align:center;padding:1rem}
+.overlay h1{font-size:clamp(1.8rem,5vw,3rem);background:linear-gradient(90deg,#00d9ff,#00ffd5);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.5rem}
+.overlay p{color:#a0c8e0;margin-bottom:1.5rem;max-width:450px}
+.overlay .final-score{font-size:1.5rem;color:#00ffd5;margin:.5rem 0;font-weight:700}
+.btn{padding:.9rem 2rem;border-radius:10px;border:none;font-family:'Orbitron',sans-serif;font-weight:800;font-size:1rem;background:linear-gradient(135deg,#00d9ff,#00ffd5);color:#020205;cursor:pointer;box-shadow:0 0 25px rgba(0,217,255,.5);transition:.2s}
+.btn:hover{transform:translateY(-3px)}
+.hint{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);color:#5a8098;font-size:.85rem;z-index:10;pointer-events:none;font-family:'Share Tech Mono',monospace}
+</style>
+</head>
+<body>
+<div class="ui"><div class="score" id="score">0</div><div class="best" id="best">BEST: 0</div></div>
+<canvas id="game"></canvas>
+<div class="overlay" id="startScreen"><h1>🚀 FLAPPY BLUES</h1><p style="color:#00ffd5;font-weight:700">ROCKET EDITION • JAYD.DEV</p><p>Tap / Click / SPACE to fly.<br><strong>✅ JUMP FIXED: slight lift only — not too high!</strong><br>Avoid the pipes!</p><button class="btn" id="startBtn">▶ START</button></div>
+<div class="overlay" id="gameOverScreen" style="display:none"><h1 style="color:#ff4d6d;background:none;-webkit-text-fill-color:#ff4d6d">💥 CRASHED</h1><div class="final-score">SCORE: <span id="finalScore">0</span></div><div class="final-score" style="color:#00d9ff;font-size:1.1rem">BEST: <span id="finalBest">0</span></div><button class="btn" id="restartBtn" style="margin-top:1rem">↻ RETRY</button></div>
+<div class="hint">TAP / CLICK / SPACE TO FLY</div>
+<script>
+const cv=document.getElementById('game'),cx=cv.getContext('2d');
+function resizeCanvas(){const ratio=Math.min(innerWidth/420,innerHeight/720,.95);cv.width=420;cv.height=720;cv.style.width=(420*ratio)+'px';cv.style.height=(720*ratio)+'px'}
+resizeCanvas();addEventListener('resize',resizeCanvas);
+const W=cv.width,H=cv.height;
+const GRAVITY=0.42;
+const JUMP_POWER=-5.0;
+const PIPE_SPEED=2.4,PIPE_GAP=155,PIPE_WIDTH=62;
+let gameState='start',rocket,pipes,flame,smoke,score,frame,bestScore;
+bestScore=parseInt(localStorage.getItem('flappyBest')||'0',10);
+document.getElementById('best').textContent='BEST: '+bestScore;
+function resetGame(){rocket={x:W*0.28,y:H*0.45,vy:0,w:46,h:34,angle:0,thrust:0};pipes=[];flame=[];smoke=[];score=0;frame=0;document.getElementById('score').textContent='0'}
+resetGame();
+function addPipe(){const minTop=60,maxTop=H-PIPE_GAP-120;const topHeight=minTop+Math.random()*(maxTop-minTop);pipes.push({x:W+20,top:topHeight,passed:false})}
+function jumpAction(){if(gameState==='start'){gameState='play';document.getElementById('startScreen').style.display='none';return}if(gameState==='over')return;rocket.vy=JUMP_POWER;rocket.thrust=1;for(let i=0;i<5;i++)smoke.push({x:rocket.x-18,y:rocket.y+(Math.random()-0.5)*8,vx:-1.5-Math.random()*1.5,vy:(Math.random()-0.5),life:30,max:45,size:5+Math.random()*5});for(let i=0;i<8;i++)flame.push({x:rocket.x-20,y:rocket.y+(Math.random()-0.5)*10,vx:-2.5-Math.random()*2.5,vy:(Math.random()-0.5)*2,life:15,max:25,size:4+Math.random()*4,hue:Math.random()<0.5?30:50})}
+cv.addEventListener('mousedown',jumpAction);
+cv.addEventListener('touchstart',function(e){e.preventDefault();jumpAction()},{passive:false});
+document.addEventListener('keydown',function(e){if(e.code==='Space'){e.preventDefault();jumpAction()}});
+document.getElementById('startBtn').addEventListener('click',function(){gameState='play';document.getElementById('startScreen').style.display='none'});
+document.getElementById('restartBtn').addEventListener('click',function(){resetGame();document.getElementById('gameOverScreen').style.display='none';gameState='play'});
+const stars=[];for(let i=0;i<80;i++)stars.push({x:Math.random()*W,y:Math.random()*H,s:Math.random()*1.5+0.5,sp:Math.random()*0.3+0.1});
+function drawRocket(){cx.save();cx.translate(rocket.x,rocket.y);cx.rotate(rocket.angle);if(rocket.thrust>0.1||rocket.vy<-1){const f=14+Math.random()*10;cx.fillStyle='#ff8800';cx.beginPath();cx.moveTo(-23,-6);cx.lineTo(-23-f-2,0);cx.lineTo(-23,6);cx.closePath();cx.fill();cx.fillStyle='#ffe14a';cx.beginPath();cx.moveTo(-23,-3);cx.lineTo(-23-f*0.6,0);cx.lineTo(-23,3);cx.closePath();cx.fill();cx.fillStyle='#ffffff';cx.beginPath();cx.moveTo(-23,-1.5);cx.lineTo(-23-f*0.3,0);cx.lineTo(-23,1.5);cx.closePath();cx.fill()}const w=46,h=34;const g=cx.createLinearGradient(-w/2,0,w/2,0);g.addColorStop(0,'#3a3a55');g.addColorStop(0.5,'#e8ecf5');g.addColorStop(1,'#8a94b0');cx.fillStyle=g;cx.beginPath();cx.moveTo(w/2,0);cx.lineTo(w/4,-h/2);cx.lineTo(-w/2+4,-h/2+4);cx.lineTo(-w/2,-h/4);cx.lineTo(-w/2,h/4);cx.lineTo(-w/2+4,h/2-4);cx.lineTo(w/4,h/2);cx.closePath();cx.fill();cx.strokeStyle='#00e5ff';cx.lineWidth=1.5;cx.stroke();cx.fillStyle='#ff3860';cx.beginPath();cx.moveTo(-w/3,-h/2+4);cx.lineTo(-w/2+2,-h/2-6);cx.lineTo(-w/2+2,-h/4);cx.closePath();cx.fill();cx.beginPath();cx.moveTo(-w/3,h/2-4);cx.lineTo(-w/2+2,h/2+6);cx.lineTo(-w/2+2,h/4);cx.closePath();cx.fill();cx.fillStyle='#0a1630';cx.beginPath();cx.arc(w/6,0,6.5,0,Math.PI*2);cx.fill();cx.fillStyle='#00e5ff';cx.beginPath();cx.arc(w/6-1.5,-1.5,2.5,0,Math.PI*2);cx.fill();cx.fillStyle='#00e5ff';cx.fillRect(-w/4,-2,w/2,4);cx.restore()}
+function drawParticles(){for(let i=smoke.length-1;i>=0;i--){const s=smoke[i],a=s.life/s.max;cx.fillStyle='rgba(180,190,210,'+(a*0.45)+')';cx.beginPath();cx.arc(s.x,s.y,s.size*(1.6-a),0,Math.PI*2);cx.fill();s.x+=s.vx;s.y+=s.vy;s.size+=0.08;s.life--;if(s.life<=0)smoke.splice(i,1)}for(let i=flame.length-1;i>=0;i--){const p=flame[i],a=p.life/p.max;cx.fillStyle='hsla('+p.hue+',100%,'+(55+a*25)+'%,'+a+')';cx.beginPath();cx.arc(p.x,p.y,p.size*a,0,Math.PI*2);cx.fill();p.x+=p.vx;p.y+=p.vy;p.life--;if(p.life<=0)flame.splice(i,1)}}
+function drawPipes(){pipes.forEach(function(p){const g=cx.createLinearGradient(p.x,0,p.x+PIPE_WIDTH,0);g.addColorStop(0,'#0f3d2e');g.addColorStop(0.5,'#1a9e6b');g.addColorStop(1,'#0a2a20');cx.fillStyle=g;cx.fillRect(p.x,0,PIPE_WIDTH,p.top);cx.fillStyle='#22d3a0';cx.fillRect(p.x-4,p.top-22,PIPE_WIDTH+8,22);cx.strokeStyle='#00ffd5';cx.lineWidth=1.5;cx.strokeRect(p.x-4,p.top-22,PIPE_WIDTH+8,22);cx.fillStyle=g;const by=p.top+PIPE_GAP;cx.fillRect(p.x,by,PIPE_WIDTH,H-by);cx.fillStyle='#22d3a0';cx.fillRect(p.x-4,by,PIPE_WIDTH+8,22);cx.strokeRect(p.x-4,by,PIPE_WIDTH+8,22)})}
+function checkCollision(){if(rocket.y+17>H-22||rocket.y-17<0)return true;for(let i=0;i<pipes.length;i++){const p=pipes[i];if(rocket.x+18>p.x&&rocket.x-18<p.x+PIPE_WIDTH){if(rocket.y-15<p.top||rocket.y+15>p.top+PIPE_GAP)return true}}return false}
+function gameLoop(){const g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#050a1f');g.addColorStop(0.5,'#0a1538');g.addColorStop(1,'#1a0a38');cx.fillStyle=g;cx.fillRect(0,0,W,H);cx.fillStyle='#ffffff';stars.forEach(function(s){cx.globalAlpha=0.4+Math.sin(frame*0.05+s.x)*0.3;cx.fillRect(s.x,s.y,s.s,s.s);s.x-=s.sp;if(s.x<0)s.x=W});cx.globalAlpha=1;if(gameState==='play'){frame++;rocket.vy+=GRAVITY;rocket.y+=rocket.vy;rocket.angle=Math.max(-0.5,Math.min(0.6,rocket.vy*0.055));rocket.thrust*=0.82;if(frame%96===0)addPipe();pipes.forEach(function(p){p.x-=PIPE_SPEED});if(pipes.length>0&&pipes[0].x+PIPE_WIDTH<0)pipes.shift();pipes.forEach(function(p){if(!p.passed&&p.x+PIPE_WIDTH<rocket.x){p.passed=true;score++;document.getElementById('score').textContent=score}});if(checkCollision()){gameState='over';if(score>bestScore){bestScore=score;localStorage.setItem('flappyBest',String(bestScore));document.getElementById('best').textContent='BEST: '+bestScore}document.getElementById('finalScore').textContent=score;document.getElementById('finalBest').textContent=bestScore;document.getElementById('gameOverScreen').style.display='flex'}}drawPipes();cx.fillStyle='#0a0f20';cx.fillRect(0,H-22,W,22);cx.fillStyle='#00e5ff';cx.fillRect(0,H-22,W,2);drawParticles();drawRocket();requestAnimationFrame(gameLoop)}
+gameLoop();
+</script>
+</body>
+</html>
