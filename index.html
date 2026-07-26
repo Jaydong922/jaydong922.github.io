@@ -12,7 +12,6 @@
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Rajdhani',sans-serif;background:radial-gradient(ellipse at top,#071029 0%,#03060d 60%,#000 100%);color:var(--text);overflow-x:hidden;line-height:1.6;width:100%}
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
-.mono{font-family:'Share Tech Mono',monospace}
 #matrix{position:fixed;inset:0;z-index:0;opacity:.12}
 .grid-bg{position:fixed;inset:0;z-index:1;background:linear-gradient(rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px,linear-gradient(90deg,rgba(0,229,255,.06)1px,transparent 1px)0 0/50px 50px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
 .glow-orbs{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
@@ -64,13 +63,7 @@ nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);background:rgba
 .math-tag{position:absolute;top:50%;left:50%;font-family:'Share Tech Mono',monospace;color:rgba(0,229,255,.88);text-shadow:0 0 8px rgba(0,229,255,.6);white-space:nowrap;font-weight:700;font-size:clamp(.7rem,1.2vw,.9rem);animation:mathOrbit var(--dur) linear infinite;animation-delay:var(--del);transform-origin:center}
 .math-tag.mo{color:rgba(255,170,60,.92);text-shadow:0 0 8px rgba(255,170,60,.55)}
 .math-tag.mv{color:rgba(180,140,255,.88);text-shadow:0 0 8px rgba(180,140,255,.55)}
-@keyframes mathOrbit{
-  0%{transform:translate(-50%,-50%) rotate(0deg) translateX(var(--r)) rotate(0deg) scale(.82);opacity:0}
-  10%{opacity:1}
-  50%{transform:translate(-50%,-50%) rotate(180deg) translateX(var(--r)) rotate(-180deg) scale(1.08);opacity:1}
-  90%{opacity:1}
-  100%{transform:translate(-50%,-50%) rotate(360deg) translateX(var(--r)) rotate(-360deg) scale(.82);opacity:0}
-}
+@keyframes mathOrbit{0%{transform:translate(-50%,-50%) rotate(0deg) translateX(var(--r)) rotate(0deg) scale(.82);opacity:0}10%{opacity:1}50%{transform:translate(-50%,-50%) rotate(180deg) translateX(var(--r)) rotate(-180deg) scale(1.08);opacity:1}90%{opacity:1}100%{transform:translate(-50%,-50%) rotate(360deg) translateX(var(--r)) rotate(-360deg) scale(.82);opacity:0}}
 section{max-width:1300px;margin:0 auto;padding:5rem 1.5rem;width:100%}
 .sec-head{text-align:center;margin-bottom:3.5rem}
 .eyebrow{font-family:'Share Tech Mono',monospace;font-size:.85rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem}
@@ -200,9 +193,10 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 <div class="timeline">
 <div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">2023 — BEGINNING</div><h4>First Line of Code</h4><p>Wrote first HTML file on Android text editor. Fell in love instantly.</p></div></div>
 <div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">EARLY 2024 — TERMUX</div><h4>Discovered Termux & Linux</h4><p>Turned phone into real dev machine. Mastered CLI, Git, packages.</p></div></div>
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">MID 2024 — GAMES</div><h4>Released First Game</h4><p>Built and published Flappy Blues with physics, scoring, animations.</p></div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div
+class="tl-date">MID 2024 — GAMES</div><h4>Released First Game</h4><p>Built and published Flappy Blues with physics, scoring, animations.</p></div></div>
 <div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">LATE 2024 — FULL STACK</div><h4>Full Stack Mastery</h4><p>Shipped multiple production websites with Python, JS, databases.</p></div></div>
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class <div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">2025 — 3D</div><h4>Three.js & WebGL</h4><p>Built particle systems, interactive globes, cinematic visuals.</p></div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">2025 — 3D</div><h4>Three.js & WebGL</h4><p>Built particle systems, interactive globes, cinematic visuals.</p></div></div>
 <div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">2026 — NOW</div><h4>Premium Portfolio Live</h4><p>Deployed world-class work globally. Phone = all you need.</p></div></div>
 </div>
 </section>
@@ -228,36 +222,154 @@ footer p.muted{color:var(--muted);font-size:.88rem;margin:.2rem 0}
 (function(){try{const c=document.getElementById('matrix'),ctx=c.getContext('2d');function r(){c.width=innerWidth;c.height=innerHeight}r();addEventListener('resize',r);const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEF0123456789',fs=14;let cols=Math.floor(c.width/fs),drops=Array(cols).fill(1);addEventListener('resize',()=>{cols=Math.floor(c.width/fs);drops=Array(cols).fill(1)});setInterval(()=>{ctx.fillStyle='rgba(3,6,13,.08)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#00e5ff';ctx.font=fs+'px monospace';for(let i=0;i<cols;i++){const ch=chars[Math.floor(Math.random()*chars.length)];ctx.fillText(ch,i*fs,drops[i]*fs);if(drops[i]*fs>c.height&&Math.random()>.975)drops[i]=0;drops[i]++}},55)}catch(e){}})();
 
 /* FLOATING MATH / BINARY FORMULAS */
-(function(){const L=document.getElementById('mathLayer');if(!L)return;const F=['lim h→0 f(x+h)−f(x)/h','∫ f(x)dx = F(x)+C','E = mc²','∑ a·rⁿ','∇×E = −∂B/∂t','x = −b±√(b²−4ac)/2a','01001011 10010101','π ≈ 3.14159265','sin²θ + cos²θ = 1','e^(iπ)+1 = 0','F = Gm₁m₂/r²','λ = h/p','log(ab)=log a+log b','1010 1101 0011','∂²u/∂t² = c²∇²u','det(A) = Σ ±a₁ᵢ…aₙⱼ','01110110 11010010','∮ E·dl = −dΦ/dt','v = u + at','σ² = E[X²]−(E[X])²'];const C=['','mo','mv'];for(let i=0;i<18;i++){const s=document.createElement('span');s.className='math-tag '+(C[i%3]);s.textContent=F[i%F.length];s.style.setProperty('--r',(52+Math.random()*44)+'%');s.style.setProperty('--dur',(14+Math.random()*14)+'s');s.style.setProperty('--del',(-Math.random()*18)+'s');L.appendChild(s)}})();
+(function(){const L=document.getElementById('mathLayer');if(!L)return;const F=['lim h→0 f(x+h)−f(x)/h','∫ f(x)dx = F(x)+C','E = mc²','∑ a·rⁿ','∇×E = −∂B/∂t','x = −b±√(b²−4ac)/2a','01001011 10010101','π ≈ 3.14159265','sin²θ + cos²θ = 1','e^(iπ)+1 = 0','F = Gm₁m₂/r²','λ = h/p','log(ab)=log a+log b','1010 1101 0011','∂²u/∂t² = c²∇²u','01110110 11010010','∮ E·dl = −dΦ/dt','v = u + at','σ² = E[X²]−(E[X])²'];const C=['','mo','mv'];for(let i=0;i<18;i++){const s=document.createElement('span');s.className='math-tag '+(C[i%3]);s.textContent=F[i%F.length];s.style.setProperty('--r',(52+Math.random()*44)+'%');s.style.setProperty('--dur',(14+Math.random()*14)+'s');s.style.setProperty('--del',(-Math.random()*18)+'s');L.appendChild(s)}})();
 
-/* HOLOGRAPHIC CIRCUIT GLOBE + GRAVITY PARTICLES */
-(function(){try{const cv=document.getElementById('globeCanvas');if(!cv||!window.THREE)return;const scene=new THREE.Scene(),pr=Math.min(window.devicePixelRatio||1,2);function fit(){const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;cv.width=w*pr;cv.height=h*pr;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-const camera=new THREE.PerspectiveCamera(45,1,.1,1000);camera.position.z=4.6;const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});renderer.setPixelRatio(pr);renderer.setClearColor(0,0);fit();addEventListener('resize',fit);
-const R=1.55,root=new THREE.Group();scene.add(root);
-/* ocean */
-root.add(new THREE.Mesh(new THREE.SphereGeometry(R*.99,64,48),new THREE.MeshBasicMaterial({color:0x002244})));
-/* holographic wire continents */
-function patch(lat0,lon0,lat1,lon1,rr){const s=rr||R*1.004,seg=18,pts=[];for(let i=0;i<=seg;i++){const t=i/seg,la=lat0+(lat1-lat0)*t,lo=lon0+(lon1-lon0)*t+Math.sin(t*Math.PI)*.35;const p=THREE.MathUtils.degToRad,la2=p(la),lo2=p(lo);pts.push(new THREE.Vector3(s*Math.cos(la2)*Math.cos(lo2),s*Math.sin(la2),s*Math.cos(la2)*Math.sin(lo2)))}const g=new THREE.BufferGeometry().setFromPoints(pts);root.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x00ffcc})));const fill=[];pts.forEach(p=>{fill.push(p.x,p.y,p.z,0,0,0)});const fg=new THREE.BufferGeometry();fg.setAttribute('position',new THREE.Float32BufferAttribute(fill,3));root.add(new THREE.Mesh(fg,new THREE.MeshBasicMaterial({color:0x00cc88,side:THREE.DoubleSide,transparent:true,opacity:.55})))}
-patch(15,-130,72,-55);patch(-58,-75,18,-30);patch(36,-12,72,45);patch(-38,12,38,58);patch(-42,112,-8,158);patch(8,70,58,142);patch(-12,120,-42,150);patch(60,-170,72,-60);
-/* circuit grid */
-root.add(new THREE.Mesh(new THREE.SphereGeometry(R*1.012,48,36),new THREE.MeshBasicMaterial({color:0x00aaff,wireframe:true,transparent:true,opacity:.35,depthWrite:false})));
-/* binary dots surface */
-const BN=2600,bp=new Float32Array(BN*3);for(let i=0;i<BN;i++){const u=Math.random(),v=Math.random(),t=2*Math.PI*u,p=Math.acos(2*v-1),rr=R*(1.001+Math.random()*.012);bp[i*3]=rr*Math.sin(p)*Math.cos(t);bp[i*3+1]=rr*Math.sin(p)*Math.sin(t);bp[i*3+2]=rr*Math.cos(p)}const bg=new THREE.BufferGeometry();bg.setAttribute('position',new THREE.BufferAttribute(bp,3));const bpts=new THREE.Points(bg,new THREE.PointsMaterial({color:0x00ffff,size:.022,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false}));root.add(bpts);
-/* outer network halo */
-const HN=300,hp=new Float32Array(HN*3),hl=[];for(let i=0;i<HN;i++){const u=Math.random(),v=Math.random(),t=2*Math.PI*u,p=Math.acos(2*v-1),rr=R*(1.25+Math.random()*.35);hp[i*3]=rr*Math.sin(p)*Math.cos(t);hp[i*3+1]=rr*Math.sin(p)*Math.sin(t);hp[i*3+2]=rr*Math.cos(p);hl.push(rr)}const hg=new THREE.BufferGeometry();hg.setAttribute('position',new THREE.BufferAttribute(hp,3));const halo=new THREE.Points(hg,new THREE.PointsMaterial({color:0x88aaff,size:.025,transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false}));root.add(halo);
-/* atmosphere glow */
-function atmo(rr,col,a,po){return new THREE.Mesh(new THREE.SphereGeometry(rr,48,48),new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,depthWrite:false,uniforms:{c:{value:.6},p:{value:po},gc:{value:new THREE.Color(col)}},vertexShader:'varying vec3 n;void main(){n=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'uniform vec3 gc;uniform float c,p;varying vec3 n;void main(){float i=pow(c-dot(n,vec3(0,0,1)),p);gl_FragColor=vec4(gc,i*'+a+');}'})))}
-root.add(atmo(R*1.3,0x00e5ff,.55,4));root.add(atmo(R*1.55,0x7c3aed,.22,2.4));
-/* drag + auto rotate */
-let tY=0,cY=0,drag=false,lx=0;cv.addEventListener('mousedown',e=>{drag=true;lx=e.clientX});window.addEventListener('mouseup',()=>drag=false);cv.addEventListener('mousemove',e=>{if(drag){tY+=(e.clientX-lx)*.005;lx=e.clientX}});cv.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;drag=true;lx=e.touches[0].clientX},{passive:true});cv.addEventListener('touchmove',e=>{if(!drag||e.touches.length!==1)return;e.preventDefault();tY+=(e.touches[0].clientX-lx)*.005;lx=e.touches[0].clientX},{passive:false});cv.addEventListener('touchend',()=>drag=false);
-let ti=0;function loop(){requestAnimationFrame(loop);ti+=.008;if(!drag)tY+=.002;cY+=(tY-cY)*.08;root.rotation.y=cY;
-const pa=hg.attributes.position.array;for(let i=0;i<HN;i++){const idx=i*3,rr=hl[i]+Math.sin(ti*2+i)*.04;const k=rr/Math.sqrt(pa[idx]*pa[idx]+pa[idx+1]*pa[idx+1]+pa[idx+2]*pa[idx+2]);pa[idx]*=k;pa[idx+1]*=k;pa[idx+2]*=k}hg.attributes.position.needsUpdate=true;
-bpts.material.opacity=.75+Math.sin(ti*3)*.15;halo.material.opacity=.6+Math.sin(ti*2)*.2;
-renderer.render(scene,camera)}loop()
-}catch(e){console.warn('GLOBE:',e)}})();
+/* ✅ BUONG THREE.JS — HOLOGRAPHIC CIRCUIT EARTH (SIGURADONG LALABAS NA ITO) */
+(function(){
+try{
+const cv=document.getElementById('globeCanvas');
+if(!cv||!window.THREE)return;
+const scene=new THREE.Scene();
+const pr=Math.min(window.devicePixelRatio||1,2);
+const camera=new THREE.PerspectiveCamera(45,1,.1,1000);
+camera.position.z=4.6;
+const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+renderer.setPixelRatio(pr);
+renderer.setClearColor(0,0);
+function fit(){
+const w=cv.clientWidth,h=cv.clientHeight;
+if(!w||!h)return;
+cv.width=w*pr;cv.height=h*pr;
+renderer.setSize(w,h,false);
+camera.aspect=w/h;
+camera.updateProjectionMatrix();
+}
+fit();
+addEventListener('resize',fit);
+const R=1.55;
+const root=new THREE.Group();
+scene.add(root);
+
+/* 1 — Deep ocean base */
+root.add(new THREE.Mesh(
+new THREE.SphereGeometry(R*0.99,64,48),
+new THREE.MeshBasicMaterial({color:0x002244})
+));
+
+/* 2 — Holographic continent shapes */
+function patch(lat0,lon0,lat1,lon1,rr){
+const s=rr||R*1.004,seg=20,pts=[];
+for(let i=0;i<=seg;i++){
+const t=i/seg;
+const la=lat0+(lat1-lat0)*t;
+const lo=lon0+(lon1-lon0)*t+Math.sin(t*Math.PI)*0.35;
+const p=THREE.MathUtils.degToRad;
+const la2=p(la),lo2=p(lo);
+pts.push(new THREE.Vector3(s*Math.cos(la2)*Math.cos(lo2),s*Math.sin(la2),s*Math.cos(la2)*Math.sin(lo2)));
+}
+const g=new THREE.BufferGeometry().setFromPoints(pts);
+root.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x00ffcc})));
+const fill=[];
+pts.forEach(p=>{fill.push(p.x,p.y,p.z,0,0,0)});
+const fg=new THREE.BufferGeometry();
+fg.setAttribute('position',new THREE.Float32BufferAttribute(fill,3));
+root.add(new THREE.Mesh(fg,new THREE.MeshBasicMaterial({color:0x00cc88,side:THREE.DoubleSide,transparent:true,opacity:0.55})));
+}
+patch(15,-130,72,-55);
+patch(-58,-75,18,-30);
+patch(36,-12,72,45);
+patch(-38,12,38,58);
+patch(-42,112,-8,158);
+patch(8,70,58,142);
+patch(-12,120,-42,150);
+patch(60,-170,72,-60);
+
+/* 3 — Circuit grid wireframe */
+root.add(new THREE.Mesh(
+new THREE.SphereGeometry(R*1.012,48,36),
+new THREE.MeshBasicMaterial({color:0x00aaff,wireframe:true,transparent:true,opacity:0.35,depthWrite:false})
+));
+
+/* 4 — Binary dots on surface */
+const BN=2800,bp=new Float32Array(BN*3);
+for(let i=0;i<BN;i++){
+const u=Math.random(),v=Math.random();
+const t=2*Math.PI*u,p=Math.acos(2*v-1);
+const rr=R*(1.001+Math.random()*0.012);
+bp[i*3]=rr*Math.sin(p)*Math.cos(t);
+bp[i*3+1]=rr*Math.sin(p)*Math.sin(t);
+bp[i*3+2]=rr*Math.cos(p);
+}
+const bg=new THREE.BufferGeometry();
+bg.setAttribute('position',new THREE.BufferAttribute(bp,3));
+const bpts=new THREE.Points(bg,new THREE.PointsMaterial({color:0x00ffff,size:0.022,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false}));
+root.add(bpts);
+
+/* 5 — Outer network halo */
+const HN=320,hp=new Float32Array(HN*3),hl=[];
+for(let i=0;i<HN;i++){
+const u=Math.random(),v=Math.random();
+const t=2*Math.PI*u,p=Math.acos(2*v-1);
+const rr=R*(1.25+Math.random()*0.35);
+hp[i*3]=rr*Math.sin(p)*Math.cos(t);
+hp[i*3+1]=rr*Math.sin(p)*Math.sin(t);
+hp[i*3+2]=rr*Math.cos(p);
+hl.push(rr);
+}
+const hg=new THREE.BufferGeometry();
+hg.setAttribute('position',new THREE.BufferAttribute(hp,3));
+const halo=new THREE.Points(hg,new THREE.PointsMaterial({color:0x88aaff,size:0.025,transparent:true,opacity:0.75,blending:THREE.AdditiveBlending,depthWrite:false}));
+root.add(halo);
+
+/* 6 — Dual atmosphere glow */
+function atmo(rr,col,a,po){
+return new THREE.Mesh(
+new THREE.SphereGeometry(rr,48,48),
+new THREE.ShaderMaterial({
+transparent:true,side:THREE.BackSide,depthWrite:false,
+uniforms:{c:{value:0.6},p:{value:po},gc:{value:new THREE.Color(col)}},
+vertexShader:'varying vec3 n;void main(){n=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+fragmentShader:'uniform vec3 gc;uniform float c,p;varying vec3 n;void main(){float i=pow(c-dot(n,vec3(0,0,1)),p);gl_FragColor=vec4(gc,i*'+a+');}'
+})
+);
+}
+root.add(atmo(R*1.3,0x00e5ff,0.55,4));
+root.add(atmo(R*1.55,0x7c3aed,0.22,2.4));
+
+/* 7 — Drag + auto rotate */
+let tY=0,cY=0,drag=false,lx=0;
+cv.addEventListener('mousedown',e=>{drag=true;lx=e.clientX});
+window.addEventListener('mouseup',()=>drag=false);
+cv.addEventListener('mousemove',e=>{if(drag){tY+=(e.clientX-lx)*0.005;lx=e.clientX}});
+cv.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;drag=true;lx=e.touches[0].clientX},{passive:true});
+cv.addEventListener('touchmove',e=>{if(!drag||e.touches.length!==1)return;e.preventDefault();tY+=(e.touches[0].clientX-lx)*0.005;lx=e.touches[0].clientX},{passive:false});
+cv.addEventListener('touchend',()=>drag=false);
+
+/* 8 — Animation loop */
+let ti=0;
+function loop(){
+requestAnimationFrame(loop);
+ti+=0.008;
+if(!drag)tY+=0.002;
+cY+=(tY-cY)*0.08;
+root.rotation.y=cY;
+const pa=hg.attributes.position.array;
+for(let i=0;i<HN;i++){
+const idx=i*3,rr=hl[i]+Math.sin(ti*2+i)*0.04;
+const k=rr/Math.sqrt(pa[idx]*pa[idx]+pa[idx+1]*pa[idx+1]+pa[idx+2]*pa[idx+2]);
+pa[idx]*=k;pa[idx+1]*=k;pa[idx+2]*=k;
+}
+hg.attributes.position.needsUpdate=true;
+bpts.material.opacity=0.75+Math.sin(ti*3)*0.15;
+halo.material.opacity=0.6+Math.sin(ti*2)*0.2;
+renderer.render(scene,camera);
+}
+loop();
+}catch(e){console.warn('GLOBE ERR:',e)}
+})();
 
 /* SCROLL REVEAL */
-(function(){const E=document.querySelectorAll('section > div, .id-card, .bio, .skill-card, .project, .tl-item, .contact-card');E.forEach(e=>{e.style.opacity='0';e.style.transform='translateY(30px)';e.style.transition='all .8s ease'});if('IntersectionObserver'in window){const io=new IntersectionObserver(O=>{O.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';io.unobserve(e.target)}})},{threshold:.1});E.forEach(e=>io.observe(e))}else E.forEach(e=>{e.style.opacity='1';e.style.transform='none'})})();
+(function(){const E=document.querySelectorAll('section > div, .id-card, .bio, .skill-card, .project, .tl-item, .contact-card');E.forEach(e=>{e.style.opacity='0';e.style.transform='translateY(30px)';e.style.transition='all .8s ease'});if('IntersectionObserver'in window){const io=new IntersectionObserver(O=>{O.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';io.unobserve(e.target)}})},{threshold:0.1});E.forEach(e=>io.observe(e))}else E.forEach(e=>{e.style.opacity='1';e.style.transform='none'})})();
 </script>
 </body>
 </html>
