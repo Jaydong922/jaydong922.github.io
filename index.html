@@ -3,670 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | GLOBAL GRID // SECTOR 7</title>
-<meta name="description" content="Jayd F. Repoberbio — Web Engineer, Ethical Security Researcher. 100% Self-Taught, built entirely on Android.">
-<meta name="keywords" content="CyberJayd, Jayd Repoberbio, Web Design, Cybersecurity, Termux, FCIC Baybay City">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
+<title>GALAXY WAR // SECTOR 01</title>
+<meta name="description" content="Epic continuous space battle — fighters, lasers, explosions, and debris floating in deep space.">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --prime:#00f8ff;
-  --deep-blue:#0055ff;
-  --neon-cyan:#00ffd5;
-  --dark-space:#000012;
-  --glass:rgba(0,10,30,0.85);
-  --border:1px solid rgba(0,248,255,0.3);
-  --glow:0 0 50px rgba(0,248,255,0.4);
-  --text:#e0ffff;
-  --muted:#80c8e0;
-}
-html{scroll-behavior:smooth;overflow-x:hidden;font-size:18px}
-body{
-  font-family:'Rajdhani',sans-serif;
-  background:
-    radial-gradient(circle at 10% 0%,rgba(0,248,255,0.12),transparent 60%),
-    radial-gradient(circle at 90% 100%,rgba(0,85,255,0.1),transparent 60%),
-    linear-gradient(180deg,#000012 0%,#00051a 50%,#000012 100%);
-  color:var(--text);
-  overflow-x:hidden;
-  line-height:1.8;
-}
-h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:1.5px;font-weight:800}
-.mono{font-family:'Share Tech Mono',monospace}
-
-/* BACKGROUND: NO GRID • PURE 3D + 10 ASTRONAUTS */
-#energyField{position:fixed;inset:0;z-index:0;pointer-events:none}
-#hologramOrb{position:fixed;top:8%;right:2%;width:420px;height:420px;z-index:1;opacity:.9;pointer-events:auto}
-
-/* NAVIGATION */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:linear-gradient(180deg,rgba(0,5,20,0.95) 0%,rgba(0,5,20,0.8) 100%);
-  backdrop-filter:blur(25px);
-  border-bottom:var(--border);
-  padding:1.2rem 0;
-  box-shadow:0 0 60px rgba(0,248,255,0.15);
-}
-.nav-inner{
-  max-width:1400px;margin:0 auto;padding:0 2rem;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;
-}
-.logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:2.2rem;font-weight:900;
-  background:linear-gradient(90deg,var(--prime),var(--deep-blue));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 50px rgba(0,248,255,0.6);
-  animation:logoPulse 3s infinite;
-}
-@keyframes logoPulse{0%,100%{opacity:1}50%{opacity:.7}}
-.nav-links{display:flex;gap:2rem;flex-wrap:wrap}
-.nav-links a{
-  color:var(--muted);text-decoration:none;font-weight:600;
-  font-size:1.1rem;transition:.4s;position:relative;padding:.5rem 0;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;
-  background:var(--prime);transition:.4s;transform:translateX(-50%)
-}
-.nav-links a:hover{color:var(--prime);text-shadow:0 0 25px var(--prime)}
-.nav-links a:hover::after{width:100%}
-
-/* HERO SECTION */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;
-  padding:5rem 2rem;
-  max-width:1400px;margin:0 auto;
-  position:relative;z-index:2;
-}
-.hero-content{flex:1}
-.system-badge{
-  display:inline-flex;align-items:center;gap:.6rem;
-  background:rgba(0,248,255,0.08);border:var(--border);
-  border-radius:30px;padding:.6rem 1.5rem;
-  font-size:.95rem;color:var(--prime);margin-bottom:2rem;
-  box-shadow:var(--glow);
-}
-.badge-dot{width:12px;height:12px;background:var(--prime);border-radius:50%;animation:blink 1.5s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{
-  font-size:clamp(3.5rem,8vw,6rem);
-  font-weight:900;
-  line-height:1.1;
-  margin-bottom:1.5rem;
-  background:linear-gradient(90deg,var(--prime),var(--neon-cyan),var(--deep-blue));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 70px rgba(0,248,255,0.5);
-}
-.hero p{
-  font-size:clamp(1.2rem,2.5vw,1.5rem);
-  color:var(--muted);
-  max-width:700px;
-  margin-bottom:2.5rem;
-  line-height:1.9;
-}
-.hero-buttons{display:flex;gap:1.5rem;flex-wrap:wrap}
-.btn{
-  padding:1.2rem 2.5rem;border-radius:16px;
-  font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.1rem;
-  text-decoration:none;border:var(--border);
-  transition:.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position:relative;overflow:hidden;
-}
-.btn-primary{
-  background:linear-gradient(135deg,var(--prime),var(--deep-blue));
-  color:var(--dark-space);
-  box-shadow:var(--glow);
-}
-.btn-primary:hover{transform:translateY(-6px);box-shadow:0 15px 50px rgba(0,248,255,0.5)}
-.btn-holo{background:transparent;color:var(--prime);box-shadow:0 0 25px rgba(0,248,255,0.2)}
-.btn-holo:hover{background:rgba(0,248,255,0.1);transform:translateY(-6px)}
-
-/* SECTIONS & CARDS */
-section{max-width:1400px;margin:0 auto;padding:6rem 2rem;width:100%;position:relative;z-index:2}
-.section-header{
-  display:flex;align-items:baseline;gap:1.2rem;
-  margin-bottom:3rem;
-  border-bottom:var(--border);
-  padding-bottom:1rem;
-}
-.section-num{
-  font-family:'Share Tech Mono',monospace;
-  font-size:1.4rem;color:var(--neon-cyan);font-weight:700;
-}
-.section-title{
-  font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;
-  background:linear-gradient(90deg,var(--text),var(--prime));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.card{
-  background:var(--glass);
-  border:var(--border);
-  border-radius:20px;padding:2.2rem;
-  backdrop-filter:blur(20px);
-  transition:.5s;
-  box-shadow:0 0 40px rgba(0,248,255,0.1);
-  position:relative;overflow:hidden;
-}
-.card::before{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(0,248,255,0.1),transparent);
-  transition:.6s;
-}
-.card:hover::before{left:100%}
-.card:hover{
-  transform:translateY(-10px) rotateX(3deg);
-  border-color:var(--neon-cyan);
-  box-shadow:0 20px 60px rgba(0,248,255,0.2);
-}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
-.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
-
-/* SKILL BARS */
-.skill-bar{margin:1rem 0}
-.skill-label{display:flex;justify-content:space-between;margin-bottom:.5rem}
-.bar-track{height:8px;background:rgba(0,248,255,0.1);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;background:linear-gradient(90deg,var(--prime),var(--deep-blue));border-radius:4px;animation:fillBar 2s ease-out forwards}
-@keyframes fillBar{from{width:0}}
-
-/* PRICING */
-.price-tag{
-  font-size:1.8rem;font-weight:900;color:var(--prime);
-  margin:1rem 0;text-shadow:0 0 30px var(--prime);
-}
-
-/* FOOTER */
-footer{
-  text-align:center;padding:5rem 2rem 3rem;
-  border-top:var(--border);
-  margin-top:6rem;
-  background:rgba(0,5,20,0.9);
-  position:relative;z-index:2;
-}
-footer .logo{font-size:2.5rem;margin-bottom:1.5rem}
-.footer-divider{
-  max-width:800px;height:1px;margin:2rem auto;
-  background:linear-gradient(90deg,transparent,var(--prime),var(--deep-blue),transparent);
-}
-.footer-text{color:var(--muted);font-size:1.1rem;margin-bottom:1rem}
-.footer-copy{font-family:'Share Tech Mono';font-size:.9rem;color:#6090b0;margin-top:2rem}
-
-/* RESPONSIVE */
-@media(min-width:900px){.hero-content{flex:1.2}}
-@media(max-width:900px){
-  #hologramOrb{position:relative;top:auto;right:auto;width:380px;height:380px;margin:3rem auto;display:block}
-  .hero{flex-direction:column;text-align:center;padding-top:3rem}
-  .hero-buttons{justify-content:center}
-}
-@media(max-width:600px){
-  html{font-size:16px}
-  .nav-inner{justify-content:center}
-  section{padding:4rem 1.5rem}
-  .card{padding:1.8rem}
-}
+html,body{width:100%;height:100%;overflow:hidden;background:#000510}
+canvas{display:block;width:100%;height:100%}
 </style>
 </head>
 <body>
-
-<canvas id="energyField"></canvas>
-<div id="hologramOrb"></div>
-
-<nav>
-<div class="nav-inner">
-  <div class="logo">CYBERJAYD</div>
-  <div class="nav-links">
-    <a href="#home">HOME</a>
-    <a href="#about">ABOUT</a>
-    <a href="#why">WHY ME</a>
-    <a href="#skills">SKILLS</a>
-    <a href="#services">SERVICES</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="flappy.html">PLAY GAME</a>
-    <a href="#contact">CONTACT</a>
-  </div>
-</div>
-</nav>
-
-<section class="hero" id="home">
-  <div class="hero-content">
-    <div class="system-badge">
-      <span class="badge-dot"></span>
-      SYSTEM ONLINE • GLOBAL STANDARD • MOBILE-NATIVE
-    </div>
-    <h1>GLOBAL GRID // SECTOR 7</h1>
-    <p>ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH.<br>Clean Design, Maximum Power — built 100% on Android, no PC required.</p>
-    <div class="hero-buttons">
-      <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
-      <a href="#contact" class="btn btn-holo">HIRE ME</a>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="section-header"><span class="section-num">01</span><h2 class="section-title">ABOUT_ME.EXE</h2></div>
-  <div class="card">
-    <p class="mono" style="color:var(--neon-cyan);margin-bottom:1.5rem">> INITIALIZING USER PROFILE...</p>
-    <p style="font-size:1.1rem;margin-bottom:1rem"><strong>IDENTITY:</strong> JAYD F. REPOBERBIO — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
-    <p style="font-size:1.1rem;margin-bottom:1rem"><strong>STATUS:</strong> First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. 100% SELF-TAUGHT. Every skill earned through 3AM grind, relentless research, and refusing limits.</p>
-    <p style="font-size:1.1rem;margin-bottom:1rem"><strong>SPECIALIZATION:</strong> Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on Android / Termux — advanced tech for everyone.</p>
-    <p style="font-size:1.1rem"><strong>MISSION:</strong> Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p>
-    <p class="mono" style="margin-top:1.5rem;color:var(--prime)">> STATUS: ONLINE • ACCEPTING NEW CONTRACTS WORLDWIDE • RESPONSE < 24H</p>
-  </div>
-</section>
-
-<section id="why">
-  <div class="section-header"><span class="section-num">02</span><h2 class="section-title">WHY_CHOOSE_CYBERJAYD</h2></div>
-  <div class="grid-3">
-    <div class="card"><h3 style="color:var(--prime);margin-bottom:1rem">💡 OBSESSED WITH QUALITY</h3><p style="color:var(--muted)">No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
-    <div class="card"><h3 style="color:var(--deep-blue);margin-bottom:1rem">📱 MOBILE IS FIRST</h3><p style="color:var(--muted)">70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
-    <div class="card"><h3 style="color:var(--neon-cyan);margin-bottom:1rem">💰 HONEST PRICING</h3><p style="color:var(--muted)">What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
-    <div class="card"><h3 style="color:var(--prime);margin-bottom:1rem">⚖️ ETHICAL BY DEFAULT</h3><p style="color:var(--muted)">Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
-    <div class="card"><h3 style="color:var(--deep-blue);margin-bottom:1rem">⚡ REAL-TIME SUPPORT</h3><p style="color:var(--muted)">Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
-    <div class="card"><h3 style="color:var(--neon-cyan);margin-bottom:1rem">🌍 GLOBAL STANDARD</h3><p style="color:var(--muted)">Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="section-header"><span class="section-num">03</span><h2 class="section-title">CORE_CAPABILITIES</h2></div>
-  <div class="grid-3">
-    <div class="card">
-      <h3 style="color:var(--prime);margin-bottom:1.5rem">🔐 CYBERSECURITY</h3>
-      <div class="skill-bar"><div class="skill-label"><span>Ethical Research</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Bug Bounty</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Vuln Assessment</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>SSRF & Recon</span><span>78%</span></div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div>
-    </div>
-    <div class="card">
-      <h3 style="color:var(--deep-blue);margin-bottom:1.5rem">💻 DEVELOPMENT</h3>
-      <div class="skill-bar"><div class="skill-label"><span>Python</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Bash / Shell</span><span>95%</span></div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>HTML/CSS/JS</span><span>100%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Automation</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
-    </div>
-    <div class="card">
-      <h3 style="color:var(--neon-cyan);margin-bottom:1.5rem">📡 PLATFORMS</h3>
-      <div class="skill-bar"><div class="skill-label"><span>Termux / Linux</span><span>95%</span></div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Mobile Tech</span><span>100%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>GitHub</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
-      <div class="skill-bar"><div class="skill-label"><span>Cloud Deploy</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="section-header"><span class="section-num">04</span><h2 class="section-title">SERVICES_&_PRICING</h2></div>
-  <div class="grid-4">
-    <div class="card">
-      <h3>🌐 WEB DESIGN BEST SELLER</h3>
-      <p class="price-tag">₱800 – ₱2,000</p>
-      <p style="color:var(--muted)">Clean • Professional • Cyber-Grade</p>
-      <ul style="color:var(--muted);margin-top:1rem;padding-left:1.2rem">
-        <li>Portfolio / Business Sites</li>
-        <li>Mobile-First Optimization</li>
-        <li>Free Deployment Guide</li>
-        <li>1 Free Revision Included</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>🔒 SECURITY AUDIT</h3>
-      <p class="price-tag">₱1,000 – ₱2,500</p>
-      <p style="color:var(--muted)">Find risks before attackers do</p>
-      <ul style="color:var(--muted);margin-top:1rem;padding-left:1.2rem">
-        <li>Automated + Manual Scan</li>
-        <li>Full Vulnerability Report</li>
-        <li>Fix Recommendations</li>
-        <li>100% Legal & Ethical</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>📱 TERMUX / LINUX</h3>
-      <p class="price-tag">₱300 – ₱800</p>
-      <p style="color:var(--muted)">Full setup • Tuned for speed</p>
-      <ul style="color:var(--muted);margin-top:1rem;padding-left:1.2rem">
-        <li>Clean Install & Config</li>
-        <li>Essential Toolkit Preloaded</li>
-        <li>RAM / Performance Boost</li>
-        <li>Step-by-Step Guide</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>⚙️ AUTOMATION</h3>
-      <p class="price-tag">₱500 – ₱1,500</p>
-      <p style="color:var(--muted)">Scripts that work while you sleep</p>
-      <ul style="color:var(--muted);margin-top:1rem;padding-left:1.2rem">
-        <li>Python / Bash Source Code</li>
-        <li>Full Commented Source</li>
-        <li>Usage Documentation</li>
-        <li>Free Minor Updates</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="section-header"><span class="section-num">05</span><h2 class="section-title">FEATURED_PROJECTS</h2></div>
-  <div class="grid-3">
-    <div class="card" style="border-color:var(--prime);box-shadow:0 0 60px rgba(0,248,255,0.3)">
-      <h3 style="color:var(--prime)">🔐 CYBERJAYD SECURITY LAB v1.7.2</h3>
-      <p style="color:var(--neon-cyan);font-size:.9rem;margin-bottom:1rem">FLAGSHIP ACTIVE</p>
-      <p style="color:var(--muted)">All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host detection, SSRF testing, and full automation workflows.</p>
-      <div style="margin-top:1.5rem;display:flex;gap:1rem">
-        <a href="#" class="btn btn-holo" style="padding:.8rem 1.2rem;font-size:.9rem">🌐 LIVE SITE</a>
-        <a href="https://github.com/Jaydong922/cyberjayd-security-lab" class="btn btn-holo" style="padding:.8rem 1.2rem;font-size:.9rem">📂 SOURCE</a>
-      </div>
-    </div>
-    <div class="card">
-      <h3 style="color:var(--deep-blue)">🛒 CYBERJAYD SHOP MARKETPLACE</h3>
-      <p style="color:var(--muted)">Full marketplace with Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS. No frameworks. No bloat.</p>
-      <a href="#" class="btn btn-holo" style="padding:.8rem 1.2rem;font-size:.9rem;margin-top:1.5rem;display:inline-block">🌐 LIVE DEMO</a>
-    </div>
-    <div class="card">
-      <h3 style="color:var(--neon-cyan)">🌐 CYBERJAYD SERVICES NET</h3>
-      <p style="color:var(--muted)">Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts.</p>
-      <a href="#" class="btn btn-holo" style="padding:.8rem 1.2rem;font-size:.9rem;margin-top:1.5rem;display:inline-block">🌐 LIVE SITE</a>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="section-header"><span class="section-num">06</span><h2 class="section-title">ESTABLISH_CONNECTION</h2></div>
-  <div class="grid-3">
-    <div class="card"><h3 style="color:var(--prime)">📧 MAIN EMAIL</h3><p style="font-size:1.1rem;margin-top:.5rem"><a href="mailto:repoberbiojayd3@gmail.com" style="color:var(--prime);text-decoration:none">repoberbiojayd3@gmail.com</a></p></div>
-    <div class="card"><h3 style="color:var(--deep-blue)">💼 BUSINESS EMAIL</h3><p style="font-size:1.1rem;margin-top:.5rem"><a href="mailto:cyberjayd1@gmail.com" style="color:var(--prime);text-decoration:none">cyberjayd1@gmail.com</a></p></div>
-    <div class="card"><h3 style="color:var(--neon-cyan)">📍 LOCATION</h3><p style="font-size:1.1rem;margin-top:.5rem">Baybay City, Leyte / Cebu City, PH 🇵🇭</p></div>
-    <div class="card"><h3 style="color:var(--prime)">⏰ OPERATING HOURS</h3><p style="font-size:1.1rem;margin-top:.5rem">Daily 09:00 — 21:00 PHT</p></div>
-    <div class="card"><h3 style="color:var(--deep-blue)">⚡ RESPONSE TIME</h3><p style="font-size:1.1rem;margin-top:.5rem">&lt; 24 Hours • Mon-Sun</p></div>
-    <div class="card"><h3 style="color:var(--neon-cyan)">⚠️ PROTOCOL</h3><p style="font-size:1.1rem;margin-top:.5rem">LEGAL & ETHICAL ONLY</p></div>
-  </div>
-  <div style="text-align:center;margin-top:3rem">
-    <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_//_CYBERJAYD_GRAYBLUE" class="btn btn-primary">▶ TRANSMIT INQUIRY</a>
-  </div>
-</section>
-
-<footer>
-  <div class="logo">CYBERJAYD</div>
-  <div class="footer-divider"></div>
-  <p class="footer-text">© 2077 CYBERJAYD SYSTEMS // ALL RIGHTS RESERVED</p>
-  <p class="footer-text">**DESIGNED & FORGED BY JAYD F. REPOBERBIO**</p>
-  <p class="footer-copy">BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
-</footer>
-
+<canvas id="galaxy"></canvas>
 <script>
-// ENERGY PARTICLES + 10 ASTRONAUTS + STEAM EFFECTS
-const canvas = document.getElementById('energyField');
+const canvas = document.getElementById('galaxy');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+window.addEventListener('resize',resize);
+resize();
 
-const particles = [];
-for(let i=0;i<200;i++){
-  particles.push({
+// COLORS
+const DEEP_SPACE = '#000510';
+const STAR_COLORS = ['#ffffff','#aaddff','#ffddaa','#ff8888','#88ffaa'];
+const LASER_RED = '#ff2244';
+const LASER_BLUE = '#22aaff';
+const EXPLOSION_GLOW = '#ffaa00';
+const DEBRIS_COLOR = '#8899aa';
+
+// OBJECTS
+const stars = [];
+const ships = [];
+const lasers = [];
+const explosions = [];
+const debris = [];
+
+// CREATE STARS
+for(let i=0;i<600;i++){
+  stars.push({
     x:Math.random()*canvas.width,
     y:Math.random()*canvas.height,
-    vx:(Math.random()-0.5)*0.6,
-    vy:(Math.random()-0.5)*0.6,
-    size:Math.random()*2+0.5,
-    alpha:Math.random()*0.5+0.2,
-    color:Math.random()>0.5 ? '#00f8ff' : '#00ffd5'
+    size:Math.random()*1.5+0.2,
+    speed:Math.random()*0.3+0.05,
+    color:STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)],
+    twinkle:Math.random()*Math.PI*2
   });
 }
 
-// STEAM / WIND EFFECTS
-const steams = [];
-let steamTimer = 0;
-
-// 10 UNIQUE ASTRONAUTS
-const astronauts = [];
-for(let i=0;i<10;i++){
-  astronauts.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    vx:(Math.random()-0.5)*0.25,
-    vy:(Math.random()-0.5)*0.25,
-    rotate:0,
-    rotateSpeed:(Math.random()-0.5)*0.005,
-    size:0.8 + Math.random()*0.6,
-    bodyColor: ['#c0c8d0','#d0d8e0','#b0b8c0','#d8e0e8'][Math.floor(Math.random()*4)],
-    visor: ['#00f8ff','#00ffd5','#0055ff','#80ffff'][Math.floor(Math.random()*4)],
-    suitDark: ['#707880','#808890','#606870','#9098a0'][Math.floor(Math.random()*4)],
-    blinkColor: '#ff4d6d',
-    blinkTimer: Math.random()*100,
-    armAngle: Math.random()*Math.PI*2,
-    armDir: Math.random()>0.5 ? 1 : -1
-  });
-}
-
-function drawAstronaut(a){
-  ctx.save();
-  ctx.translate(a.x, a.y);
-  ctx.rotate(a.rotate);
-  ctx.scale(a.size, a.size);
-
-  // SUIT BODY
-  ctx.fillStyle = a.bodyColor;
-  ctx.strokeStyle = a.suitDark;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.ellipse(0,0,18,26,0,0,Math.PI*2);
-  ctx.fill(); ctx.stroke();
-
-  // BACKPACK
-  ctx.fillStyle = a.suitDark;
-  ctx.fillRect(-12,-10,6,20);
-  ctx.fillStyle = a.visor;
-  ctx.fillRect(-11,-8,4,16);
-
-  // HELMET
-  ctx.fillStyle = a.bodyColor;
-  ctx.beginPath();
-  ctx.arc(0,-22,14,0,Math.PI*2);
-  ctx.fill(); ctx.stroke();
-
-  // VISOR WITH GLOW
-  ctx.shadowColor = a.visor;
-  ctx.shadowBlur = 15;
-  ctx.fillStyle = a.visor;
-  ctx.beginPath();
-  ctx.arc(0,-22,9,0,Math.PI*2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  // BLINKING DOT ON SUIT
-  a.blinkTimer++;
-  if(a.blinkTimer > 60){
-    a.blinkColor = a.blinkColor === '#ff4d6d' ? '#39ff14' : '#ff4d6d';
-    a.blinkTimer = 0;
+// SHIP CLASS
+class Ship{
+  constructor(side){
+    this.side = side; // 'red' or 'blue'
+    this.x = side==='red' ? Math.random()*canvas.width*0.4 : canvas.width*0.6 + Math.random()*canvas.width*0.4;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-0.5)*1.5;
+    this.vy = (Math.random()-0.5)*1.5;
+    this.angle = Math.random()*Math.PI*2;
+    this.size = 12 + Math.random()*8;
+    this.health = 100;
+    this.fireTimer = Math.random()*120;
+    this.color = side==='red' ? '#ff3355' : '#3399ff';
+    this.engineGlow = 0;
   }
-  ctx.fillStyle = a.blinkColor;
-  ctx.shadowColor = a.blinkColor;
-  ctx.shadowBlur = 8;
-  ctx.beginPath();
-  ctx.arc(8,5,3,0,Math.PI*2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  // ARMS - FLOATING POSITION
-  a.armAngle += 0.015 * a.armDir;
-  ctx.fillStyle = a.bodyColor;
-  ctx.save();
-  ctx.translate(12,-5);
-  ctx.rotate(a.armAngle);
-  ctx.fillRect(0,0,18,6);
-  ctx.restore();
-  ctx.save();
-  ctx.translate(-12,-5);
-  ctx.rotate(-a.armAngle);
-  ctx.fillRect(-18,0,18,6);
-  ctx.restore();
-
-  // LEGS
-  ctx.fillRect(-10,22,8,22);
-  ctx.fillRect(2,22,8,22);
-
-  // FAINT GLOW
-  ctx.strokeStyle = `rgba(0,248,255,0.15)`;
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(0,0,35,0,Math.PI*2);
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-function drawSteam(s){
-  ctx.fillStyle = `rgba(200,240,255,${s.alpha})`;
-  ctx.beginPath();
-  ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
-  ctx.fill();
-}
-
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // STEAM / WIND EFFECT
-  steamTimer++;
-  if(steamTimer > 120){
-    steamTimer = 0;
-    const side = Math.random() > 0.5 ? 'left' : 'right';
-    steams.push({
-      x: side === 'left' ? 0 : canvas.width,
-      y: Math.random()*canvas.height,
-      vx: side === 'left' ? 0.4 : -0.4,
-      vy: (Math.random()-0.5)*0.1,
-      size: 15 + Math.random()*25,
-      alpha: 0.25,
-      life: 200
+  update(){
+    // MOVE & BOUNCE
+    this.x += this.vx;
+    this.y += this.vy;
+    this.angle += (Math.random()-0.5)*0.02;
+    if(this.x<50||this.x>canvas.width-50) this.vx*=-0.9;
+    if(this.y<50||this.y>canvas.height-50) this.vy*=-0.9;
+    // ENGINE GLOW
+    this.engineGlow = Math.sin(Date.now()*0.01+this.x)*0.5+0.5;
+    // FIRE LASER
+    this.fireTimer--;
+    if(this.fireTimer<=0){
+      this.fire();
+      this.fireTimer = 80 + Math.random()*100;
+    }
+  }
+  fire(){
+    const dir = this.side==='red' ? 1 : -1;
+    lasers.push({
+      x:this.x, y:this.y,
+      vx:dir*4 + this.vx, vy:this.vy,
+      color:this.side==='red' ? LASER_RED : LASER_BLUE,
+      life:250,
+      width:3, height:12
     });
-    // PUSH ASTRONAUTS WHEN STEAM HITS
-    astronauts.forEach(a => {
-      if(Math.abs(a.y - steams[steams.length-1].y) < 150){
-        a.vx += side === 'left' ? -0.08 : 0.08;
+  }
+  draw(){
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    // ENGINE GLOW
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 15 * this.engineGlow;
+    // BODY
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.moveTo(this.size,0);
+    ctx.lineTo(-this.size*0.7, -this.size*0.4);
+    ctx.lineTo(-this.size*0.4,0);
+    ctx.lineTo(-this.size*0.7, this.size*0.4);
+    ctx.closePath();
+    ctx.fill();
+    // DETAILS
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(-this.size*0.2, -this.size*0.1, this.size*0.4, this.size*0.2);
+    ctx.restore();
+  }
+  hit(){
+    this.health -= 25;
+    if(this.health<=0){
+      explosions.push({x:this.x,y:this.y,r:0,maxR:this.size*4,alpha:1});
+      for(let i=0;i<12;i++){
+        debris.push({
+          x:this.x,y:this.y,
+          vx:(Math.random()-0.5)*6, vy:(Math.random()-0.5)*6,
+          size:Math.random()*4+1,
+          rot:Math.random()*Math.PI*2,
+          rotSpeed:(Math.random()-0.5)*0.2,
+          life:400
+        });
       }
-    });
+      return true;
+    }
+    return false;
   }
+}
 
-  steams.forEach((s,i) => {
-    s.x += s.vx;
-    s.y += s.vy;
-    s.alpha -= 0.0015;
-    s.size += 0.05;
-    s.life--;
-    if(s.life <= 0 || s.alpha <= 0) steams.splice(i,1);
-    drawSteam(s);
-  });
+// SPAWN INITIAL SHIPS
+for(let i=0;i<6;i++){
+  ships.push(new Ship('red'));
+  ships.push(new Ship('blue'));
+}
+
+// ANIMATION LOOP
+function animate(){
+  ctx.fillStyle = DEEP_SPACE;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
   // DRAW STARS
-  particles.forEach(p => {
-    ctx.fillStyle = `${p.color}${Math.floor(p.alpha*255).toString(16).padStart(2,'0')}`;
+  stars.forEach(s=>{
+    s.twinkle += 0.02;
+    const alpha = 0.4 + Math.sin(s.twinkle)*0.3;
+    ctx.fillStyle = s.color;
+    ctx.globalAlpha = alpha;
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
     ctx.fill();
-    p.x += p.vx;
-    p.y += p.vy;
-    if(p.x<0||p.x>canvas.width)p.vx*=-1;
-    if(p.y<0||p.y>canvas.height)p.vy*=-1;
+    s.x -= s.speed;
+    if(s.x<0) s.x=canvas.width;
   });
+  ctx.globalAlpha = 1;
 
-  // DRAW & UPDATE ASTRONAUTS
-  astronauts.forEach(a => {
-    a.x += a.vx;
-    a.y += a.vy;
-    a.rotate += a.rotateSpeed;
-
-    // BOUNCE WHEN HIT EDGE
-    if(a.x < 60){
-      a.x = 60;
-      a.vx *= -0.7;
+  // UPDATE & DRAW SHIPS
+  for(let i=ships.length-1;i>=0;i--){
+    const s = ships[i];
+    s.update();
+    s.draw();
+    // COLLISION WITH LASERS
+    for(let j=lasers.length-1;j>=0;j--){
+      const l = lasers[j];
+      if(Math.hypot(s.x-l.x,s.y-l.y)<s.size+5){
+        if((s.side==='red'&&l.color===LASER_BLUE)||(s.side==='blue'&&l.color===LASER_RED)){
+          if(s.hit()) ships.splice(i,1);
+          lasers.splice(j,1);
+        }
+      }
     }
-    if(a.x > canvas.width - 60){
-      a.x = canvas.width - 60;
-      a.vx *= -0.7;
+  }
+
+  // UPDATE & DRAW LASERS
+  for(let i=lasers.length-1;i>=0;i--){
+    const l = lasers[i];
+    l.x += l.vx; l.y += l.vy; l.life--;
+    if(l.life<=0||l.x<0||l.x>canvas.width||l.y<0||l.y>canvas.height){
+      lasers.splice(i,1);
+      continue;
     }
-    if(a.y < 60){
-      a.y = 60;
-      a.vy *= -0.7;
-    }
-    if(a.y > canvas.height - 60){
-      a.y = canvas.height - 60;
-      a.vy *= -0.7;
-    }
+    ctx.fillStyle = l.color;
+    ctx.shadowColor = l.color;
+    ctx.shadowBlur = 12;
+    ctx.fillRect(l.x-l.width/2,l.y-l.height/2,l.width,l.height);
+  }
+  ctx.shadowBlur = 0;
 
-    // SLOW DOWN NATURALLY
-    a.vx *= 0.998;
-    a.vy *= 0.998;
+  // UPDATE & DRAW EXPLOSIONS
+  for(let i=explosions.length-1;i>=0;i--){
+    const e = explosions[i];
+    e.r += 1.2; e.alpha -= 0.025;
+    if(e.alpha<=0){explosions.splice(i,1);continue}
+    ctx.strokeStyle = EXPLOSION_GLOW;
+    ctx.lineWidth = 3;
+    ctx.globalAlpha = e.alpha;
+    ctx.beginPath();
+    ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+    ctx.stroke();
+    ctx.fillStyle = '#ff4400';
+    ctx.globalAlpha = e.alpha*0.5;
+    ctx.beginPath();
+    ctx.arc(e.x,e.y,e.r*0.4,0,Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
 
-    drawAstronaut(a);
-  });
+  // UPDATE & DRAW DEBRIS
+  for(let i=debris.length-1;i>=0;i--){
+    const d = debris[i];
+    d.x += d.vx; d.y += d.vy; d.vx *= 0.995; d.vy *= 0.995;
+    d.rot += d.rotSpeed; d.life--;
+    if(d.life<=0){debris.splice(i,1);continue}
+    ctx.fillStyle = DEBRIS_COLOR;
+    ctx.globalAlpha = d.life/400;
+    ctx.save();
+    ctx.translate(d.x,d.y);
+    ctx.rotate(d.rot);
+    ctx.fillRect(-d.size/2,-d.size/2,d.size,d.size);
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
 
-  requestAnimationFrame(animateParticles);
+  // KEEP SPAWNING SHIPS
+  if(ships.length<12){
+    ships.push(new Ship(Math.random()>0.5?'red':'blue'));
+  }
+
+  requestAnimationFrame(animate);
 }
-animateParticles();
-window.addEventListener('resize', () => {canvas.width=window.innerWidth;canvas.height=window.innerHeight});
-
-// HOLOGRAM ORB 3D
-const orbCanvas = document.createElement('canvas');
-const container = document.getElementById('hologramOrb');
-container.appendChild(orbCanvas);
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, orbCanvas.clientWidth / orbCanvas.clientHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({canvas:orbCanvas, antialias:true, alpha:true});
-renderer.setSize(orbCanvas.clientWidth, orbCanvas.clientHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.02;
-controls.autoRotate = true;
-controls.autoRotateSpeed = 0.7;
-
-const coreGeo = new THREE.IcosahedronGeometry(4, 4);
-const coreMat = new THREE.MeshBasicMaterial({color:0x00f8ff, wireframe:true, transparent:true, opacity:0.6});
-const core = new THREE.Mesh(coreGeo, coreMat);
-scene.add(core);
-
-for(let i=0;i<6;i++){
-  const ringGeo = new THREE.TorusGeometry(5+i*0.5, 0.02, 16, 200);
-  const ringMat = new THREE.MeshBasicMaterial({color:i%2===0 ? 0x00ffd5 : 0x0055ff, transparent:true, opacity:0.4});
-  const ring = new THREE.Mesh(ringGeo, ringMat);
-  ring.rotation.x = Math.random()*Math.PI;
-  ring.rotation.y = Math.random()*Math.PI;
-  scene.add(ring);
-}
-
-const dotGeo = new THREE.SphereGeometry(0.15, 12, 12);
-for(let i=0;i<100;i++){
-  const dotMat = new THREE.MeshBasicMaterial({color:Math.random()>0.5 ? 0x00f8ff : 0x0055ff});
-  const dot = new THREE.Mesh(dotGeo, dotMat);
-  const r = 6 + Math.random()*3;
-  const theta = Math.random()*Math.PI*2;
-  const phi = Math.random()*Math.PI;
-  dot.position.set(r*Math.sin(phi)*Math.cos(theta), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(theta));
-  scene.add(dot);
-}
-
-camera.position.set(0, 0, 15);
-
-window.addEventListener('resize', () => {
-  const w = container.clientWidth;
-  const h = container.clientHeight;
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
-  renderer.setSize(w, h);
-});
-
-function animateOrb(){
-  requestAnimationFrame(animateOrb);
-  core.rotation.y += 0.003;
-  core.rotation.x += 0.001;
-  scene.children.forEach((obj,i) => {if(i>0) obj.rotation.z += 0.002*(i%2===0 ? 1 : -1)});
-  controls.update();
-  renderer.render(scene, camera);
-}
-animateOrb();
+animate();
 </script>
-
 </body>
 </html>
