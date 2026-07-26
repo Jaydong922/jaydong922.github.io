@@ -2,356 +2,658 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>CYBERJAYD | Global Grid — Ethical Security & Development</title>
-<meta name="description" content="Jayd F. Repoberbio — Web Engineer & Developer. 100% self-taught, built entirely on Android/Termux. Portfolio, Games, & Services.">
-<meta name="author" content="Jayd F. Repoberbio">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --prime:#00d9ff;
   --accent:#00ffd5;
   --dark:#050710;
-  --glass:rgba(10,15,30,0.7);
-  --border:rgba(0,217,255,0.3);
+  --darker:#020205;
+  --glass:rgba(10,15,30,0.72);
+  --border:rgba(0,217,255,0.28);
   --text:#e0f7ff;
+  --muted:#7aa8c8;
 }
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   font-family:'Rajdhani',sans-serif;
-  background:radial-gradient(circle at top,#0b1428,#020205);
+  background:
+    radial-gradient(circle at 20% 10%,rgba(0,217,255,0.12),transparent 50%),
+    radial-gradient(circle at 80% 90%,rgba(0,255,213,0.10),transparent 55%),
+    linear-gradient(180deg,#050816 0%,#020205 100%);
   color:var(--text);
   overflow-x:hidden;
+  line-height:1.6;
 }
-h1,h2,h3,h4{font-family:'Orbitron',sans-serif}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px}
+.mono{font-family:'Share Tech Mono',monospace}
 
-/* Background Matrix */
-#matrix{position:fixed;inset:0;z-index:0;opacity:0.15}
+/* BACKGROUND LAYERS */
+#matrix{position:fixed;inset:0;z-index:0;opacity:.14}
 .grid-bg{
   position:fixed;inset:0;z-index:1;
-  background:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:40px 40px;
-  opacity:0.08;
+  background:
+    linear-gradient(var(--border) 1px,transparent 1px) 0 0/45px 45px,
+    linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/45px 45px;
+  opacity:.08;
+  mask-image:radial-gradient(ellipse at center,#000 40%,transparent 85%);
 }
-.wrap{position:relative;z-index:10}
+.wrap{position:relative;z-index:10;width:100%}
 
-/* Navigation */
+/* NAVIGATION — ORIGINAL */
 nav{
-  position:sticky;top:0;z-index:99;
-  background:rgba(5,7,16,0.85);
-  backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,7,16,.85);
+  backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
-  padding:0.8rem 1.5rem;
+  padding:.9rem 0;
+  width:100%;
 }
 .nav-inner{
-  max-width:1200px;margin:0 auto;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
+  max-width:1250px;margin:0 auto;padding:0 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
 }
 .logo{
   font-family:'Orbitron',sans-serif;
-  font-size:1.4rem;font-weight:900;
+  font-size:1.5rem;font-weight:900;
   color:var(--prime);
-  text-shadow:0 0 15px var(--prime);
+  text-shadow:0 0 18px rgba(0,217,255,.6);
+  letter-spacing:1px;
 }
-.nav-links{display:flex;gap:1.2rem;flex-wrap:wrap}
+.nav-links{display:flex;gap:1.3rem;flex-wrap:wrap;align-items:center}
 .nav-links a{
-  color:#a0c8e8;text-decoration:none;font-weight:600;
-  transition:0.3s;
+  color:#b8d8ee;text-decoration:none;font-weight:600;
+  font-size:.98rem;transition:.25s;position:relative;padding:.25rem 0;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--prime),var(--accent));transition:.25s;
 }
 .nav-links a:hover{color:var(--prime);text-shadow:0 0 8px var(--prime)}
+.nav-links a:hover::after{width:100%}
 
-/* Hero Section */
+/* HERO — ORIGINAL */
 .hero{
-  min-height:90vh;
+  min-height:92vh;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;padding:2rem;
+  text-align:center;padding:3rem 1.5rem;
+  position:relative;
+}
+.hero-num{
+  font-family:'Share Tech Mono',monospace;
+  color:var(--muted);font-size:.85rem;letter-spacing:.2em;
+  margin-bottom:1rem;
 }
 .hero h1{
-  font-size:clamp(2.5rem,6vw,4rem);
-  background:linear-gradient(90deg,var(--prime),var(--accent));
+  font-size:clamp(2.8rem,7vw,5rem);
+  font-weight:900;
+  background:linear-gradient(135deg,var(--prime) 0%,var(--accent) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  margin-bottom:0.5rem;
+  filter:drop-shadow(0 0 25px rgba(0,217,255,.4));
+  margin-bottom:.8rem;
+  line-height:1.05;
+}
+.hero hr{
+  width:120px;height:2px;border:none;
+  background:linear-gradient(90deg,transparent,var(--prime),transparent);
+  margin:1rem auto;opacity:.7;
 }
 .hero-sub{
-  font-size:clamp(1rem,2vw,1.3rem);
-  color:#90c0e0;
+  font-size:clamp(1rem,2.2vw,1.35rem);
+  color:#9fc8e0;
   letter-spacing:1px;
-  margin-bottom:1.5rem;
+  max-width:900px;
+  margin-bottom:2rem;
 }
 .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
 .btn{
-  padding:0.8rem 1.8rem;border-radius:8px;
-  font-family:'Orbitron',sans-serif;font-weight:700;font-size:0.9rem;
-  text-decoration:none;
-  border:1px solid var(--prime);
-  transition:0.3s;
+  padding:.85rem 1.9rem;border-radius:8px;
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;
+  text-decoration:none;cursor:pointer;border:1px solid var(--prime);
+  transition:.3s all;position:relative;overflow:hidden;
 }
-.btn-primary{background:var(--prime);color:#020205;box-shadow:0 0 20px rgba(0,217,255,0.4)}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(0,217,255,0.6)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--prime),var(--accent));
+  color:#020205;
+  box-shadow:0 0 22px rgba(0,217,255,.45);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,217,255,.6)}
 .btn-outline{background:transparent;color:var(--prime)}
-.btn-outline:hover{background:var(--prime);color:#020205}
+.btn-outline:hover{background:var(--prime);color:#020205;box-shadow:0 0 25px rgba(0,217,255,.45)}
 
-/* Sections */
-section{max-width:1200px;margin:0 auto;padding:3rem 1.5rem}
-.sec-title{
-  font-size:1.8rem;margin-bottom:2rem;
-  border-left:3px solid var(--prime);padding-left:1rem;
+/* SECTIONS — ORIGINAL LAYOUT */
+section{max-width:1250px;margin:0 auto;padding:4.5rem 1.5rem;width:100%}
+.sec-head{
+  display:flex;align-items:baseline;gap:1rem;
+  margin-bottom:2.5rem;
+  border-bottom:1px solid var(--border);
+  padding-bottom:.8rem;
+}
+.sec-num{
+  font-family:'Share Tech Mono',monospace;
+  font-size:1.1rem;color:var(--accent);font-weight:700;
+}
+.sec-head h2{
+  font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(90deg,var(--text),var(--prime));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-/* About */
-.about-text{
-  background:var(--glass);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;line-height:1.7;
+/* ABOUT — ORIGINAL FULL TEXT */
+.about-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:2rem;
+  backdrop-filter:blur(12px);
+  line-height:1.85;
+  font-size:1.05rem;
+}
+.about-card p{margin-bottom:1rem;color:#cfe8f5}
+.about-card strong{color:var(--prime)}
+.about-status{
+  margin-top:1.2rem;padding-top:1rem;
+  border-top:1px dashed var(--border);
+  font-family:'Share Tech Mono',monospace;
+  color:var(--accent);font-weight:700;
 }
 
-/* Skills */
+/* WHY CHOOSE — ORIGINAL 6 POINTS */
+.why-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;
+}
+.why-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
+}
+.why-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 10px 30px rgba(0,217,255,.15)}
+.why-card h3{
+  font-size:1.1rem;color:var(--prime);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.why-card p{color:#b8d4e6;font-size:.98rem}
+
+/* SKILLS — ORIGINAL 3 CATEGORIES */
 .skills-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.4rem;
 }
 .skill-card{
-  background:var(--glass);border:1px solid var(--border);border-radius:10px;
-  padding:1.2rem;transition:0.3s;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:1.6rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
 }
-.skill-card:hover{transform:translateY(-4px);border-color:var(--accent)}
-.skill-name{font-weight:700;color:var(--prime);margin-bottom:0.5rem}
+.skill-card:hover{transform:translateY(-5px);border-color:var(--accent)}
+.skill-card h3{
+  font-size:1.2rem;color:var(--prime);margin-bottom:1rem;
+}
+.skill-list{display:grid;gap:.5rem;margin-bottom:1rem;color:#cfe0ee}
+.skill-list div::before{content:'▸ ';color:var(--accent);font-weight:700}
 .skill-bar{
-  height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;
+  height:8px;background:rgba(255,255,255,.08);
+  border-radius:4px;overflow:hidden;margin-top:.5rem;
 }
 .skill-fill{
-  height:100%;background:linear-gradient(90deg,var(--prime),var(--accent));
+  height:100%;
+  background:linear-gradient(90deg,var(--prime),var(--accent));
+  box-shadow:0 0 12px rgba(0,217,255,.5);
+  position:relative;
+}
+.skill-fill::after{
+  content:attr(data-val);
+  position:absolute;right:8px;top:-1.3rem;
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:var(--accent);font-weight:700;
 }
 
-/* Services */
+/* SERVICES — ORIGINAL 4 WITH PRICES */
 .services-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.4rem;
 }
 .service-card{
-  background:var(--glass);border:1px solid var(--border);border-radius:10px;
-  padding:1.3rem;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;padding:1.7rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
+  position:relative;overflow:hidden;
 }
-.service-price{font-size:1.2rem;font-weight:700;color:var(--accent);margin:0.5rem 0}
+.service-card:hover{transform:translateY(-5px);border-color:var(--prime);box-shadow:0 15px 40px rgba(0,217,255,.18)}
+.service-card.best::before{
+  content:'BEST SELLER';
+  position:absolute;top:18px;right:-35px;
+  background:linear-gradient(90deg,var(--accent),var(--prime));
+  color:#020205;font-size:.7rem;font-weight:900;
+  padding:.25rem 2.5rem;transform:rotate(40deg);
+  font-family:'Orbitron',sans-serif;letter-spacing:1px;
+}
+.service-card h3{
+  font-size:1.2rem;color:var(--text);margin-bottom:.5rem;
+}
+.service-price{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  color:var(--accent);
+  margin:.8rem 0 1rem;
+  text-shadow:0 0 12px rgba(0,255,213,.35);
+}
+.service-list{display:grid;gap:.45rem;color:#c5ddee;font-size:.98rem}
+.service-list div::before{content:'✓ ';color:var(--prime);font-weight:700}
 
-/* Projects — CLICKABLE ENHANCED */
+/* PROJECTS — ✅ ENHANCED: ALL CLICKABLE + FLAPPY HIGHLIGHT */
 .projects-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;
 }
 .project-card{
-  background:var(--glass);border:1px solid var(--border);border-radius:12px;overflow:hidden;
-  transition:0.3s;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(10px);
+  transition:.35s all;
   text-decoration:none;color:inherit;
   display:block;
+  cursor:pointer;
 }
-.project-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,217,255,0.2)}
-.project-header{
-  background:linear-gradient(135deg,rgba(0,217,255,0.2),rgba(0,255,213,0.1));
-  padding:1.2rem;text-align:center;
-  font-size:1.1rem;font-weight:700;color:var(--prime);
+.project-card:hover{
+  transform:translateY(-7px) scale(1.015);
+  border-color:var(--prime);
+  box-shadow:0 20px 50px rgba(0,217,255,.22);
 }
-.project-body{padding:1.2rem}
+.project-head{
+  padding:1.4rem;
+  background:linear-gradient(135deg,rgba(0,217,255,.18),rgba(0,255,213,.1));
+  border-bottom:1px solid var(--border);
+}
+.project-head h3{
+  font-size:1.1rem;color:var(--prime);
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+}
 .project-tag{
-  display:inline-block;padding:0.2rem 0.6rem;border-radius:4px;
-  font-size:0.75rem;background:rgba(0,217,255,0.15);color:var(--accent);
-  margin-bottom:0.5rem;
+  margin-left:auto;
+  font-size:.7rem;font-family:'Share Tech Mono',monospace;
+  padding:.2rem .6rem;border-radius:4px;
+  background:rgba(0,255,213,.15);color:var(--accent);
+  border:1px solid rgba(0,255,213,.3);
+  font-weight:700;
 }
-/* ✅ FLAPPY BLUES SPECIAL HIGHLIGHT */
-.flappy-highlight{
+.project-body{padding:1.4rem}
+.project-body p{color:#c2daea;font-size:1rem}
+.project-links{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  margin-top:1rem;padding-top:1rem;
+  border-top:1px dashed var(--border);
+}
+.project-links a{
+  color:var(--prime);text-decoration:none;
+  font-weight:600;font-size:.95rem;
+  transition:.2s;
+}
+.project-links a:hover{color:var(--accent);text-shadow:0 0 6px var(--accent)}
+
+/* ✅ FLAPPY BLUES SPECIAL ROCKET HIGHLIGHT */
+.flappy-card{
   border:2px solid var(--accent);
-  box-shadow:0 0 25px rgba(0,255,213,0.3);
+  box-shadow:0 0 30px rgba(0,255,213,.25);
+  animation:flappyGlow 2.5s ease-in-out infinite;
 }
-.flappy-highlight .project-header{
-  background:linear-gradient(135deg,rgba(0,255,213,0.3),rgba(0,217,255,0.2));
+@keyframes flappyGlow{
+  0%,100%{box-shadow:0 0 25px rgba(0,255,213,.2)}
+  50%{box-shadow:0 0 45px rgba(0,255,213,.45)}
 }
+.flappy-card .project-head{
+  background:linear-gradient(135deg,rgba(0,255,213,.25),rgba(0,217,255,.18));
+}
+.flappy-card .project-head h3{color:var(--accent)}
 
-/* Contact */
-.contact-info{
-  background:var(--glass);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;line-height:1.8;
+/* CONTACT — ORIGINAL FULL */
+.contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;
+  margin-bottom:2rem;
 }
-.contact-info a{color:var(--prime);text-decoration:none}
+.contact-item{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.3rem;
+  backdrop-filter:blur(10px);
+  transition:.3s;
+}
+.contact-item:hover{border-color:var(--accent);transform:translateY(-3px)}
+.contact-label{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.15em;
+  margin-bottom:.3rem;
+}
+.contact-value{font-size:1.05rem;font-weight:600;color:var(--text)}
+.contact-value a{color:var(--prime);text-decoration:none;transition:.2s}
+.contact-value a:hover{color:var(--accent)}
+.transmit-btn{text-align:center;margin-top:1rem}
 
-/* Footer */
+/* FOOTER — ORIGINAL */
 footer{
-  text-align:center;padding:2rem;border-top:1px solid var(--border);
-  font-size:0.9rem;color:#6088a0;
+  text-align:center;padding:2.5rem 1.5rem 1.8rem;
+  border-top:1px solid var(--border);
+  margin-top:3rem;
+  background:rgba(2,2,5,.6);
+  width:100%;
+}
+footer .logo{font-size:1.6rem;margin-bottom:.5rem}
+footer p{color:var(--muted);font-size:.95rem;margin:.25rem 0}
+.footer-line{
+  max-width:500px;height:1px;margin:1rem auto;
+  background:linear-gradient(90deg,transparent,var(--prime),transparent);
+}
+.footer-sig{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.8rem;color:#5a8098;margin-top:.8rem;
+  letter-spacing:.05em;
 }
 
-/* Matrix Rain */
-canvas#matrix{position:fixed;inset:0;z-index:0}
+/* RESPONSIVE */
+@media(max-width:600px){
+  .nav-inner{justify-content:center}
+  .hero{min-height:85vh;padding-top:2rem}
+  section{padding:3.5rem 1.2rem}
+}
 </style>
 </head>
 <body>
 
+<!-- BACKGROUND -->
 <canvas id="matrix"></canvas>
 <div class="grid-bg"></div>
 
 <div class="wrap">
+
+<!-- NAV — ORIGINAL -->
 <nav>
-  <div class="nav-inner">
-    <div class="logo">CYBERJAYD</div>
-    <div class="nav-links">
-      <a href="#about">ABOUT</a>
-      <a href="#skills">SKILLS</a>
-      <a href="#services">SERVICES</a>
-      <a href="#projects">PROJECTS</a>
-      <a href="#contact">CONTACT</a>
-    </div>
+<div class="nav-inner">
+  <div class="logo">CYBERJAYD</div>
+  <div class="nav-links">
+    <a href="#about">ABOUT</a>
+    <a href="#why">WHY</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#services">SERVICES</a>
+    <a href="#projects">PROJECTS 🎮</a>
+    <a href="#projects">PLAY GAME</a>
+    <a href="#contact">🔐 ACCOUNT</a>
   </div>
+</div>
 </nav>
 
+<!-- HERO — ORIGINAL -->
 <section class="hero">
-  <h1>GLOBAL GRID // SECTOR 7</h1>
-  <p class="hero-sub">ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH<br>CLEAN DESIGN, MAXIMUM POWER</p>
+  <div class="hero-num">01</div>
+  <h1>CYBERJAYD</h1>
+  <hr>
+  <p class="hero-sub">
+    GLOBAL GRID // SECTOR 7 — ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH.<br>
+    CLEAN DESIGN, MAXIMUM POWER.
+  </p>
   <div class="hero-buttons">
     <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
     <a href="#contact" class="btn btn-outline">HIRE ME</a>
   </div>
 </section>
 
+<!-- 01 ABOUT — ORIGINAL FULL TEXT -->
 <section id="about">
-  <h2 class="sec-title">01 — ABOUT_ME.EXE</h2>
-  <div class="about-text">
-    <p><strong>IDENTITY:</strong> JAYD F. REPOBERBIO — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
-    <p><strong>STATUS:</strong> First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. 100% SELF-TAUGHT. Every skill earned through 3AM grind, relentless research, and refusing limits.</p>
-    <p><strong>SPECIALIZATION:</strong> Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on Android / Termux — advanced tech for everyone.</p>
-    <p><strong>MISSION:</strong> Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p>
-    <p><strong>STATUS:</strong> ONLINE • ACCEPTING NEW CONTRACTS WORLDWIDE • RESPONSE < 24H</p>
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>ABOUT_ME.EXE</h2>
+  </div>
+  <div class="about-card">
+    <p><span class="mono">> INITIALIZING USER PROFILE...</span></p>
+    <p>👋 <strong>IDENTITY:</strong> JAYD F. REPOBERBIO — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
+    <p>🎓 <strong>STATUS:</strong> First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. <strong>100% SELF-TAUGHT</strong>. Every skill earned through 3AM grind, relentless research, and refusing limits.</p>
+    <p>⚡ <strong>SPECIALIZATION:</strong> Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on Android / Termux — advanced tech for everyone.</p>
+    <p>🌍 <strong>MISSION:</strong> Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p>
+    <p class="about-status">> STATUS: ONLINE • ACCEPTING NEW CONTRACTS WORLDWIDE • RESPONSE < 24H</p>
   </div>
 </section>
 
+<!-- 02 WHY CHOOSE — ORIGINAL 6 POINTS -->
+<section id="why">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>WHY_CHOOSE_CYBERJAYD</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><h3>💡 OBSESSED WITH QUALITY</h3><p>No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
+    <div class="why-card"><h3>📱 MOBILE IS FIRST</h3><p>70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
+    <div class="why-card"><h3>💰 HONEST PRICING</h3><p>What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
+    <div class="why-card"><h3>⚖️ ETHICAL BY DEFAULT</h3><p>Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
+    <div class="why-card"><h3>⚡ REAL-TIME SUPPORT</h3><p>Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
+    <div class="why-card"><h3>🌍 GLOBAL STANDARD</h3><p>Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
+  </div>
+</section>
+
+<!-- 03 SKILLS — ORIGINAL 3 CATEGORIES -->
 <section id="skills">
-  <h2 class="sec-title">03 — CORE_CAPABILITIES</h2>
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>CORE_CAPABILITIES</h2>
+  </div>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-name">🔐 CYBERSECURITY</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-      <p style="font-size:0.9rem;margin-top:0.5rem">Ethical Research • Bug Bounty • Vuln Assessment • SSRF & Recon</p>
+      <h3>🔐 CYBERSECURITY</h3>
+      <div class="skill-list">
+        <div>Ethical Research</div>
+        <div>Bug Bounty</div>
+        <div>Vuln Assessment</div>
+        <div>SSRF & Recon</div>
+        <div>Security Analysis</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%" data-val="80%"></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-name">💻 DEVELOPMENT</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-      <p style="font-size:0.9rem;margin-top:0.5rem">Python • Bash • HTML/CSS/JS • Automation • Web & Scripting</p>
+      <h3>💻 DEVELOPMENT</h3>
+      <div class="skill-list">
+        <div>Python</div>
+        <div>Bash / Shell</div>
+        <div>HTML/CSS/JS</div>
+        <div>Automation</div>
+        <div>Web & Scripting</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:100%" data-val="100%"></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-name">📡 PLATFORMS</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
-      <p style="font-size:0.9rem;margin-top:0.5rem">Termux / Linux • Mobile Tech • GitHub • Cloud Deploy</p>
+      <h3>📡 PLATFORMS</h3>
+      <div class="skill-list">
+        <div>Termux / Linux</div>
+        <div>Mobile Tech</div>
+        <div>GitHub</div>
+        <div>Cloud Deploy</div>
+        <div>System Optimization</div>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%" data-val="85%"></div></div>
     </div>
   </div>
 </section>
 
+<!-- 04 SERVICES — ORIGINAL 4 WITH PRICES -->
 <section id="services">
-  <h2 class="sec-title">04 — SERVICES_&_PRICING</h2>
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>SERVICES_&_PRICING</h2>
+  </div>
   <div class="services-grid">
-    <div class="service-card">
+    <div class="service-card best">
       <h3>🌐 WEB DESIGN</h3>
+      <p style="color:var(--muted);font-size:.9rem">Clean • Professional • Cyber-Grade</p>
       <div class="service-price">₱800 – ₱2,000</div>
-      <p style="font-size:0.9rem">Portfolio / Business Sites • Mobile-First • Free Deployment Guide • 1 Revision</p>
+      <div class="service-list">
+        <div>Portfolio / Business Sites</div>
+        <div>Mobile-First Optimization</div>
+        <div>Free Deployment Guide</div>
+        <div>1 Free Revision Included</div>
+      </div>
     </div>
     <div class="service-card">
       <h3>🔒 SECURITY AUDIT</h3>
+      <p style="color:var(--muted);font-size:.9rem">Find risks before attackers do</p>
       <div class="service-price">₱1,000 – ₱2,500</div>
-      <p style="font-size:0.9rem">Scan + Manual Check • Full Report • Fix Guide • 100% Legal & Ethical</p>
+      <div class="service-list">
+        <div>Automated + Manual Scan</div>
+        <div>Full Vulnerability Report</div>
+        <div>Fix Recommendations</div>
+        <div>100% Legal & Ethical</div>
+      </div>
     </div>
     <div class="service-card">
       <h3>📱 TERMUX / LINUX</h3>
+      <p style="color:var(--muted);font-size:.9rem">Full setup • Tuned for speed</p>
       <div class="service-price">₱300 – ₱800</div>
-      <p style="font-size:0.9rem">Setup & Config • Toolkit Preload • Speed Boost • Step-by-Step Guide</p>
+      <div class="service-list">
+        <div>Clean Install & Config</div>
+        <div>Essential Toolkit Preloaded</div>
+        <div>RAM / Performance Boost</div>
+        <div>Step-by-Step Guide</div>
+      </div>
     </div>
     <div class="service-card">
       <h3>⚙️ AUTOMATION</h3>
+      <p style="color:var(--muted);font-size:.9rem">Scripts that work while you sleep</p>
       <div class="service-price">₱500 – ₱1,500</div>
-      <p style="font-size:0.9rem">Python/Bash Scripts • Commented Code • Docs • Free Minor Updates</p>
+      <div class="service-list">
+        <div>Python / Bash Source Code</div>
+        <div>Full Commented Source</div>
+        <div>Usage Documentation</div>
+        <div>Free Minor Updates</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- 05 PROJECTS — ✅ ALL CLICKABLE + FLAPPY ROCKET EDITION -->
 <section id="projects">
-  <h2 class="sec-title">05 — FEATURED_PROJECTS</h2>
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>FEATURED_PROJECTS</h2>
+  </div>
   <div class="projects-grid">
-    <!-- ✅ CLICKABLE FLAPPY BLUES WITH ROCKET DESIGN -->
-    <a href="flappy.html" class="project-card flappy-highlight" target="_blank">
-      <div class="project-header">🚀 FLAPPY BLUES — ROCKET EDITION</div>
+
+    <!-- ✅ CLICKABLE FLAPPY BLUES — ROCKET EDITION (ADJUSTED JUMP + APOY + USOK) -->
+    <a href="flappy.html" class="project-card flappy-card" target="_blank">
+      <div class="project-head">
+        <h3>🚀 FLAPPY BLUES — ROCKET EDITION <span class="project-tag">🎮 PLAY NOW</span></h3>
+      </div>
       <div class="project-body">
-        <span class="project-tag">🎮 GAME</span>
-        <p>Custom-built browser game. <strong>Adjusted jump height — perfect control</strong>! Features: 🚀 Rocket character, 🔥 Flame thruster effect, 💨 Smoke trails when flying, smooth physics. Click to PLAY NOW!</p>
+        <p><strong>UPDATED PHYSICS:</strong> Jump height adjusted — sakto lang, hindi na sobrang taas kaya hindi ka laging naa-out!</p>
+        <p style="margin-top:.5rem">✨ Features: Custom rocket character, 🔥 flame thruster effect, 💨 smoke trails on every tap, smooth gravity, animated pipes, score + high score system.</p>
+        <div class="project-links">
+          <a href="flappy.html" target="_blank">▶ CLICK TO PLAY →</a>
+        </div>
       </div>
     </a>
 
+    <!-- ✅ CLICKABLE SECURITY LAB -->
     <a href="https://github.com/Jaydong922/cyberjayd-security-lab" class="project-card" target="_blank">
-      <div class="project-header">🔐 CYBERJAYD SECURITY LAB v1.7.2</div>
+      <div class="project-head">
+        <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2 <span class="project-tag">FLAGSHIP ACTIVE</span></h3>
+      </div>
       <div class="project-body">
-        <span class="project-tag">SECURITY TOOLKIT</span>
-        <p>All-in-one toolkit for Android/Termux. Subdomain scan, live host check, SSRF testing, full automation workflows.</p>
+        <p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host detection, SSRF testing, and full automation workflows.</p>
+        <div class="project-links">
+          <a href="https://jaydong922.github.io/cyberjayd-security-lab" target="_blank">🌐 LIVE SITE</a>
+          <a href="https://github.com/Jaydong922/cyberjayd-security-lab" target="_blank">📂 SOURCE</a>
+        </div>
       </div>
     </a>
 
+    <!-- ✅ CLICKABLE SHOP -->
     <a href="https://github.com/Jaydong922/cyberjayd-shop" class="project-card" target="_blank">
-      <div class="project-header">🛒 CYBERJAYD SHOP</div>
+      <div class="project-head">
+        <h3>🛒 CYBERJAYD SHOP <span class="project-tag">MARKETPLACE</span></h3>
+      </div>
       <div class="project-body">
-        <span class="project-tag">MARKETPLACE</span>
-        <p>Full system: Sign Up/Login, Admin Dashboard, Product Management, Buyer view. Pure HTML/CSS/JS — no bloat.</p>
+        <p>Full marketplace with Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS. No frameworks. No bloat.</p>
+        <div class="project-links">
+          <a href="https://jaydong922.github.io/cyberjayd-shop" target="_blank">🌐 LIVE DEMO</a>
+        </div>
       </div>
     </a>
 
+    <!-- ✅ CLICKABLE SERVICES NET -->
     <a href="https://cyberjayd-services.github.io" class="project-card" target="_blank">
-      <div class="project-header">🌐 CYBERJAYD SERVICES NET</div>
+      <div class="project-head">
+        <h3>🌐 CYBERJAYD SERVICES NET <span class="project-tag">PORTAL</span></h3>
+      </div>
       <div class="project-body">
-        <span class="project-tag">SERVICES PORTAL</span>
-        <p>Official page with pricing, portfolio, and direct inquiry form. Built to convert visitors to clients.</p>
+        <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts.</p>
+        <div class="project-links">
+          <a href="https://cyberjayd-services.github.io" target="_blank">🌐 LIVE SITE</a>
+        </div>
       </div>
     </a>
+
   </div>
 </section>
 
+<!-- 06 CONTACT — ORIGINAL FULL -->
 <section id="contact">
-  <h2 class="sec-title">06 — ESTABLISH_CONNECTION</h2>
-  <div class="contact-info">
-    <p><strong>📧 Main Email:</strong> <a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></p>
-    <p><strong>💼 Business Email:</strong> <a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></p>
-    <p><strong>📍 Location:</strong> Baybay City, Leyte / Cebu City, PH 🇵🇭</p>
-    <p><strong>⏰ Hours:</strong> Daily 09:00 — 21:00 PHT</p>
-    <p><strong>⚡ Response:</strong> Within 24 Hours</p>
-    <p><strong>⚠️ Protocol:</strong> LEGAL & ETHICAL ONLY</p>
-    <br>
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>ESTABLISH_CONNECTION</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-item"><div class="contact-label">📧 Main Email</div><div class="contact-value"><a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></div></div>
+    <div class="contact-item"><div class="contact-label">💼 Business Email</div><div class="contact-value"><a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div></div>
+    <div class="contact-item"><div class="contact-label">📍 Location</div><div class="contact-value">Baybay City, Leyte / Cebu City, PH 🇵🇭</div></div>
+    <div class="contact-item"><div class="contact-label">⏰ Operating Hours</div><div class="contact-value">Daily 09:00 — 21:00 PHT</div></div>
+    <div class="contact-item"><div class="contact-label">⚡ Response Time</div><div class="contact-value">< 24 Hours • Mon-Sun</div></div>
+    <div class="contact-item"><div class="contact-label">⚠️ Protocol</div><div class="contact-value" style="color:var(--accent)">LEGAL & ETHICAL ONLY</div></div>
+  </div>
+  <div class="transmit-btn">
     <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_//_CYBERJAYD_GRAYBLUE" class="btn btn-primary">▶ TRANSMIT INQUIRY</a>
   </div>
 </section>
 
+<!-- FOOTER — ORIGINAL -->
 <footer>
+  <div class="logo">CYBERJAYD</div>
   <p>© 2077 CYBERJAYD SYSTEMS // ALL RIGHTS RESERVED</p>
+  <div class="footer-line"></div>
   <p><strong>DESIGNED & FORGED BY JAYD F. REPOBERBIO</strong></p>
-  <p>BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
+  <p class="footer-sig">BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
 </footer>
+
 </div>
 
+<!-- MATRIX RAIN — ORIGINAL -->
 <script>
-// Matrix Rain Effect
-const c = document.getElementById('matrix');
-const ctx = c.getContext('2d');
-c.width = window.innerWidth;
-c.height = window.innerHeight;
-const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-const fontSize = 14;
-const cols = c.width / fontSize;
-const drops = Array(Math.floor(cols)).fill(1);
-
-function drawMatrix(){
-  ctx.fillStyle = 'rgba(2,2,8,0.05)';
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.fillStyle = '#00d9ff';
-  ctx.font = fontSize + 'px monospace';
-  for(let i=0;i<drops.length;i++){
-    const text = chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-    if(drops[i]*fontSize > c.height && Math.random()>0.975) drops[i]=0;
-    drops[i]++;
-  }
-}
-setInterval(drawMatrix,50);
-window.addEventListener('resize',()=>{
-  c.width=window.innerWidth;c.height=window.innerHeight;
-});
+(function(){
+  const c=document.getElementById('matrix');
+  const ctx=c.getContext('2d');
+  function r(){c.width=innerWidth;c.height=innerHeight}
+  r();addEventListener('resize',r);
+  const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const fs=14;let cols=Math.floor(c.width/fs);let d=Array(cols).fill(1);
+  addEventListener('resize',()=>{cols=Math.floor(c.width/fs);d=Array(cols).fill(1)});
+  setInterval(()=>{
+    ctx.fillStyle='rgba(2,2,8,.06)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#00d9ff';
+    ctx.font=fs+'px monospace';
+    for(let i=0;i<cols;i++){
+      const ch=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillText(ch,i*fs,d[i]*fs);
+      if(d[i]*fs>c.height&&Math.random()>.975)d[i]=0;
+      d[i]++;
+    }
+  },50);
+})();
 </script>
 </body>
 </html>

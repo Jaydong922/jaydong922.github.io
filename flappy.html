@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🚀 FLAPPY BLUES — ROCKET EDITION | CYBERJAYD</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#020208;font-family:'Orbitron',sans-serif}
+#game{
+  display:block;margin:0 auto;
+  background:linear-gradient(180deg,#050a1f 0%,#0a1538 50%,#1a0a38 100%);
+  border:2px solid #00d9ff;
+  box-shadow:0 0 40px rgba(0,217,255,.4);
+  max-width:100%;max-height:100vh;
+  touch-action:none;
+  cursor:pointer;
+}
+.ui{
+  position:fixed;top:1rem;left:50%;transform:translateX(-50%);
+  text-align:center;color:#e0f7ff;z-index:10;pointer-events:none;
+}
+.score{font-size:2.5rem;font-weight:900;color:#00ffd5;text-shadow:0 0 15px #00ffd5}
+.best{font-family:'Share Tech Mono',monospace;font-size:.9rem;color:#7aa8c8;margin-top:.2rem}
+.overlay{
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  background:rgba(2,2,8,.85);color:#fff;z-index:20;
+  text-align:center;padding:1rem;
+}
+.overlay h1{
+  font-size:clamp(1.8rem,5vw,3rem);
+  background:linear-gradient(90deg,#00d9ff,#00ffd5);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:.5rem;
+}
+.overlay p{color:#a0c8e0;margin-bottom:1.5rem;max-width:450px}
+.overlay .final-score{font-size:1.5rem;color:#00ffd5;margin:.5rem 0;font-weight:700}
+.btn{
+  padding:.9rem 2rem;border-radius:10px;border:none;
+  font-family:'Orbitron',sans-serif;font-weight:800;font-size:1rem;
+  background:linear-gradient(135deg,#00d9ff,#00ffd5);
+  color:#020205;cursor:pointer;
+  box-shadow:0 0 25px rgba(0,217,255,.5);
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,217,255,.65)}
+.hint{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);color:#5a8098;font-size:.85rem;z-index:10;pointer-events:none;font-family:'Share Tech Mono',monospace}
+</style>
+</head>
+<body>
+
+<div class="ui">
+  <div class="score" id="score">0</div>
+  <div class="best" id="best">BEST: 0</div>
+</div>
+
+<canvas id="game"></canvas>
+
+<div class="overlay" id="startScreen">
+  <h1>🚀 FLAPPY BLUES</h1>
+  <p style="color:#00ffd5;font-weight:700">ROCKET EDITION • CYBERJAYD</p>
+  <p>Tap / Click / SPACE to fire thrusters and fly.<br><strong>Adjusted jump height — sakto lang, hindi na sobrang taas!</strong><br>Avoid the pipes, go for high score!</p>
+  <button class="btn" id="startBtn">▶ START MISSION</button>
+</div>
+
+<div class="overlay" id="gameOverScreen" style="display:none">
+  <h1 style="color:#ff4d6d;background:none;-webkit-text-fill-color:#ff4d6d">💥 MISSION FAILED</h1>
+  <div class="final-score">SCORE: <span id="finalScore">0</span></div>
+  <div class="final-score" style="color:#00d9ff;font-size:1.1rem">BEST: <span id="finalBest">0</span></div>
+  <p style="margin-top:1rem">Rocket destroyed. Try again?</p>
+  <button class="btn" id="restartBtn">↻ RETRY</button>
+</div>
+
+<div class="hint">TAP / CLICK / SPACE TO FLY</div>
+
+<script>
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score');
+const bestEl=document.getElementById('best');
+const startScreen=document.getElementById('startScreen');
+const gameOverScreen=document.getElementById('gameOverScreen');
+const startBtn=document.getElementById('startBtn');
+const restartBtn=document.getElementById('restartBtn');
+const finalScore=document.getElementById('finalScore');
+const finalBest=document.getElementById('finalBest');
+
+// Game sizing
+function resize(){
+  const maxW=420,maxH=720;
+  const ratio=Math.min(window.innerWidth/maxW,window.innerHeight/maxH,.95);
+  canvas.width=maxW;canvas.height=maxH;
+  canvas.style.width=(maxW*ratio)+'px';
+  canvas.style.height=(maxH*ratio)+'px';
+}
+resize();
+window.addEventListener('resize',resize);
+
+const W=canvas.width,H=canvas.height;
+const GRAVITY=0.42;
+// ✅ ADJUSTED JUMP POWER — MAS MABABA, SAKTO LANG (dati mas mataas)
+const JUMP_POWER=-7.2;
+const PIPE_SPEED=2.4;
+const PIPE_GAP=155;
+const PIPE_SPACING=230;
+const PIPE_WIDTH=62;
+
+let state='start'; // start | play | over
+let rocket, pipes, particles, smoke, score, frame, best;
+
+best=parseInt(localStorage.getItem('flappyBest')||'0');
+bestEl.textContent='BEST: '+best;
+
+function reset(){
+  rocket={x:W*0.28,y:H*0.45,vy:0,w:46,h:34,angle:0,thrust:0};
+  pipes=[];
+  particles=[]; // flame
+  smoke=[];     // smoke
+  score=0;
+  frame=0;
+  scoreEl.textContent=score;
+}
+reset();
+
+// Generate pipe
+function addPipe(){
+  const minTop=60,maxTop=H-PIPE_GAP-120;
+  const topH=minTop+Math.random()*(maxTop-minTop);
+  pipes.push({x:W+20,top:topH,passed:false});
+}
+
+// Input
+function jump(){
+  if(state==='start'){startGame();return}
+  if(state==='over')return;
+  rocket.vy=JUMP_POWER;
+  rocket.thrust=1;
+  // ✅ USOK / SMOKE on every tap
+  for(let i=0;i<6;i++){
+    smoke.push({
+      x:rocket.x-18,
+      y:rocket.y+2+Math.random()*6,
+      vx:-1.2-Math.random()*1.8,
+      vy:(Math.random()-.5)*1.2,
+      life:35+Math.random()*20,
+      max:55,
+      size:5+Math.random()*6
+    });
+  }
+  // ✅ APOY / FLAME burst
+  for(let i=0;i<10;i++){
+    particles.push({
+      x:rocket.x-20,
+      y:rocket.y+2+(Math.random()-.5)*10,
+      vx:-2.5-Math.random()*3,
+      vy:(Math.random()-.5)*2.2,
+      life:18+Math.random()*12,
+      max:30,
+      size:4+Math.random()*5,
+      hue:Math.random()<.5?30:50
+    });
+  }
+}
+function startGame(){state='play';startScreen.style.display='none'}
+function gameOver(){
+  state='over';
+  if(score>best){best=score;localStorage.setItem('flappyBest',best);bestEl.textContent='BEST: '+best}
+  finalScore.textContent=score;
+  finalBest.textContent=best;
+  gameOverScreen.style.display='flex';
+}
+
+canvas.addEventListener('mousedown',jump);
+canvas.addEventListener('touchstart',e=>{e.preventDefault();jump()},{passive:false});
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();jump()}});
+startBtn.addEventListener('click',startGame);
+restartBtn.addEventListener('click',()=>{reset();gameOverScreen.style.display='none';state='play'});
+
+// Stars background
+const stars=[];
+for(let i=0;i<80;i++)stars.push({x:Math.random()*W,y:Math.random()*H,s:Math.random()*1.5+.5,sp:Math.random()*.3+.1});
+
+// Draw rocket
+function drawRocket(){
+  ctx.save();
+  ctx.translate(rocket.x,rocket.y);
+  ctx.rotate(rocket.angle);
+
+  // ✅ APOY / FLAME (behind rocket)
+  if(rocket.thrust>0.1||rocket.vy<-1){
+    const fl=18+Math.random()*14;
+    // Outer flame
+    ctx.fillStyle='#ff8800';
+    ctx.beginPath();
+    ctx.moveTo(-rocket.w/2,-6);
+    ctx.lineTo(-rocket.w/2-fl-2,0);
+    ctx.lineTo(-rocket.w/2,6);
+    ctx.closePath();
+    ctx.fill();
+    // Inner flame
+    ctx.fillStyle='#ffe14a';
+    ctx.beginPath();
+    ctx.moveTo(-rocket.w/2,-3);
+    ctx.lineTo(-rocket.w/2-fl*.6,0);
+    ctx.lineTo(-rocket.w/2,3);
+    ctx.closePath();
+    ctx.fill();
+    // Core
+    ctx.fillStyle='#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(-rocket.w/2,-1.5);
+    ctx.lineTo(-rocket.w/2-fl*.3,0);
+    ctx.lineTo(-rocket.w/2,1.5);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Rocket body
+  const w=rocket.w,h=rocket.h;
+  // Body
+  const grad=ctx.createLinearGradient(-w/2,0,w/2,0);
+  grad.addColorStop(0,'#3a3a55');
+  grad.addColorStop(.5,'#e8ecf5');
+  grad.addColorStop(1,'#8a94b0');
+  ctx.fillStyle=grad;
+  ctx.beginPath();
+  ctx.moveTo(w/2,0); // nose
+  ctx.lineTo(w/4,-h/2);
+  ctx.lineTo(-w/2+4,-h/2+4);
+  ctx.lineTo(-w/2,-h/4);
+  ctx.lineTo(-w/2,h/4);
+  ctx.lineTo(-w/2+4,h/2-4);
+  ctx.lineTo(w/4,h/2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle='#00d9ff';ctx.lineWidth=1.5;ctx.stroke();
+
+  // Fins
+  ctx.fillStyle='#ff3860';
+  ctx.beginPath();
+  ctx.moveTo(-w/3,-h/2+4);ctx.lineTo(-w/2+2,-h/2-6);ctx.lineTo(-w/2+2,-h/4);ctx.closePath();ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-w/3,h/2-4);ctx.lineTo(-w/2+2,h/2+6);ctx.lineTo(-w/2+2,h/4);ctx.closePath();ctx.fill();
+
+  // Window
+  ctx.fillStyle='#0a1630';
+  ctx.beginPath();ctx.arc(w/6,0,6.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#00d9ff';
+  ctx.beginPath();ctx.arc(w/6-1.5,-1.5,2.5,0,Math.PI*2);ctx.fill();
+
+  // Stripe
+  ctx.fillStyle='#00d9ff';
+  ctx.fillRect(-w/4,-2,w/2,4);
+
+  ctx.restore();
+}
+
+// Draw particles
+function drawParticles(){
+  // Smoke (gray, soft)
+  for(let i=smoke.length-1;i>=0;i--){
+    const s=smoke[i];
+    const a=s.life/s.max;
+    ctx.fillStyle=`rgba(180,190,210,${a*.45})`;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.size*(1.6-a),0,Math.PI*2);
+    ctx.fill();
+    s.x+=s.vx;s.y+=s.vy;s.vy+=.02;s.size+=.08;s.life--;
+    if(s.life<=0)smoke.splice(i,1);
+  }
+  // Flame
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    const a=p.life/p.max;
+    ctx.fillStyle=`hsla(${p.hue},100%,${55+a*25}%,${a})`;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size*a,0,Math.PI*2);
+    ctx.fill();
+    p.x+=p.vx;p.y+=p.vy;p.vx+=.08;p.life--;
+    if(p.life<=0)particles.splice(i,1);
+  }
+}
+
+// Pipes
+function drawPipes(){
+  pipes.forEach(p=>{
+    const g=ctx.createLinearGradient(p.x,0,p.x+PIPE_WIDTH,0);
+    g.addColorStop(0,'#0f3d2e');
+    g.addColorStop(.5,'#1a9e6b');
+    g.addColorStop(1,'#0a2a20');
+    ctx.fillStyle=g;
+    // Top pipe
+    ctx.fillRect(p.x,0,PIPE_WIDTH,p.top);
+    ctx.fillStyle='#22d3a0';
+    ctx.fillRect(p.x-4,p.top-22,PIPE_WIDTH+8,22);
+    ctx.strokeStyle='#00ffd5';ctx.lineWidth=1.5;
+    ctx.strokeRect(p.x-4,p.top-22,PIPE_WIDTH+8,22);
+    // Bottom pipe
+    ctx.fillStyle=g;
+    const by=p.top+PIPE_GAP;
+    ctx.fillRect(p.x,by,PIPE_WIDTH,H-by);
+    ctx.fillStyle='#22d3a0';
+    ctx.fillRect(p.x-4,by,PIPE_WIDTH+8,22);
+    ctx.strokeRect(p.x-4,by,PIPE_WIDTH+8,22);
+  });
+}
+
+// Ground
+function drawGround(){
+  ctx.fillStyle='#0a0f20';
+  ctx.fillRect(0,H-22,W,22);
+  ctx.fillStyle='#00d9ff';
+  ctx.fillRect(0,H-22,W,2);
+  // Grid lines
+  ctx.strokeStyle='rgba(0,217,255,.15)';ctx.lineWidth=1;
+  for(let x=-(frame*PIPE_SPEED%40);x<W;x+=40){
+    ctx.beginPath();ctx.moveTo(x,H-22);ctx.lineTo(x,H);ctx.stroke();
+  }
+}
+
+// Collision
+function collide(){
+  if(rocket.y+rocket.h/2>H-22||rocket.y-rocket.h/2<0)return true;
+  for(const p of pipes){
+    if(rocket.x+rocket.w/2-4>p.x&&rocket.x-rocket.w/2+4<p.x+PIPE_WIDTH){
+      if(rocket.y-rocket.h/2+4<p.top||rocket.y+rocket.h/2-4>p.top+PIPE_GAP)return true;
+    }
+  }
+  return false;
+}
+
+// Main loop
+function loop(){
+  // Sky gradient
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#050a1f');
+  g.addColorStop(.5,'#0a1538');
+  g.addColorStop(1,'#1a0a38');
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,W,H);
+
+  // Stars
+  ctx.fillStyle='#ffffff';
+  stars.forEach(s=>{
+    ctx.globalAlpha=.4+Math.sin(frame*.05+s.x)*.3;
+    ctx.fillRect(s.x,s.y,s.s,s.s);
+    s.x-=s.sp;
+    if(s.x<0)s.x=W;
+  });
+  ctx.globalAlpha=1;
+
+  if(state==='play'){
+    frame++;
+    // Physics
+    rocket.vy+=GRAVITY;
+    rocket.y+=rocket.vy;
+    rocket.angle=Math.max(-.5,Math.min(.6,rocket.vy*.055));
+    rocket.thrust*=.82;
+
+    // Pipes
+    if(frame%Math.floor(PIPE_SPACING/PIPE_SPEED)===0)addPipe();
+    pipes.forEach(p=>p.x-=PIPE_SPEED);
+    if(pipes.length&&pipes[0].x+PIPE_WIDTH<0)pipes.shift();
+
+    // Score
+    pipes.forEach(p=>{
+      if(!p.passed&&p.x+PIPE_WIDTH<rocket.x){
+        p.passed=true;
+        score++;
+        scoreEl.textContent=score;
+      }
+    });
+
+    // Collision
+    if(collide()){gameOver()}
+  }
+
+  // Draw
+  drawPipes();
+  drawGround();
+  drawParticles();
+  drawRocket();
+
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
