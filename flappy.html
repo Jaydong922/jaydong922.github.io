@@ -33,20 +33,19 @@ let score = 0;
 let best = localStorage.getItem('flappyBest') || 0;
 let gravity = 0.32;
 let jumpPower = -7.2;
-let speed = 3.1;
+let speed = 2.8; // MAS MABILIS ANG PAGLAYO NG PIPE
 
 const rocket = {x:100,y:canvas.height/2,w:55,h:38,vy:0,power:0,tilt:0,glow:0};
 let pipes = [];
 const pipeW = 72;
 const gapH = 175;
+const pipeDistance = 320; // MAS MALAYO ANG PAGITAN NG PIPE
 
-// Background Gradient (Malinis at Walang Grid)
 const bg = ctx.createLinearGradient(0,0,0,canvas.height);
 bg.addColorStop(0,'#001540');
 bg.addColorStop(0.4,'#000a25');
 bg.addColorStop(1,'#000012');
 
-// 3D STAR PARTICLES
 const stars = [];
 for(let i=0;i<80;i++){
   stars.push({
@@ -78,11 +77,9 @@ function drawRocket(){
   ctx.translate(rocket.x+rocket.w/2, rocket.y+rocket.h/2);
   ctx.rotate(rocket.tilt);
   
-  // OUTER GLOW (3D EFFECT)
   ctx.shadowColor = '#00f8ff';
   ctx.shadowBlur = 40 * rocket.glow;
   
-  // MAIN BODY
   const bodyGrad = ctx.createLinearGradient(-rocket.w/2, 0, rocket.w/2, 0);
   bodyGrad.addColorStop(0,'#00a8cc');
   bodyGrad.addColorStop(0.5,'#00f8ff');
@@ -96,19 +93,16 @@ function drawRocket(){
   ctx.closePath();
   ctx.fill();
   
-  // COCKPIT GLASS
   const glassGrad = ctx.createLinearGradient(0, -rocket.h/4, 0, rocket.h/4);
   glassGrad.addColorStop(0,'#80ffff');
   glassGrad.addColorStop(1,'#00a8cc');
   ctx.fillStyle = glassGrad;
   ctx.fillRect(-rocket.w/4+6, -rocket.h/4+3, 18, 22);
   
-  // WINGS
   ctx.fillStyle = '#0055ff';
   ctx.fillRect(-rocket.w/2-2, -rocket.h/3, 10, 6);
   ctx.fillRect(-rocket.w/2-2, rocket.h/3-6, 10, 6);
   
-  // ENERGY TRAIL (3D FIRE EFFECT)
   const trailGrad = ctx.createLinearGradient(-rocket.w/2, 0, -rocket.w/2-30*rocket.power, 0);
   trailGrad.addColorStop(0,'rgba(0,255,213,0.9)');
   trailGrad.addColorStop(0.5,'rgba(0,248,255,0.6)');
@@ -129,7 +123,6 @@ function drawRocket(){
 
 function drawPipes(){
   pipes.forEach(p => {
-    // PIPE 3D GRADIENT
     const pipeGrad = ctx.createLinearGradient(p.x,0,p.x+pipeW,0);
     pipeGrad.addColorStop(0,'#0055ff');
     pipeGrad.addColorStop(0.5,'#00f8ff');
@@ -138,14 +131,12 @@ function drawPipes(){
     ctx.shadowColor = '#00f8ff';
     ctx.shadowBlur = 25;
     
-    // TOP PIPE WITH CAP
     ctx.fillRect(p.x,0,pipeW,p.top);
     ctx.fillStyle = '#00ffd5';
     ctx.fillRect(p.x-6,p.top-22,pipeW+12,22);
     ctx.fillStyle = 'rgba(255,255,255,0.2)';
     ctx.fillRect(p.x+2,p.top-20,pipeW+8,4);
     
-    // BOTTOM PIPE WITH CAP
     ctx.fillStyle = pipeGrad;
     ctx.fillRect(p.x,p.top+gapH,pipeW,canvas.height-p.top-gapH);
     ctx.fillStyle = '#00ffd5';
@@ -174,13 +165,12 @@ function update(){
     if(!p.passed && p.x+pipeW < rocket.x){score++;p.passed=true;}
     if(p.x+pipeW < 0) pipes.splice(i,1);
     
-    // COLLISION DETECTION
     if(rocket.x+rocket.w-12 > p.x && rocket.x+12 < p.x+pipeW){
       if(rocket.y+rocket.h-12 < p.top || rocket.y+12 > p.top+gapH){gameOver();}
     }
   });
   
-  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width-260) spawnPipe();
+  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width - pipeDistance) spawnPipe();
   
   if(rocket.y < 0 || rocket.y+rocket.h > canvas.height) gameOver();
 }
@@ -212,7 +202,6 @@ function jump(){
 }
 
 function drawUI(){
-  // SCORE WITH 3D GLOW
   ctx.fillStyle = '#00f8ff';
   ctx.font = 'bold 28px Orbitron';
   ctx.textAlign = 'center';
@@ -258,7 +247,6 @@ function loop(){
 }
 loop();
 
-// CONTROLS
 document.addEventListener('touchstart', e => {e.preventDefault(); jump()});
 document.addEventListener('mousedown', jump);
 document.addEventListener('keydown', e => {
