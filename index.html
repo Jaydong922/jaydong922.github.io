@@ -3,190 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | 20 ASTRONAUTS · 3D GALAXY PORTFOLIO</title>
-<meta name="description" content="Jayd F. Repoberbio — 20 Floating 3D Astronauts in Deep Space. 100% Pure Code, Built on Android.">
-<meta name="author" content="Jayd F. Repoberbio">
+<title>CYBERJAYD | ETHICAL SECURITY • DEV • 3D ASTRONAUTS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-    --c1:#00e5ff;--c2:#00ffc8;--c3:#ff2bd6;--c4:#ffd000;--c5:#7a5cff;
-    --bg1:#030014;--txt:#e6faff;--dim:#8fb8d9;
-    --glow:0 0 30px rgba(0,229,255,0.9);--glow2:0 0 25px rgba(255,43,214,0.8);
+    --cyan:#00e5ff;--pink:#ff2bd6;--green:#00ffc8;--yellow:#ffd000;--purple:#7a5cff;
+    --bg:#050014;--bg2:#0a0024;--card:rgba(8,0,35,0.78);--border:rgba(0,229,255,0.28);
+    --text:#d6f7ff;--muted:#7ab8d4;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Rajdhani',sans-serif;background:var(--bg1);color:var(--txt);overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:1px}
-a{color:var(--c1);text-decoration:none;transition:all .25s}
-a:hover{color:var(--c2);text-shadow:var(--glow)}
-#space{position:fixed;inset:0;z-index:0;display:block;width:100vw;height:100vh;background:#050018}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1rem 6%;
-background:linear-gradient(180deg,rgba(3,0,20,0.95),rgba(3,0,20,0.5),transparent);backdrop-filter:blur(4px)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.logo{font-family:'Orbitron',sans-serif;font-size:1.7rem;font-weight:900;color:var(--c1);text-shadow:var(--glow);letter-spacing:3px}
-.links{display:flex;gap:1.3rem;flex-wrap:wrap}
-.links a{font-weight:600;font-size:1.1rem;padding:.3rem 0;position:relative}
-.links a::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,var(--c1),var(--c3));transition:.3s;transform:translateX(-50%)}
-.links a:hover::after{width:100%}
-.hero{position:relative;z-index:5;padding:7rem 6% 4rem;text-align:center}
-.tag{display:inline-block;padding:.5rem 1.4rem;border:1px solid rgba(0,229,255,.4);border-radius:50px;
-font-size:.9rem;color:var(--c2);letter-spacing:2px;background:rgba(0,229,255,.06);margin-bottom:1.5rem}
-.hero h1{font-size:clamp(2.8rem,7vw,5.2rem);font-weight:900;margin-bottom:1.2rem;
-background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c1));
-background-size:400% 400%;-webkit-background-clip:text;color:transparent;
-animation:grad 7s ease infinite;letter-spacing:3px;line-height:1.1}
-@keyframes grad{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
-.hero p{font-size:clamp(1.1rem,2.8vw,1.5rem);max-width:950px;margin:0 auto 2rem;color:var(--dim);line-height:1.8}
-.btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
-.btn{padding:.9rem 2.2rem;border:2px solid var(--c1);border-radius:4px;font-family:'Orbitron',sans-serif;
-font-weight:700;letter-spacing:1.2px;cursor:pointer;transition:.3s}
-.b1{background:linear-gradient(135deg,var(--c1),var(--c2));color:#001218;box-shadow:var(--glow)}
-.b1:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 45px rgba(0,229,255,.6)}
-.b2{background:rgba(0,229,255,.06);color:var(--c1);backdrop-filter:blur(4px)}
-.b2:hover{background:rgba(0,229,255,.18);transform:translateY(-3px);border-color:var(--c2)}
-section{position:relative;z-index:5;padding:3.5rem 6%;max-width:1300px;margin:0 auto}
-.head{text-align:center;margin-bottom:2.5rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,229,255,.2)}
-.head h2{font-size:clamp(1.9rem,4.2vw,2.8rem);color:var(--c1);text-shadow:0 0 15px rgba(0,229,255,.4)}
-.head p{color:var(--dim);margin-top:.5rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem}
-.card{background:linear-gradient(145deg,rgba(10,0,48,.78),rgba(0,26,51,.55));
-border:1px solid rgba(0,229,255,.22);border-radius:10px;padding:1.7rem;
-transition:.35s;backdrop-filter:blur(8px);position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(0,229,255,.14),transparent 30%);
-animation:spin 8s linear infinite;opacity:0;transition:.3s}
-.card:hover::before{opacity:1}
-@keyframes spin{to{transform:rotate(360deg)}}
-.card:hover{transform:translateY(-5px) scale(1.015);border-color:var(--c2);box-shadow:var(--glow)}
-.card h3{color:var(--c2);margin-bottom:.9rem;font-size:1.35rem}
-.card p{color:var(--dim);line-height:1.7}
-.card ul{list-style:none;padding:0;margin-top:.8rem}
-.card ul li{padding:.35rem 0;color:var(--dim);border-bottom:1px dashed rgba(0,229,255,.1)}
-.price{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:var(--c1);font-weight:800;margin:.8rem 0;text-shadow:0 0 12px rgba(0,229,255,.5)}
-.gc{border:2px solid var(--c3);background:linear-gradient(145deg,rgba(50,5,55,.8),rgba(90,10,100,.45))}
-.gc:hover{border-color:var(--c3);box-shadow:var(--glow2)}
-.gc h3{color:var(--c3)}
-.cbox{background:linear-gradient(145deg,rgba(10,0,48,.85),rgba(0,26,51,.6));
-border:1px solid rgba(0,229,255,.25);border-radius:12px;padding:2.5rem;text-align:center;
-backdrop-filter:blur(10px);max-width:900px;margin:0 auto}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin:1.5rem 0 2rem}
-.citem{padding:1rem;border:1px solid rgba(0,229,255,.18);border-radius:8px;background:rgba(0,229,255,.04);transition:.3s}
-.citem:hover{border-color:var(--c2);transform:translateY(-2px);background:rgba(0,229,255,.09)}
-.cl{font-size:.85rem;letter-spacing:2px;color:var(--c2);text-transform:uppercase;margin-bottom:.4rem}
-.cv{font-size:1.1rem;font-weight:600;word-break:break-word}
-footer{position:relative;z-index:5;padding:2.5rem 6% 1.8rem;text-align:center;color:var(--dim);
-border-top:1px solid rgba(0,229,255,.18);margin-top:4rem;
-background:linear-gradient(0deg,rgba(3,0,20,.95),transparent)}
-footer .logo{display:inline-block;margin-bottom:1rem;font-size:1.4rem}
-.div{max-width:600px;height:1px;margin:1.2rem auto;background:linear-gradient(90deg,transparent,var(--c1),var(--c3),transparent)}
-footer p{margin:.3rem 0}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:1.5px;color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,0.7)}
+a{color:var(--cyan);text-decoration:none;transition:all .2s}
+a:hover{color:var(--pink);text-shadow:0 0 15px rgba(255,43,214,0.8)}
+
+/* ===== 3D BACKGROUND (NASA HARAP NA ANG MGA ASTRONAUT!) ===== */
+#space{position:fixed;inset:0;z-index:0;width:100vw;height:100vh;
+background:radial-gradient(ellipse at center,#0a0030 0%,#050014 65%,#020008 100%)}
+
+/* ===== NAV BAR ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 6%;
+background:linear-gradient(180deg,rgba(5,0,20,0.96),rgba(5,0,20,0.55),transparent);
+backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1250px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;color:var(--cyan);
+text-shadow:0 0 14px var(--cyan),0 0 28px rgba(0,229,255,0.45);letter-spacing:3px}
+.links{display:flex;gap:20px;flex-wrap:wrap}
+.links a{font-family:'Orbitron',sans-serif;font-weight:600;font-size:13px;letter-spacing:1px;padding:5px 0;border-bottom:2px solid transparent;text-transform:uppercase}
+.links a:hover{border-bottom:2px solid var(--pink)}
+
+/* ===== SECTIONS ===== */
+section{position:relative;z-index:5;max-width:1200px;margin:0 auto;padding:110px 6% 60px}
+.section-title{text-align:center;margin-bottom:45px}
+.section-title h2{font-size:clamp(22px,5vw,36px);margin-bottom:8px}
+.section-title .diamond{color:var(--cyan);margin:0 10px}
+.section-title p{color:var(--muted);font-size:15px}
+
+/* ===== HERO ===== */
+.hero{padding-top:170px;text-align:center}
+.hero .sys-tag{display:inline-block;padding:8px 22px;border:1px solid var(--border);border-radius:50px;
+color:var(--green);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;
+background:rgba(0,255,200,0.05);margin-bottom:26px;text-transform:uppercase}
+.hero h1{font-size:clamp(34px,9vw,70px);font-weight:900;line-height:1.05;margin-bottom:18px;
+background:linear-gradient(90deg,var(--cyan),var(--green),var(--pink),var(--yellow),var(--cyan));
+background-size:300% 100%;-webkit-background-clip:text;color:transparent;animation:glow 6s linear infinite}
+@keyframes glow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+.hero .sub{max-width:780px;margin:0 auto 32px;font-size:clamp(14px,3vw,18px);color:var(--muted)}
+.hero .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{padding:13px 30px;font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:1.3px;border-radius:5px;
+border:2px solid var(--cyan);background:rgba(0,229,255,0.08);color:var(--cyan);cursor:pointer;transition:all .2s;
+box-shadow:0 0 18px rgba(0,229,255,0.3);font-size:14px}
+.btn:hover{background:var(--cyan);color:#000;box-shadow:0 0 32px var(--cyan);transform:translateY(-2px)}
+.btn.pink{border-color:var(--pink);background:rgba(255,43,214,0.08);color:var(--pink);box-shadow:0 0 18px rgba(255,43,214,0.3)}
+.btn.pink:hover{background:var(--pink);color:#000;box-shadow:0 0 32px var(--pink)}
+
+/* ===== GRIDS ===== */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+
+/* ===== CARDS ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:26px;
+backdrop-filter:blur(10px);transition:all .3s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;
+background:linear-gradient(90deg,transparent,var(--cyan),transparent);transition:left .6s}
+.card:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:0 8px 35px rgba(255,43,214,0.18)}
+.card:hover::before{left:100%}
+.card h3{font-size:18px;margin-bottom:12px;color:var(--cyan)}
+.card.pink{border-color:rgba(255,43,214,0.55);box-shadow:0 0 22px rgba(255,43,214,0.22)}
+.card.pink h3{color:var(--pink);text-shadow:0 0 12px rgba(255,43,214,0.7)}
+.card ul{list-style:none;margin-top:10px}
+.card ul li{padding:5px 0;color:var(--muted);border-bottom:1px dashed rgba(0,229,255,0.14)}
+.card ul li:last-child{border:none}
+.flag{display:inline-block;padding:3px 9px;border-radius:3px;background:rgba(0,255,200,0.1);color:var(--green);
+font-size:10px;font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:9px;text-transform:uppercase}
+.price{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:800;color:var(--yellow);
+text-shadow:0 0 11px rgba(255,208,0,0.55);margin:10px 0}
+
+/* ===== ABOUT ===== */
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:32px;backdrop-filter:blur(10px)}
+.about-card h4{font-size:16px;margin:18px 0 8px;color:var(--green);letter-spacing:1px}
+.about-card h4:first-child{margin-top:0}
+.about-card p{color:var(--muted)}
+.about-card .check{color:var(--green);font-weight:600}
+.about-card .status{text-align:center;margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);
+color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+
+/* ===== CONTACT ===== */
+.contact-box{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:38px 28px;
+text-align:center;backdrop-filter:blur(10px)}
+.contact-box h3{font-size:20px;margin-bottom:6px;color:var(--green)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:26px 0}
+.contact-item{padding:14px;border:1px solid var(--border);border-radius:7px;background:rgba(0,229,255,0.03)}
+.contact-item .label{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1.4px;color:var(--green);text-transform:uppercase;margin-bottom:5px}
+.contact-item .val{font-size:15px;font-weight:600;word-break:break-word}
+
+/* ===== FOOTER ===== */
+footer{position:relative;z-index:5;text-align:center;padding:45px 6% 28px;border-top:1px solid var(--border);
+background:linear-gradient(0deg,rgba(5,0,20,0.85),transparent)}
+footer .f-logo{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;color:var(--cyan);
+text-shadow:0 0 12px var(--cyan);letter-spacing:2.5px;margin-bottom:14px}
+footer p{color:var(--muted);font-size:13px;margin:3px 0}
+footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--green);opacity:.8}
+
+/* ===== MOBILE ===== */
 @media(max-width:700px){
-    nav{padding:1rem 4%}.logo{font-size:1.4rem}.links{gap:1rem;justify-content:center}
-    .hero{padding:6rem 4% 3rem}section{padding:2.8rem 4%}.cbox{padding:1.8rem 1.2rem}
+    nav{padding:14px 5%}
+    .logo{font-size:20px}
+    .links a{font-size:11px}
+    section{padding:95px 5% 50px}
+    .hero{padding-top:150px}
 }
 </style>
 </head>
 <body>
 
+<!-- 3D BACKGROUND (20 ASTRONAUTS + ALL EFFECTS NASA DITO NA!) -->
 <div id="space"></div>
 
+<!-- NAV -->
 <nav>
 <div class="nav-inner">
     <div class="logo">CYBERJAYD</div>
     <div class="links">
-        <a href="#about">ABOUT</a><a href="#skills">SKILLS</a><a href="#services">SERVICES</a>
-        <a href="#projects">PROJECTS</a><a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
+        <a href="#about">ABOUT</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#services">SERVICES</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
     </div>
 </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-    <div class="tag">✦ SYSTEM ONLINE · 20 ASTRONAUTS DRIFTING · 4000 STARS BURNING ✦</div>
-    <h1>JAYD F. REPOBERBIO</h1>
-    <p>Warm greetings to you — welcome to my official portfolio. I am Jayd Repoberbio, a first-year student at <strong>Franciscan College of the Immaculate Conception (FCIC)</strong> in Baybay City, Leyte, taking <strong>BSED Major in English</strong>. With zero formal IT schooling, I taught myself web development, 3D design, game creation, and cybersecurity using <strong>only an Android phone + Termux + pure code</strong>. I build fast, beautiful, global-standard websites and tools — and I accept freelance projects from anywhere in the world.</p>
-    <div class="btns"><a href="#projects" class="btn b1">VIEW MY PROJECTS</a><a href="#contact" class="btn b2">HIRE ME NOW</a></div>
-</section>
-
-<section id="about">
-<div class="head"><h2>⟡ ABOUT_ME.EXE ⟡</h2><p>Who is behind CYBERJAYD?</p></div>
-<div class="card">
-    <h3>👤 IDENTITY</h3><p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, Game Developer, and the sole designer & coder of everything you see here.</p><br>
-    <h3>🎓 STATUS</h3><p>First Year College • <strong>BSED-ENG</strong> • FCIC Baybay City, Leyte, Philippines 🇵🇭<br><span style="color:var(--c2)">→ No formal IT degree. 100% SELF-TAUGHT. ←</span><br>Every skill earned through 3AM grinds, endless tutorials, reading hundreds of docs, breaking code on purpose to learn how it works, and never accepting "I can't" as an answer.</p><br>
-    <h3>⚡ SPECIALIZATION</h3><p>✅ Lightweight, mobile-optimized professional websites<br>✅ Custom browser games (Flappy Blues)<br>✅ Python / Bash automation scripts<br>✅ Ethical security tools for Android / Termux<br>✅ 3D animated web experiences (this page you're looking at!)</p><br>
-    <h3>🌍 MISSION</h3><p>To prove that <strong>passion beats expensive equipment</strong>. You don't need a high-end PC, fancy school, or rich family to create world-class work. All you need is dedication, curiosity, and the courage to keep trying when code refuses to run. If a province student with an Android phone can build this — so can you.</p><br>
-    <p style="color:var(--c2);font-weight:700;font-size:1.1rem;text-align:center;border-top:1px dashed rgba(0,229,255,.25);padding-top:1rem">⟢ STATUS: ONLINE · ACCEPTING NEW CONTRACTS WORLDWIDE · RESPONSE < 24H ⟣</p>
-</div>
-</section>
-
-<section id="skills">
-<div class="head"><h2>⟡ CORE_CAPABILITIES ⟡</h2><p>Tools & skills I use every day</p></div>
-<div class="grid">
-    <div class="card"><h3>🔐 CYBERSECURITY</h3><ul><li>Ethical Hacking Research</li><li>Bug Bounty Hunting</li><li>Vulnerability Assessment</li><li>SSRF / XSS / Recon</li><li>Security Analysis & Reporting</li></ul></div>
-    <div class="card"><h3>💻 DEVELOPMENT</h3><ul><li>HTML5 · CSS3 · JavaScript ES6+</li><li>Three.js 3D Web Graphics</li><li>Python 3 Scripting & Automation</li><li>Bash / Shell Scripting</li><li>Git & GitHub Version Control</li></ul></div>
-    <div class="card"><h3>📱 PLATFORMS</h3><ul><li>Termux (Android Linux)</li><li>Ubuntu / Debian Linux</li><li>GitHub Pages Deployment</li><li>Mobile-First Responsive Design</li><li>System Optimization & Tuning</li></ul></div>
-</div>
-</section>
-
-<section id="services">
-<div class="head"><h2>⟡ SERVICES_&_PRICING ⟡</h2><p>What I can build for you</p></div>
-<div class="grid">
-    <div class="card"><h3>🌐 WEB DESIGN · BEST SELLER</h3><div class="price">₱800 – ₱2,000</div><p>Clean · Professional · Cyber / Modern Style</p><ul><li>Portfolio / Business / Personal Sites</li><li>100% Mobile Responsive</li><li>Free GitHub Deployment Guide</li><li>1 Free Minor Revision</li><li>Fast Loading & SEO Ready</li></ul></div>
-    <div class="card"><h3>🔒 SECURITY AUDIT</h3><div class="price">₱1,000 – ₱2,500</div><p>Find risks before attackers do</p><ul><li>Automated + Manual Deep Scan</li><li>Full Written Vulnerability Report</li><li>Step-by-Step Fix Recommendations</li><li>100% Legal & Ethical Only</li><li>Confidentiality Guaranteed</li></ul></div>
-    <div class="card"><h3>📱 TERMUX / LINUX SETUP</h3><div class="price">₱300 – ₱800</div><p>Turn your phone into a dev / hacking machine</p><ul><li>Clean Install & Full Configuration</li><li>Essential Tools Preloaded</li><li>RAM / CPU Performance Boost</li><li>Written Step-by-Step Guide</li><li>Remote Walkthrough Option</li></ul></div>
-    <div class="card"><h3>⚙️ AUTOMATION SCRIPTS</h3><div class="price">₱500 – ₱1,500</div><p>Code that works while you sleep</p><ul><li>Python · Bash · JS Source Code</li><li>Full Commented Code</li><li>Usage Documentation</li><li>Free Minor Updates 7 Days</li><li>Custom Features Accepted</li></ul></div>
-</div>
-</section>
-
-<section id="projects">
-<div class="head"><h2>⟡ FEATURED_PROJECTS ⟡</h2><p>Things I built from scratch</p></div>
-<div class="grid">
-    <div class="card"><h3>🔐 CYBERJAYD SECURITY LAB v1.7.2</h3><p style="color:var(--c2);font-weight:700">★ FLAGSHIP · ACTIVE ★</p><p>All-in-one security toolkit built for Android via Termux. Subdomain enumeration, live host detection, SSRF testing, port scanning, automation workflows — no PC required.</p></div>
-    <div class="card"><h3>🛒 CYBERJAYD SHOP</h3><p>Full marketplace: Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS — no frameworks, no bloat.</p></div>
-    <div class="card gc"><h3>🎮 FLAPPY BLUES</h3><p>My first complete browser game — custom rocket, smoke particles, animated obstacles, live score, game over screen, smooth physics. Built entirely on Android.</p><a href="flappy.html" target="_blank" class="btn b2" style="display:inline-block;margin-top:1rem;padding:.6rem 1.4rem;font-size:.9rem">▶ PLAY NOW</a></div>
-    <div class="card"><h3>🚀 20 ASTRONAUTS 3D PORTFOLIO</h3><p style="color:var(--c2);font-weight:700">★ THIS PAGE ★</p><p>20 fully modeled 3D astronauts drifting in zero gravity, 4100 twinkling stars, 12 glowing orbit rings, 250 space debris, 500 energy particles. Pure Three.js code.</p></div>
-</div>
-</section>
-
-<section id="contact">
-<div class="head"><h2>⟡ ESTABLISH_CONNECTION ⟡</h2><p>Let's build something together</p></div>
-<div class="cbox">
-    <h3 style="color:var(--c2);margin-bottom:.5rem">📡 TRANSMISSION READY</h3>
-    <p style="color:var(--dim);margin-bottom:1rem">Pick any channel — I reply fast, even on weekends.</p>
-    <div class="cgrid">
-        <div class="citem"><div class="cl">📧 MAIN EMAIL</div><div class="cv"><a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></div></div>
-        <div class="citem"><div class="cl">💼 BUSINESS</div><div class="cv"><a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div></div>
-        <div class="citem"><div class="cl">📍 LOCATION</div><div class="cv">Baybay City, Leyte<br>Cebu City, PH 🇵🇭</div></div>
-        <div class="citem"><div class="cl">⏰ HOURS</div><div class="cv">Daily 09:00–21:00 PHT<br>Response < 24h</div></div>
+    <div class="sys-tag">✦ SYSTEM ONLINE · 20 ASTRONAUTS DRIFTING · 4000 STARS BURNING ✦</div>
+    <h1>JAYD F.<br>REPOBERBIO</h1>
+    <p class="sub">Warm greetings — welcome to my official portfolio. I am Jayd Repoberbio, a first-year student at <strong>Franciscan College of the Immaculate Conception (FCIC)</strong> in Baybay City, Leyte, taking <strong>BSED Major in English</strong>. With zero formal IT schooling, I taught myself web development, 3D design, game creation, and cybersecurity using <strong>only an Android phone + Termux + pure code</strong>.</p>
+    <div class="btns">
+        <a href="#projects" class="btn">▶ VIEW MY PROJECTS</a>
+        <a href="#contact" class="btn pink">HIRE ME NOW</a>
     </div>
-    <a href="mailto:cyberjayd1@gmail.com?subject=PROJECT_REQUEST_%2F%2F_CYBERJAYD" class="btn b1">▶ SEND ME AN INQUIRY</a>
-</div>
 </section>
 
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-title">
+        <h2><span class="diamond">◇</span> ABOUT_ME.EXE <span class="diamond">◇</span></h2>
+        <p>Who is behind CYBERJAYD?</p>
+    </div>
+    <div class="about-card">
+        <h4>👤 IDENTITY</h4>
+        <p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, Game Developer, and the sole designer & coder of everything you see here.</p>
+        
+        <h4>🎓 STATUS</h4>
+        <p>First Year College • <strong>BSED-ENG</strong> • FCIC Baybay City, Leyte, Philippines 🇵🇭<br>
+        <span class="check">→ No formal IT degree. 100% SELF-TAUGHT. ←</span><br>
+        Every skill earned through 3AM grinds, endless tutorials, reading hundreds of docs, breaking code on purpose to learn how it works, and never accepting "I can't" as an answer.</p>
+        
+        <h4>⚡ SPECIALIZATION</h4>
+        <p><span class="check">✓</span> Lightweight, mobile-optimized professional websites<br>
+        <span class="check">✓</span> Custom browser games (Flappy Blues)<br>
+        <span class="check">✓</span> Python / Bash automation scripts<br>
+        <span class="check">✓</span> Ethical security tools for Android / Termux<br>
+        <span class="check">✓</span> 3D animated web experiences (this page you're looking at!)</p>
+        
+        <h4>🌍 MISSION</h4>
+        <p>To prove that <strong>passion beats expensive equipment</strong>. You don't need a high-end PC, fancy school, or rich family to create world-class work. All you need is dedication, curiosity, and the courage to keep trying when code refuses to run. If a province student with an Android phone can build this — so can you.</p>
+        
+        <div class="status">◇ STATUS: ONLINE · ACCEPTING NEW CONTRACTS WORLDWIDE · RESPONSE < 24H ◇</div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-title">
+        <h2><span class="diamond">◇</span> CORE_CAPABILITIES <span class="diamond">◇</span></h2>
+        <p>Tools & skills I use every day</p>
+    </div>
+    <div class="grid-3">
+        <div class="card">
+            <h3>🔐 CYBERSECURITY</h3>
+            <ul>
+                <li>Ethical Hacking Research</li>
+                <li>Bug Bounty Hunting</li>
+                <li>Vulnerability Assessment</li>
+                <li>SSRF / XSS / Recon</li>
+                <li>Security Analysis & Reporting</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>💻 DEVELOPMENT</h3>
+            <ul>
+                <li>HTML5 · CSS3 · JavaScript ES6+</li>
+                <li>Three.js 3D Web Graphics</li>
+                <li>Python 3 Scripting & Automation</li>
+                <li>Bash / Shell Scripting</li>
+                <li>Git & GitHub Version Control</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>📱 PLATFORMS</h3>
+            <ul>
+                <li>Termux (Android Linux)</li>
+                <li>Ubuntu / Debian Linux</li>
+                <li>GitHub Pages Deployment</li>
+                <li>Mobile-First Responsive Design</li>
+                <li>System Optimization & Tuning</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+    <div class="section-title">
+        <h2><span class="diamond">◇</span> SERVICES_&_PRICING <span class="diamond">◇</span></h2>
+        <p>What I can build for you</p>
+    </div>
+    <div class="grid-4">
+        <div class="card">
+            <span class="flag">BEST SELLER</span>
+            <h3>🌐 WEB DESIGN</h3>
+            <p>Clean · Professional · Cyber-Grade</p>
+            <div class="price">₱800 – ₱2,000</div>
+            <ul>
+                <li>Portfolio / Business Sites</li>
+                <li>100% Mobile Responsive</li>
+                <li>Free Deployment Guide</li>
+                <li>1 Free Revision Included</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🔒 SECURITY AUDIT</h3>
+            <p>Find risks before attackers do</p>
+            <div class="price">₱1,000 – ₱2,500</div>
+            <ul>
+                <li>Automated + Manual Scan</li>
+                <li>Full Vulnerability Report</li>
+                <li>Step-by-Step Fixes</li>
+                <li>100% Legal & Ethical</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>📱 TERMUX / LINUX</h3>
+            <p>Full setup · Tuned for speed</p>
+            <div class="price">₱300 – ₱800</div>
+            <ul>
+                <li>Clean Install & Config</li>
+                <li>Essential Toolkit Preloaded</li>
+                <li>RAM / Performance Boost</li>
+                <li>Written Step-by-Step Guide</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>⚙️ AUTOMATION</h3>
+            <p>Scripts that work while you sleep</p>
+            <div class="price">₱500 – ₱1,500</div>
+            <ul>
+                <li>Python · Bash · JS Source Code</li>
+                <li>Full Commented Code</li>
+                <li>Usage Documentation</li>
+                <li>Free Minor Updates 7 Days</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS (EXACT NA GAYA SA SCREENSHOT MO!) -->
+<section id="projects">
+    <div class="section-title">
+        <h2><span class="diamond">◇</span> FEATURED_PROJECTS <span class="diamond">◇</span></h2>
+        <p>Things I built from scratch</p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <span class="flag">★ FLAGSHIP · ACTIVE ★</span>
+            <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2</h3>
+            <p>All-in-one security toolkit built for Android via Termux. Subdomain enumeration, live host detection, SSRF testing, port scanning, full automation workflows — no PC required.</p>
+        </div>
+        <div class="card">
+            <h3>🛒 CYBERJAYD SHOP</h3>
+            <p>Full marketplace: Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS — no frameworks, no bloat.</p>
+        </div>
+        <div class="card pink">
+            <h3>🎮 FLAPPY BLUES</h3>
+            <p>My first complete browser game — custom rocket, smoke particles, animated obstacles, live score, game over screen, smooth physics. Built entirely on Android.</p>
+            <a href="flappy.html" target="_blank" class="btn pink" style="margin-top:16px;display:inline-block;padding:10px 24px;font-size:13px">▶ PLAY NOW</a>
+        </div>
+        <div class="card">
+            <span class="flag">★ THIS PAGE ★</span>
+            <h3>🚀 20 ASTRONAUTS 3D PORTFOLIO</h3>
+            <p>20 fully modeled 3D astronauts drifting in zero gravity, 4100 twinkling stars, 12 glowing orbit rings, 250 space debris, 500 energy particles. Pure Three.js code.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-title">
+        <h2><span class="diamond">◇</span> ESTABLISH_CONNECTION <span class="diamond">◇</span></h2>
+        <p>Let's build something together</p>
+    </div>
+    <div class="contact-box">
+        <h3>📡 TRANSMISSION READY</h3>
+        <p style="color:var(--muted)">Pick any channel — I reply fast, even on weekends.</p>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="label">📧 Main Email</div>
+                <div class="val">repoberbiojayd3@gmail.com</div>
+            </div>
+            <div class="contact-item">
+                <div class="label">💼 Business</div>
+                <div class="val">cyberjayd1@gmail.com</div>
+            </div>
+            <div class="contact-item">
+                <div class="label">📍 Location</div>
+                <div class="val">Baybay City, Leyte<br>Cebu City, PH 🇵🇭</div>
+            </div>
+            <div class="contact-item">
+                <div class="label">⏰ Hours</div>
+                <div class="val">Daily 09:00–21:00 PHT<br>Response < 24h</div>
+            </div>
+        </div>
+        <a href="mailto:cyberjayd1@gmail.com?subject=PROJECT_REQUEST_%2F%2F_CYBERJAYD" class="btn" style="padding:14px 36px;font-size:15px">▶ SEND ME AN INQUIRY</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-<div class="logo">CYBERJAYD</div><div class="div"></div>
-<p>© 2077 CYBERJAYD SYSTEMS · ALL RIGHTS RESERVED</p>
-<p><strong>DESIGNED · CODED · FORGED BY JAYD F. REPOBERBIO</strong></p>
-<p>100% PURE CODE · NO AI IMAGES · BUILT 100% ON ANDROID VIA TERMUX</p>
-<p style="margin-top:1rem;font-size:.85rem;color:#6088aa">⟢ 20 Astronauts drifting · 4000 stars burning · You are here ⟣</p>
+    <div class="f-logo">CYBERJAYD</div>
+    <p>© 2077 CYBERJAYD SYSTEMS · ALL RIGHTS RESERVED</p>
+    <p><strong>DESIGNED · CODED · FORGED BY JAYD F. REPOBERBIO</strong></p>
+    <p>100% PURE CODE · NO AI IMAGES · BUILT 100% ON ANDROID VIA TERMUX</p>
+    <div class="f-tag">◇ 20 ASTRONAUTS DRIFTING · 4000 STARS BURNING · YOU ARE HERE ◇</div>
 </footer>
 
+<!-- ==================================================
+     3D ENGINE — 20 ASTRONAUTS + ALL EFFECTS (NAKA-FIX NA!)
+     ================================================== -->
 <script>
 (function(){
     const container = document.getElementById('space');
     const scene = new THREE.Scene();
 
+    // BACKGROUND
     const bg = document.createElement('canvas');
     bg.width = 4; bg.height = 1024;
     const bx = bg.getContext('2d');
     const g = bx.createLinearGradient(0,0,0,1024);
-    g.addColorStop(0.0,'#0a0030');g.addColorStop(0.2,'#14003a');g.addColorStop(0.4,'#001a44');
-    g.addColorStop(0.6,'#002244');g.addColorStop(0.8,'#1a0033');g.addColorStop(1.0,'#030014');
+    g.addColorStop(0.0,'#0a0030');g.addColorStop(0.3,'#0f003a');
+    g.addColorStop(0.6,'#080028');g.addColorStop(1.0,'#030010');
     bx.fillStyle = g; bx.fillRect(0,0,4,1024);
     scene.background = new THREE.CanvasTexture(bg);
     // ✅ BINAWASAN ANG FOG PARA HINDI MAWALA ANG MGA ASTRONAUT
-    scene.fog = new THREE.FogExp2(0x0a0030, 0.0018);
+    scene.fog = new THREE.FogExp2(0x0a0030, 0.0015);
 
     const W = window.innerWidth, H = window.innerHeight;
     const camera = new THREE.PerspectiveCamera(70, W/H, 0.1, 3000);
@@ -195,48 +370,48 @@ footer p{margin:.3rem 0}
     renderer.setSize(W, H);
     container.appendChild(renderer.domElement);
 
-    // ✅ MAS MALINAW AT MAS MALAKING ILAW
-    scene.add(new THREE.AmbientLight(0xffffff, 1.1));
-    const L1 = new THREE.PointLight(0x00e5ff, 5, 500); L1.position.set(20,15,30); scene.add(L1);
-    const L2 = new THREE.PointLight(0xff2bd6, 4, 450); L2.position.set(-25,-8,20); scene.add(L2);
-    const L3 = new THREE.PointLight(0xffd000, 3, 400); L3.position.set(0,-20,40); scene.add(L3);
-    const L4 = new THREE.PointLight(0x00ffc8, 3.5, 450); L4.position.set(18,-12,12); scene.add(L4);
-    const L5 = new THREE.PointLight(0x7a5cff, 3, 400); L5.position.set(-18,20,25); scene.add(L5);
+    // ✅ MAS MALAKAS NA ILAW PARA KITANG-KITA ANG MGA ASTRONAUT
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+    const L1 = new THREE.PointLight(0x00e5ff, 5.5, 500); L1.position.set(18,12,28); scene.add(L1);
+    const L2 = new THREE.PointLight(0xff2bd6, 4.5, 450); L2.position.set(-22,-6,18); scene.add(L2);
+    const L3 = new THREE.PointLight(0xffd000, 3, 400); L3.position.set(0,-18,38); scene.add(L3);
+    const L4 = new THREE.PointLight(0x00ffc8, 4, 450); L4.position.set(16,-10,10); scene.add(L4);
+    const L5 = new THREE.PointLight(0x7a5cff, 3.5, 400); L5.position.set(-16,18,22); scene.add(L5);
 
-    // 4100 STARS
+    // 4100 TWINKLING STARS
     const STAR_N = 4100;
     const sg = new THREE.BufferGeometry();
     const sp = new Float32Array(STAR_N*3); const sc = new Float32Array(STAR_N*3);
     const ss = new Float32Array(STAR_N); const ph = new Float32Array(STAR_N);
     for(let i=0;i<STAR_N;i++){
         const k=i*3;
-        sp[k]=(Math.random()-0.5)*2000; sp[k+1]=(Math.random()-0.5)*1400; sp[k+2]=(Math.random()-0.5)*1500-100;
+        sp[k]=(Math.random()-0.5)*1800; sp[k+1]=(Math.random()-0.5)*1200; sp[k+2]=(Math.random()-0.5)*1200-80;
         const r=Math.random();
         if(r<0.5){sc[k]=0.5;sc[k+1]=0.85;sc[k+2]=1;}
         else if(r<0.75){sc[k]=1;sc[k+1]=0.9;sc[k+2]=0.7;}
         else if(r<0.9){sc[k]=1;sc[k+1]=0.4;sc[k+2]=0.85;}
         else{sc[k]=1;sc[k+1]=1;sc[k+2]=1;}
-        ss[i]=0.4+Math.random()*2.2; ph[i]=Math.random()*6.28;
+        ss[i]=0.4+Math.random()*2.4; ph[i]=Math.random()*6.28;
     }
     sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
     sg.setAttribute('color',new THREE.BufferAttribute(sc,3));
     sg.setAttribute('aSize',new THREE.BufferAttribute(ss,1));
     sg.setAttribute('aPhase',new THREE.BufferAttribute(ph,1));
-    const sm = new THREE.ShaderMaterial({
+    const sm = new THREE.ShaderMaterial
         uniforms:{uT:{value:0}},
-        vertexShader:`attribute float aSize;attribute float aPhase;varying vec3 vc;uniform float uT;void main(){vc=color;vec4 mv=modelViewMatrix*vec4(position,1.);float tw=0.55+0.45*sin(uT*1.8+aPhase);gl_PointSize=aSize*tw*(260./-mv.z);gl_Position=projectionMatrix*mv;}`,
+        vertexShader:`attribute float aSize;attribute float aPhase;varying vec3 vc;uniform float uT;void main(){vc=color;vec4 mv=modelViewMatrix*vec4(position,1.);float tw=0.55+0.45*sin(uT*1.8+aPhase);gl_PointSize=aSize*tw*(280./-mv.z);gl_Position=projectionMatrix*mv;}`,
         fragmentShader:`varying vec3 vc;void main(){vec2 d=gl_PointCoord-.5;float r=length(d);if(r>.5)discard;float a=smoothstep(.5,0.,r);gl_FragColor=vec4(vc,a);}`,
         vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false
     });
     const stars = new THREE.Points(sg, sm); scene.add(stars);
 
-    // NEBULA
+    // NEBULA CLOUDS
     const NB = 800;
     const ng = new THREE.BufferGeometry();
     const np = new Float32Array(NB*3); const nc = new Float32Array(NB*3);
     for(let i=0;i<NB;i++){
         const k=i*3;
-        np[k]=(Math.random()-0.5)*1500; np[k+1]=(Math.random()-0.5)*1000; np[k+2]=-300-Math.random()*600;
+        np[k]=(Math.random()-0.5)*1400; np[k+1]=(Math.random()-0.5)*900; np[k+2]=-250-Math.random()*500;
         const r=Math.random();
         if(r<0.35){nc[k]=0.4;nc[k+1]=0.1;nc[k+2]=0.6;}
         else if(r<0.7){nc[k]=0;nc[k+1]=0.35;nc[k+2]=0.7;}
@@ -244,20 +419,20 @@ footer p{margin:.3rem 0}
     }
     ng.setAttribute('position',new THREE.BufferAttribute(np,3));
     ng.setAttribute('color',new THREE.BufferAttribute(nc,3));
-    scene.add(new THREE.Points(ng,new THREE.PointsMaterial({size:80,vertexColors:true,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending,depthWrite:false})));
+    scene.add(new THREE.Points(ng,new THREE.PointsMaterial({size:90,vertexColors:true,transparent:true,opacity:0.38,blending:THREE.AdditiveBlending,depthWrite:false})));
 
-    // 12 ORBIT RINGS
+    // 12 GLOW ORBIT RINGS
     const rings = new THREE.Group(); scene.add(rings);
     const RC = [0x00e5ff,0x00ffc8,0xff2bd6,0xffd000,0x7a5cff,0xff6699,0x88ffcc,0xffffff,0x00bbff,0xff8800,0xaa66ff,0x66ff99];
     for(let r=0;r<12;r++){
-        const rad=18+r*4.5;
-        const m=new THREE.Mesh(new THREE.TorusGeometry(rad,0.05+r*0.008,18,180),new THREE.MeshBasicMaterial({color:RC[r%RC.length],transparent:true,opacity:0.25+(r%4)*0.06}));
+        const rad=16+r*4;
+        const m=new THREE.Mesh(new THREE.TorusGeometry(rad,0.05+r*0.009,16,160),new THREE.MeshBasicMaterial({color:RC[r%RC.length],transparent:true,opacity:0.28+(r%4)*0.06}));
         m.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);
         m.userData={rx:(Math.random()-0.5)*0.004,ry:(Math.random()-0.5)*0.005,rz:(Math.random()-0.5)*0.003};
         rings.add(m);
     }
 
-    // 250 DEBRIS
+    // 250 SPACE DEBRIS
     const deb = new THREE.Group(); scene.add(deb);
     for(let i=0;i<250;i++){
         let geo; const t=Math.random();
@@ -265,19 +440,19 @@ footer p{margin:.3rem 0}
         else if(t<0.66)geo=new THREE.BoxGeometry(0.25+Math.random()*0.8,0.2+Math.random()*0.7,0.2+Math.random()*0.7);
         else geo=new THREE.OctahedronGeometry(0.25+Math.random()*0.7,0);
         const mm=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x556688+Math.floor(Math.random()*0x333333),metalness:0.7,roughness:0.5,flatShading:true}));
-        mm.position.set((Math.random()-0.5)*350,(Math.random()-0.5)*250,-40-Math.random()*200);
+        mm.position.set((Math.random()-0.5)*320,(Math.random()-0.5)*220,-30-Math.random()*180);
         mm.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
         mm.userData={rx:(Math.random()-0.5)*0.01,ry:(Math.random()-0.5)*0.012,rz:(Math.random()-0.5)*0.009,vx:(Math.random()-0.5)*0.04,vy:(Math.random()-0.5)*0.03};
         deb.add(mm);
     }
 
-    // 500 ENERGY
+    // 500 ENERGY PARTICLES
     const EP=500;
     const eg=new THREE.BufferGeometry();
     const ep=new Float32Array(EP*3); const ec=new Float32Array(EP*3); const ev=[];
     for(let i=0;i<EP;i++){
         const k=i*3;
-        ep[k]=(Math.random()-0.5)*250; ep[k+1]=(Math.random()-0.5)*180; ep[k+2]=-15-Math.random()*120;
+        ep[k]=(Math.random()-0.5)*220; ep[k+1]=(Math.random()-0.5)*160; ep[k+2]=-10-Math.random()*100;
         const r=Math.random();
         if(r<0.33){ec[k]=0;ec[k+1]=0.9;ec[k+2]=1;}
         else if(r<0.66){ec[k]=1;ec[k+1]=0.17;ec[k+2]=0.84;}
@@ -286,10 +461,12 @@ footer p{margin:.3rem 0}
     }
     eg.setAttribute('position',new THREE.BufferAttribute(ep,3));
     eg.setAttribute('color',new THREE.BufferAttribute(ec,3));
-    const energy=new THREE.Points(eg,new THREE.PointsMaterial({size:1.8,vertexColors:true,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false}));
+    const energy=new THREE.Points(eg,new THREE.PointsMaterial({size:2,vertexColors:true,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending,depthWrite:false}));
     scene.add(energy);
 
-    // ✅ ✅ ✅ 20 ASTRONAUTS — ILALAPIT NATIN SA CAMERA PARA SIGURADONG MAKITA!
+    // ==============================================
+    // ✅ 20 ASTRONAUTS — NASA HARAP NA, MALAKI, KITANG-KITA!
+    // ==============================================
     const astroGroup = new THREE.Group(); scene.add(astroGroup);
     const HC=[0x00e5ff,0x00ffc8,0xff2bd6,0xffd000,0x7a5cff,0xff6699,0x88ffcc,0xffffff,0xff8800,0x00ffff,0xaa66ff,0x66ff99,0xff4444,0x44ff88,0x4488ff,0xffaa00,0xff66cc,0x66ffff,0xffff66,0xcc88ff];
     const SC=[0xf2f7ff,0xe6f0ff,0xf5faff,0xdce6ff,0xeaf2ff,0xeef5ff,0xf0f6ff,0xdfe9ff,0xf3f8ff,0xe8f1ff];
@@ -298,15 +475,15 @@ footer p{margin:.3rem 0}
     function buildAstronaut(idx){
         const g=new THREE.Group();
         const hc=HC[idx%HC.length]; const sc=SC[idx%SC.length];
-        // ✅ MAS MALAKING SIZE + MAS MALAPIT: 1.8 to 3.0
-        const S=1.8 + (idx%5)*0.3;
+        // ✅ MAS MALAKING SIZE: 2.0 to 3.2 (dati 1x lang)
+        const S=2.0 + (idx%5)*0.3;
 
         // BODY
         g.add(new THREE.Mesh(new THREE.CapsuleGeometry(1*S,2.3*S,12,20),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3})));
-        // HELMET
-        const hel=new THREE.Mesh(new THREE.SphereGeometry(0.98*S,32,32),new THREE.MeshStandardMaterial({color:hc,transparent:true,opacity:0.5,metalness:0.95,roughness:0.05,emissive:hc,emissiveIntensity:0.6}));
+        // HELMET (MAY GLOW)
+        const hel=new THREE.Mesh(new THREE.SphereGeometry(0.98*S,32,32),new THREE.MeshStandardMaterial({color:hc,transparent:true,opacity:0.55,metalness:0.95,roughness:0.05,emissive:hc,emissiveIntensity:0.65}));
         hel.position.y=2.1*S; g.add(hel);
-        // RIM
+        // HELMET RIM
         const rim=new THREE.Mesh(new THREE.TorusGeometry(1*S,0.07*S,12,40),new THREE.MeshStandardMaterial({color:0x223355,metalness:0.9,roughness:0.2}));
         rim.rotation.x=Math.PI/2; rim.position.y=1.3*S; g.add(rim);
         // VISOR
@@ -315,62 +492,63 @@ footer p{margin:.3rem 0}
         // BACKPACK
         const bp=new THREE.Mesh(new THREE.BoxGeometry(1.4*S,2*S,0.7*S),new THREE.MeshStandardMaterial({color:0x0f1a35,metalness:0.7,roughness:0.3}));
         bp.position.set(0,0.45*S,-1*S); g.add(bp);
-        // 2 LIGHTS
+        // 2 BACKPACK LIGHTS
         for(let q=0;q<2;q++){
-            const bl=new THREE.Mesh(new THREE.SphereGeometry(0.14*S,10,10),new THREE.MeshBasicMaterial({color:q===0?hc:0xff0055}));
+            const bl=new THREE.Mesh(new THREE.SphereGeometry(0.15*S,10,10),new THREE.MeshBasicMaterial({color:q===0?hc:0xff0055}));
             bl.position.set((q===0?-0.4:0.4)*S,0.1*S,-1.38*S); g.add(bl);
         }
-        // CHEST BLINK
-        const cb=new THREE.Mesh(new THREE.SphereGeometry(0.18*S,12,12),new THREE.MeshBasicMaterial({color:0xff2233}));
+        // CHEST BLINKER
+        const cb=new THREE.Mesh(new THREE.SphereGeometry(0.2*S,12,12),new THREE.MeshBasicMaterial({color:0xff2233}));
         cb.position.set(0,0.3*S,1.03*S); cb.userData={t:Math.random()*100,hc}; g.add(cb); g.userData.cb=cb;
         // ARMS
-        const la=new THREE.Mesh(new THREE.CapsuleGeometry(0.26*S,1.2*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
-        la.position.set(-1.25*S,0.25*S,0); la.rotation.z=0.42; g.add(la); g.userData.la=la;
-        const ra=new THREE.Mesh(new THREE.CapsuleGeometry(0.26*S,1.2*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
-        ra.position.set(1.25*S,0.25*S,0); ra.rotation.z=-0.42; g.add(ra); g.userData.ra=ra;
-        // GLOVES
-        const lg=new THREE.Mesh(new THREE.SphereGeometry(0.32*S,12,12),new THREE.MeshStandardMaterial({color:hc,metalness:0.75,roughness:0.25,emissive:hc,emissiveIntensity:0.25}));
-        lg.position.set(-1.6*S,-0.55*S,0); g.add(lg);
-        const rg=new THREE.Mesh(new THREE.SphereGeometry(0.32*S,12,12),new THREE.MeshStandardMaterial({color:hc,metalness:0.75,roughness:0.25,emissive:hc,emissiveIntensity:0.25}));
-        rg.position.set(1.6*S,-0.55*S,0); g.add(rg);
+        const la=new THREE.Mesh(new THREE.CapsuleGeometry(0.27*S,1.2*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
+        la.position.set(-1.28*S,0.25*S,0); la.rotation.z=0.42; g.add(la); g.userData.la=la;
+        const ra=new THREE.Mesh(new THREE.CapsuleGeometry(0.27*S,1.2*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
+        ra.position.set(1.28*S,0.25*S,0); ra.rotation.z=-0.42; g.add(ra); g.userData.ra=ra;
+        // GLOVES (MAY GLOW)
+        const lg=new THREE.Mesh(new THREE.SphereGeometry(0.34*S,12,12),new THREE.MeshStandardMaterial({color:hc,metalness:0.75,roughness:0.25,emissive:hc,emissiveIntensity:0.3}));
+        lg.position.set(-1.65*S,-0.55*S,0); g.add(lg);
+        const rg=new THREE.Mesh(new THREE.SphereGeometry(0.34*S,12,12),new THREE.MeshStandardMaterial({color:hc,metalness:0.75,roughness:0.25,emissive:hc,emissiveIntensity:0.3}));
+        rg.position.set(1.65*S,-0.55*S,0); g.add(rg);
         // LEGS
-        const ll=new THREE.Mesh(new THREE.CapsuleGeometry(0.3*S,1.3*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
-        ll.position.set(-0.45*S,-2*S,0); g.add(ll);
-        const rl=new THREE.Mesh(new THREE.CapsuleGeometry(0.3*S,1.3*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
-        rl.position.set(0.45*S,-2*S,0); g.add(rl);
+        const ll=new THREE.Mesh(new THREE.CapsuleGeometry(0.31*S,1.3*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
+        ll.position.set(-0.47*S,-2*S,0); g.add(ll);
+        const rl=new THREE.Mesh(new THREE.CapsuleGeometry(0.31*S,1.3*S,8,12),new THREE.MeshStandardMaterial({color:sc,metalness:0.5,roughness:0.3}));
+        rl.position.set(0.47*S,-2*S,0); g.add(rl);
         // BOOTS
-        const lb=new THREE.Mesh(new THREE.BoxGeometry(0.55*S,0.35*S,0.75*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.75,roughness:0.35}));
-        lb.position.set(-0.45*S,-2.9*S,0.1*S); g.add(lb);
-        const rb=new THREE.Mesh(new THREE.BoxGeometry(0.55*S,0.35*S,0.75*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.75,roughness:0.35}));
-        rb.position.set(0.45*S,-2.9*S,0.1*S); g.add(rb);
-        // FLAME
-        const flame=new THREE.Mesh(new THREE.ConeGeometry(0.48*S,1.6*S,18),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.75}));
+        const lb=new THREE.Mesh(new THREE.BoxGeometry(0.58*S,0.38*S,0.78*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.75,roughness:0.35}));
+        lb.position.set(-0.47*S,-2.95*S,0.1*S); g.add(lb);
+        const rb=new THREE.Mesh(new THREE.BoxGeometry(0.58*S,0.38*S,0.78*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.75,roughness:0.35}));
+        rb.position.set(0.47*S,-2.95*S,0.1*S); g.add(rb);
+        // JETPACK FLAME
+        const flame=new THREE.Mesh(new THREE.ConeGeometry(0.52*S,1.7*S,18),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.78}));
         flame.rotation.x=Math.PI; flame.position.set(0,-0.1*S,-1.45*S); g.add(flame); g.userData.flame=flame;
-        // PERSONAL RING
-        const pr=new THREE.Mesh(new THREE.TorusGeometry(3.5*S,0.05*S,10,70),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.6}));
-        pr.rotation.x=Math.PI/3+Math.random(); pr.userData={s:0.012+Math.random()*0.02}; g.add(pr); g.userData.pr=pr;
+        // PERSONAL ORBIT RING
+        const pr=new THREE.Mesh(new THREE.TorusGeometry(3.8*S,0.055*S,10,70),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.65}));
+        pr.rotation.x=Math.PI/3+Math.random(); pr.userData={s:0.014+Math.random()*0.02}; g.add(pr); g.userData.pr=pr;
 
-        // ✅ ✅ ✅ DITO ANG PINAKAMAHALAGA: ILALAPIT NATIN SILA SA CAMERA!
-        // Dati nasa -32 to -60 ang z (sobrang layo + tinatanggal ng fog)
-        // NGAYON: -3 hanggang -22 LANG ANG Z — NASA HARAP NA SILA TALAGA!
+        // ✅ ✅ ✅ PINAKAMAHALAGA: ILALAPIT NATIN SILA SA CAMERA!
+        // Dati nasa -30 to -60 (sobrang layo, kinakain ng fog)
+        // NGAYON: -2 HANGGANG -16 LANG — NASA HARAP NA SILA TALAGA!
         const ang=(idx/20)*Math.PI*2 + Math.random()*0.5;
-        const rad=10 + (idx%7)*2.2;  // mas maliit na orbit = mas malapit
+        const rad=9 + (idx%7)*2;
         g.position.set(
-            Math.cos(ang)*rad + (Math.random()-0.5)*6,
-            (Math.random()-0.5)*14,
-            -3 - (idx%5)*4   // ✅ -3 hanggang -19 LANG — SIGURADONG MAKIKITA!
+            Math.cos(ang)*rad + (Math.random()-0.5)*5,
+            (Math.random()-0.5)*12,
+            -2 - (idx%5)*3.5   // ✅ -2 to -16 LANG — SISIGURADONG MAKIKITA MO!
         );
         g.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
 
-        g.userData={idx,rad,ang,os:0.0008+Math.random()*0.0015,bs:0.001+Math.random()*0.002,rv:{x:(Math.random()-0.5)*0.006,y:(Math.random()-0.5)*0.007,z:(Math.random()-0.5)*0.005},ap:Math.random()*Math.PI*2,hc,S};
+        g.userData={idx,rad,ang,os:0.0009+Math.random()*0.0015,bs:0.001+Math.random()*0.002,rv:{x:(Math.random()-0.5)*0.006,y:(Math.random()-0.5)*0.007,z:(Math.random()-0.5)*0.005},ap:Math.random()*Math.PI*2,hc,S};
         astroGroup.add(g); list.push(g);
     }
     for(let i=0;i<20;i++) buildAstronaut(i);
 
     // ✅ CAMERA — NAKATUTOK TALAGA SA MGA ASTRONAUT
-    camera.position.set(0, 0, 18);
-    camera.lookAt(0, 0, -12);
+    camera.position.set(0, 0, 16);
+    camera.lookAt(0, 0, -10);
 
+    // ANIMATION LOOP
     const clock=new THREE.Clock();
     function loop(){
         requestAnimationFrame(loop);
@@ -385,53 +563,54 @@ footer p{margin:.3rem 0}
         deb.children.forEach(d=>{
             d.rotation.x+=d.userData.rx;d.rotation.y+=d.userData.ry;d.rotation.z+=d.userData.rz;
             d.position.x+=d.userData.vx;d.position.y+=d.userData.vy;
-            if(d.position.x>180)d.position.x=-180;if(d.position.x<-180)d.position.x=180;
-            if(d.position.y>130)d.position.y=-130;if(d.position.y<-130)d.position.y=130;
+            if(d.position.x>160)d.position.x=-160;if(d.position.x<-160)d.position.x=160;
+            if(d.position.y>110)d.position.y=-110;if(d.position.y<-110)d.position.y=110;
         });
 
         const pa=eg.attributes.position.array;
         for(let i=0;i<EP;i++){
             const k=i*3;const v=ev[i];
             pa[k]+=v.vx;pa[k+1]+=v.vy;pa[k+2]+=v.vz;
-            if(Math.abs(pa[k])>150)v.vx*=-1;
-            if(Math.abs(pa[k+1])>100)v.vy*=-1;
-            if(pa[k+2]>-10||pa[k+2]<-180)v.vz*=-1;
+            if(Math.abs(pa[k])>130)v.vx*=-1;
+            if(Math.abs(pa[k+1])>90)v.vy*=-1;
+            if(pa[k+2]>-8||pa[k+2]<-160)v.vz*=-1;
         }
         eg.attributes.position.needsUpdate=true;
 
-        // ✅ 20 ASTRONAUT ANIMATION — GUMAGALAW NA TALAGA!
+        // ✅ 20 ASTRONAUT ANIMATION — GUMAGALAW, KUMAKAWAY, NAGLILIWANAG!
         list.forEach(a=>{
             const u=a.userData;
             u.ang+=u.os;
             a.position.x=Math.cos(u.ang)*u.rad;
-            a.position.z=-12 + Math.sin(u.ang)*u.rad*0.7;
-            a.position.y+=Math.sin(T*u.bs*1000+u.idx)*0.015;
+            a.position.z=-10 + Math.sin(u.ang)*u.rad*0.7;
+            a.position.y+=Math.sin(T*u.bs*1000+u.idx)*0.016;
 
             a.rotation.x+=u.rv.x;a.rotation.y+=u.rv.y;a.rotation.z+=u.rv.z;
 
-            const wave=Math.sin(T*2.2+u.ap)*0.35;
+            const wave=Math.sin(T*2.2+u.ap)*0.38;
             if(a.userData.la)a.userData.la.rotation.z=0.42+wave;
             if(a.userData.ra)a.userData.ra.rotation.z=-0.42-wave;
 
             if(a.userData.cb){a.userData.cb.userData.t+=0.06;a.userData.cb.material.color.setHex((Math.sin(a.userData.cb.userData.t)+1)/2>0.5?0x33ff55:0xff2233);}
-            if(a.userData.flame){a.userData.flame.scale.y=0.7+Math.random()*0.7;a.userData.flame.material.opacity=0.5+Math.random()*0.45;}
+            if(a.userData.flame){a.userData.flame.scale.y=0.7+Math.random()*0.75;a.userData.flame.material.opacity=0.5+Math.random()*0.45;}
             if(a.userData.pr)a.userData.pr.rotation.z+=a.userData.pr.userData.s;
         });
 
-        camera.position.x=Math.sin(T*0.08)*1.2;
-        camera.position.y=Math.cos(T*0.06)*0.9;
-        camera.lookAt(0,0,-12);
+        camera.position.x=Math.sin(T*0.07)*1.3;
+        camera.position.y=Math.cos(T*0.05)*1;
+        camera.lookAt(0,0,-10);
 
-        L1.position.x=Math.sin(T*0.3)*22;
-        L2.position.y=Math.cos(T*0.25)*15;
-        L3.position.z=35+Math.sin(T*0.2)*14;
-        L4.position.x=Math.cos(T*0.18)*18;
-        L5.position.y=Math.sin(T*0.15)*16;
+        L1.position.x=Math.sin(T*0.3)*20;
+        L2.position.y=Math.cos(T*0.25)*14;
+        L3.position.z=33+Math.sin(T*0.2)*13;
+        L4.position.x=Math.cos(T*0.18)*16;
+        L5.position.y=Math.sin(T*0.15)*15;
 
         renderer.render(scene,camera);
     }
     loop();
 
+    // RESIZE HANDLER
     window.addEventListener('resize',()=>{
         const w=window.innerWidth,h=window.innerHeight;
         camera.aspect=w/h;camera.updateProjectionMatrix();
