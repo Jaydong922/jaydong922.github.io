@@ -15,23 +15,23 @@
 :root{
     --prime:#00d9ff;
     --accent:#00ffd5;
-    --dark:#020510;
-    --mid:#050a1a;
-    --light:#102040;
+    --dark:#01030a;
+    --mid:#040818;
+    --light:#0c1a35;
     --text:#e0f7ff;
-    --muted:#8aa2c0;
-    --glow:0 0 20px rgba(0,217,255,0.6);
+    --muted:#90b0d8;
+    --glow:0 0 25px rgba(0,217,255,0.7);
 }
-body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow:hidden}
 h1,h2,h3,h4{font-family:'Orbitron',sans-serif}
 a{color:var(--prime);text-decoration:none;transition:all 0.3s}
 a:hover{color:var(--accent);text-shadow:var(--glow)}
 
-/* 3D BACKGROUND CONTAINER */
-#bg-3d{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+/* FULL SCREEN 3D BACKGROUND */
+#full-3d-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 
 /* HEADER */
-header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(180deg,rgba(2,5,16,0.9) 0%,transparent 100%)}
+header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(180deg,rgba(1,3,10,0.85) 0%,transparent 100%)}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .logo{font-size:1.5rem;font-weight:800;color:var(--prime);text-shadow:var(--glow)}
 .nav-links{display:flex;gap:1.2rem;flex-wrap:wrap}
@@ -45,24 +45,24 @@ header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(18
 .btn{padding:0.8rem 2rem;border:2px solid var(--prime);border-radius:4px;font-weight:700;letter-spacing:1px;transition:all 0.3s}
 .btn.primary{background:var(--prime);color:var(--dark)}
 .btn.primary:hover{background:var(--accent);border-color:var(--accent);box-shadow:var(--glow)}
-.btn.secondary{background:transparent;color:var(--prime)}
-.btn.secondary:hover{background:rgba(0,217,255,0.15)}
+.btn.secondary{background:rgba(0,217,255,0.1);color:var(--prime);backdrop-filter:blur(4px)}
+.btn.secondary:hover{background:rgba(0,217,255,0.2)}
 
 /* SECTIONS */
 section{position:relative;z-index:2;padding:3rem 5%;max-width:1200px;margin:0 auto}
 .section-title{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:2rem;text-align:center;color:var(--prime);border-bottom:1px solid var(--light);padding-bottom:0.5rem}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.card{background:rgba(5,10,26,0.8);border:1px solid var(--light);border-radius:6px;padding:1.5rem;transition:all 0.3s;backdrop-filter:blur(4px)}
+.card{background:rgba(4,8,24,0.75);border:1px solid var(--light);border-radius:6px;padding:1.5rem;transition:all 0.3s;backdrop-filter:blur(6px)}
 .card:hover{border-color:var(--prime);box-shadow:var(--glow);transform:translateY(-3px)}
 .card h3{color:var(--accent);margin-bottom:0.8rem}
 .card p{color:var(--muted);line-height:1.6}
 
 /* GAME CARD */
-.game-card{background:linear-gradient(135deg,rgba(10,26,48,0.9),rgba(2,5,16,0.9));border:2px solid var(--prime)}
+.game-card{background:linear-gradient(135deg,rgba(8,20,40,0.8),rgba(1,3,10,0.8));border:2px solid var(--prime)}
 .game-card a{display:block;padding:1rem;text-align:center;font-size:1.3rem;font-weight:700}
 
 /* CONTACT */
-.contact-box{background:rgba(5,10,26,0.8);border:1px solid var(--light);border-radius:6px;padding:2rem;text-align:center;backdrop-filter:blur(4px)}
+.contact-box{background:rgba(4,8,24,0.75);border:1px solid var(--light);border-radius:6px;padding:2rem;text-align:center;backdrop-filter:blur(6px)}
 .contact-item{margin:1rem 0;font-size:1.2rem}
 .contact-item a{font-weight:600}
 
@@ -77,8 +77,8 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
 </style>
 </head>
 <body>
-<!-- FULL 3D BACKGROUND -->
-<div id="bg-3d"></div>
+<!-- FULL 3D BACKGROUND WITH ASTRONAUT + 2200+ STARS + ORBITS -->
+<div id="full-3d-bg"></div>
 
 <header>
     <div class="nav-bar">
@@ -188,126 +188,175 @@ footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(-
     <p>© 2077 CYBERJAYD SYSTEMS • ALL RIGHTS RESERVED<br>DESIGNED & BUILT BY JAYD F. REPOBERBIO<br>100% PURE CODE • NO IMAGES USED</p>
 </footer>
 
-<!-- FULL 3D BACKGROUND: ASTRONAUT + STARS + RINGS + TRAILS -->
+<!-- 3D ENGINE: ASTRONAUT + 2200+ STARS + ORBITS + PARTICLES -->
 <script>
-const container = document.getElementById('bg-3d');
+const container = document.getElementById('full-3d-bg');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
 const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
 
 // LIGHTING
-const ambient = new THREE.AmbientLight(0x305080, 0.6);
-scene.add(ambient);
-const blueLight = new THREE.PointLight(0x00d9ff, 2, 300);
-blueLight.position.set(0, 5, 10);
-scene.add(blueLight);
-const whiteLight = new THREE.PointLight(0xffffff, 1.2, 200);
-whiteLight.position.set(-8, 3, 5);
-scene.add(whiteLight);
+const ambientLight = new THREE.AmbientLight(0x4060a0, 0.7);
+scene.add(ambientLight);
+const blueMain = new THREE.PointLight(0x00d9ff, 2.5, 500);
+blueMain.position.set(0, 0, 15);
+scene.add(blueMain);
+const cyanLight = new THREE.PointLight(0x00ffd5, 1.8, 400);
+cyanLight.position.set(-12, 6, 8);
+scene.add(cyanLight);
 
-// ✨ 1500+ STARS
-const starsGeo = new THREE.BufferGeometry();
-const starCount = 1600;
-const positions = new Float32Array(starCount * 3);
-const colors = new Float32Array(starCount * 3);
-for(let i=0;i<starCount*3;i+=3){
-    positions[i] = (Math.random()-0.5)*1200;
-    positions[i+1] = (Math.random()-0.5)*800;
-    positions[i+2] = (Math.random()-0.5)*1000;
-    const c = Math.random();
-    colors[i] = 0.2 + c*0.6;
-    colors[i+1] = 0.6 + c*0.4;
-    colors[i+2] = 1;
+// ✨ 2200+ STARS (FULL COVERAGE)
+const starGeometry = new THREE.BufferGeometry();
+const totalStars = 2250;
+const starPositions = new Float32Array(totalStars * 3);
+const starColors = new Float32Array(totalStars * 3);
+const starSizes = new Float32Array(totalStars);
+
+for(let i = 0; i < totalStars; i++) {
+    const i3 = i * 3;
+    starPositions[i3] = (Math.random() - 0.5) * 1800;
+    starPositions[i3 + 1] = (Math.random() - 0.5) * 1200;
+    starPositions[i3 + 2] = (Math.random() - 0.5) * 1600;
+    
+    const brightness = 0.3 + Math.random() * 0.7;
+    const hue = Math.random();
+    starColors[i3] = 0.2 + brightness * (hue < 0.5 ? 1 : 0.6);
+    starColors[i3 + 1] = 0.5 + brightness * (hue < 0.5 ? 0.8 : 1);
+    starColors[i3 + 2] = brightness;
+    starSizes[i] = 0.3 + Math.random() * 1.2;
 }
-starsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-starsGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-const starMat = new THREE.PointsMaterial({size:0.8, vertexColors:true, transparent:true, opacity:0.8});
-const stars = new THREE.Points(starsGeo, starMat);
+
+starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+const starMaterial = new THREE.PointsMaterial({
+    size: 0.6,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    blending: THREE.AdditiveBlending
+});
+const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-// 🧑‍🚀 MAIN ASTRONAUT
-const astroGroup = new THREE.Group();
-scene.add(astroGroup);
+// 🧑‍🚀 3D ASTRONAUT
+const astronaut = new THREE.Group();
+astronaut.position.set(0, 0, -25);
+scene.add(astronaut);
 
 // Body
-const bodyGeo = new THREE.CapsuleGeometry(1.2, 2.8, 10, 20);
-const bodyMat = new THREE.MeshStandardMaterial({color:0xf0f8ff, metalness:0.5, roughness:0.25});
-const body = new THREE.Mesh(bodyGeo, bodyMat);
-astroGroup.add(body);
+const bodyGeo = new THREE.CapsuleGeometry(1.3, 3, 12, 24);
+const bodyMat = new THREE.MeshStandardMaterial({color:0xf5faff, metalness:0.55, roughness:0.2});
+const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+astronaut.add(bodyMesh);
 
-// Helmet (glowing blue)
-const helmetGeo = new THREE.SphereGeometry(1.1, 40, 40);
-const helmetMat = new THREE.MeshStandardMaterial({color:0x00d9ff, transparent:true, opacity:0.45, metalness:0.95, roughness:0.05});
-const helmet = new THREE.Mesh(helmetGeo, helmetMat);
-helmet.position.y = 2.4;
-astroGroup.add(helmet);
+// Glowing Helmet
+const helmetGeo = new THREE.SphereGeometry(1.2, 48, 48);
+const helmetMat = new THREE.MeshStandardMaterial({
+    color:0x00d9ff,
+    transparent: true,
+    opacity: 0.4,
+    metalness: 0.98,
+    roughness: 0.02,
+    emissive:0x00d9ff,
+    emissiveIntensity: 0.3
+});
+const helmetMesh = new THREE.Mesh(helmetGeo, helmetMat);
+helmetMesh.position.y = 2.6;
+astronaut.add(helmetMesh);
 
 // Backpack
-const packGeo = new THREE.BoxGeometry(1.5, 2.2, 0.7);
-const packMat = new THREE.MeshStandardMaterial({color:0x102040, metalness:0.6, roughness:0.3});
-const pack = new THREE.Mesh(packGeo, packMat);
-pack.position.z = -0.9;
-pack.position.y = 0.5;
-astroGroup.add(pack);
+const packGeo = new THREE.BoxGeometry(1.6, 2.4, 0.8);
+const packMat = new THREE.MeshStandardMaterial({color:0x0a1530, metalness:0.65, roughness:0.25});
+const packMesh = new THREE.Mesh(packGeo, packMat);
+packMesh.position.z = -1;
+packMesh.position.y = 0.6;
+astronaut.add(packMesh);
 
-// 🔵 GLOWING RINGS AROUND ASTRONAUT
-const ring1Geo = new THREE.TorusGeometry(4, 0.05, 16, 100);
-const ringMat1 = new THREE.MeshStandardMaterial({color:0x00d9ff, emissive:0x00d9ff, emissiveIntensity:0.5});
-const ring1 = new THREE.Mesh(ring1Geo, ringMat1);
-ring1.rotation.x = Math.PI/2;
-astroGroup.add(ring1);
+// 🔵 GLOWING ORBIT RINGS
+const ringA = new THREE.TorusGeometry(5, 0.06, 24, 120);
+const ringMatA = new THREE.MeshStandardMaterial({
+    color:0x00d9ff,
+    emissive:0x00d9ff,
+    emissiveIntensity:0.6,
+    transparent:true,
+    opacity:0.7
+});
+const ring1 = new THREE.Mesh(ringA, ringMatA);
+ring1.rotation.x = Math.PI / 2;
+astronaut.add(ring1);
 
-const ring2Geo = new THREE.TorusGeometry(5, 0.04, 16, 100);
-const ringMat2 = new THREE.MeshStandardMaterial({color:0x00ffd5, emissive:0x00ffd5, emissiveIntensity:0.4});
-const ring2 = new THREE.Mesh(ring2Geo, ringMat2);
-ring2.rotation.z = Math.PI/3;
-astroGroup.add(ring2);
+const ringB = new THREE.TorusGeometry(6.2, 0.045, 24, 120);
+const ringMatB = new THREE.MeshStandardMaterial({
+    color:0x00ffd5,
+    emissive:0x00ffd5,
+    emissiveIntensity:0.5,
+    transparent:true,
+    opacity:0.6
+});
+const ring2 = new THREE.Mesh(ringB, ringMatB);
+ring2.rotation.z = Math.PI / 3;
+astronaut.add(ring2);
 
-// ⚡ ENERGY TRAILS
-const trailCount = 80;
-const trails = [];
-for(let i=0;i<trailCount;i++){
-    const tGeo = new THREE.CylinderGeometry(0.02, 0.08, 3, 8);
-    const tMat = new THREE.MeshStandardMaterial({color:0x00d9ff, transparent:true, opacity:0.3});
-    const trail = new THREE.Mesh(tGeo, tMat);
-    trail.position.set(
+// ⚡ FLOATING PARTICLES / TRAILS
+const particleCount = 120;
+const particles = [];
+for(let i=0; i<particleCount; i++) {
+    const pGeo = new THREE.SphereGeometry(0.05 + Math.random()*0.1, 8, 8);
+    const pMat = new THREE.MeshStandardMaterial({
+        color: Math.random()>0.5 ? 0x00d9ff : 0x00ffd5,
+        transparent: true,
+        opacity: 0.4 + Math.random()*0.4,
+        emissive: Math.random()>0.5 ? 0x00d9ff : 0x00ffd5,
+        emissiveIntensity: 0.2
+    });
+    const p = new THREE.Mesh(pGeo, pMat);
+    p.position.set(
+        (Math.random()-0.5)*12,
         (Math.random()-0.5)*8,
-        (Math.random()-0.5)*6,
-        (Math.random()-0.5)*4
+        (Math.random()-0.5)*6
     );
-    trail.userData = {speed:0.02+Math.random()*0.03, rotSpeed:(Math.random()-0.5)*0.02};
-    trails.push(trail);
-    astroGroup.add(trail);
+    p.userData = {
+        speed: 0.01 + Math.random()*0.02,
+        angle: Math.random()*Math.PI*2,
+        radius: 3 + Math.random()*5
+    };
+    particles.push(p);
+    astronaut.add(p);
 }
 
-// POSITION & ANIMATION
-astroGroup.position.set(0, 0, -15);
-camera.position.z = 12;
+// CAMERA & ANIMATION
+camera.position.z = 18;
 
-function animate(){
-    requestAnimationFrame(animate);
-    // Floating + Rotate
-    astroGroup.rotation.y += 0.003;
-    astroGroup.position.y = Math.sin(Date.now()*0.0008)*1.5;
+function animateScene() {
+    requestAnimationFrame(animateScene);
+    
+    // Astronaut float & rotate
+    astronaut.rotation.y += 0.0025;
+    astronaut.position.y = Math.sin(Date.now()*0.0006)*2;
+    
     // Rings spin opposite
-    ring1.rotation.z += 0.008;
-    ring2.rotation.x -= 0.006;
-    // Stars drift
-    stars.rotation.y += 0.0002;
-    // Trails move
-    trails.forEach(t=>{
-        t.position.y += t.userData.speed;
-        t.rotation.y += t.userData.rotSpeed;
-        if(t.position.y>4) t.position.y = -4;
+    ring1.rotation.z += 0.007;
+    ring2.rotation.x -= 0.005;
+    
+    // Stars drift slowly
+    stars.rotation.y += 0.00015;
+    
+    // Particles orbit
+    particles.forEach(p => {
+        p.userData.angle += p.userData.speed;
+        p.position.x = Math.cos(p.userData.angle) * p.userData.radius;
+        p.position.z = Math.sin(p.userData.angle) * p.userData.radius;
+        p.position.y += Math.sin(Date.now()*0.002 + p.userData.angle) * 0.02;
     });
+    
     renderer.render(scene, camera);
 }
-animate();
+animateScene();
 
-window.addEventListener('resize',()=>{
+window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
