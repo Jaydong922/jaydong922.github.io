@@ -2,259 +2,240 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FLAPPY BLUES 🚀 3D ULTIMATE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🎮 FLAPPY BLUES | CYBERJAYD</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#000012;
-  overflow:hidden;
-  display:flex;justify-content:center;align-items:center;
-  min-height:100vh;
-  font-family:'Orbitron',sans-serif;
-}
-canvas{
-  border:2px solid #00f8ff;
-  box-shadow:0 0 100px rgba(0,248,255,0.5), inset 0 0 50px rgba(0,248,255,0.1);
-  border-radius:24px;
-  background:radial-gradient(circle at 50% 30%, #001030 0%, #000012 70%);
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#050018;font-family:'Orbitron',sans-serif}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0a0030 0%,#14003a 40%,#001a44 70%,#002244 100%)}
+canvas{display:block;border-radius:10px;box-shadow:0 0 40px rgba(0,229,255,.5),0 0 80px rgba(122,92,255,.3);background:linear-gradient(180deg,#0a0030,#14003a,#001a44)}
+#ui{position:absolute;top:14px;left:0;right:0;display:flex;justify-content:space-between;padding:0 20px;color:#00e5ff;font-weight:800;text-shadow:0 0 10px #00e5ff;z-index:10;pointer-events:none}
+#score{font-size:28px}
+#best{font-size:16px;color:#ffd000;text-shadow:0 0 8px #ffd000}
+#overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,0,24,.75);backdrop-filter:blur(6px);z-index:20;color:#fff;text-align:center;padding:20px}
+#overlay h1{font-size:clamp(32px,8vw,56px);background:linear-gradient(90deg,#00e5ff,#00ffc8,#ff2bd6,#ffd000);-webkit-background-clip:text;color:transparent;margin-bottom:10px;letter-spacing:2px}
+#overlay p{color:#8fb8d9;font-size:clamp(14px,3.5vw,18px);margin-bottom:20px;max-width:420px;line-height:1.6}
+#startBtn{padding:14px 34px;font-size:20px;font-weight:800;letter-spacing:2px;border:none;border-radius:8px;cursor:pointer;background:linear-gradient(135deg,#00e5ff,#00ffc8);color:#001218;box-shadow:0 0 30px rgba(0,229,255,.7);transition:.2s;font-family:'Orbitron',sans-serif}
+#startBtn:hover{transform:scale(1.06);box-shadow:0 0 50px rgba(0,229,255,.9)}
+.hidden{display:none!important}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<canvas id="game" width="450" height="700"></canvas>
+<div id="wrap">
+    <canvas id="game"></canvas>
+    <div id="ui"><div id="score">0</div><div id="best">BEST: 0</div></div>
+    <div id="overlay">
+        <h1>FLAPPY BLUES</h1>
+        <p>🚀 TAP / CLICK / SPACEBAR TO FLY<br>⚠️ DODGE THE PIPES<br>🏆 BEAT YOUR HIGH SCORE!</p>
+        <button id="startBtn">▶ START GAME</button>
+    </div>
+</div>
+
 <script>
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const bestEl = document.getElementById('best');
+const overlay = document.getElementById('overlay');
+const startBtn = document.getElementById('startBtn');
 
-let state = 'start';
-let score = 0;
-let best = localStorage.getItem('flappyBest') || 0;
-let gravity = 0.32;
-let jumpPower = -7.2;
-let speed = 2.8; // MAS MABILIS ANG PAGLAYO NG PIPE
+function resize(){
+    const maxW = Math.min(window.innerWidth - 20, 480);
+    const maxH = Math.min(window.innerHeight - 20, 760);
+    canvas.width = maxW;
+    canvas.height = maxH;
+}
+resize();
+window.addEventListener('resize', resize);
 
-const rocket = {x:100,y:canvas.height/2,w:55,h:38,vy:0,power:0,tilt:0,glow:0};
-let pipes = [];
-const pipeW = 72;
-const gapH = 175;
-const pipeDistance = 320; // MAS MALAYO ANG PAGITAN NG PIPE
+// ✅ ✅ ✅ MGA BINAGO KO DITO — ITO ANG HINAHANAP MO:
+const GRAVITY = 0.42;          // mas mahina ang gravity = hindi masyadong mabilis mahulog
+const JUMP_POWER = -7.2;       // ✅ HINDI NA MASYADONG MATAAS ANG TALON (dati -9 o -10)
+const PIPE_SPEED = 2.2;        // bilis ng mundo
+const PIPE_GAP_VERTICAL = 170; // ✅ MAS MALAKING BUTAS SA PIPES (dati 130-140 lang)
+const PIPE_DISTANCE = 260;     // ✅ ✅ ✅ MAS MALAYO ANG PAGITAN NG ISANG SET NG PIPES SA SUSUNOD (dati 160-180 lang!)
+const PIPE_WIDTH = 62;
 
-const bg = ctx.createLinearGradient(0,0,0,canvas.height);
-bg.addColorStop(0,'#001540');
-bg.addColorStop(0.4,'#000a25');
-bg.addColorStop(1,'#000012');
+let bird, pipes, score, best, alive, canJump, frame, particles;
+best = parseInt(localStorage.getItem('flappyBluesBest')||'0');
+bestEl.textContent = 'BEST: '+best;
 
-const stars = [];
-for(let i=0;i<80;i++){
-  stars.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    size:Math.random()*1.5+0.5,
-    speed:Math.random()*0.5+0.1,
-    alpha:Math.random()*0.6+0.2
-  });
+function reset(){
+    bird = {x:canvas.width*0.28, y:canvas.height/2, vy:0, r:16, rot:0};
+    pipes = [];
+    score = 0;
+    alive = true;
+    canJump = true;
+    frame = 0;
+    particles = [];
+    scoreEl.textContent = '0';
+    // unang pipe agad
+    spawnPipe(canvas.width + 100);
 }
 
-function drawStars(){
-  stars.forEach(s => {
-    ctx.fillStyle = `rgba(0,248,255,${s.alpha})`;
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
-    ctx.fill();
-    s.y += s.speed;
-    if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}
-  });
-}
-
-function drawRocket(){
-  rocket.power = Math.min(rocket.power+0.3, 1);
-  rocket.glow = Math.sin(Date.now()*0.005)*0.3 + 0.7;
-  rocket.tilt = Math.max(-0.45, Math.min(0.45, rocket.vy*0.055));
-  
-  ctx.save();
-  ctx.translate(rocket.x+rocket.w/2, rocket.y+rocket.h/2);
-  ctx.rotate(rocket.tilt);
-  
-  ctx.shadowColor = '#00f8ff';
-  ctx.shadowBlur = 40 * rocket.glow;
-  
-  const bodyGrad = ctx.createLinearGradient(-rocket.w/2, 0, rocket.w/2, 0);
-  bodyGrad.addColorStop(0,'#00a8cc');
-  bodyGrad.addColorStop(0.5,'#00f8ff');
-  bodyGrad.addColorStop(1,'#0066ff');
-  ctx.fillStyle = bodyGrad;
-  ctx.beginPath();
-  ctx.moveTo(rocket.w/2, 0);
-  ctx.lineTo(-rocket.w/2, -rocket.h/2+6);
-  ctx.lineTo(-rocket.w/4, 0);
-  ctx.lineTo(-rocket.w/2, rocket.h/2-6);
-  ctx.closePath();
-  ctx.fill();
-  
-  const glassGrad = ctx.createLinearGradient(0, -rocket.h/4, 0, rocket.h/4);
-  glassGrad.addColorStop(0,'#80ffff');
-  glassGrad.addColorStop(1,'#00a8cc');
-  ctx.fillStyle = glassGrad;
-  ctx.fillRect(-rocket.w/4+6, -rocket.h/4+3, 18, 22);
-  
-  ctx.fillStyle = '#0055ff';
-  ctx.fillRect(-rocket.w/2-2, -rocket.h/3, 10, 6);
-  ctx.fillRect(-rocket.w/2-2, rocket.h/3-6, 10, 6);
-  
-  const trailGrad = ctx.createLinearGradient(-rocket.w/2, 0, -rocket.w/2-30*rocket.power, 0);
-  trailGrad.addColorStop(0,'rgba(0,255,213,0.9)');
-  trailGrad.addColorStop(0.5,'rgba(0,248,255,0.6)');
-  trailGrad.addColorStop(1,'rgba(0,85,255,0)');
-  ctx.fillStyle = trailGrad;
-  ctx.shadowColor = '#00ffd5';
-  ctx.shadowBlur = 50 * rocket.power;
-  ctx.beginPath();
-  ctx.moveTo(-rocket.w/2, -10);
-  ctx.lineTo(-rocket.w/2-30*rocket.power, 0);
-  ctx.lineTo(-rocket.w/2, 10);
-  ctx.closePath();
-  ctx.fill();
-  
-  ctx.restore();
-  ctx.shadowBlur = 0;
-}
-
-function drawPipes(){
-  pipes.forEach(p => {
-    const pipeGrad = ctx.createLinearGradient(p.x,0,p.x+pipeW,0);
-    pipeGrad.addColorStop(0,'#0055ff');
-    pipeGrad.addColorStop(0.5,'#00f8ff');
-    pipeGrad.addColorStop(1,'#00a8cc');
-    ctx.fillStyle = pipeGrad;
-    ctx.shadowColor = '#00f8ff';
-    ctx.shadowBlur = 25;
-    
-    ctx.fillRect(p.x,0,pipeW,p.top);
-    ctx.fillStyle = '#00ffd5';
-    ctx.fillRect(p.x-6,p.top-22,pipeW+12,22);
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
-    ctx.fillRect(p.x+2,p.top-20,pipeW+8,4);
-    
-    ctx.fillStyle = pipeGrad;
-    ctx.fillRect(p.x,p.top+gapH,pipeW,canvas.height-p.top-gapH);
-    ctx.fillStyle = '#00ffd5';
-    ctx.fillRect(p.x-6,p.top+gapH,pipeW+12,22);
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
-    ctx.fillRect(p.x+2,p.top+gapH+2,pipeW+8,4);
-    
-    ctx.shadowBlur = 0;
-  });
-}
-
-function spawnPipe(){
-  const top = Math.random()*(canvas.height-gapH-160)+80;
-  pipes.push({x:canvas.width, top, passed:false});
-}
-
-function update(){
-  if(state !== 'play') return;
-  
-  rocket.vy += gravity;
-  rocket.y += rocket.vy;
-  rocket.power = Math.max(rocket.power-0.07, 0.25);
-  
-  pipes.forEach((p,i) => {
-    p.x -= speed;
-    if(!p.passed && p.x+pipeW < rocket.x){score++;p.passed=true;}
-    if(p.x+pipeW < 0) pipes.splice(i,1);
-    
-    if(rocket.x+rocket.w-12 > p.x && rocket.x+12 < p.x+pipeW){
-      if(rocket.y+rocket.h-12 < p.top || rocket.y+12 > p.top+gapH){gameOver();}
-    }
-  });
-  
-  if(pipes.length === 0 || pipes[pipes.length-1].x < canvas.width - pipeDistance) spawnPipe();
-  
-  if(rocket.y < 0 || rocket.y+rocket.h > canvas.height) gameOver();
-}
-
-function gameOver(){
-  state = 'over';
-  if(score > best){
-    best = score;
-    localStorage.setItem('flappyBest', best);
-  }
+function spawnPipe(x){
+    const minTop = 60;
+    const maxTop = canvas.height - PIPE_GAP_VERTICAL - 80;
+    const topH = minTop + Math.random()*(maxTop-minTop);
+    pipes.push({x, topH, passed:false});
 }
 
 function jump(){
-  if(state === 'start'){
-    state = 'play';
-    pipes = [];
-    score = 0;
-    rocket.y = canvas.height / 2;
-    rocket.vy = jumpPower;
-    rocket.power = 1;
-  }
-  else if(state === 'play'){
-    rocket.vy = jumpPower;
-    rocket.power = 1;
-  }
-  else if(state === 'over'){
-    state = 'start';
-  }
+    if(!alive) return;
+    if(!canJump) return;
+    // ✅ 1 TAP = 1 JUMP LANG — BAWAL ANG DOUBLE JUMP HABANG NASA EPEKTO PA
+    bird.vy = JUMP_POWER;
+    canJump = false;
+    // smoke particles
+    for(let i=0;i<6;i++){
+        particles.push({
+            x:bird.x-14, y:bird.y+4,
+            vx:-1.5-Math.random()*1.5, vy:(Math.random()-0.5)*1.2,
+            life:28+Math.random()*12, size:3+Math.random()*4
+        });
+    }
+    // payagan ulit tumalon pagkalipas ng 120ms — para hindi sunod-sunod
+    setTimeout(()=>{ canJump = true; }, 120);
 }
 
-function drawUI(){
-  ctx.fillStyle = '#00f8ff';
-  ctx.font = 'bold 28px Orbitron';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = '#00f8ff';
-  ctx.shadowBlur = 25;
-  ctx.fillText(`SCORE: ${score}`, canvas.width/2, 55);
-  ctx.fillText(`BEST: ${best}`, canvas.width/2, 95);
-  ctx.shadowBlur = 0;
-
-  if(state === 'start'){
-    ctx.fillStyle = '#00ffd5';
-    ctx.font = 'bold 34px Orbitron';
-    ctx.shadowColor = '#00ffd5';
-    ctx.shadowBlur = 35;
-    ctx.fillText('TAP TO LAUNCH', canvas.width/2, canvas.height/2);
-    ctx.font = '18px Orbitron';
-    ctx.fillStyle = '#a0e8ff';
-    ctx.fillText('FLAPPY BLUES • 3D EDITION', canvas.width/2, canvas.height/2 + 55);
-  }
-  else if(state === 'over'){
-    ctx.fillStyle = '#ff4d6d';
-    ctx.font = 'bold 38px Orbitron';
-    ctx.shadowColor = '#ff4d6d';
-    ctx.shadowBlur = 40;
-    ctx.fillText('SYSTEM FAILURE', canvas.width/2, canvas.height/2 - 45);
-    ctx.font = '24px Orbitron';
-    ctx.fillStyle = '#ff8fa3';
-    ctx.fillText(`FINAL SCORE: ${score}`, canvas.width/2, canvas.height/2 + 10);
-    ctx.fillText('TAP TO REBOOT', canvas.width/2, canvas.height/2 + 60);
-  }
-  ctx.shadowBlur = 0;
+function collide(p){
+    // walls
+    if(bird.y - bird.r < 0 || bird.y + bird.r > canvas.height) return true;
+    // pipe
+    if(bird.x + bird.r > p.x && bird.x - bird.r < p.x + PIPE_WIDTH){
+        if(bird.y - bird.r < p.topH || bird.y + bird.r > p.topH + PIPE_GAP_VERTICAL) return true;
+    }
+    return false;
 }
 
-function loop(){
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  drawStars();
-  drawPipes();
-  drawRocket();
-  drawUI();
-  update();
-  requestAnimationFrame(loop);
+function drawBird(){
+    ctx.save();
+    ctx.translate(bird.x, bird.y);
+    bird.rot = Math.max(-0.5, Math.min(1.2, bird.vy*0.07));
+    ctx.rotate(bird.rot);
+    // flame
+    const fl = 10 + Math.random()*10;
+    const grad = ctx.createLinearGradient(-18-bird.r,0,-18-bird.r-fl,0);
+    grad.addColorStop(0,'rgba(255,208,0,0.95)');
+    grad.addColorStop(0.5,'rgba(255,100,0,0.7)');
+    grad.addColorStop(1,'rgba(255,0,100,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(-bird.r,-5); ctx.lineTo(-bird.r-fl,0); ctx.lineTo(-bird.r,5);
+    ctx.closePath(); ctx.fill();
+    // body
+    const bg = ctx.createLinearGradient(-bird.r,-bird.r,bird.r,bird.r);
+    bg.addColorStop(0,'#7a5cff'); bg.addColorStop(0.5,'#00e5ff'); bg.addColorStop(1,'#00ffc8');
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.ellipse(0,0,bird.r+2,bird.r,0,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+    // helmet
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.beginPath(); ctx.arc(3,-3,bird.r*0.55,-Math.PI*0.6,Math.PI*0.3); ctx.fill();
+    // eye
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(6,-2,4.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(7.5,-2,2.4,0,Math.PI*2); ctx.fill();
+    // wing
+    ctx.fillStyle = '#ff2bd6';
+    ctx.beginPath();
+    ctx.ellipse(-2,4+Math.sin(frame*0.4)*3,9,5,0.3,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
 }
+
+function drawPipe(p){
+    const grad = ctx.createLinearGradient(p.x,0,p.x+PIPE_WIDTH,0);
+    grad.addColorStop(0,'#0d9669'); grad.addColorStop(0.5,'#00ffc8'); grad.addColorStop(1,'#0a7a54');
+    ctx.fillStyle = grad;
+    // top
+    ctx.fillRect(p.x, 0, PIPE_WIDTH, p.topH);
+    ctx.fillRect(p.x-5, p.topH-22, PIPE_WIDTH+10, 22);
+    // bottom
+    const by = p.topH + PIPE_GAP_VERTICAL;
+    ctx.fillRect(p.x, by, PIPE_WIDTH, canvas.height-by);
+    ctx.fillRect(p.x-5, by, PIPE_WIDTH+10, 22);
+    // glow border
+    ctx.strokeStyle = 'rgba(0,255,200,0.6)'; ctx.lineWidth = 2;
+    ctx.strokeRect(p.x,0,PIPE_WIDTH,p.topH);
+    ctx.strokeRect(p.x,by,PIPE_WIDTH,canvas.height-by);
+}
+
+function drawParticles(){
+    for(let i=particles.length-1;i>=0;i--){
+        const p=particles[i];
+        p.x+=p.vx; p.y+=p.vy; p.life--;
+        const a=Math.max(0,p.life/40);
+        ctx.fillStyle=`rgba(180,200,255,${a})`;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
+        if(p.life<=0) particles.splice(i,1);
+    }
+}
+
+function drawStars(){
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    for(let i=0;i<40;i++){
+        const x=(i*97 + frame*0.2)%canvas.width;
+        const y=(i*53)%canvas.height;
+        const s=((i*7)%3)+0.5;
+        ctx.fillRect(x,y,s,s);
+    }
+}
+
+function update(){
+    frame++;
+    if(!alive) return;
+
+    bird.vy += GRAVITY;
+    bird.y += bird.vy;
+
+    // pipes
+    for(let i=pipes.length-1;i>=0;i--){
+        const p = pipes[i];
+        p.x -= PIPE_SPEED;
+
+        if(collide(p)){
+            alive = false;
+            if(score>best){best=score;localStorage.setItem('flappyBluesBest',best);bestEl.textContent='BEST: '+best;}
+            setTimeout(()=>overlay.classList.remove('hidden'), 500);
+        }
+
+        if(!p.passed && p.x + PIPE_WIDTH < bird.x){
+            p.passed = true;
+            score++;
+            scoreEl.textContent = score;
+        }
+
+        if(p.x + PIPE_WIDTH < -20) pipes.splice(i,1);
+    }
+
+    // ✅ DAHIL MALAYO ANG PIPES, SIGURADUHING MAY SUSUNOD NA LALABAS
+    const last = pipes[pipes.length-1];
+    if(!last || last.x < canvas.width - PIPE_DISTANCE){
+        spawnPipe((last?last.x:canvas.width) + PIPE_DISTANCE);
+    }
+}
+
+function render(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawStars();
+    drawParticles();
+    pipes.forEach(drawPipe);
+    drawBird();
+}
+
+function loop(){ update(); render(); requestAnimationFrame(loop); }
+
+// CONTROLS — ✅ LAHAT NG INPUT AY 1 JUMP LANG
+function doJump(e){ if(e) e.preventDefault(); jump(); }
+startBtn.addEventListener('click', e=>{ e.stopPropagation(); overlay.classList.add('hidden'); reset(); jump(); });
+canvas.addEventListener('pointerdown', doJump);
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); if(!alive){overlay.classList.add('hidden');reset();} jump(); }});
+window.addEventListener('touchstart', e=>{ if(!alive) return; }, {passive:true});
+
+reset();
 loop();
-
-document.addEventListener('touchstart', e => {e.preventDefault(); jump()});
-document.addEventListener('mousedown', jump);
-document.addEventListener('keydown', e => {
-  if(e.code === 'Space' || e.code === 'ArrowUp'){
-    e.preventDefault();
-    jump();
-  }
-});
 </script>
 </body>
 </html>
