@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | ETHICAL SECURITY • DEV • 3D ASTRONAUTS</title>
+<title>CYBERJAYD | ETHICAL SECURITY • DEV • PORTFOLIO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,8 +21,7 @@ a{color:var(--cyan);text-decoration:none;transition:all .2s}
 a:hover{color:var(--pink);text-shadow:0 0 15px rgba(255,43,214,0.8)}
 
 /* =========================================
-   ✅ FINAL: TUNAY NA NASA-STYLE ASTRONAUTS
-   100% MAKIKITA MO SILA NGAYON
+   ✅ FINAL: TUNAY NA ZERO-GRAVITY ASTRONAUTS
    ========================================= */
 #space{position:fixed;inset:0;z-index:0;width:100vw;height:100vh;overflow:hidden;
 background:
@@ -38,156 +37,255 @@ background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px, 260px 260px
 animation:stars 120s linear infinite}
 @keyframes stars{from{background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0}to{background-position:2000px 1000px,-1500px 1200px,1800px -800px,-1200px 1500px,2000px -1000px,-1600px -900px,1400px 1100px,0 0}}
 
-/* ✅ ✅ ✅ TUNAY NA ASTRONAOT NA NASA-STYLE ✅ ✅ ✅ */
+/* ✅ BASE ASTRONAUT (MAS MALAKI, MAY DETALYE) */
 .astronaut {
   position: absolute;
-  width: 60px;  /* MAS MALAKI PARA KITANG-KITA */
-  height: 100px;
-  opacity: 0.9;
-  animation: float 20s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6));
+  width: 70px;
+  height: 110px;
+  opacity: 0.92;
+  transform-origin: center center;
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.55));
 }
 
-/* HELMET (MAY GLOW) */
-.astronaut::before {
-  content: '';
+/* HELMET WITH VISOR REFLECTION */
+.astronaut .helmet {
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
+  width: 34px; height: 34px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), #4a90e2 60%, #1a3a6e);
-  box-shadow: 0 0 15px #00e5ff, 0 0 30px rgba(0, 229, 255, 0.5), inset 0 0 8px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.95), #4a90e2 55%, #1a3a6e 100%);
+  border: 2px solid rgba(255,255,255,0.75);
+  box-shadow: 0 0 14px #00e5ff, inset -4px -4px 10px rgba(0,0,0,0.4);
 }
-
-/* BODY */
-.astronaut::after {
+.astronaut .visor {
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 22px; height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #001133 0%, #003366 60%, #00e5ff 100%);
+  opacity: 0.9;
+}
+.astronaut .visor::after {
   content: '';
   position: absolute;
-  top: 25px;
-  left: 50%;
+  top: 2px; left: 4px;
+  width: 6px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+}
+
+/* SUIT BODY WITH CHEST PANEL */
+.astronaut .body {
+  position: absolute;
+  top: 28px; left: 50%;
   transform: translateX(-50%);
-  width: 22px;
-  height: 35px;
-  background: linear-gradient(180deg, #e0e0e0 0%, #a0a0a0 50%, #707070 100%);
-  border-radius: 10px 10px 5px 5px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  width: 26px; height: 40px;
+  background: linear-gradient(180deg, #e8e8e8 0%, #b8b8b8 50%, #888 100%);
+  border-radius: 10px 10px 6px 6px;
+  box-shadow: inset -3px 0 6px rgba(0,0,0,0.2);
 }
-
-/* LEFT ARM */
-.astronaut .arm-left {
+.astronaut .chest-panel {
   position: absolute;
-  top: 30px;
-  left: 10px;
-  width: 8px;
-  height: 20px;
-  background: linear-gradient(180deg, #a0a0a0, #707070);
-  border-radius: 4px;
-  transform: rotate(-20deg);
-}
-
-/* RIGHT ARM */
-.astronaut .arm-right {
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  width: 8px;
-  height: 20px;
-  background: linear-gradient(180deg, #a0a0a0, #707070);
-  border-radius: 4px;
-  transform: rotate(20deg);
-}
-
-/* LEFT LEG */
-.astronaut .leg-left {
-  position: absolute;
-  top: 55px;
-  left: 18px;
-  width: 8px;
-  height: 25px;
-  background: linear-gradient(180deg, #a0a0a0, #707070);
-  border-radius: 4px;
-  transform: rotate(10deg);
-}
-
-/* RIGHT LEG */
-.astronaut .leg-right {
-  position: absolute;
-  top: 55px;
-  right: 18px;
-  width: 8px;
-  height: 25px;
-  background: linear-gradient(180deg, #a0a0a0, #707070);
-  border-radius: 4px;
-  transform: rotate(-10deg);
-}
-
-/* LEFT BOOT */
-.astronaut .boot-left {
-  position: absolute;
-  top: 75px;
-  left: 15px;
-  width: 12px;
-  height: 8px;
-  background: #505050;
-  border-radius: 3px;
-  transform: rotate(5deg);
-}
-
-/* RIGHT BOOT */
-.astronaut .boot-right {
-  position: absolute;
-  top: 75px;
-  right: 15px;
-  width: 12px;
-  height: 8px;
-  background: #505050;
-  border-radius: 3px;
-  transform: rotate(-5deg);
-}
-
-/* JETPACK FLAME (MAY ANIMATION) */
-.astronaut .flame {
-  position: absolute;
-  top: 90px;
-  left: 50%;
+  top: 34px; left: 50%;
   transform: translateX(-50%);
-  width: 15px;
-  height: 25px;
-  background: linear-gradient(180deg, #ffd000, #ff6600, transparent);
-  border-radius: 50% 50% 0 0;
-  filter: blur(3px);
-  animation: flicker 0.5s infinite alternate;
-  opacity: 0.8;
+  width: 14px; height: 10px;
+  background: #222;
+  border-radius: 2px;
+  border: 1px solid #555;
+}
+.astronaut .chest-panel::before, .astronaut .chest-panel::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+}
+.astronaut .chest-panel::before { left: 2px; background: #00ff88; box-shadow: 0 0 4px #00ff88; }
+.astronaut .chest-panel::after { right: 2px; background: #ff3355; box-shadow: 0 0 4px #ff3355; }
+
+/* O2 TANK SA LIKOD */
+.astronaut .tank {
+  position: absolute;
+  top: 30px; left: 50%;
+  transform: translateX(-50%) translateZ(-1px);
+  width: 20px; height: 30px;
+  background: linear-gradient(180deg, #aaa, #666);
+  border-radius: 4px;
+  z-index: -1;
 }
 
-@keyframes flicker {
-  0% { height: 20px; opacity: 0.7; }
-  100% { height: 30px; opacity: 0.9; }
+/* ARMS — IBAT-IBANG POSITION BAWAT ISA */
+.astronaut .arm {
+  position: absolute;
+  width: 7px; height: 22px;
+  background: linear-gradient(180deg, #c8c8c8, #888);
+  border-radius: 4px;
+  transform-origin: top center;
+}
+.astronaut .arm::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 9px; height: 7px;
+  background: #555;
+  border-radius: 3px;
+}
+/* DEFAULT ARMS (MAAYOS NA POSE) */
+.astronaut .arm-left { top: 32px; left: 12px; transform: rotate(-35deg); }
+.astronaut .arm-right { top: 32px; right: 12px; transform: rotate(35deg); }
+
+/* LEGS */
+.astronaut .leg {
+  position: absolute;
+  width: 8px; height: 26px;
+  background: linear-gradient(180deg, #c8c8c8, #888);
+  border-radius: 4px;
+}
+.astronaut .leg-left { top: 64px; left: 22px; transform: rotate(8deg); }
+.astronaut .leg-right { top: 64px; right: 22px; transform: rotate(-8deg); }
+
+/* BOOTS WITH DETAIL */
+.astronaut .boot {
+  position: absolute;
+  width: 11px; height: 8px;
+  background: #3a3a3a;
+  border-radius: 2px 2px 4px 4px;
+  border-top: 1px solid #222;
+}
+.astronaut .boot-left { top: 87px; left: 20px; transform: rotate(5deg); }
+.astronaut .boot-right { top: 87px; right: 20px; transform: rotate(-5deg); }
+
+/* ✅ THRUSTER VAPOR — PUTING SINGAW, KALIWA/KANAN NA PUMAPALIT */
+.astronaut .vapor {
+  position: absolute;
+  top: 50px;
+  width: 20px; height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(230,245,255,0.4) 40%, transparent 70%);
+  filter: blur(4px);
+  opacity: 0;
+}
+.astronaut .vapor-left { left: -10px; animation: vaporLeft var(--vapor-dur, 5s) ease-in-out infinite; animation-delay: var(--vapor-delay, 0s); }
+.astronaut .vapor-right { right: -10px; animation: vaporRight var(--vapor-dur, 5s) ease-in-out infinite; animation-delay: calc(var(--vapor-delay, 0s) + var(--vapor-dur, 5s) / 2); }
+
+@keyframes vaporLeft {
+  0%, 45%, 100% { opacity: 0; transform: translateX(0) scale(0.8); }
+  10%, 35% { opacity: 0.9; transform: translateX(-18px) scale(1.4); }
+}
+@keyframes vaporRight {
+  0%, 45%, 100% { opacity: 0; transform: translateX(0) scale(0.8); }
+  10%, 35% { opacity: 0.9; transform: translateX(18px) scale(1.4); }
 }
 
-/* FLOATING ANIMATION */
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-40px) rotate(8deg); }
-  50% { transform: translateY(-20px) rotate(-5deg); }
-  75% { transform: translateY(-50px) rotate(6deg); }
+/* ✅ ZERO-GRAVITY ANIMATION — IBAT-IBANG GALAW BAWAT ISA */
+@keyframes drift1 {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  25% { transform: translate(15px,-30px) rotate(12deg); }
+  50% { transform: translate(-10px,-15px) rotate(-8deg); }
+  75% { transform: translate(20px,-40px) rotate(6deg); }
+}
+@keyframes drift2 {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  30% { transform: translate(-20px,-25px) rotate(-15deg); }
+  60% { transform: translate(10px,-40px) rotate(10deg); }
+  90% { transform: translate(-15px,-10px) rotate(-5deg); }
+}
+@keyframes drift3 {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  20% { transform: translate(10px,-35px) rotate(20deg); }
+  50% { transform: translate(-25px,-20px) rotate(-18deg); }
+  80% { transform: translate(18px,-45px) rotate(14deg); }
+}
+@keyframes drift4 {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  35% { transform: translate(-12px,-40px) rotate(25deg); }
+  70% { transform: translate(22px,-15px) rotate(-22deg); }
 }
 
-/* POSITIONS NG 20 TUNAY NA ASTRONAUTS (KAKALAT SA BUONG SCREEN) */
-.a1{top:8%;left:5%;animation-delay:0s;transform:scale(1.3)}.a2{top:15%;right:10%;animation-delay:-2s;transform:scale(1.0)}
-.a3{top:25%;left:20%;animation-delay:-4s;transform:scale(1.2)}.a4{top:40%;right:25%;animation-delay:-6s;transform:scale(0.9)}
-.a5{top:55%;left:8%;animation-delay:-8s;transform:scale(1.4)}.a6{top:70%;right:15%;animation-delay:-10s;transform:scale(1.1)}
-.a7{top:85%;left:30%;animation-delay:-12s;transform:scale(1.05)}.a8{top:10%;left:45%;animation-delay:-1s;transform:scale(1.25)}
-.a9{top:35%;right:5%;animation-delay:-3s;transform:scale(0.95)}.a10{top:60%;left:50%;animation-delay:-5s;transform:scale(1.35)}
-.a11{top:20%;right:40%;animation-delay:-7s;transform:scale(1.1)}.a12{top:75%;left:15%;animation-delay:-9s;transform:scale(1.0)}
-.a13{top:5%;right:30%;animation-delay:-11s;transform:scale(1.15)}.a14{top:45%;left:35%;animation-delay:-13s;transform:scale(1.3)}
-.a15{top:80%;right:35%;animation-delay:-14s;transform:scale(0.98)}.a16{top:30%;left:60%;animation-delay:-15s;transform:scale(1.2)}
-.a17{top:65%;right:45%;animation-delay:-16s;transform:scale(1.02)}.a18{top:90%;left:55%;animation-delay:-17s;transform:scale(1.28)}
-.a19{top:50%;left:70%;animation-delay:-18s;transform:scale(0.9)}.a20{top:22%;left:75%;animation-delay:-2.5s;transform:scale(1.18)}
+/* ✅ 20 ASTRONAUTS — BAWAT ISA MAY IBANG:
+   POSITION, SIZE, DRIFT ANIMATION, ROTATION, VAPOR TIMING, ARM POSE */
+.a1{top:6%;left:4%;animation:drift1 22s ease-in-out infinite;--vapor-dur:6s;--vapor-delay:0s;transform:scale(1.35) rotate(-10deg)}
+.a1 .arm-left{transform:rotate(-80deg)!important;top:30px!important}
+.a1 .arm-right{transform:rotate(60deg)!important;top:34px!important}
+
+.a2{top:12%;right:8%;animation:drift2 26s ease-in-out infinite;--vapor-dur:7s;--vapor-delay:1s;transform:scale(1.1) rotate(15deg)}
+.a2 .arm-left{transform:rotate(-20deg)!important}
+.a2 .arm-right{transform:rotate(90deg)!important;top:30px!important}
+
+.a3{top:22%;left:18%;animation:drift3 24s ease-in-out infinite;--vapor-dur:5.5s;--vapor-delay:2s;transform:scale(1.25) rotate(-20deg)}
+.a3 .arm-left{transform:rotate(-100deg)!important;top:28px!important}
+.a3 .arm-right{transform:rotate(-40deg)!important}
+
+.a4{top:38%;right:22%;animation:drift4 28s ease-in-out infinite;--vapor-dur:6.5s;--vapor-delay:0.5s;transform:scale(0.95) rotate(25deg)}
+.a4 .arm-left{transform:rotate(-50deg)!important}
+.a4 .arm-right{transform:rotate(100deg)!important;top:28px!important}
+
+.a5{top:52%;left:6%;animation:drift1 25s ease-in-out infinite;--vapor-dur:5s;--vapor-delay:3s;transform:scale(1.45) rotate(5deg)}
+.a5 .arm-left{transform:rotate(-30deg)!important}
+.a5 .arm-right{transform:rotate(30deg)!important}
+
+.a6{top:68%;right:12%;animation:drift2 23s ease-in-out infinite;--vapor-dur:7.5s;--vapor-delay:1.5s;transform:scale(1.15) rotate(-15deg)}
+.a6 .arm-left{transform:rotate(-70deg)!important;top:30px!important}
+.a6 .arm-right{transform:rotate(70deg)!important;top:30px!important}
+
+.a7{top:82%;left:28%;animation:drift3 27s ease-in-out infinite;--vapor-dur:6s;--vapor-delay:2.5s;transform:scale(1.05) rotate(18deg)}
+.a7 .arm-left{transform:rotate(-10deg)!important}
+.a7 .arm-right{transform:rotate(20deg)!important}
+
+.a8{top:8%;left:44%;animation:drift4 21s ease-in-out infinite;--vapor-dur:5.5s;--vapor-delay:0.8s;transform:scale(1.3) rotate(-25deg)}
+.a8 .arm-left{transform:rotate(-90deg)!important;top:28px!important}
+.a8 .arm-right{transform:rotate(80deg)!important;top:30px!important}
+
+.a9{top:33%;right:4%;animation:drift1 29s ease-in-out infinite;--vapor-dur:6.5s;--vapor-delay:3.5s;transform:scale(1) rotate(30deg)}
+.a9 .arm-left{transform:rotate(-40deg)!important}
+.a9 .arm-right{transform:rotate(50deg)!important}
+
+.a10{top:58%;left:48%;animation:drift2 22s ease-in-out infinite;--vapor-dur:7s;--vapor-delay:1.2s;transform:scale(1.4) rotate(-5deg)}
+.a10 .arm-left{transform:rotate(-60deg)!important;top:30px!important}
+.a10 .arm-right{transform:rotate(40deg)!important}
+
+.a11{top:18%;right:38%;animation:drift3 25s ease-in-out infinite;--vapor-dur:5s;--vapor-delay:2.2s;transform:scale(1.1) rotate(22deg)}
+.a11 .arm-left{transform:rotate(-25deg)!important}
+.a11 .arm-right{transform:rotate(75deg)!important;top:30px!important}
+
+.a12{top:73%;left:14%;animation:drift4 26s ease-in-out infinite;--vapor-dur:6s;--vapor-delay:0.3s;transform:scale(1.08) rotate(-30deg)}
+.a12 .arm-left{transform:rotate(-85deg)!important;top:28px!important}
+.a12 .arm-right{transform:rotate(15deg)!important}
+
+.a13{top:4%;right:28%;animation:drift1 24s ease-in-out infinite;--vapor-dur:7.5s;--vapor-delay:1.8s;transform:scale(1.2) rotate(8deg)}
+.a13 .arm-left{transform:rotate(-15deg)!important}
+.a13 .arm-right{transform:rotate(85deg)!important;top:28px!important}
+
+.a14{top:43%;left:34%;animation:drift2 28s ease-in-out infinite;--vapor-dur:5.5s;--vapor-delay:3.2s;transform:scale(1.35) rotate(-12deg)}
+.a14 .arm-left{transform:rotate(-55deg)!important}
+.a14 .arm-right{transform:rotate(55deg)!important}
+
+.a15{top:78%;right:32%;animation:drift3 23s ease-in-out infinite;--vapor-dur:6.5s;--vapor-delay:0.7s;transform:scale(1.02) rotate(28deg)}
+.a15 .arm-left{transform:rotate(-95deg)!important;top:28px!important}
+.a15 .arm-right{transform:rotate(65deg)!important;top:32px!important}
+
+.a16{top:28%;left:58%;animation:drift4 25s ease-in-out infinite;--vapor-dur:5s;--vapor-delay:2.8s;transform:scale(1.22) rotate(-22deg)}
+.a16 .arm-left{transform:rotate(-35deg)!important}
+.a16 .arm-right{transform:rotate(95deg)!important;top:28px!important}
+
+.a17{top:63%;right:42%;animation:drift1 27s ease-in-out infinite;--vapor-dur:7s;--vapor-delay:1.5s;transform:scale(1.08) rotate(12deg)}
+.a17 .arm-left{transform:rotate(-75deg)!important;top:30px!important}
+.a17 .arm-right{transform:rotate(25deg)!important}
+
+.a18{top:88%;left:54%;animation:drift2 21s ease-in-out infinite;--vapor-dur:6s;--vapor-delay:3.8s;transform:scale(1.32) rotate(-35deg)}
+.a18 .arm-left{transform:rotate(-45deg)!important}
+.a18 .arm-right{transform:rotate(45deg)!important}
+
+.a19{top:48%;left:68%;animation:drift3 29s ease-in-out infinite;--vapor-dur:5.5s;--vapor-delay:0.2s;transform:scale(0.98) rotate(35deg)}
+.a19 .arm-left{transform:rotate(-105deg)!important;top:28px!important}
+.a19 .arm-right{transform:rotate(70deg)!important;top:30px!important}
+
+.a20{top:20%;left:74%;animation:drift4 24s ease-in-out infinite;--vapor-dur:6.5s;--vapor-delay:2s;transform:scale(1.2) rotate(-8deg)}
+.a20 .arm-left{transform:rotate(-25deg)!important}
+.a20 .arm-right{transform:rotate(55deg)!important}
 
 /* ORBIT RINGS */
 .orbit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -291,148 +389,209 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
 </head>
 <body>
 
-<!-- ANIMATED SPACE + 20 TUNAY NA ASTRONAUTS -->
+<!-- SPACE + 20 ZERO-G ASTRONAUTS -->
 <div id="space">
     <div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div>
-    <!-- A1 -->
+
+    <!-- ASTRONAUT 1 -->
     <div class="astronaut a1">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A2 -->
+    <!-- ASTRONAUT 2 -->
     <div class="astronaut a2">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A3 -->
+    <!-- ASTRONAUT 3 -->
     <div class="astronaut a3">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A4 -->
+    <!-- ASTRONAUT 4 -->
     <div class="astronaut a4">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A5 -->
+    <!-- ASTRONAUT 5 -->
     <div class="astronaut a5">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A6 -->
+    <!-- ASTRONAUT 6 -->
     <div class="astronaut a6">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A7 -->
+    <!-- ASTRONAUT 7 -->
     <div class="astronaut a7">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A8 -->
+    <!-- ASTRONAUT 8 -->
     <div class="astronaut a8">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A9 -->
+    <!-- ASTRONAUT 9 -->
     <div class="astronaut a9">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A10 -->
+    <!-- ASTRONAUT 10 -->
     <div class="astronaut a10">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A11 -->
+    <!-- ASTRONAUT 11 -->
     <div class="astronaut a11">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A12 -->
+    <!-- ASTRONAUT 12 -->
     <div class="astronaut a12">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A13 -->
+    <!-- ASTRONAUT 13 -->
     <div class="astronaut a13">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A14 -->
+    <!-- ASTRONAUT 14 -->
     <div class="astronaut a14">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A15 -->
+    <!-- ASTRONAUT 15 -->
     <div class="astronaut a15">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A16 -->
+    <!-- ASTRONAUT 16 -->
     <div class="astronaut a16">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A17 -->
+    <!-- ASTRONAUT 17 -->
     <div class="astronaut a17">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A18 -->
+    <!-- ASTRONAUT 18 -->
     <div class="astronaut a18">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A19 -->
+    <!-- ASTRONAUT 19 -->
     <div class="astronaut a19">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
-    <!-- A20 -->
+    <!-- ASTRONAUT 20 -->
     <div class="astronaut a20">
-        <div class="arm-left"></div><div class="arm-right"></div>
-        <div class="leg-left"></div><div class="leg-right"></div>
-        <div class="boot-left"></div><div class="boot-right"></div>
-        <div class="flame"></div>
+        <div class="tank"></div>
+        <div class="helmet"><div class="visor"></div></div>
+        <div class="body"><div class="chest-panel"></div></div>
+        <div class="arm arm-left"></div><div class="arm arm-right"></div>
+        <div class="leg leg-left"></div><div class="leg leg-right"></div>
+        <div class="boot boot-left"></div><div class="boot boot-right"></div>
+        <div class="vapor vapor-left"></div><div class="vapor vapor-right"></div>
     </div>
 </div>
 
@@ -452,7 +611,7 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
 
 <!-- HERO -->
 <section class="hero">
-    <div class="sys-tag">✦ SYSTEM ONLINE · 4000 STARS BURNING ✦</div>
+    <div class="sys-tag">✦ SYSTEM ONLINE · DRIFTING IN DEEP SPACE ✦</div>
     <h1>JAYD F.<br>REPOBERBIO</h1>
     <p class="sub">Warm greetings — welcome to my official portfolio. I am Jayd Repoberbio, a first-year student at <strong>Franciscan College of the Immaculate Conception (FCIC)</strong> in Baybay City, Leyte, taking <strong>BSED Major in English</strong>. With zero formal IT schooling, I taught myself web development, design, game creation, and cybersecurity using <strong>only an Android phone + Termux + pure code</strong>.</p>
     <div class="btns">
@@ -585,7 +744,7 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
     </div>
 </section>
 
-<!-- PROJECTS (TINANGGAL NA ANG "20 ASTRONAUTS 3D PORTFOLIO") -->
+<!-- PROJECTS -->
 <section id="projects">
     <div class="section-title">
         <h2><span class="diamond">◇</span> FEATURED_PROJECTS <span class="diamond">◇</span></h2>
@@ -608,8 +767,8 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
         </div>
         <div class="card">
             <span class="flag">★ THIS PAGE ★</span>
-            <h3>🚀 3D ANIMATED PORTFOLIO</h3>
-            <p>Fully animated astronauts drifting in zero gravity, 4000 twinkling stars, 3 glowing orbit rings, pure CSS animation code — no external libraries.</p>
+            <h3>🚀 DEEP SPACE PORTFOLIO</h3>
+            <p>20 fully animated zero-gravity astronauts, animated starfield, 3 glowing orbit rings, pure CSS animation code — no external libraries.</p>
         </div>
     </div>
 </section>
@@ -651,7 +810,7 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
     <p>© 2077 CYBERJAYD SYSTEMS · ALL RIGHTS RESERVED</p>
     <p><strong>DESIGNED · CODED · FORGED BY JAYD F. REPOBERBIO</strong></p>
     <p>100% PURE CODE · NO AI IMAGES · BUILT 100% ON ANDROID VIA TERMUX</p>
-    <div class="f-tag">◇ 4000 STARS BURNING · YOU ARE HERE ◇</div>
+    <div class="f-tag">◇ DRIFTING IN DEEP SPACE · YOU ARE HERE ◇</div>
 </footer>
 
 </body>
