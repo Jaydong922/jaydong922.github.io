@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | ULTIMATE 3D PORTFOLIO</title>
-<meta name="description" content="Jayd F. Repoberbio — BSED-English First Year, Self-Taught Web & Game Developer. Built 100% on Android via Termux.">
+<title>CYBERJAYD | 20 ASTRONAUTS · 3D GALAXY PORTFOLIO</title>
+<meta name="description" content="Jayd F. Repoberbio — 20 Floating 3D Astronauts in Deep Space. 100% Pure Code, Built on Android.">
 <meta name="author" content="Jayd F. Repoberbio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,354 +13,381 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-    --prime:#00d9ff;
-    --accent:#00ffd5;
-    --dark:#01030a;
-    --mid:#040818;
-    --light:#0c1a35;
-    --text:#e0f7ff;
-    --muted:#90b0d8;
-    --glow:0 0 25px rgba(0,217,255,0.7);
+    --c1:#00e5ff;--c2:#00ffc8;--c3:#ff2bd6;--c4:#ffd000;--c5:#7a5cff;
+    --bg1:#030014;--txt:#e6faff;--dim:#8fb8d9;
+    --glow:0 0 30px rgba(0,229,255,0.9);--glow2:0 0 25px rgba(255,43,214,0.8);
 }
-body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow:hidden}
-h1,h2,h3,h4{font-family:'Orbitron',sans-serif}
-a{color:var(--prime);text-decoration:none;transition:all 0.3s}
-a:hover{color:var(--accent);text-shadow:var(--glow)}
-
-/* FULL SCREEN 3D BACKGROUND */
-#full-3d-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
-
-/* HEADER */
-header{position:relative;z-index:2;padding:1rem 5%;background:linear-gradient(180deg,rgba(1,3,10,0.85) 0%,transparent 100%)}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.logo{font-size:1.5rem;font-weight:800;color:var(--prime);text-shadow:var(--glow)}
-.nav-links{display:flex;gap:1.2rem;flex-wrap:wrap}
-.nav-links a{font-weight:600;font-size:1.1rem}
-
-/* HERO */
-.hero{position:relative;z-index:2;padding:4rem 5%;text-align:center}
-.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);margin-bottom:1rem;background:linear-gradient(90deg,var(--prime),var(--accent));-webkit-background-clip:text;color:transparent;letter-spacing:2px}
-.hero p{font-size:clamp(1.1rem,3vw,1.5rem);max-width:900px;margin:0 auto 2rem;color:var(--muted);line-height:1.8}
-.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn{padding:0.8rem 2rem;border:2px solid var(--prime);border-radius:4px;font-weight:700;letter-spacing:1px;transition:all 0.3s}
-.btn.primary{background:var(--prime);color:var(--dark)}
-.btn.primary:hover{background:var(--accent);border-color:var(--accent);box-shadow:var(--glow)}
-.btn.secondary{background:rgba(0,217,255,0.1);color:var(--prime);backdrop-filter:blur(4px)}
-.btn.secondary:hover{background:rgba(0,217,255,0.2)}
-
-/* SECTIONS */
-section{position:relative;z-index:2;padding:3rem 5%;max-width:1200px;margin:0 auto}
-.section-title{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:2rem;text-align:center;color:var(--prime);border-bottom:1px solid var(--light);padding-bottom:0.5rem}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.card{background:rgba(4,8,24,0.75);border:1px solid var(--light);border-radius:6px;padding:1.5rem;transition:all 0.3s;backdrop-filter:blur(6px)}
-.card:hover{border-color:var(--prime);box-shadow:var(--glow);transform:translateY(-3px)}
-.card h3{color:var(--accent);margin-bottom:0.8rem}
-.card p{color:var(--muted);line-height:1.6}
-
-/* GAME CARD */
-.game-card{background:linear-gradient(135deg,rgba(8,20,40,0.8),rgba(1,3,10,0.8));border:2px solid var(--prime)}
-.game-card a{display:block;padding:1rem;text-align:center;font-size:1.3rem;font-weight:700}
-
-/* CONTACT */
-.contact-box{background:rgba(4,8,24,0.75);border:1px solid var(--light);border-radius:6px;padding:2rem;text-align:center;backdrop-filter:blur(6px)}
-.contact-item{margin:1rem 0;font-size:1.2rem}
-.contact-item a{font-weight:600}
-
-/* FOOTER */
-footer{position:relative;z-index:2;padding:2rem 5%;text-align:center;color:var(--muted);font-size:0.9rem;border-top:1px solid var(--light);margin-top:3rem}
-
-/* RESPONSIVE */
-@media(max-width:600px){
-    .nav-links{justify-content:center}
-    .hero h1{font-size:2.2rem}
+html{scroll-behavior:smooth}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg1);color:var(--txt);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:1px}
+a{color:var(--c1);text-decoration:none;transition:all .25s}
+a:hover{color:var(--c2);text-shadow:var(--glow)}
+#space{position:fixed;inset:0;z-index:0;display:block;width:100vw;height:100vh}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1rem 6%;
+background:linear-gradient(180deg,rgba(3,0,20,0.95),rgba(3,0,20,0.5),transparent);backdrop-filter:blur(4px)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.logo{font-family:'Orbitron',sans-serif;font-size:1.7rem;font-weight:900;color:var(--c1);text-shadow:var(--glow);letter-spacing:3px}
+.links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.links a{font-weight:600;font-size:1.1rem;padding:.3rem 0;position:relative}
+.links a::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,var(--c1),var(--c3));transition:.3s;transform:translateX(-50%)}
+.links a:hover::after{width:100%}
+.hero{position:relative;z-index:5;padding:7rem 6% 4rem;text-align:center}
+.tag{display:inline-block;padding:.5rem 1.4rem;border:1px solid rgba(0,229,255,.4);border-radius:50px;
+font-size:.9rem;color:var(--c2);letter-spacing:2px;background:rgba(0,229,255,.06);margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.8rem,7vw,5.2rem);font-weight:900;margin-bottom:1.2rem;
+background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c1));
+background-size:400% 400%;-webkit-background-clip:text;color:transparent;
+animation:grad 7s ease infinite;letter-spacing:3px;line-height:1.1}
+@keyframes grad{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.hero p{font-size:clamp(1.1rem,2.8vw,1.5rem);max-width:950px;margin:0 auto 2rem;color:var(--dim);line-height:1.8}
+.btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.btn{padding:.9rem 2.2rem;border:2px solid var(--c1);border-radius:4px;font-family:'Orbitron',sans-serif;
+font-weight:700;letter-spacing:1.2px;cursor:pointer;transition:.3s}
+.b1{background:linear-gradient(135deg,var(--c1),var(--c2));color:#001218;box-shadow:var(--glow)}
+.b1:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 45px rgba(0,229,255,.6)}
+.b2{background:rgba(0,229,255,.06);color:var(--c1);backdrop-filter:blur(4px)}
+.b2:hover{background:rgba(0,229,255,.18);transform:translateY(-3px);border-color:var(--c2)}
+section{position:relative;z-index:5;padding:3.5rem 6%;max-width:1300px;margin:0 auto}
+.head{text-align:center;margin-bottom:2.5rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,229,255,.2)}
+.head h2{font-size:clamp(1.9rem,4.2vw,2.8rem);color:var(--c1);text-shadow:0 0 15px rgba(0,229,255,.4)}
+.head p{color:var(--dim);margin-top:.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem}
+.card{background:linear-gradient(145deg,rgba(10,0,48,.78),rgba(0,26,51,.55));
+border:1px solid rgba(0,229,255,.22);border-radius:10px;padding:1.7rem;
+transition:.35s;backdrop-filter:blur(8px);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(0,229,255,.14),transparent 30%);
+animation:spin 8s linear infinite;opacity:0;transition:.3s}
+.card:hover::before{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card:hover{transform:translateY(-5px) scale(1.015);border-color:var(--c2);box-shadow:var(--glow)}
+.card h3{color:var(--c2);margin-bottom:.9rem;font-size:1.35rem}
+.card p{color:var(--dim);line-height:1.7}
+.card ul{list-style:none;padding:0;margin-top:.8rem}
+.card ul li{padding:.35rem 0;color:var(--dim);border-bottom:1px dashed rgba(0,229,255,.1)}
+.price{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:var(--c1);font-weight:800;margin:.8rem 0;text-shadow:0 0 12px rgba(0,229,255,.5)}
+.gc{border:2px solid var(--c3);background:linear-gradient(145deg,rgba(50,5,55,.8),rgba(90,10,100,.45))}
+.gc:hover{border-color:var(--c3);box-shadow:var(--glow2)}
+.gc h3{color:var(--c3)}
+.cbox{background:linear-gradient(145deg,rgba(10,0,48,.85),rgba(0,26,51,.6));
+border:1px solid rgba(0,229,255,.25);border-radius:12px;padding:2.5rem;text-align:center;
+backdrop-filter:blur(10px);max-width:900px;margin:0 auto}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin:1.5rem 0 2rem}
+.citem{padding:1rem;border:1px solid rgba(0,229,255,.18);border-radius:8px;background:rgba(0,229,255,.04);transition:.3s}
+.citem:hover{border-color:var(--c2);transform:translateY(-2px);background:rgba(0,229,255,.09)}
+.cl{font-size:.85rem;letter-spacing:2px;color:var(--c2);text-transform:uppercase;margin-bottom:.4rem}
+.cv{font-size:1.1rem;font-weight:600;word-break:break-word}
+footer{position:relative;z-index:5;padding:2.5rem 6% 1.8rem;text-align:center;color:var(--dim);
+border-top:1px solid rgba(0,229,255,.18);margin-top:4rem;
+background:linear-gradient(0deg,rgba(3,0,20,.95),transparent)}
+footer .logo{display:inline-block;margin-bottom:1rem;font-size:1.4rem}
+.div{max-width:600px;height:1px;margin:1.2rem auto;background:linear-gradient(90deg,transparent,var(--c1),var(--c3),transparent)}
+footer p{margin:.3rem 0}
+@media(max-width:700px){
+    nav{padding:1rem 4%}.logo{font-size:1.4rem}.links{gap:1rem;justify-content:center}
+    .hero{padding:6rem 4% 3rem}section{padding:2.8rem 4%}.cbox{padding:1.8rem 1.2rem}
 }
 </style>
 </head>
 <body>
-<!-- FULL 3D BACKGROUND WITH ASTRONAUT + 2200+ STARS + ORBITS -->
-<div id="full-3d-bg"></div>
 
-<header>
-    <div class="nav-bar">
-        <div class="logo">CYBERJAYD</div>
-        <nav class="nav-links">
-            <a href="#about">ABOUT</a>
-            <a href="#skills">SKILLS</a>
-            <a href="#services">SERVICES</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
-        </nav>
+<div id="space"></div>
+
+<nav>
+<div class="nav-inner">
+    <div class="logo">CYBERJAYD</div>
+    <div class="links">
+        <a href="#about">ABOUT</a><a href="#skills">SKILLS</a><a href="#services">SERVICES</a>
+        <a href="#projects">PROJECTS</a><a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
     </div>
-</header>
+</div>
+</nav>
 
 <section class="hero">
+    <div class="tag">✦ SYSTEM ONLINE · 20 ASTRONAUTS DRIFTING · 4000 STARS BURNING ✦</div>
     <h1>JAYD F. REPOBERBIO</h1>
-    <p>Warm greetings to you — welcome to my portfolio. I am Jayd Repoberbio, a first-year student at FCIC taking BSED Major in English. Self-taught in web development, I built this entire site using only an Android phone, Termux, and pure code. I create professional websites, games, and automation tools — and I am open to projects worldwide.</p>
-    <div class="hero-buttons">
-        <a href="#projects" class="btn primary">VIEW PROJECTS</a>
-        <a href="#contact" class="btn secondary">HIRE ME</a>
-    </div>
+    <p>Warm greetings to you — welcome to my official portfolio. I am Jayd Repoberbio, a first-year student at <strong>Franciscan College of the Immaculate Conception (FCIC)</strong> in Baybay City, Leyte, taking <strong>BSED Major in English</strong>. With zero formal IT schooling, I taught myself web development, 3D design, game creation, and cybersecurity using <strong>only an Android phone + Termux + pure code</strong>. I build fast, beautiful, global-standard websites and tools — and I accept freelance projects from anywhere in the world.</p>
+    <div class="btns"><a href="#projects" class="btn b1">VIEW MY PROJECTS</a><a href="#contact" class="btn b2">HIRE ME NOW</a></div>
 </section>
 
 <section id="about">
-    <h2 class="section-title">ABOUT_ME.EXE</h2>
-    <div class="card">
-        <h3>IDENTITY</h3>
-        <p>JAYD F. REPOBERBIO — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
-        <h3>STATUS</h3>
-        <p>First Year College • BSED-ENG • Franciscan College of Immaculate Conception (FCIC) Baybay City, Leyte.<br>No formal IT degree. 100% SELF-TAUGHT. Every skill earned through late-night practice, endless research, and never giving up.</p>
-        <h3>SPECIALIZATION</h3>
-        <p>Lightweight mobile-optimized websites, automation scripts, and ethical security tools — all built to run perfectly on Android devices.</p>
-        <h3>MISSION</h3>
-        <p>Prove that passion beats expensive equipment. Anyone can build global-standard work with dedication and knowledge.</p>
-        <p style="margin-top:1rem;color:var(--accent);font-weight:600;">STATUS: ONLINE • ACCEPTING NEW CONTRACTS • RESPONSE < 24H</p>
-    </div>
+<div class="head"><h2>⟡ ABOUT_ME.EXE ⟡</h2><p>Who is behind CYBERJAYD?</p></div>
+<div class="card">
+    <h3>👤 IDENTITY</h3><p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, Game Developer, and the sole designer & coder of everything you see here.</p><br>
+    <h3>🎓 STATUS</h3><p>First Year College • <strong>BSED-ENG</strong> • FCIC Baybay City, Leyte, Philippines 🇵🇭<br><span style="color:var(--c2)">→ No formal IT degree. 100% SELF-TAUGHT. ←</span><br>Every skill earned through 3AM grinds, endless tutorials, reading hundreds of docs, breaking code on purpose to learn how it works, and never accepting "I can't" as an answer.</p><br>
+    <h3>⚡ SPECIALIZATION</h3><p>✅ Lightweight, mobile-optimized professional websites<br>✅ Custom browser games (Flappy Blues, Galaxy War)<br>✅ Python / Bash automation scripts<br>✅ Ethical security tools for Android / Termux<br>✅ 3D animated web experiences (this page you're looking at!)</p><br>
+    <h3>🌍 MISSION</h3><p>To prove that <strong>passion beats expensive equipment</strong>. You don't need a high-end PC, fancy school, or rich family to create world-class work. All you need is dedication, curiosity, and the courage to keep trying when code refuses to run. If a province student with an Android phone can build this — so can you.</p><br>
+    <p style="color:var(--c2);font-weight:700;font-size:1.1rem;text-align:center;border-top:1px dashed rgba(0,229,255,.25);padding-top:1rem">⟢ STATUS: ONLINE · ACCEPTING NEW CONTRACTS WORLDWIDE · RESPONSE < 24H ⟣</p>
+</div>
 </section>
 
 <section id="skills">
-    <h2 class="section-title">CORE_CAPABILITIES</h2>
-    <div class="card-grid">
-        <div class="card">
-            <h3>🔐 CYBERSECURITY</h3>
-            <p>Ethical Research • Bug Bounty • Vulnerability Assessment • Reconnaissance • Security Analysis</p>
-        </div>
-        <div class="card">
-            <h3>💻 DEVELOPMENT</h3>
-            <p>HTML • CSS • JavaScript • Python • Bash Scripting • Automation • Web Design</p>
-        </div>
-        <div class="card">
-            <h3>📡 PLATFORMS</h3>
-            <p>Termux • Linux • GitHub • Mobile-First Design • Cloud Deployment</p>
-        </div>
-    </div>
+<div class="head"><h2>⟡ CORE_CAPABILITIES ⟡</h2><p>Tools & skills I use every day</p></div>
+<div class="grid">
+    <div class="card"><h3>🔐 CYBERSECURITY</h3><ul><li>Ethical Hacking Research</li><li>Bug Bounty Hunting</li><li>Vulnerability Assessment</li><li>SSRF / XSS / Recon</li><li>Security Analysis & Reporting</li></ul></div>
+    <div class="card"><h3>💻 DEVELOPMENT</h3><ul><li>HTML5 · CSS3 · JavaScript ES6+</li><li>Three.js 3D Web Graphics</li><li>Python 3 Scripting & Automation</li><li>Bash / Shell Scripting</li><li>Git & GitHub Version Control</li></ul></div>
+    <div class="card"><h3>📱 PLATFORMS</h3><ul><li>Termux (Android Linux)</li><li>Ubuntu / Debian Linux</li><li>GitHub Pages Deployment</li><li>Mobile-First Responsive Design</li><li>System Optimization & Tuning</li></ul></div>
+</div>
 </section>
 
 <section id="services">
-    <h2 class="section-title">SERVICES_&_PRICING</h2>
-    <div class="card-grid">
-        <div class="card">
-            <h3>🌐 WEB DESIGN</h3>
-            <p>Clean • Professional • Cyber Style<br>₱800 – ₱2,000<br>Portfolio / Business Sites • Fully Responsive • Free Setup Guide</p>
-        </div>
-        <div class="card">
-            <h3>🔒 SECURITY AUDIT</h3>
-            <p>Find risks before attackers do<br>₱1,000 – ₱2,500<br>Full Report • Fix Tips • 100% Legal & Ethical</p>
-        </div>
-        <div class="card">
-            <h3>📱 TERMUX / LINUX</h3>
-            <p>Full setup • Speed optimized<br>₱300 – ₱800<br>Clean Install • Toolkit Preloaded • Performance Boost</p>
-        </div>
-    </div>
+<div class="head"><h2>⟡ SERVICES_&_PRICING ⟡</h2><p>What I can build for you</p></div>
+<div class="grid">
+    <div class="card"><h3>🌐 WEB DESIGN · BEST SELLER</h3><div class="price">₱800 – ₱2,000</div><p>Clean · Professional · Cyber / Modern Style</p><ul><li>Portfolio / Business / Personal Sites</li><li>100% Mobile Responsive</li><li>Free GitHub Deployment Guide</li><li>1 Free Minor Revision</li><li>Fast Loading & SEO Ready</li></ul></div>
+    <div class="card"><h3>🔒 SECURITY AUDIT</h3><div class="price">₱1,000 – ₱2,500</div><p>Find risks before attackers do</p><ul><li>Automated + Manual Deep Scan</li><li>Full Written Vulnerability Report</li><li>Step-by-Step Fix Recommendations</li><li>100% Legal & Ethical Only</li><li>Confidentiality Guaranteed</li></ul></div>
+    <div class="card"><h3>📱 TERMUX / LINUX SETUP</h3><div class="price">₱300 – ₱800</div><p>Turn your phone into a dev / hacking machine</p><ul><li>Clean Install & Full Configuration</li><li>Essential Tools Preloaded</li><li>RAM / CPU Performance Boost</li><li>Written Step-by-Step Guide</li><li>Remote Walkthrough Option</li></ul></div>
+    <div class="card"><h3>⚙️ AUTOMATION SCRIPTS</h3><div class="price">₱500 – ₱1,500</div><p>Code that works while you sleep</p><ul><li>Python · Bash · JS Source Code</li><li>Full Commented Code</li><li>Usage Documentation</li><li>Free Minor Updates 7 Days</li><li>Custom Features Accepted</li></ul></div>
+</div>
 </section>
 
 <section id="projects">
-    <h2 class="section-title">FEATURED_PROJECTS</h2>
-    <div class="card-grid">
-        <div class="card">
-            <h3>🔐 CYBERJAYD SECURITY LAB</h3>
-            <p>All-in-one security toolkit for Android — SSRF scanning, recon, automation scripts.</p>
-        </div>
-        <div class="card">
-            <h3>🛒 CYBERJAYD SHOP</h3>
-            <p>Full marketplace system — sign up, login, admin panel, product display.</p>
-        </div>
-        <div class="card game-card">
-            <h3>🎮 FLAPPY BLUES</h3>
-            <p>Original custom game — rocket design, smoke trails, score system.<br><a href="flappy.html" target="_blank">▶ PLAY NOW</a></p>
-        </div>
-    </div>
+<div class="head"><h2>⟡ FEATURED_PROJECTS ⟡</h2><p>Things I built from scratch</p></div>
+<div class="grid">
+    <div class="card"><h3>🔐 CYBERJAYD SECURITY LAB v1.7.2</h3><p style="color:var(--c2);font-weight:700">★ FLAGSHIP · ACTIVE ★</p><p>All-in-one security toolkit built for Android via Termux. Subdomain enumeration, live host detection, SSRF testing, port scanning, automation workflows — no PC required.</p></div>
+    <div class="card"><h3>🛒 CYBERJAYD SHOP</h3><p>Full marketplace: Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS — no frameworks, no bloat.</p></div>
+    <div class="card gc"><h3>🎮 FLAPPY BLUES</h3><p>My first complete browser game — custom rocket, smoke particles, animated obstacles, live score, game over screen, smooth physics. Built entirely on Android.</p><a href="flappy.html" target="_blank" class="btn b2" style="display:inline-block;margin-top:1rem;padding:.6rem 1.4rem;font-size:.9rem">▶ PLAY NOW</a></div>
+    <div class="card gc"><h3>🚀 GALAXY WAR</h3><p>Continuous 2D space battle — 2 teams, lasers, explosions, floating debris, endless respawns. Live on GitHub Pages.</p><a href="https://jaydong922.github.io/earth/" target="_blank" class="btn b2" style="display:inline-block;margin-top:1rem;padding:.6rem 1.4rem;font-size:.9rem">▶ WATCH BATTLE</a></div>
+</div>
 </section>
 
 <section id="contact">
-    <h2 class="section-title">ESTABLISH_CONNECTION</h2>
-    <div class="contact-box">
-        <div class="contact-item">📧 MAIN: <a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></div>
-        <div class="contact-item">📧 BUSINESS: <a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div>
-        <div class="contact-item">📍 Baybay City, Leyte / Cebu City, PH 🇵🇭</div>
-        <div class="contact-item">⏰ Daily 09:00 — 21:00 PHT | ⚡ Fast Response</div>
-        <div class="contact-item" style="margin-top:1.5rem;">
-            <a href="mailto:cyberjayd1@gmail.com?subject=PROJECT_REQUEST_//_CYBERJAYD" class="btn primary">▶ SEND INQUIRY</a>
-        </div>
+<div class="head"><h2>⟡ ESTABLISH_CONNECTION ⟡</h2><p>Let's build something together</p></div>
+<div class="cbox">
+    <h3 style="color:var(--c2);margin-bottom:.5rem">📡 TRANSMISSION READY</h3>
+    <p style="color:var(--dim);margin-bottom:1rem">Pick any channel — I reply fast, even on weekends.</p>
+    <div class="cgrid">
+        <div class="citem"><div class="cl">📧 MAIN EMAIL</div><div class="cv"><a href="mailto:repoberbiojayd3@gmail.com">repoberbiojayd3@gmail.com</a></div></div>
+        <div class="citem"><div class="cl">💼 BUSINESS</div><div class="cv"><a href="mailto:cyberjayd1@gmail.com">cyberjayd1@gmail.com</a></div></div>
+        <div class="citem"><div class="cl">📍 LOCATION</div><div class="cv">Baybay City, Leyte<br>Cebu City, PH 🇵🇭</div></div>
+        <div class="citem"><div class="cl">⏰ HOURS</div><div class="cv">Daily 09:00–21:00 PHT<br>Response < 24h</div></div>
     </div>
+    <a href="mailto:cyberjayd1@gmail.com?subject=PROJECT_REQUEST_%2F%2F_CYBERJAYD" class="btn b1">▶ SEND ME AN INQUIRY</a>
+</div>
 </section>
 
 <footer>
-    <p>© 2077 CYBERJAYD SYSTEMS • ALL RIGHTS RESERVED<br>DESIGNED & BUILT BY JAYD F. REPOBERBIO<br>100% PURE CODE • NO IMAGES USED</p>
+<div class="logo">CYBERJAYD</div><div class="div"></div>
+<p>© 2077 CYBERJAYD SYSTEMS · ALL RIGHTS RESERVED</p>
+<p><strong>DESIGNED · CODED · FORGED BY JAYD F. REPOBERBIO</strong></p>
+<p>100% PURE CODE · NO AI IMAGES · BUILT 100% ON ANDROID VIA TERMUX</p>
+<p style="margin-top:1rem;font-size:.85rem;color:#6088aa">⟢ 20 Astronauts drifting · 4000 stars burning · You are here ⟣</p>
 </footer>
 
-<!-- 3D ENGINE: ASTRONAUT + 2200+ STARS + ORBITS + PARTICLES -->
 <script>
-const container = document.getElementById('full-3d-bg');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
-const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-container.appendChild(renderer.domElement);
+(function(){
+    const container = document.getElementById('space');
+    const scene = new THREE.Scene();
 
-// LIGHTING
-const ambientLight = new THREE.AmbientLight(0x4060a0, 0.7);
-scene.add(ambientLight);
-const blueMain = new THREE.PointLight(0x00d9ff, 2.5, 500);
-blueMain.position.set(0, 0, 15);
-scene.add(blueMain);
-const cyanLight = new THREE.PointLight(0x00ffd5, 1.8, 400);
-cyanLight.position.set(-12, 6, 8);
-scene.add(cyanLight);
+    const bg = document.createElement('canvas');
+    bg.width = 4; bg.height = 1024;
+    const bx = bg.getContext('2d');
+    const g = bx.createLinearGradient(0,0,0,1024);
+    g.addColorStop(0.0,'#0a0030');g.addColorStop(0.2,'#14003a');g.addColorStop(0.4,'#001a44');
+    g.addColorStop(0.6,'#002244');g.addColorStop(0.8,'#1a0033');g.addColorStop(1.0,'#030014');
+    bx.fillStyle = g; bx.fillRect(0,0,4,1024);
+    scene.background = new THREE.CanvasTexture(bg);
+    scene.fog = new THREE.FogExp2(0x0a0030, 0.0035);
 
-// ✨ 2200+ STARS (FULL COVERAGE)
-const starGeometry = new THREE.BufferGeometry();
-const totalStars = 2250;
-const starPositions = new Float32Array(totalStars * 3);
-const starColors = new Float32Array(totalStars * 3);
-const starSizes = new Float32Array(totalStars);
+    const W = window.innerWidth, H = window.innerHeight;
+    const camera = new THREE.PerspectiveCamera(70, W/H, 0.1, 3000);
+    const renderer = new THREE.WebGLRenderer({antialias:true, alpha:false, powerPreference:'high-performance'});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(W, H);
+    container.appendChild(renderer.domElement);
 
-for(let i = 0; i < totalStars; i++) {
-    const i3 = i * 3;
-    starPositions[i3] = (Math.random() - 0.5) * 1800;
-    starPositions[i3 + 1] = (Math.random() - 0.5) * 1200;
-    starPositions[i3 + 2] = (Math.random() - 0.5) * 1600;
-    
-    const brightness = 0.3 + Math.random() * 0.7;
-    const hue = Math.random();
-    starColors[i3] = 0.2 + brightness * (hue < 0.5 ? 1 : 0.6);
-    starColors[i3 + 1] = 0.5 + brightness * (hue < 0.5 ? 0.8 : 1);
-    starColors[i3 + 2] = brightness;
-    starSizes[i] = 0.3 + Math.random() * 1.2;
-}
+    scene.add(new THREE.AmbientLight(0x88aaff, 0.9));
+    const L1 = new THREE.PointLight(0x00e5ff, 4, 700); L1.position.set(30,20,40); scene.add(L1);
+    const L2 = new THREE.PointLight(0xff2bd6, 3, 600); L2.position.set(-30,-10,25); scene.add(L2);
+    const L3 = new THREE.PointLight(0xffd000, 2, 500); L3.position.set(0,-25,50); scene.add(L3);
+    const L4 = new THREE.PointLight(0x00ffc8, 2.5, 550); L4.position.set(25,-15,15); scene.add(L4);
+    const L5 = new THREE.PointLight(0x7a5cff, 2, 500); L5.position.set(-20,25,30); scene.add(L5);
 
-starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-const starMaterial = new THREE.PointsMaterial({
-    size: 0.6,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.9,
-    blending: THREE.AdditiveBlending
-});
-const stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
-
-// 🧑‍🚀 3D ASTRONAUT
-const astronaut = new THREE.Group();
-astronaut.position.set(0, 0, -25);
-scene.add(astronaut);
-
-// Body
-const bodyGeo = new THREE.CapsuleGeometry(1.3, 3, 12, 24);
-const bodyMat = new THREE.MeshStandardMaterial({color:0xf5faff, metalness:0.55, roughness:0.2});
-const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
-astronaut.add(bodyMesh);
-
-// Glowing Helmet
-const helmetGeo = new THREE.SphereGeometry(1.2, 48, 48);
-const helmetMat = new THREE.MeshStandardMaterial({
-    color:0x00d9ff,
-    transparent: true,
-    opacity: 0.4,
-    metalness: 0.98,
-    roughness: 0.02,
-    emissive:0x00d9ff,
-    emissiveIntensity: 0.3
-});
-const helmetMesh = new THREE.Mesh(helmetGeo, helmetMat);
-helmetMesh.position.y = 2.6;
-astronaut.add(helmetMesh);
-
-// Backpack
-const packGeo = new THREE.BoxGeometry(1.6, 2.4, 0.8);
-const packMat = new THREE.MeshStandardMaterial({color:0x0a1530, metalness:0.65, roughness:0.25});
-const packMesh = new THREE.Mesh(packGeo, packMat);
-packMesh.position.z = -1;
-packMesh.position.y = 0.6;
-astronaut.add(packMesh);
-
-// 🔵 GLOWING ORBIT RINGS
-const ringA = new THREE.TorusGeometry(5, 0.06, 24, 120);
-const ringMatA = new THREE.MeshStandardMaterial({
-    color:0x00d9ff,
-    emissive:0x00d9ff,
-    emissiveIntensity:0.6,
-    transparent:true,
-    opacity:0.7
-});
-const ring1 = new THREE.Mesh(ringA, ringMatA);
-ring1.rotation.x = Math.PI / 2;
-astronaut.add(ring1);
-
-const ringB = new THREE.TorusGeometry(6.2, 0.045, 24, 120);
-const ringMatB = new THREE.MeshStandardMaterial({
-    color:0x00ffd5,
-    emissive:0x00ffd5,
-    emissiveIntensity:0.5,
-    transparent:true,
-    opacity:0.6
-});
-const ring2 = new THREE.Mesh(ringB, ringMatB);
-ring2.rotation.z = Math.PI / 3;
-astronaut.add(ring2);
-
-// ⚡ FLOATING PARTICLES / TRAILS
-const particleCount = 120;
-const particles = [];
-for(let i=0; i<particleCount; i++) {
-    const pGeo = new THREE.SphereGeometry(0.05 + Math.random()*0.1, 8, 8);
-    const pMat = new THREE.MeshStandardMaterial({
-        color: Math.random()>0.5 ? 0x00d9ff : 0x00ffd5,
-        transparent: true,
-        opacity: 0.4 + Math.random()*0.4,
-        emissive: Math.random()>0.5 ? 0x00d9ff : 0x00ffd5,
-        emissiveIntensity: 0.2
+    const STAR_N = 4100;
+    const sg = new THREE.BufferGeometry();
+    const sp = new Float32Array(STAR_N*3); const sc = new Float32Array(STAR_N*3);
+    const ss = new Float32Array(STAR_N); const ph = new Float32Array(STAR_N);
+    for(let i=0;i<STAR_N;i++){
+        const k=i*3;
+        sp[k]=(Math.random()-0.5)*2500; sp[k+1]=(Math.random()-0.5)*1700; sp[k+2]=(Math.random()-0.5)*2000-150;
+        const r=Math.random();
+        if(r<0.5){sc[k]=0.5;sc[k+1]=0.85;sc[k+2]=1;}
+        else if(r<0.75){sc[k]=1;sc[k+1]=0.9;sc[k+2]=0.7;}
+        else if(r<0.9){sc[k]=1;sc[k+1]=0.4;sc[k+2]=0.85;}
+        else{sc[k]=1;sc[k+1]=1;sc[k+2]=1;}
+        ss[i]=0.3+Math.random()*1.9; ph[i]=Math.random()*6.28;
+    }
+    sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+    sg.setAttribute('color',new THREE.BufferAttribute(sc,3));
+    sg.setAttribute('aSize',new THREE.BufferAttribute(ss,1));
+    sg.setAttribute('aPhase',new THREE.BufferAttribute(ph,1));
+    const sm = new THREE.ShaderMaterial({
+        uniforms:{uT:{value:0}},
+        vertexShader:`attribute float aSize;attribute float aPhase;varying vec3 vc;uniform float uT;void main(){vc=color;vec4 mv=modelViewMatrix*vec4(position,1.);float tw=0.55+0.45*sin(uT*1.8+aPhase);gl_PointSize=aSize*tw*(320./-mv.z);gl_Position=projectionMatrix*mv;}`,
+        fragmentShader:`varying vec3 vc;void main(){vec2 d=gl_PointCoord-.5;float r=length(d);if(r>.5)discard;float a=smoothstep(.5,0.,r);gl_FragColor=vec4(vc,a);}`,
+        vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false
     });
-    const p = new THREE.Mesh(pGeo, pMat);
-    p.position.set(
-        (Math.random()-0.5)*12,
-        (Math.random()-0.5)*8,
-        (Math.random()-0.5)*6
-    );
-    p.userData = {
-        speed: 0.01 + Math.random()*0.02,
-        angle: Math.random()*Math.PI*2,
-        radius: 3 + Math.random()*5
-    };
-    particles.push(p);
-    astronaut.add(p);
-}
+    const stars = new THREE.Points(sg, sm); scene.add(stars);
 
-// CAMERA & ANIMATION
-camera.position.z = 18;
+    const NB = 800;
+    const ng = new THREE.BufferGeometry();
+    const np = new Float32Array(NB*3); const nc = new Float32Array(NB*3);
+    for(let i=0;i<NB;i++){
+        const k=i*3;
+        np[k]=(Math.random()-0.5)*1800; np[k+1]=(Math.random()-0.5)*1100; np[k+2]=-400-Math.random()*700;
+        const r=Math.random();
+        if(r<0.35){nc[k]=0.4;nc[k+1]=0.1;nc[k+2]=0.6;}
+        else if(r<0.7){nc[k]=0;nc[k+1]=0.35;nc[k+2]=0.7;}
+        else{nc[k]=0.6;nc[k+1]=0.1;nc[k+2]=0.5;}
+    }
+    ng.setAttribute('position',new THREE.BufferAttribute(np,3));
+    ng.setAttribute('color',new THREE.BufferAttribute(nc,3));
+    scene.add(new THREE.Points(ng,new THREE.PointsMaterial({size:70,vertexColors:true,transparent:true,opacity:0.38,blending:THREE.AdditiveBlending,depthWrite:false})));
 
-function animateScene() {
-    requestAnimationFrame(animateScene);
-    
-    // Astronaut float & rotate
-    astronaut.rotation.y += 0.0025;
-    astronaut.position.y = Math.sin(Date.now()*0.0006)*2;
-    
-    // Rings spin opposite
-    ring1.rotation.z += 0.007;
-    ring2.rotation.x -= 0.005;
-    
-    // Stars drift slowly
-    stars.rotation.y += 0.00015;
-    
-    // Particles orbit
-    particles.forEach(p => {
-        p.userData.angle += p.userData.speed;
-        p.position.x = Math.cos(p.userData.angle) * p.userData.radius;
-        p.position.z = Math.sin(p.userData.angle) * p.userData.radius;
-        p.position.y += Math.sin(Date.now()*0.002 + p.userData.angle) * 0.02;
+    const rings = new THREE.Group(); scene.add(rings);
+    const RC = [0x00e5ff,0x00ffc8,0xff2bd6,0xffd000,0x7a5cff,0xff6699,0x88ffcc,0xffffff,0x00bbff,0xff8800,0xaa66ff,0x66ff99];
+    for(let r=0;r<12;r++){
+        const rad=30+r*11;
+        const m=new THREE.Mesh(new THREE.TorusGeometry(rad,0.07+r*0.012,22,200),new THREE.MeshBasicMaterial({color:RC[r%RC.length],transparent:true,opacity:0.2+(r%4)*0.07}));
+        m.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);
+        m.userData={rx:(Math.random()-0.5)*0.005,ry:(Math.random()-0.5)*0.006,rz:(Math.random()-0.5)*0.004};
+        rings.add(m);
+    }
+
+    const deb = new THREE.Group(); scene.add(deb);
+    for(let i=0;i<250;i++){
+        let geo; const t=Math.random();
+        if(t<0.33)geo=new THREE.TetrahedronGeometry(0.35+Math.random(),0);
+        else if(t<0.66)geo=new THREE.BoxGeometry(0.3+Math.random(),0.25+Math.random(),0.25+Math.random());
+        else geo=new THREE.OctahedronGeometry(0.3+Math.random(),0);
+        const mm=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x556688+Math.floor(Math.random()*0x333333),metalness:0.75,roughness:0.45,flatShading:true}));
+        mm.position.set((Math.random()-0.5)*450,(Math.random()-0.5)*320,-60-Math.random()*300);
+        mm.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
+        mm.userData={rx:(Math.random()-0.5)*0.012,ry:(Math.random()-0.5)*0.014,rz:(Math.random()-0.5)*0.01,vx:(Math.random()-0.5)*0.05,vy:(Math.random()-0.5)*0.04};
+        deb.add(mm);
+    }
+
+    const EP=500;
+    const eg=new THREE.BufferGeometry();
+    const ep=new Float32Array(EP*3); const ec=new Float32Array(EP*3); const ev=[];
+    for(let i=0;i<EP;i++){
+        const k=i*3;
+        ep[k]=(Math.random()-0.5)*300; ep[k+1]=(Math.random()-0.5)*200; ep[k+2]=-30-Math.random()*150;
+        const r=Math.random();
+        if(r<0.33){ec[k]=0;ec[k+1]=0.9;ec[k+2]=1;}
+        else if(r<0.66){ec[k]=1;ec[k+1]=0.17;ec[k+2]=0.84;}
+        else{ec[k]=1;ec[k+1]=0.82;ec[k+2]=0;}
+        ev.push({vx:(Math.random()-0.5)*0.08,vy:(Math.random()-0.5)*0.08,vz:(Math.random()-0.5)*0.05});
+    }
+    eg.setAttribute('position',new THREE.BufferAttribute(ep,3));
+    eg.setAttribute('color',new THREE.BufferAttribute(ec,3));
+    const energy=new THREE.Points(eg,new THREE.PointsMaterial({size:2.2,vertexColors:true,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending,depthWrite:false}));
+    scene.add(energy);
+
+    const astroGroup = new THREE.Group(); scene.add(astroGroup);
+    const HC=[0x00e5ff,0x00ffc8,0xff2bd6,0xffd000,0x7a5cff,0xff6699,0x88ffcc,0xffffff,0xff8800,0x00ffff,0xaa66ff,0x66ff99,0xff4444,0x44ff88,0x4488ff,0xffaa00,0xff66cc,0x66ffff,0xffff66,0xcc88ff];
+    const SC=[0xf2f7ff,0xe6f0ff,0xf5faff,0xdce6ff,0xeaf2ff,0xeef5ff,0xf0f6ff,0xdfe9ff,0xf3f8ff,0xe8f1ff];
+    const list=[];
+
+    function buildAstronaut(idx){
+        const g=new THREE.Group();
+        const hc=HC[idx%HC.length]; const sc=SC[idx%SC.length]; const S=1.3+(idx%5)*0.25;
+        g.add(new THREE.Mesh(new THREE.CapsuleGeometry(1*S,2.3*S,12,20),new THREE.MeshStandardMaterial({color:sc,metalness:0.55,roughness:0.25})));
+        const hel=new THREE.Mesh(new THREE.SphereGeometry(0.98*S,40,40),new THREE.MeshStandardMaterial({color:hc,transparent:true,opacity:0.48,metalness:0.98,roughness:0.03,emissive:hc,emissiveIntensity:0.55}));
+        hel.position.y=2.1*S; g.add(hel);
+        const rim=new THREE.Mesh(new THREE.TorusGeometry(1*S,0.07*S,14,48),new THREE.MeshStandardMaterial({color:0x223355,metalness:0.95,roughness:0.15}));
+        rim.rotation.x=Math.PI/2; rim.position.y=1.3*S; g.add(rim);
+        const vis=new THREE.Mesh(new THREE.SphereGeometry(0.72*S,32,32,0,Math.PI),new THREE.MeshStandardMaterial({color:0x001122,metalness:1,roughness:0.05,transparent:true,opacity:0.85}));
+        vis.position.set(0,2.1*S,0.55*S); g.add(vis);
+        const bp=new THREE.Mesh(new THREE.BoxGeometry(1.4*S,2*S,0.7*S),new THREE.MeshStandardMaterial({color:0x0f1a35,metalness:0.75,roughness:0.28}));
+        bp.position.set(0,0.45*S,-1*S); g.add(bp);
+        for(let q=0;q<2;q++){
+            const bl=new THREE.Mesh(new THREE.SphereGeometry(0.12*S,12,12),new THREE.MeshBasicMaterial({color:q===0?hc:0xff0055}));
+            bl.position.set((q===0?-0.4:0.4)*S,0.1*S,-1.38*S); g.add(bl);
+        }
+        const cb=new THREE.Mesh(new THREE.SphereGeometry(0.15*S,14,14),new THREE.MeshBasicMaterial({color:0xff2233}));
+        cb.position.set(0,0.3*S,1.03*S); cb.userData={t:Math.random()*100,hc}; g.add(cb); g.userData.cb=cb;
+        const la=new THREE.Mesh(new THREE.CapsuleGeometry(0.24*S,1.2*S,8,14),new THREE.MeshStandardMaterial({color:sc,metalness:0.55,roughness:0.25}));
+        la.position.set(-1.22*S,0.25*S,0); la.rotation.z=0.42; g.add(la); g.userData.la=la;
+        const ra=new THREE.Mesh(new THREE.CapsuleGeometry(0.24*S,1.2*S,8,14),new THREE.MeshStandardMaterial({color:sc,metalness:0.55,roughness:0.25}));
+        ra.position.set(1.22*S,0.25*S,0); ra.rotation.z=-0.42; g.add(ra); g.userData.ra=ra;
+        const lg=new THREE.Mesh(new THREE.SphereGeometry(0.28*S,14,14),new THREE.MeshStandardMaterial({color:hc,metalness:0.8,roughness:0.2,emissive:hc,emissiveIntensity:0.2}));
+        lg.position.set(-1.55*S,-0.55*S,0); g.add(lg);
+        const rg=new THREE.Mesh(new THREE.SphereGeometry(0.28*S,14,14),new THREE.MeshStandardMaterial({color:hc,metalness:0.8,roughness:0.2,emissive:hc,emissiveIntensity:0.2}));
+        rg.position.set(1.55*S,-0.55*S,0); g.add(rg);
+        const ll=new THREE.Mesh(new THREE.CapsuleGeometry(0.28*S,1.3*S,8,14),new THREE.MeshStandardMaterial({color:sc,metalness:0.55,roughness:0.25}));
+        ll.position.set(-0.42*S,-2*S,0); g.add(ll);
+        const rl=new THREE.Mesh(new THREE.CapsuleGeometry(0.28*S,1.3*S,8,14),new THREE.MeshStandardMaterial({color:sc,metalness:0.55,roughness:0.25}));
+        rl.position.set(0.42*S,-2*S,0); g.add(rl);
+        const lb=new THREE.Mesh(new THREE.BoxGeometry(0.5*S,0.3*S,0.7*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.8,roughness:0.3}));
+        lb.position.set(-0.42*S,-2.85*S,0.1*S); g.add(lb);
+        const rb=new THREE.Mesh(new THREE.BoxGeometry(0.5*S,0.3*S,0.7*S),new THREE.MeshStandardMaterial({color:0x1a1a2a,metalness:0.8,roughness:0.3}));
+        rb.position.set(0.42*S,-2.85*S,0.1*S); g.add(rb);
+        const flame=new THREE.Mesh(new THREE.ConeGeometry(0.42*S,1.3*S,20),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.75}));
+        flame.rotation.x=Math.PI; flame.position.set(0,-0.1*S,-1.45*S); g.add(flame); g.userData.flame=flame;
+        const pr=new THREE.Mesh(new THREE.TorusGeometry(3.2*S,0.04*S,12,80),new THREE.MeshBasicMaterial({color:hc,transparent:true,opacity:0.55}));
+        pr.rotation.x=Math.PI/3+Math.random(); pr.userData={s:0.01+Math.random()*0.02}; g.add(pr); g.userData.pr=pr;
+        const ang=(idx/20)*Math.PI*2+Math.random()*0.6; const rad=28+(idx%7)*6;
+        g.position.set(Math.cos(ang)*rad+(Math.random()-0.5)*18,(Math.random()-0.5)*35,-32-(idx%5)*7);
+        g.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
+        g.userData={idx,rad,ang,os:0.0004+Math.random()*0.001,bs:0.0007+Math.random()*0.0015,rv:{x:(Math.random()-0.5)*0.005,y:(Math.random()-0.5)*0.006,z:(Math.random()-0.5)*0.004},ap:Math.random()*Math.PI*2,hc,S};
+        astroGroup.add(g); list.push(g);
+    }
+    for(let i=0;i<20;i++) buildAstronaut(i);
+
+    camera.position.set(0,0,22);
+    const clock=new THREE.Clock();
+    function loop(){
+        requestAnimationFrame(loop);
+        const T=clock.getElapsedTime();
+        sm.uniforms.uT.value=T;
+        stars.rotation.y+=0.00012; stars.rotation.x+=0.00005;
+        energy.rotation.y+=0.00008;
+        rings.children.forEach(r=>{r.rotation.x+=r.userData.rx;r.rotation.y+=r.userData.ry;r.rotation.z+=r.userData.rz;});
+        deb.children.forEach(d=>{
+            d.rotation.x+=d.userData.rx;d.rotation.y+=d.userData.ry;d.rotation.z+=d.userData.rz;
+            d.position.x+=d.userData.vx;d.position.y+=d.userData.vy;
+            if(d.position.x>240)d.position.x=-240;if(d.position.x<-240)d.position.x=240;
+            if(d.position.y>170)d.position.y=-170;if(d.position.y<-170)d.position.y=170;
+        });
+        const pa=eg.attributes.position.array;
+        for(let i=0;i<EP;i++){
+            const k=i*3;const v=ev[i];
+            pa[k]+=v.vx;pa[k+1]+=v.vy;pa[k+2]+=v.vz;
+            if(Math.abs(pa[k])>180)v.vx*=-1;
+            if(Math.abs(pa[k+1])>120)v.vy*=-1;
+            if(pa[k+2]>-20||pa[k+2]<-220)v.vz*=-1;
+        }
+        eg.attributes.position.needsUpdate=true;
+        list.forEach(a=>{
+            const u=a.userData;
+            u.ang+=u.os;
+            a.position.x=Math.cos(u.ang)*u.rad;
+            a.position.z=-34+Math.sin(u.ang)*u.rad*0.75;
+            a.position.y+=Math.sin(T*u.bs*1000+u.idx)*0.012;
+            a.rotation.x+=u.rv.x;a.rotation.y+=u.rv.y;a.rotation.z+=u.rv.z;
+            const wave=Math.sin(T*2.2+u.ap)*0.3;
+            if(u.la)u.la.rotation.z=0.42+wave;
+            if(u.ra)u.ra.rotation.z=-0.42-wave;
+            if(u.cb){u.cb.userData.t+=0.06;u.cb.material.color.setHex((Math.sin(u.cb.userData.t)+1)/2>0.5?0x33ff55:0xff2233);}
+            if(u.flame){u.flame.scale.y=0.75+Math.random()*0.6;u.flame.material.opacity=0.5+Math.random()*0.45;}
+            if(u.pr)u.pr.rotation.z+=u.pr.userData.s;
+        });
+        camera.position.x=Math.sin(T*0.1)*1.6;
+        camera.position.y=Math.cos(T*0.08)*1.1;
+        camera.lookAt(0,0,-34);
+        L1.position.x=Math.sin(T*0.35)*28;
+        L2.position.y=Math.cos(T*0.3)*18;
+        L3.position.z=45+Math.sin(T*0.25)*18;
+        L4.position.x=Math.cos(T*0.2)*22;
+        L5.position.y=Math.sin(T*0.18)*20;
+        renderer.render(scene,camera);
+    }
+    loop();
+    window.addEventListener('resize',()=>{
+        const w=window.innerWidth,h=window.innerHeight;
+        camera.aspect=w/h;camera.updateProjectionMatrix();
+        renderer.setSize(w,h);
     });
-    
-    renderer.render(scene, camera);
-}
-animateScene();
-
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+})();
 </script>
 </body>
 </html>
