@@ -7,8 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- ✅ 3D EARTH LIBRARY (NO INSTALL NEEDED) -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
@@ -23,14 +21,87 @@ a{color:var(--cyan);text-decoration:none;transition:all .2s}
 a:hover{color:var(--pink);text-shadow:0 0 15px rgba(255,43,214,0.8)}
 
 /* =========================================
-   ✅ NEW: 3D ROTATING EARTH + GLITTERS
-   (TINANGGAL NA LAHAT NG ASTRONAUT)
+   ✅ NEW: NO-LAG 3D EARTH + GLITTERS
+   PURE CSS + CANVAS 2D ONLY — ZERO LIBRARY
    ========================================= */
-#space-canvas{
+#space-wrap{
     position:fixed;inset:0;z-index:0;
     width:100vw;height:100vh;
-    display:block;
+    overflow:hidden;
     background:radial-gradient(ellipse at center,#0a0030 0%,#050014 65%,#020008 100%);
+}
+#dust-canvas{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    display:block;
+}
+
+/* ✅ 3D EARTH — PURE CSS, GPU ACCELERATED ONLY */
+.earth-stage{
+    position:absolute;
+    top:50%;left:50%;
+    width:320px;height:320px;
+    transform:translate(-50%,-50%);
+    perspective:1000px;
+    pointer-events:none;
+    opacity:.55;
+}
+@media(max-width:700px){
+    .earth-stage{width:240px;height:240px;opacity:.45}
+}
+.earth{
+    position:absolute;inset:0;
+    border-radius:50%;
+    transform-style:preserve-3d;
+    animation:earthSpin 45s linear infinite;
+    /* Procedural world map: oceans + land clouds — walang image, walang shader */
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), transparent 45%),
+        radial-gradient(ellipse at 20% 20%, rgba(0,255,200,.18), transparent 35%),
+        radial-gradient(ellipse at 70% 60%, rgba(0,255,200,.15), transparent 40%),
+        radial-gradient(ellipse at 45% 75%, rgba(255,208,0,.10), transparent 30%),
+        radial-gradient(ellipse at 80% 25%, rgba(255,255,255,.12), transparent 25%),
+        linear-gradient(180deg, #001a33 0%, #003366 25%, #004488 50%, #003366 75%, #001a33 100%);
+    background-size: 200% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 100%;
+    box-shadow:
+        inset -30px -30px 80px rgba(0,0,0,.85),
+        inset 15px 15px 40px rgba(120,200,255,.25),
+        0 0 40px rgba(0,150,255,.45),
+        0 0 90px rgba(0,100,220,.25);
+    border:1px solid rgba(100,200,255,.35);
+}
+/* Cloud layer — separate, slower spin */
+.earth::before{
+    content:'';
+    position:absolute;inset:4%;
+    border-radius:50%;
+    background:
+        radial-gradient(ellipse at 25% 30%, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(ellipse at 60% 50%, rgba(255,255,255,.28), transparent 35%),
+        radial-gradient(ellipse at 75% 75%, rgba(255,255,255,.22), transparent 30%),
+        radial-gradient(ellipse at 15% 70%, rgba(255,255,255,.18), transparent 28%);
+    background-size:200% 100%;
+    mix-blend-mode:screen;
+    animation:cloudSpin 70s linear infinite;
+    filter:blur(.5px);
+    opacity:.7;
+}
+/* Atmosphere glow ring */
+.earth::after{
+    content:'';
+    position:absolute;inset:-8%;
+    border-radius:50%;
+    background:radial-gradient(circle, transparent 58%, rgba(0,180,255,.35) 66%, rgba(0,100,220,.18) 74%, transparent 82%);
+    filter:blur(2px);
+    animation:none !important;
+}
+@keyframes earthSpin{
+    from{transform:rotateY(0deg) rotateX(-8deg)}
+    to{transform:rotateY(-360deg) rotateX(-8deg)}
+}
+@keyframes cloudSpin{
+    from{background-position:0 0, 0 0, 0 0, 0 0}
+    to{background-position:-200% 0, -200% 0, -200% 0, -200% 0}
 }
 
 /* NAV */
@@ -132,8 +203,11 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
 </head>
 <body>
 
-<!-- ✅ 3D EARTH + GLITTERS BACKGROUND -->
-<canvas id="space-canvas"></canvas>
+<!-- ✅ NO-LAG BACKGROUND: EARTH + DUST -->
+<div id="space-wrap">
+    <canvas id="dust-canvas"></canvas>
+    <div class="earth-stage"><div class="earth"></div></div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -297,7 +371,7 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
         <div class="card">
             <span class="flag">★ THIS PAGE ★</span>
             <h3>🌐 CYBERJAYD SERVICES NET</h3>
-            <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts. Features the 3D rotating Earth you see right now.</p>
+            <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts — zero-lag 3D Earth background included.</p>
         </div>
     </div>
 </section>
@@ -332,215 +406,82 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
     <p>BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
 </footer>
 
-<!-- ✅ 3D EARTH + GLITTERS ANIMATION SCRIPT -->
+<!-- ✅ NO-LAG DUST / GLITTERS — PURE CANVAS 2D -->
 <script>
 (function(){
-    var canvas = document.getElementById('space-canvas');
-    if(!canvas || typeof THREE === 'undefined') return;
+    var canvas = document.getElementById('dust-canvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,1.5); // Limit DPR = walang lag
+    var CX=0,CY=0;
 
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+    // 300 particles lang — sobrang gaan, pero mukhang marami
+    var COUNT = 300;
+    var parts = [];
+    var t = 0;
 
-    var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // ✅ REALISTIC EARTH (PROCEDURAL — NO TEXTURE FILE NEEDED)
-    var earthGeo = new THREE.SphereGeometry(1.8, 64, 64);
-    
-    // Procedural earth material (blue oceans + green/brown land + white clouds glow)
-    var earthMat = new THREE.ShaderMaterial({
-        uniforms: {
-            time: { value: 0 }
-        },
-        vertexShader: `
-            varying vec2 vUv;
-            varying vec3 vNormal;
-            varying vec3 vPos;
-            void main(){
-                vUv = uv;
-                vNormal = normalize(normalMatrix * normal);
-                vPos = position;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-            }
-        `,
-        fragmentShader: `
-            uniform float time;
-            varying vec2 vUv;
-            varying vec3 vNormal;
-            varying vec3 vPos;
-            
-            // Simple noise
-            float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-            float noise(vec2 p){
-                vec2 i=floor(p),f=fract(p);
-                float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+1.);
-                vec2 u=f*f*(3.-2.*f);
-                return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;
-            }
-            float fbm(vec2 p){
-                float v=0.,a=.5;
-                for(int i=0;i<6;i++){v+=a*noise(p);p*=2.;a*=.5;}
-                return v;
-            }
-            
-            void main(){
-                vec2 uv = vUv;
-                uv.x += time * 0.02; // Rotate texture
-                
-                float n = fbm(uv * 8.0);
-                float n2 = fbm(uv * 16.0 + 100.0);
-                
-                // Land vs ocean
-                float land = smoothstep(0.48, 0.55, n);
-                
-                // Ocean color (deep blue -> shallow cyan)
-                vec3 ocean = mix(vec3(0.0,0.05,0.2), vec3(0.0,0.4,0.6), n2*0.8);
-                
-                // Land color (green -> brown -> desert)
-                float elev = n + n2*0.3;
-                vec3 forest = vec3(0.0, 0.4, 0.15);
-                vec3 grass = vec3(0.2, 0.55, 0.1);
-                vec3 desert = vec3(0.75, 0.65, 0.35);
-                vec3 mountain = vec3(0.4, 0.35, 0.3);
-                vec3 snow = vec3(0.95, 0.95, 1.0);
-                
-                vec3 landCol = forest;
-                landCol = mix(landCol, grass, smoothstep(0.55,0.65,elev));
-                landCol = mix(landCol, desert, smoothstep(0.62,0.72,elev));
-                landCol = mix(landCol, mountain, smoothstep(0.75,0.85,elev));
-                landCol = mix(landCol, snow, smoothstep(0.88,0.95,elev));
-                
-                // Ice caps (top/bottom)
-                float lat = abs(vUv.y - 0.5) * 2.0;
-                float ice = smoothstep(0.85, 0.95, lat);
-                landCol = mix(landCol, vec3(1.0), ice);
-                ocean = mix(ocean, vec3(0.9,0.95,1.0), ice*0.8);
-                
-                vec3 col = mix(ocean, landCol, land);
-                
-                // Clouds
-                float clouds = fbm(uv * 12.0 + vec2(time*0.015, 0.0));
-                clouds = smoothstep(0.55, 0.75, clouds) * 0.7;
-                col = mix(col, vec3(1.0), clouds);
-                
-                // Lighting
-                vec3 lightDir = normalize(vec3(0.8, 0.3, 0.5));
-                float diff = max(dot(vNormal, lightDir), 0.0);
-                diff = 0.35 + 0.75 * diff; // Ambient + diffuse
-                col *= diff;
-                
-                // Rim / atmosphere glow
-                float rim = 1.0 - max(dot(vNormal, vec3(0.0,0.0,1.0)), 0.0);
-                rim = pow(rim, 3.0);
-                col += vec3(0.0, 0.6, 1.0) * rim * 0.6;
-                
-                gl_FragColor = vec4(col, 1.0);
-            }
-        `
-    });
-    var earth = new THREE.Mesh(earthGeo, earthMat);
-    scene.add(earth);
-
-    // ✅ ATMOSPHERE GLOW
-    var atmosGeo = new THREE.SphereGeometry(1.92, 64, 64);
-    var atmosMat = new THREE.ShaderMaterial({
-        transparent:true,
-        side:THREE.BackSide,
-        vertexShader:`varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-        fragmentShader:`varying vec3 vN;void main(){float i=pow(0.75-dot(vN,vec3(0.,0.,1.)),4.);gl_FragColor=vec4(0.,0.7,1.,i*0.9);}`
-    });
-    scene.add(new THREE.Mesh(atmosGeo, atmosMat));
-
-    // ✅ GLITTERS / COSMIC DUST (2000 PARTICLES)
-    var dustCount = 2000;
-    var dustGeo = new THREE.BufferGeometry();
-    var dustPos = new Float32Array(dustCount * 3);
-    var dustSize = new Float32Array(dustCount);
-    for(var i=0;i<dustCount;i++){
-        // Spherical distribution around earth
-        var r = 2.5 + Math.random() * 3.5;
-        var theta = Math.random() * Math.PI * 2;
-        var phi = Math.acos(2 * Math.random() - 1);
-        dustPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-        dustPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-        dustPos[i*3+2] = r * Math.cos(phi);
-        dustSize[i] = Math.random() * 0.025 + 0.005;
+    function resize(){
+        W = canvas.clientWidth;
+        H = canvas.clientHeight;
+        canvas.width = W * DPR;
+        canvas.height = H * DPR;
+        ctx.setTransform(DPR,0,0,DPR,0,0);
+        CX = W/2;
+        CY = H/2;
     }
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-    dustGeo.setAttribute('size', new THREE.BufferAttribute(dustSize, 1));
-    
-    var dustMat = new THREE.PointsMaterial({
-        color: 0x88ddff,
-        size: 0.03,
-        transparent: true,
-        opacity: 0.9,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        sizeAttenuation: true
-    });
-    var dust = new THREE.Points(dustGeo, dustMat);
-    scene.add(dust);
+    resize();
+    window.addEventListener('resize', resize);
 
-    // Extra far glitters
-    var farCount = 1500;
-    var farGeo = new THREE.BufferGeometry();
-    var farPos = new Float32Array(farCount * 3);
-    for(var i=0;i<farCount;i++){
-        var r = 7 + Math.random() * 10;
-        var theta = Math.random() * Math.PI * 2;
-        var phi = Math.acos(2 * Math.random() - 1);
-        farPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-        farPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-        farPos[i*3+2] = r * Math.cos(phi);
+    // Init particles: orbit around center
+    for(var i=0;i<COUNT;i++){
+        var angle = Math.random()*Math.PI*2;
+        var radius = 140 + Math.random()*Math.max(W,H)*0.55;
+        var speed = (0.0003 + Math.random()*0.0008) * (Math.random()<.5?1:-1);
+        var tilt = (Math.random()-.5) * Math.max(W,H)*0.25;
+        parts.push({
+            a: angle,
+            r: radius,
+            s: speed,
+            y: tilt,
+            size: Math.random()*1.6 + .4,
+            alpha: .35 + Math.random()*.55,
+            hue: 190 + Math.random()*40 // cyan-blue range
+        });
     }
-    farGeo.setAttribute('position', new THREE.BufferAttribute(farPos, 3));
-    var farMat = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.025,
-        transparent: true,
-        opacity: 0.7,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-    });
-    var farStars = new THREE.Points(farGeo, farMat);
-    scene.add(farStars);
 
-    // ✅ ANIMATION LOOP (EARTH + DUST ROTATE — GRAVITY EFFECT)
-    var clock = new THREE.Clock();
-    function animate(){
-        var t = clock.getElapsedTime();
-        
-        // Earth rotates
-        earth.rotation.y = t * 0.15;
-        
-        // Dust rotates SLIGHTLY SLOWER — depth effect, sumasabay sa ikot
-        dust.rotation.y = t * 0.08;
-        dust.rotation.x = Math.sin(t * 0.05) * 0.1;
-        
-        // Far stars rotate opposite — parang real space
-        farStars.rotation.y = -t * 0.02;
-        
-        // Update shader time
-        earthMat.uniforms.time.value = t;
-        
-        // Subtle camera movement
-        camera.position.x = Math.sin(t * 0.1) * 0.3;
-        camera.position.y = Math.cos(t * 0.08) * 0.2;
-        camera.lookAt(0,0,0);
-        
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
+    function loop(){
+        // Fade trails — smooth effect, cheap
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(5,0,20,0.18)';
+        ctx.fillRect(0,0,W,H);
+
+        // Glowing additive dust
+        ctx.globalCompositeOperation = 'lighter';
+
+        t += 0.016;
+        for(var i=0;i<COUNT;i++){
+            var p = parts[i];
+            p.a += p.s;
+            // Elliptical orbit + vertical wave = sumasabay sa ikot ng earth
+            var x = CX + Math.cos(p.a) * p.r * 0.9;
+            var y = CY + Math.sin(p.a) * p.r * 0.45 + Math.sin(t*0.5 + p.a) * p.y * 0.35;
+
+            // Twinkle
+            var a = p.alpha * (0.55 + 0.45*Math.sin(t*2 + i));
+
+            ctx.beginPath();
+            ctx.fillStyle = 'hsla('+p.hue+', 100%, 75%, '+a+')';
+            ctx.arc(x, y, p.size, 0, Math.PI*2);
+            ctx.fill();
+        }
+
+        requestAnimationFrame(loop);
     }
-    animate();
-
-    // ✅ RESPONSIVE
-    window.addEventListener('resize', function(){
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    // Pause kapag hidden tab = tipid sa CPU/battery
+    document.addEventListener('visibilitychange', function(){
+        if(!document.hidden) requestAnimationFrame(loop);
     });
+    loop();
 })();
 </script>
 
