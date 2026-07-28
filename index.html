@@ -21,87 +21,80 @@ a{color:var(--cyan);text-decoration:none;transition:all .2s}
 a:hover{color:var(--pink);text-shadow:0 0 15px rgba(255,43,214,0.8)}
 
 /* =========================================
-   ✅ NEW: NO-LAG 3D EARTH + GLITTERS
-   PURE CSS + CANVAS 2D ONLY — ZERO LIBRARY
+   ✅ NEW BACKGROUND: CYBERJAYD LOGO #1
+   (Tinanggal na ang 2D Earth + Dola AI watermark)
    ========================================= */
 #space-wrap{
     position:fixed;inset:0;z-index:0;
     width:100vw;height:100vh;
     overflow:hidden;
-    background:radial-gradient(ellipse at center,#0a0030 0%,#050014 65%,#020008 100%);
+    background:
+        radial-gradient(ellipse at center,#0a0030 0%,#050014 65%,#020008 100%);
 }
 #dust-canvas{
     position:absolute;inset:0;
     width:100%;height:100%;
     display:block;
+    z-index:1;
 }
 
-/* ✅ 3D EARTH — PURE CSS, GPU ACCELERATED ONLY */
-.earth-stage{
+/* ✅ LOGO CONTAINER — NAKA GITNA, WALANG LAG ANIMATION */
+.logo-bg-stage{
     position:absolute;
     top:50%;left:50%;
-    width:320px;height:320px;
+    z-index:2;
+    width:min(780px, 88vw);
+    height:min(780px, 88vw);
     transform:translate(-50%,-50%);
-    perspective:1000px;
     pointer-events:none;
-    opacity:.55;
+    opacity:.58;
+    overflow:hidden !important; /* ✅ PARA TANGGALIN ANG DOLA AI SA BABA */
+    border-radius:6px;
 }
+/* Logo image — bahagyang pinalaki at inangat para ma-crop ang watermark */
+.logo-bg-stage img{
+    position:absolute;
+    left:50%;top:50%;
+    width:106%;   /* slight zoom para matanggal ang gilid na may watermark */
+    height:106%;
+    transform:translate(-50%,-54%); /* inangat ng 4% para mawala ang bottom watermark */
+    object-fit:cover;
+    display:block;
+    /* ✅ GPU ANIMATIONS LANG — WALANG CPU LOAD */
+    animation:
+        logoBreath 9s ease-in-out infinite,
+        logoGlow 5s ease-in-out infinite;
+    will-change:transform, filter;
+    filter: drop-shadow(0 0 22px rgba(0,180,255,.55));
+}
+/* ✅ DAGDAG NA COVER SA BABA — SIGURADONG WALANG DOLA AI NA MAKIKITA */
+.logo-bg-stage::after{
+    content:'';
+    position:absolute;
+    left:0;right:0;bottom:0;
+    height:10%; /* takip sa pinakaibaba kung nasaan ang watermark */
+    background:linear-gradient(to top, #050014 10%, rgba(5,0,20,0.85) 60%, transparent 100%);
+    z-index:3;
+    pointer-events:none;
+}
+/* Extra dark vignette sa paligid para mas lumutang ang logo */
+.logo-bg-stage::before{
+    content:'';
+    position:absolute;inset:0;z-index:2;
+    background:radial-gradient(ellipse at center, transparent 45%, rgba(5,0,20,0.75) 80%, #050014 100%);
+    pointer-events:none;
+}
+@keyframes logoBreath{
+    0%,100%{ transform:translate(-50%,-54%) scale(1); }
+    50%    { transform:translate(-50%,-54%) scale(1.045); }
+}
+@keyframes logoGlow{
+    0%,100%{ filter: drop-shadow(0 0 18px rgba(0,180,255,.45)) brightness(1); }
+    50%    { filter: drop-shadow(0 0 38px rgba(0,220,255,.85)) brightness(1.15); }
+}
+
 @media(max-width:700px){
-    .earth-stage{width:240px;height:240px;opacity:.45}
-}
-.earth{
-    position:absolute;inset:0;
-    border-radius:50%;
-    transform-style:preserve-3d;
-    animation:earthSpin 45s linear infinite;
-    /* Procedural world map: oceans + land clouds — walang image, walang shader */
-    background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), transparent 45%),
-        radial-gradient(ellipse at 20% 20%, rgba(0,255,200,.18), transparent 35%),
-        radial-gradient(ellipse at 70% 60%, rgba(0,255,200,.15), transparent 40%),
-        radial-gradient(ellipse at 45% 75%, rgba(255,208,0,.10), transparent 30%),
-        radial-gradient(ellipse at 80% 25%, rgba(255,255,255,.12), transparent 25%),
-        linear-gradient(180deg, #001a33 0%, #003366 25%, #004488 50%, #003366 75%, #001a33 100%);
-    background-size: 200% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 100%;
-    box-shadow:
-        inset -30px -30px 80px rgba(0,0,0,.85),
-        inset 15px 15px 40px rgba(120,200,255,.25),
-        0 0 40px rgba(0,150,255,.45),
-        0 0 90px rgba(0,100,220,.25);
-    border:1px solid rgba(100,200,255,.35);
-}
-/* Cloud layer — separate, slower spin */
-.earth::before{
-    content:'';
-    position:absolute;inset:4%;
-    border-radius:50%;
-    background:
-        radial-gradient(ellipse at 25% 30%, rgba(255,255,255,.35), transparent 40%),
-        radial-gradient(ellipse at 60% 50%, rgba(255,255,255,.28), transparent 35%),
-        radial-gradient(ellipse at 75% 75%, rgba(255,255,255,.22), transparent 30%),
-        radial-gradient(ellipse at 15% 70%, rgba(255,255,255,.18), transparent 28%);
-    background-size:200% 100%;
-    mix-blend-mode:screen;
-    animation:cloudSpin 70s linear infinite;
-    filter:blur(.5px);
-    opacity:.7;
-}
-/* Atmosphere glow ring */
-.earth::after{
-    content:'';
-    position:absolute;inset:-8%;
-    border-radius:50%;
-    background:radial-gradient(circle, transparent 58%, rgba(0,180,255,.35) 66%, rgba(0,100,220,.18) 74%, transparent 82%);
-    filter:blur(2px);
-    animation:none !important;
-}
-@keyframes earthSpin{
-    from{transform:rotateY(0deg) rotateX(-8deg)}
-    to{transform:rotateY(-360deg) rotateX(-8deg)}
-}
-@keyframes cloudSpin{
-    from{background-position:0 0, 0 0, 0 0, 0 0}
-    to{background-position:-200% 0, -200% 0, -200% 0, -200% 0}
+    .logo-bg-stage{opacity:.42; width:92vw; height:92vw}
 }
 
 /* NAV */
@@ -203,10 +196,16 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
 </head>
 <body>
 
-<!-- ✅ NO-LAG BACKGROUND: EARTH + DUST -->
+<!-- ✅ BACKGROUND: CYBERJAYD LOGO #1 + DUST -->
 <div id="space-wrap">
     <canvas id="dust-canvas"></canvas>
-    <div class="earth-stage"><div class="earth"></div></div>
+    <div class="logo-bg-stage">
+        <!-- ✅ LOGO #1 — CINROP CROP PARA TANGGALIN ANG DOLA AI -->
+        <img src="https://p-dola-image-sign-sgnontt.byteintl.net/tos-mya-i-uo7y4d541q/rc_vlm/a53c8747e49d447c84c6d5a20d91e0ed~tplv-0es2k971ck-24-95-exif:960:960.image?rcl=20260728141307679AFFB4AAD2295AB9D6&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=dolaorigin&x-orig-expires=1785305589&x-orig-sign=n2XirV0ay8RPuGCX0QAkf90EHF8%3D" 
+             alt="CyberJayd Logo" 
+             loading="eager"
+             onerror="this.style.display='none'">
+    </div>
 </div>
 
 <!-- NAV -->
@@ -371,7 +370,7 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
         <div class="card">
             <span class="flag">★ THIS PAGE ★</span>
             <h3>🌐 CYBERJAYD SERVICES NET</h3>
-            <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts — zero-lag 3D Earth background included.</p>
+            <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts — now with animated CyberJayd logo background.</p>
         </div>
     </div>
 </section>
@@ -406,17 +405,16 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
     <p>BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
 </footer>
 
-<!-- ✅ NO-LAG DUST / GLITTERS — PURE CANVAS 2D -->
+<!-- ✅ LIGHTWEIGHT DUST / GLITTERS (WALANG LAG) -->
 <script>
 (function(){
     var canvas = document.getElementById('dust-canvas');
     if(!canvas) return;
     var ctx = canvas.getContext('2d');
-    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,1.5); // Limit DPR = walang lag
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,1.5);
     var CX=0,CY=0;
 
-    // 300 particles lang — sobrang gaan, pero mukhang marami
-    var COUNT = 300;
+    var COUNT = 260;
     var parts = [];
     var t = 0;
 
@@ -432,52 +430,40 @@ footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;l
     resize();
     window.addEventListener('resize', resize);
 
-    // Init particles: orbit around center
     for(var i=0;i<COUNT;i++){
         var angle = Math.random()*Math.PI*2;
-        var radius = 140 + Math.random()*Math.max(W,H)*0.55;
-        var speed = (0.0003 + Math.random()*0.0008) * (Math.random()<.5?1:-1);
-        var tilt = (Math.random()-.5) * Math.max(W,H)*0.25;
+        var radius = 120 + Math.random()*Math.max(W,H)*0.6;
+        var speed = (0.00025 + Math.random()*0.0007) * (Math.random()<.5?1:-1);
+        var tilt = (Math.random()-.5) * Math.max(W,H)*0.2;
         parts.push({
-            a: angle,
-            r: radius,
-            s: speed,
-            y: tilt,
-            size: Math.random()*1.6 + .4,
-            alpha: .35 + Math.random()*.55,
-            hue: 190 + Math.random()*40 // cyan-blue range
+            a: angle, r: radius, s: speed, y: tilt,
+            size: Math.random()*1.5 + .35,
+            alpha: .3 + Math.random()*.5,
+            hue: 190 + Math.random()*40
         });
     }
 
     function loop(){
-        // Fade trails — smooth effect, cheap
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = 'rgba(5,0,20,0.18)';
+        ctx.fillStyle = 'rgba(5,0,20,0.2)';
         ctx.fillRect(0,0,W,H);
-
-        // Glowing additive dust
         ctx.globalCompositeOperation = 'lighter';
 
         t += 0.016;
         for(var i=0;i<COUNT;i++){
             var p = parts[i];
             p.a += p.s;
-            // Elliptical orbit + vertical wave = sumasabay sa ikot ng earth
-            var x = CX + Math.cos(p.a) * p.r * 0.9;
-            var y = CY + Math.sin(p.a) * p.r * 0.45 + Math.sin(t*0.5 + p.a) * p.y * 0.35;
-
-            // Twinkle
-            var a = p.alpha * (0.55 + 0.45*Math.sin(t*2 + i));
+            var x = CX + Math.cos(p.a) * p.r * 0.88;
+            var y = CY + Math.sin(p.a) * p.r * 0.42 + Math.sin(t*0.4 + p.a) * p.y * 0.3;
+            var a = p.alpha * (0.55 + 0.45*Math.sin(t*1.8 + i));
 
             ctx.beginPath();
             ctx.fillStyle = 'hsla('+p.hue+', 100%, 75%, '+a+')';
             ctx.arc(x, y, p.size, 0, Math.PI*2);
             ctx.fill();
         }
-
         requestAnimationFrame(loop);
     }
-    // Pause kapag hidden tab = tipid sa CPU/battery
     document.addEventListener('visibilitychange', function(){
         if(!document.hidden) requestAnimationFrame(loop);
     });
