@@ -1,475 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD | ETHICAL SECURITY • DEV • PORTFOLIO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-    --cyan:#00e5ff;--pink:#ff2bd6;--green:#00ffc8;--yellow:#ffd000;
-    --bg:#050014;--card:rgba(8,0,35,0.78);--border:rgba(0,229,255,0.28);
-    --text:#d6f7ff;--muted:#7ab8d4;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
-h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:1.5px;color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,0.7)}
-a{color:var(--cyan);text-decoration:none;transition:all .2s}
-a:hover{color:var(--pink);text-shadow:0 0 15px rgba(255,43,214,0.8)}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>CYBERJAYD | Global Grid Sector 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg: #050814; --text: #e8f1ff; --muted: #7a8bb3;
+            --accent: #00e5ff; --accent-soft: rgba(0, 229, 255, 0.15);
+            --accent2: #b026ff; --border: rgba(0, 229, 255, 0.25);
+            --ok: #39ff88; --warn: #ff3860;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Share Tech Mono', monospace; color: var(--text); background: var(--bg); line-height: 1.65; overflow-x: hidden; }
 
-/* =========================================
-   ✅ NEW BACKGROUND: CYBERJAYD LOGO #1
-   (Tinanggal na ang 2D Earth + Dola AI watermark)
-   ========================================= */
-#space-wrap{
-    position:fixed;inset:0;z-index:0;
-    width:100vw;height:100vh;
-    overflow:hidden;
-    background:
-        radial-gradient(ellipse at center,#0a0030 0%,#050014 65%,#020008 100%);
-}
-#dust-canvas{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    display:block;
-    z-index:1;
-}
+        #earthCanvas { position: fixed; top: 0; left: 0; width: 100vw !important; height: 100vh !important; z-index: -2; display: block; pointer-events: none; }
+        .bg-overlay { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 30%, rgba(5,8,20,0) 0%, rgba(5,8,20,0.55) 45%, rgba(5,8,20,0.94) 100%), linear-gradient(180deg, rgba(5,8,20,0.6), rgba(5,8,20,0.85)); pointer-events: none; }
+        .scanlines { position: fixed; inset: 0; z-index: 999; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.035) 0px, rgba(0, 229, 255, 0.035) 1px, transparent 1px, transparent 3px); }
 
-/* ✅ LOGO CONTAINER — NAKA GITNA, WALANG LAG ANIMATION */
-.logo-bg-stage{
-    position:absolute;
-    top:50%;left:50%;
-    z-index:2;
-    width:min(780px, 88vw);
-    height:min(780px, 88vw);
-    transform:translate(-50%,-50%);
-    pointer-events:none;
-    opacity:.58;
-    overflow:hidden !important; /* ✅ PARA TANGGALIN ANG DOLA AI SA BABA */
-    border-radius:6px;
-}
-/* Logo image — bahagyang pinalaki at inangat para ma-crop ang watermark */
-.logo-bg-stage img{
-    position:absolute;
-    left:50%;top:50%;
-    width:106%;   /* slight zoom para matanggal ang gilid na may watermark */
-    height:106%;
-    transform:translate(-50%,-54%); /* inangat ng 4% para mawala ang bottom watermark */
-    object-fit:cover;
-    display:block;
-    /* ✅ GPU ANIMATIONS LANG — WALANG CPU LOAD */
-    animation:
-        logoBreath 9s ease-in-out infinite,
-        logoGlow 5s ease-in-out infinite;
-    will-change:transform, filter;
-    filter: drop-shadow(0 0 22px rgba(0,180,255,.55));
-}
-/* ✅ DAGDAG NA COVER SA BABA — SIGURADONG WALANG DOLA AI NA MAKIKITA */
-.logo-bg-stage::after{
-    content:'';
-    position:absolute;
-    left:0;right:0;bottom:0;
-    height:10%; /* takip sa pinakaibaba kung nasaan ang watermark */
-    background:linear-gradient(to top, #050014 10%, rgba(5,0,20,0.85) 60%, transparent 100%);
-    z-index:3;
-    pointer-events:none;
-}
-/* Extra dark vignette sa paligid para mas lumutang ang logo */
-.logo-bg-stage::before{
-    content:'';
-    position:absolute;inset:0;z-index:2;
-    background:radial-gradient(ellipse at center, transparent 45%, rgba(5,0,20,0.75) 80%, #050014 100%);
-    pointer-events:none;
-}
-@keyframes logoBreath{
-    0%,100%{ transform:translate(-50%,-54%) scale(1); }
-    50%    { transform:translate(-50%,-54%) scale(1.045); }
-}
-@keyframes logoGlow{
-    0%,100%{ filter: drop-shadow(0 0 18px rgba(0,180,255,.45)) brightness(1); }
-    50%    { filter: drop-shadow(0 0 38px rgba(0,220,255,.85)) brightness(1.15); }
-}
+        nav { position: sticky; top: 0; z-index: 100; padding: 18px 6%; background: rgba(5, 8, 20, 0.75); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 22px; list-style: none; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-family: 'Chakra Petch', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.2s; }
+        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
 
-@media(max-width:700px){
-    .logo-bg-stage{opacity:.42; width:92vw; height:92vw}
-}
+        .hero { min-height: 90vh; padding: 70px 6% 50px; display: flex; flex-direction: column; justify-content: center; }
+        .hero-eyebrow { color: var(--accent); font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 22px; }
+        .hero-title { font-family: 'Chakra Petch', sans-serif; font-size: clamp(46px, 11vw, 105px); font-weight: 700; line-height: 0.95; margin-bottom: 28px; letter-spacing: -1px; }
+        .hero-title .cyan { color: var(--accent); text-shadow: 0 0 12px var(--accent), 0 0 30px rgba(0,229,255,0.5); }
+        .hero-tags { color: var(--muted); font-size: clamp(15px, 2.3vw, 21px); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 26px; max-width: 700px; }
+        .hero-desc { font-size: clamp(15px, 1.9vw, 19px); max-width: 700px; margin-bottom: 40px; }
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; }
+        .btn { padding: 13px 28px; font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border: 2px solid var(--accent); cursor: pointer; transition: 0.25s; }
+        .btn-primary { background: var(--accent-soft); color: var(--accent); }
+        .btn-primary:hover { background: var(--accent); color: #041018; box-shadow: 0 0 25px rgba(0,229,255,0.6); }
+        .btn-outline { background: transparent; color: var(--text); border-color: var(--text); }
+        .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); box-shadow: 0 0 20px rgba(176,38,255,0.4); }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 6%;
-background:linear-gradient(180deg,rgba(5,0,20,0.96),rgba(5,0,20,0.55),transparent);
-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1250px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.logo{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;color:var(--cyan);
-text-shadow:0 0 14px var(--cyan),0 0 28px rgba(0,229,255,0.45);letter-spacing:3px}
-.links{display:flex;gap:20px;flex-wrap:wrap}
-.links a{font-family:'Orbitron',sans-serif;font-weight:600;font-size:13px;letter-spacing:1px;padding:5px 0;border-bottom:2px solid transparent;text-transform:uppercase}
-.links a:hover{border-bottom:2px solid var(--pink)}
+        section { padding: 80px 6%; border-top: 1px solid rgba(0,229,255,0.08); }
+        .section-head { margin-bottom: 45px; }
+        .section-num { color: var(--accent2); font-family: 'Chakra Petch', sans-serif; font-size: 15px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+        .section-title { font-family: 'Chakra Petch', sans-serif; font-size: clamp(26px, 4.5vw, 42px); font-weight: 700; line-height: 1.1; }
+        .section-title .cyan { color: var(--accent); }
 
-/* SECTIONS */
-section{position:relative;z-index:5;max-width:1200px;margin:0 auto;padding:110px 6% 60px}
-.section-title{text-align:center;margin-bottom:45px}
-.section-title h2{font-size:clamp(22px,5vw,36px);margin-bottom:8px}
-.section-title .diamond{color:var(--cyan);margin:0 10px}
-.section-title p{color:var(--muted);font-size:15px}
-.section-num{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--muted);opacity:.6;margin-bottom:8px;letter-spacing:2px}
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+        .card { padding: 26px; border: 1px solid var(--border); background: rgba(10, 15, 35, 0.55); backdrop-filter: blur(6px); transition: 0.25s; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,229,255,0.15); }
+        .card-label { color: var(--accent); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+        .card h3 { font-family: 'Chakra Petch', sans-serif; font-size: 19px; margin: 6px 0 10px; }
+        .card p, .card li { color: var(--muted); font-size: 14.5px; }
+        .tag { display: inline-block; padding: 3px 10px; border: 1px solid var(--accent); color: var(--accent); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; background: var(--accent-soft); margin-bottom: 10px; }
+        .tag-purple { border-color: var(--accent2); color: var(--accent2); background: rgba(176,38,255,0.12); }
+        .status-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
 
-/* HERO */
-.hero{padding-top:170px;text-align:center}
-.hero .sys-tag{display:inline-block;padding:8px 22px;border:1px solid var(--border);border-radius:50px;
-color:var(--green);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;
-background:rgba(0,255,200,0.05);margin-bottom:26px;text-transform:uppercase}
-.hero h1{font-size:clamp(34px,9vw,70px);font-weight:900;line-height:1.05;margin-bottom:18px;
-background:linear-gradient(90deg,var(--cyan),var(--green),var(--pink),var(--yellow),var(--cyan));
-background-size:300% 100%;-webkit-background-clip:text;color:transparent;animation:glow 6s linear infinite}
-@keyframes glow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
-.hero .sub{max-width:780px;margin:0 auto 32px;font-size:clamp(14px,3vw,18px);color:var(--muted)}
-.hero .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{padding:13px 30px;font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:1.3px;border-radius:5px;
-border:2px solid var(--cyan);background:rgba(0,229,255,0.08);color:var(--cyan);cursor:pointer;transition:all .2s;
-box-shadow:0 0 18px rgba(0,229,255,0.3);font-size:14px}
-.btn:hover{background:var(--cyan);color:#000;box-shadow:0 0 32px var(--cyan);transform:translateY(-2px)}
-.btn.pink{border-color:var(--pink);background:rgba(255,43,214,0.08);color:var(--pink);box-shadow:0 0 18px rgba(255,43,214,0.3)}
-.btn.pink:hover{background:var(--pink);color:#000;box-shadow:0 0 32px var(--pink)}
+        .bar { height: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); margin-top: 14px; overflow: hidden; }
+        .bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px var(--accent); }
+        .skill-percent { color: var(--accent); font-size: 13px; margin-top: 5px; font-weight: 700; text-align: right; }
 
-/* GRIDS */
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+        .price { font-family: 'Chakra Petch', sans-serif; font-size: 25px; font-weight: 700; color: var(--accent); margin: 8px 0 14px; }
+        .service-card ul { list-style: none; margin: 12px 0 22px; }
+        .service-card li { padding: 3px 0; font-size: 13.5px; }
+        .service-card li::before { content: "✓ "; color: var(--accent); font-weight: 700; }
+        .btn-small { padding: 9px 18px; font-size: 12px; width: 100%; text-align: center; display: block; }
 
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:26px;
-backdrop-filter:blur(10px);transition:all .3s;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;
-background:linear-gradient(90deg,transparent,var(--cyan),transparent);transition:left .6s}
-.card:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:0 8px 35px rgba(255,43,214,0.18)}
-.card:hover::before{left:100%}
-.card h3{font-size:18px;margin-bottom:12px;color:var(--cyan)}
-.card.pink{border-color:rgba(255,43,214,0.55);box-shadow:0 0 22px rgba(255,43,214,0.22)}
-.card.pink h3{color:var(--pink);text-shadow:0 0 12px rgba(255,43,214,0.7)}
-.card ul{list-style:none;margin-top:10px}
-.card ul li{padding:5px 0;color:var(--muted);border-bottom:1px dashed rgba(0,229,255,0.14)}
-.card ul li:last-child{border:none}
-.flag{display:inline-block;padding:3px 9px;border-radius:3px;background:rgba(0,255,200,0.1);color:var(--green);
-font-size:10px;font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:9px;text-transform:uppercase}
-.price{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:800;color:var(--yellow);
-text-shadow:0 0 11px rgba(255,208,0,0.55);margin:10px 0}
+        .contact-item { margin-bottom: 15px; }
+        .contact-label { color: var(--accent); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
+        .contact-item a { color: var(--text); text-decoration: none; }
+        .contact-item a:hover { color: var(--accent); }
+        .ok { color: var(--ok); font-weight: 600; }
+        .warn { color: var(--warn); font-weight: 600; }
 
-/* ABOUT / WHY */
-.about-card,.why-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:32px;backdrop-filter:blur(10px)}
-.about-card h4,.why-card h4{font-size:16px;margin:18px 0 8px;color:var(--green);letter-spacing:1px}
-.about-card h4:first-child,.why-card h4:first-child{margin-top:0}
-.about-card p,.why-card p{color:var(--muted)}
-.about-card .check,.why-card .check{color:var(--green);font-weight:600}
-.status{text-align:center;margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);
-color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+        footer { padding: 35px 6%; text-align: center; border-top: 1px solid var(--border); color: var(--muted); font-size: 12.5px; letter-spacing: 1px; }
+        footer .brand { color: var(--accent); font-family: 'Chakra Petch', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; text-shadow: 0 0 8px var(--accent); }
 
-/* SKILLS BARS */
-.skill-bar{height:8px;background:rgba(0,229,255,0.1);border-radius:4px;overflow:hidden;margin:8px 0 18px}
-.skill-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:4px;box-shadow:0 0 10px var(--cyan)}
-
-/* CONTACT */
-.contact-box{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:38px 28px;
-text-align:center;backdrop-filter:blur(10px)}
-.contact-box h3{font-size:20px;margin-bottom:6px;color:var(--green)}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:26px 0}
-.contact-item{padding:14px;border:1px solid var(--border);border-radius:7px;background:rgba(0,229,255,0.03)}
-.contact-item .label{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1.4px;color:var(--green);text-transform:uppercase;margin-bottom:5px}
-.contact-item .val{font-size:15px;font-weight:600;word-break:break-word}
-
-/* FOOTER */
-footer{position:relative;z-index:5;text-align:center;padding:45px 6% 28px;border-top:1px solid var(--border);
-background:linear-gradient(0deg,rgba(5,0,20,0.85),transparent)}
-footer .f-logo{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;color:var(--cyan);
-text-shadow:0 0 12px var(--cyan);letter-spacing:2.5px;margin-bottom:14px}
-footer p{color:var(--muted);font-size:13px;margin:3px 0}
-footer .f-tag{margin-top:12px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--green);opacity:.8}
-
-/* MOBILE */
-@media(max-width:700px){
-    nav{padding:14px 5%}.logo{font-size:20px}.links a{font-size:11px}
-    section{padding:95px 5% 50px}.hero{padding-top:150px}
-}
-</style>
+        @media (max-width: 600px) {
+            nav { padding: 14px 5%; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 11.5px; letter-spacing: 1px; }
+            section { padding: 65px 5%; }
+            .hero { padding: 55px 5% 45px; }
+        }
+    </style>
 </head>
 <body>
+    <canvas id="earthCanvas"></canvas>
+    <div class="bg-overlay"></div>
+    <div class="scanlines"></div>
 
-<!-- ✅ BACKGROUND: CYBERJAYD LOGO #1 + DUST -->
-<div id="space-wrap">
-    <canvas id="dust-canvas"></canvas>
-    <div class="logo-bg-stage">
-        <!-- ✅ LOGO #1 — CINROP CROP PARA TANGGALIN ANG DOLA AI -->
-        <img src="https://p-dola-image-sign-sgnontt.byteintl.net/tos-mya-i-uo7y4d541q/rc_vlm/a53c8747e49d447c84c6d5a20d91e0ed~tplv-0es2k971ck-24-95-exif:960:960.image?rcl=20260728141307679AFFB4AAD2295AB9D6&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=dolaorigin&x-orig-expires=1785305589&x-orig-sign=n2XirV0ay8RPuGCX0QAkf90EHF8%3D" 
-             alt="CyberJayd Logo" 
-             loading="eager"
-             onerror="this.style.display='none'">
-    </div>
-</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#why">WHY</a></li>
+            <li><a href="#skills">SKILLS</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
 
-<!-- NAV -->
-<nav>
-<div class="nav-inner">
-    <div class="logo">CYBERJAYD</div>
-    <div class="links">
-        <a href="#about">ABOUT</a>
-        <a href="#why">WHY</a>
-        <a href="#skills">SKILLS</a>
-        <a href="#services">SERVICES</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="flappy.html" target="_blank">🎮 PLAY</a>
-        <a href="#contact">🔐 CONTACT</a>
-    </div>
-</div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="sys-tag">✦ GLOBAL GRID // SECTOR 7 — ONLINE ✦</div>
-    <h1>CYBERJAYD</h1>
-    <p class="sub"><strong>ETHICAL SECURITY • SOFTWARE DEVELOPMENT • MOBILE TECH.</strong><br>
-    Clean design, maximum power — built 100% on Android via Termux.</p>
-    <div class="btns">
-        <a href="#projects" class="btn">▶ VIEW PROJECTS</a>
-        <a href="#contact" class="btn pink">HIRE ME NOW</a>
-    </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-    <div class="section-num">01</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> ABOUT_ME.EXE <span class="diamond">◇</span></h2>
-        <p>> INITIALIZING USER PROFILE...</p>
-    </div>
-    <div class="about-card">
-        <h4>👤 IDENTITY</h4>
-        <p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p>
-        
-        <h4>🎓 STATUS</h4>
-        <p>First Year College • <strong>BSED-ENG</strong> • FCIC Baybay City, Leyte, PH 🇵🇭<br>
-        <span class="check">→ No formal IT degree. 100% SELF-TAUGHT. ←</span><br>
-        Every skill earned through 3AM grind, relentless research, and refusing limits.</p>
-        
-        <h4>⚡ SPECIALIZATION</h4>
-        <p><span class="check">✓</span> Lightweight mobile-optimized websites<br>
-        <span class="check">✓</span> Custom browser games (Flappy Blues)<br>
-        <span class="check">✓</span> Python / Bash automation scripts<br>
-        <span class="check">✓</span> Ethical security tools for Android / Termux<br>
-        <span class="check">✓</span> Animated web experiences</p>
-        
-        <h4>🌍 MISSION</h4>
-        <p>Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p>
-        
-        <div class="status">◇ STATUS: ONLINE • ACCEPTING NEW CONTRACTS WORLDWIDE • RESPONSE < 24H ◇</div>
-    </div>
-</section>
-
-<!-- WHY -->
-<section id="why">
-    <div class="section-num">02</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> WHY_CHOOSE_CYBERJAYD <span class="diamond">◇</span></h2>
-        <p>What makes me different</p>
-    </div>
-    <div class="grid-3">
-        <div class="why-card"><h4>💡 OBSESSED WITH QUALITY</h4><p>No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
-        <div class="why-card"><h4>📱 MOBILE IS FIRST</h4><p>70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
-        <div class="why-card"><h4>💰 HONEST PRICING</h4><p>What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
-        <div class="why-card"><h4>⚖️ ETHICAL BY DEFAULT</h4><p>Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
-        <div class="why-card"><h4>⚡ REAL-TIME SUPPORT</h4><p>Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
-        <div class="why-card"><h4>🌍 GLOBAL STANDARD</h4><p>Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
-    </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-    <div class="section-num">03</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> CORE_CAPABILITIES <span class="diamond">◇</span></h2>
-        <p>Tools & skills I use every day</p>
-    </div>
-    <div class="grid-3">
-        <div class="card">
-            <h3>🔐 CYBERSECURITY</h3>
-            <ul><li>Ethical Research</li><li>Bug Bounty</li><li>Vuln Assessment</li><li>SSRF & Recon</li><li>Security Analysis</li></ul>
-            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+    <section class="hero" id="home">
+        <p class="hero-eyebrow">// GLOBAL GRID // SECTOR 7 — ONLINE</p>
+        <h1 class="hero-title"><span class="cyan">CYBER</span>JAYD</h1>
+        <p class="hero-tags">ETHICAL SECURITY · SOFTWARE DEVELOPMENT · MOBILE TECHNOLOGY</p>
+        <p class="hero-desc">Clean design. Maximum power. Systems forged to run at global standard — built, tested, and optimized on mobile first.</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">VIEW PROJECTS →</a>
+            <a href="#contact" class="btn btn-outline">HIRE ME ✉</a>
         </div>
-        <div class="card">
-            <h3>💻 DEVELOPMENT</h3>
-            <ul><li>Python</li><li>Bash / Shell</li><li>HTML/CSS/JS</li><li>Automation</li><li>Web & Scripting</li></ul>
-            <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+    </section>
+
+    <section id="about">
+        <div class="section-head">
+            <p class="section-num">01 // ABOUT_ME.EXE</p>
+            <h2 class="section-title">Initializing User Profile<span class="cyan">...</span></h2>
         </div>
-        <div class="card">
-            <h3>📡 PLATFORMS</h3>
-            <ul><li>Termux / Linux</li><li>Mobile Tech</li><li>GitHub</li><li>Cloud Deploy</li><li>System Optimization</li></ul>
-            <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        <div class="grid-2">
+            <div class="card"><p class="card-label">👋 IDENTITY</p><p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p></div>
+            <div class="card"><p class="card-label">🎓 STATUS</p><p>First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. <span class="ok">100% SELF-TAUGHT</span>. Every skill earned through 3AM grind, relentless research, and refusing limits.</p></div>
+            <div class="card"><p class="card-label">⚡ SPECIALIZATION</p><p>Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on <strong style="color:var(--accent2)">Android / Termux</strong> — advanced tech for everyone.</p></div>
+            <div class="card"><p class="card-label">🌍 MISSION</p><p>Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p><div class="status-tags"><span class="tag">● ONLINE</span><span class="tag tag-purple">● ACCEPTING CONTRACTS</span><span class="tag">● RESPONSE < 24H</span></div></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- SERVICES -->
-<section id="services">
-    <div class="section-num">04</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> SERVICES_&_PRICING <span class="diamond">◇</span></h2>
-        <p>What I can build for you — 100% Legal & Ethical</p>
-    </div>
-    <div class="grid-4">
-        <div class="card">
-            <span class="flag">BEST SELLER</span>
-            <h3>🌐 WEB DESIGN</h3>
-            <p>Clean • Professional • Cyber-Grade</p>
-            <div class="price">₱800 – ₱2,000</div>
-            <ul><li>Portfolio / Business Sites</li><li>Mobile-First Optimization</li><li>Free Deployment Guide</li><li>1 Free Revision Included</li></ul>
+    <section id="why">
+        <div class="section-head">
+            <p class="section-num">02 // WHY_CHOOSE_CYBERJAYD</p>
+            <h2 class="section-title">Six Reasons The Grid Trusts Me</h2>
         </div>
-        <div class="card">
-            <h3>🔒 SECURITY AUDIT</h3>
-            <p>Find risks before attackers do</p>
-            <div class="price">₱1,000 – ₱2,500</div>
-            <ul><li>Automated + Manual Scan</li><li>Full Vulnerability Report</li><li>Fix Recommendations</li><li>100% Legal & Ethical</li></ul>
+        <div class="grid-3">
+            <div class="card"><p class="card-label">💡 01 / QUALITY</p><h3>Obsessed With Quality</h3><p>No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
+            <div class="card"><p class="card-label">📱 02 / MOBILE</p><h3>Mobile Is First</h3><p>70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
+            <div class="card"><p class="card-label">💰 03 / PRICING</p><h3>Honest Pricing</h3><p>What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
+            <div class="card"><p class="card-label">⚖️ 04 / ETHICS</p><h3>Ethical By Default</h3><p>Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
+            <div class="card"><p class="card-label">⚡ 05 / SUPPORT</p><h3>Real-Time Support</h3><p>Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
+            <div class="card"><p class="card-label">🌍 06 / STANDARD</p><h3>Global Standard</h3><p>Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
         </div>
-        <div class="card">
-            <h3>📱 TERMUX / LINUX</h3>
-            <p>Full setup • Tuned for speed</p>
-            <div class="price">₱300 – ₱800</div>
-            <ul><li>Clean Install & Config</li><li>Essential Toolkit Preloaded</li><li>RAM / Performance Boost</li><li>Step-by-Step Guide</li></ul>
+    </section>
+
+    <section id="skills">
+        <div class="section-head">
+            <p class="section-num">03 // CORE_CAPABILITIES</p>
+            <h2 class="section-title">Capabilities & Proficiency</h2>
         </div>
-        <div class="card">
-            <h3>⚙️ AUTOMATION</h3>
-            <p>Scripts that work while you sleep</p>
-            <div class="price">₱500 – ₱1,500</div>
-            <ul><li>Python / Bash Source Code</li><li>Full Commented Source</li><li>Usage Documentation</li><li>Free Minor Updates</li></ul>
+        <div class="grid-3">
+            <div class="card"><p class="card-label">🔐 CYBERSECURITY</p><h3>Ethical Research & Testing</h3><p>Ethical Research • Bug Bounty • Vuln Assessment • SSRF & Recon • Security Analysis</p><div class="bar"><span style="width:80%"></span></div><p class="skill-percent">80%</p></div>
+            <div class="card"><p class="card-label">💻 DEVELOPMENT</p><h3>Web & Automation</h3><p>Python • Bash / Shell • HTML/CSS/JS • Automation • Web & Scripting</p><div class="bar"><span style="width:100%"></span></div><p class="skill-percent">100%</p></div>
+            <div class="card"><p class="card-label">📡 PLATFORMS</p><h3>Systems & Deploy</h3><p>Termux / Linux • Mobile Tech • GitHub • Cloud Deploy • System Optimization</p><div class="bar"><span style="width:85%"></span></div><p class="skill-percent">85%</p></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-    <div class="section-num">05</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> FEATURED_PROJECTS <span class="diamond">◇</span></h2>
-        <p>Things I built from scratch</p>
-    </div>
-    <div class="grid-2">
-        <div class="card">
-            <span class="flag">★ FLAGSHIP · ACTIVE ★</span>
-            <h3>🔐 CYBERJAYD SECURITY LAB v1.7.2</h3>
-            <p>All-in-one fully configured security toolkit designed to run perfectly on Android devices via Termux. Includes subdomain enumeration, live host detection, SSRF testing, and full automation workflows.</p>
+    <section id="services">
+        <div class="section-head">
+            <p class="section-num">04 // SERVICES_&_PRICING</p>
+            <h2 class="section-title">Pick Your Upgrade</h2>
         </div>
-        <div class="card">
-            <h3>🛒 CYBERJAYD SHOP</h3>
-            <p>Full marketplace with Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS. No frameworks. No bloat.</p>
+        <div class="grid-4">
+            <div class="card service-card"><span class="tag">🌐 BEST SELLER</span><p class="card-label mt-2">WEB DESIGN</p><h3>Clean • Professional • Cyber-Grade</h3><p class="price">₱800 – ₱2,000</p><ul><li>Portfolio / Business Sites</li><li>Mobile-First Optimization</li><li>Free Deployment Guide</li><li>1 Free Revision Included</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">🔒 SECURITY AUDIT</p><h3>Find Risks Before Attackers Do</h3><p class="price">₱1,000 – ₱2,500</p><ul><li>Automated + Manual Scan</li><li>Full Vulnerability Report</li><li>Fix Recommendations</li><li>100% Legal & Ethical</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">📱 TERMUX / LINUX</p><h3>Full Setup • Tuned For Speed</h3><p class="price">₱300 – ₱800</p><ul><li>Clean Install & Config</li><li>Essential Toolkit Preloaded</li><li>RAM / Performance Boost</li><li>Step-by-Step Guide</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">⚙️ AUTOMATION</p><h3>Scripts That Work While You Sleep</h3><p class="price">₱500 – ₱1,500</p><ul><li>Python / Bash Source Code</li><li>Full Commented Source</li><li>Usage Documentation</li><li>Free Minor Updates</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
         </div>
-        <div class="card pink">
-            <h3>🎮 FLAPPY BLUES</h3>
-            <p>My first complete browser game — custom rocket, smoke particles, animated obstacles, live score, game over screen, smooth physics. Built entirely on Android.</p>
-            <a href="flappy.html" target="_blank" class="btn pink" style="margin-top:16px;display:inline-block;padding:10px 24px;font-size:13px">▶ PLAY NOW</a>
+    </section>
+
+    <section id="projects">
+        <div class="section-head">
+            <p class="section-num">05 // FEATURED_PROJECTS</p>
+            <h2 class="section-title">Deployed & Operational</h2>
         </div>
-        <div class="card">
-            <span class="flag">★ THIS PAGE ★</span>
-            <h3>🌐 CYBERJAYD SERVICES NET</h3>
-            <p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts — now with animated CyberJayd logo background.</p>
+        <div class="grid-3">
+            <div class="card"><span class="tag">🔐 FLAGSHIP ● ACTIVE</span><p class="card-label mt-2">v1.7.2</p><h3>CYBERJAYD SECURITY LAB</h3><p>All-in-one fully configured security toolkit for Android/Termux: subdomain enumeration, live host detection, SSRF testing, full automation workflows.</p></div>
+            <div class="card"><span class="tag tag-purple">🛒 MARKETPLACE</span><p class="card-label mt-2">WEB APP</p><h3>CYBERJAYD SHOP</h3><p>Full marketplace with Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS. No frameworks. No bloat.</p></div>
+            <div class="card"><span class="tag">🌐 PORTAL</span><p class="card-label mt-2">SERVICES NET</p><h3>CYBERJAYD SERVICES NET</h3><p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts.</p></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- CONTACT -->
-<section id="contact">
-    <div class="section-num">06</div>
-    <div class="section-title">
-        <h2><span class="diamond">◇</span> ESTABLISH_CONNECTION <span class="diamond">◇</span></h2>
-        <p>Let's build something together</p>
-    </div>
-    <div class="contact-box">
-        <h3>📡 TRANSMISSION READY</h3>
-        <p style="color:var(--muted)">Pick any channel — I reply fast, even on weekends.</p>
-        <div class="contact-grid">
-            <div class="contact-item"><div class="label">📧 MAIN EMAIL</div><div class="val">repoberbiojayd3@gmail.com</div></div>
-            <div class="contact-item"><div class="label">💼 BUSINESS</div><div class="val">cyberjayd1@gmail.com</div></div>
-            <div class="contact-item"><div class="label">📍 LOCATION</div><div class="val">Baybay City, Leyte<br>Cebu City, PH 🇵🇭</div></div>
-            <div class="contact-item"><div class="label">⏰ HOURS</div><div class="val">Daily 09:00–21:00 PHT<br>Response < 24h</div></div>
-            <div class="contact-item"><div class="label">⚡ RESPONSE</div><div class="val">< 24 Hours<br>Mon-Sun</div></div>
-            <div class="contact-item"><div class="label">⚠️ PROTOCOL</div><div class="val" style="color:var(--green);font-weight:700">LEGAL & ETHICAL ONLY</div></div>
+    <section id="contact">
+        <div class="section-head">
+            <p class="section-num">06 // ESTABLISH_CONNECTION</p>
+            <h2 class="section-title">Open Channel — Transmit Your Inquiry</h2>
         </div>
-        <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_%2F%2F_CYBERJAYD" class="btn" style="padding:14px 36px;font-size:15px">▶ TRANSMIT INQUIRY</a>
-    </div>
-</section>
+        <div class="grid-2">
+            <div class="card">
+                <div class="contact-item"><p class="contact-label">📧 MAIN EMAIL</p><p>repoberbiojayd3@gmail.com</p></div>
+                <div class="contact-item"><p class="contact-label">💼 BUSINESS EMAIL</p><p style="color:var(--accent)">cyberjayd1@gmail.com</p></div>
+                <div class="contact-item"><p class="contact-label">📍 LOCATION</p><p>Baybay City, Leyte / Cebu City, PH 🇵🇭</p></div>
+                <div class="contact-item"><p class="contact-label">⏰ OPERATING HOURS</p><p>Daily 09:00 — 21:00 PHT</p></div>
+                <div class="contact-item"><p class="contact-label">⚡ RESPONSE TIME</p><p class="ok">● < 24 Hours • Mon-Sun</p></div>
+                <div class="contact-item"><p class="contact-label">⚠️ PROTOCOL</p><p class="warn">LEGAL & ETHICAL ONLY</p></div>
+            </div>
+            <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+                <p style="color:var(--muted);margin-bottom:22px;">Ready to forge your next system? Send your specs, timeline, and target — I reply within the day with a clear scope and exact quote.</p>
+                <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_//_CYBERJAYD_GRAYBLUE" class="btn btn-primary" style="text-align:center;">▶ TRANSMIT INQUIRY</a>
+            </div>
+        </div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="f-logo">CYBERJAYD</div>
-    <p>© 2077 CYBERJAYD SYSTEMS // ALL RIGHTS RESERVED</p>
-    <p><strong>DESIGNED & FORGED BY JAYD F. REPOBERBIO</strong></p>
-    <p>BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
-</footer>
+    <footer>
+        <p class="brand">© 2077 CYBERJAYD SYSTEMS // ALL RIGHTS RESERVED</p>
+        <p><strong>DESIGNED & FORGED BY JAYD F. REPOBERBIO</strong></p>
+        <p style="margin-top:5px;">BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
+    </footer>
 
-<!-- ✅ LIGHTWEIGHT DUST / GLITTERS (WALANG LAG) -->
-<script>
-(function(){
-    var canvas = document.getElementById('dust-canvas');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,1.5);
-    var CX=0,CY=0;
+    <script>
+    (function init(n){
+        try {
+            const canvas = document.getElementById('earthCanvas');
+            if (!canvas) return;
+            if (typeof THREE === 'undefined') { if (n < 60) { setTimeout(() => init(n+1), 180); return; } return; }
 
-    var COUNT = 260;
-    var parts = [];
-    var t = 0;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
 
-    function resize(){
-        W = canvas.clientWidth;
-        H = canvas.clientHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        ctx.setTransform(DPR,0,0,DPR,0,0);
-        CX = W/2;
-        CY = H/2;
-    }
-    resize();
-    window.addEventListener('resize', resize);
+            const R = 3.0;
+            function fitEarth() {
+                const aspect = window.innerWidth / window.innerHeight;
+                const fovRad = (camera.fov * Math.PI) / 180;
+                let dist = aspect >= 1 ? R / Math.sin(fovRad/2) : R / (Math.sin(fovRad/2) * aspect);
+                camera.position.z = dist * 1.2;
+                camera.updateProjectionMatrix();
+            }
 
-    for(var i=0;i<COUNT;i++){
-        var angle = Math.random()*Math.PI*2;
-        var radius = 120 + Math.random()*Math.max(W,H)*0.6;
-        var speed = (0.00025 + Math.random()*0.0007) * (Math.random()<.5?1:-1);
-        var tilt = (Math.random()-.5) * Math.max(W,H)*0.2;
-        parts.push({
-            a: angle, r: radius, s: speed, y: tilt,
-            size: Math.random()*1.5 + .35,
-            alpha: .3 + Math.random()*.5,
-            hue: 190 + Math.random()*40
-        });
-    }
+            const geo = new THREE.SphereGeometry(R, 64, 64);
+            const loader = new THREE.TextureLoader();
+            loader.setCrossOrigin('anonymous');
+            const tex = loader.load(
+                'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg',
+                undefined,
+                () => { mat.color.setHex(0x1a4a8a); mat.map = null; mat.needsUpdate = true; }
+            );
+            const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.85, metalness: 0.05, color: 0xaad4ff });
+            const earth = new THREE.Mesh(geo, mat);
+            scene.add(earth);
 
-    function loop(){
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = 'rgba(5,0,20,0.2)';
-        ctx.fillRect(0,0,W,H);
-        ctx.globalCompositeOperation = 'lighter';
+            const atmoGeo = new THREE.SphereGeometry(R * 1.09, 64, 64);
+            const atmoMat = new THREE.ShaderMaterial({
+                transparent: true, side: THREE.BackSide, depthWrite: false,
+                uniforms: { c:{value:.6}, p:{value:4}, glowColor:{value:new THREE.Color(0x00e5ff)} },
+                vertexShader: 'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+                fragmentShader: 'uniform vec3 g;uniform float c,p;varying vec3 vN;void main(){float i=pow(c-dot(vN,vec3(0,0,1)),p);gl_FragColor=vec4(g,i*1.2);}'
+            });
+            scene.add(new THREE.Mesh(atmoGeo, atmoMat));
 
-        t += 0.016;
-        for(var i=0;i<COUNT;i++){
-            var p = parts[i];
-            p.a += p.s;
-            var x = CX + Math.cos(p.a) * p.r * 0.88;
-            var y = CY + Math.sin(p.a) * p.r * 0.42 + Math.sin(t*0.4 + p.a) * p.y * 0.3;
-            var a = p.alpha * (0.55 + 0.45*Math.sin(t*1.8 + i));
+            const S = 3500, arr = new Float32Array(S*3);
+            for (let i=0;i<S*3;i++) arr[i]=(Math.random()-.5)*250;
+            const sg = new THREE.BufferGeometry();
+            sg.setAttribute('position', new THREE.BufferAttribute(arr,3));
+            scene.add(new THREE.Points(sg, new THREE.PointsMaterial({color:0x88ccff,size:.07,transparent:true,opacity:.92})));
 
-            ctx.beginPath();
-            ctx.fillStyle = 'hsla('+p.hue+', 100%, 75%, '+a+')';
-            ctx.arc(x, y, p.size, 0, Math.PI*2);
-            ctx.fill();
-        }
-        requestAnimationFrame(loop);
-    }
-    document.addEventListener('visibilitychange', function(){
-        if(!document.hidden) requestAnimationFrame(loop);
-    });
-    loop();
-})();
-</script>
+            scene.add(new THREE.AmbientLight(0xffffff, .48));
+            const sun = new THREE.DirectionalLight(0xffffff, 1.25);
+            sun.position.set(10,5,7); scene.add(sun);
+            const rim = new THREE.DirectionalLight(0xb026ff, .35);
+            rim.position.set(-8,-4,-6); scene.add(rim);
 
+            fitEarth();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                fitEarth();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            function loop(){
+                requestAnimationFrame(loop);
+                earth.rotation.y += 0.0015;
+                renderer.render(scene, camera);
+            }
+            loop();
+        } catch(e){ console.error(e); }
+    })(0);
+    </script>
 </body>
 </html>
