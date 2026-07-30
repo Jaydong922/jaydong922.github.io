@@ -19,7 +19,6 @@
 
         #earthCanvas { position: fixed; top: 0; left: 0; width: 100vw !important; height: 100vh !important; z-index: -2; display: block; pointer-events: none; }
         .bg-overlay { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 30%, rgba(5,8,20,0) 0%, rgba(5,8,20,0.5) 45%, rgba(5,8,20,0.95) 100%), linear-gradient(180deg, rgba(5,8,20,0.55), rgba(5,8,20,0.88)); pointer-events: none; }
-        .scanlines { position: fixed; inset: 0; z-index: 999; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.03) 0px, rgba(0, 229, 255, 0.03) 1px, transparent 1px, transparent 3px); }
 
         nav { position: sticky; top: 0; z-index: 100; padding: 20px 6%; background: rgba(5, 8, 20, 0.78); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
         .nav-links { display: flex; flex-wrap: wrap; gap: 26px; list-style: none; }
@@ -98,7 +97,6 @@
 <body>
     <canvas id="earthCanvas"></canvas>
     <div class="bg-overlay"></div>
-    <div class="scanlines"></div>
 
     <nav>
         <ul class="nav-links">
