@@ -258,7 +258,7 @@
             });
             scene.add(new THREE.Mesh(atmoGeo, atmoMat));
 
-            // ✨ 6000 FLOATING DUST + GLITTERS (ZERO-GRAVITY LOOK)
+            // ✨ 6000 FLOATING DUST + GLITTERS + STARS (FOLLOWING EARTH'S ROTATION)
             const P_COUNT = 6000;
             const SPREAD = 130;
             const positions = new Float32Array(P_COUNT * 3);
@@ -368,12 +368,21 @@
                 const time = clock.getElapsedTime();
                 pMat.uniforms.uTime.value = time;
 
-                // Drift particles
+                // Drift particles AND rotate with the Earth
                 for (let i = 0; i < P_COUNT; i++) {
                     const d = drift[i];
+                    // Original drift movement
                     posArr[i*3]   += d.vx + Math.sin(time*0.6 + d.phase) * 0.003;
                     posArr[i*3+1] += d.vy + Math.cos(time*0.5 + d.phase) * 0.002;
                     posArr[i*3+2] += d.vz;
+
+                    // NEW: Rotate the particle around the Y-axis (same as Earth's rotation)
+                    // This makes it look like they're in orbit
+                    const rotationSpeed = 0.0015; // Same as earth.rotation.y
+                    const x = posArr[i*3];
+                    const z = posArr[i*3+2];
+                    posArr[i*3]   = x * Math.cos(rotationSpeed) - z * Math.sin(rotationSpeed);
+                    posArr[i*3+2] = x * Math.sin(rotationSpeed) + z * Math.cos(rotationSpeed);
 
                     // Wrap around if too far
                     for (let k = 0; k < 3; k++) {
