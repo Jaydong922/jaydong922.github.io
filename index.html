@@ -1,224 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CYBERJAYD // GLOBAL GRID — 3D EARTH PORTFOLIO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-<style>
-:root {
-    --primary: #00d4ff; --secondary: #a855f7; --accent: #ffcc00;
-    --success: #00ff88; --dark: #050814; --darker: #020208;
-    --panel: rgba(5,10,25,0.88); --border: rgba(0,212,255,0.35);
-    --text: #e8f1ff; --muted: #7a8bb3;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Rajdhani',sans-serif}
-body{background:var(--darker);color:var(--text);overflow-x:hidden;min-height:100vh}
-#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.container{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:25px 20px}
-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:35px;padding-bottom:15px;border-bottom:1px solid var(--border)}
-.logo{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;background:linear-gradient(90deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-nav a{color:var(--muted);margin:0 12px;text-decoration:none;font-weight:600;font-size:1.05rem;transition:color 0.2s}
-nav a:hover,nav a.active{color:var(--primary);text-shadow:0 0 8px var(--primary)}
-.hero{text-align:center;margin-bottom:50px;padding:20px 0}
-.hero h1{font-family:'Orbitron',sans-serif;font-size:3.5rem;font-weight:900;margin-bottom:15px;color:var(--primary);text-shadow:0 0 25px rgba(0,212,255,0.4)}
-.hero p{font-size:1.4rem;color:var(--muted);max-width:800px;margin:0 auto 25px}
-.btn{display:inline-block;padding:14px 28px;border:1px solid var(--primary);border-radius:8px;color:var(--primary);text-decoration:none;font-weight:700;font-size:1.1rem;transition:all 0.25s;margin:0 8px 12px}
-.btn-fill{background:var(--primary);color:var(--dark);box-shadow:0 0 15px rgba(0,212,255,0.3)}
-.btn:hover{background:rgba(0,212,255,0.15);box-shadow:0 0 20px rgba(0,212,255,0.5)}
-.section{margin-bottom:55px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:25px;backdrop-filter:blur(8px)}
-.section h2{font-family:'Orbitron',sans-serif;font-size:2.2rem;border-left:5px solid var(--primary);padding-left:15px;margin-bottom:25px;color:var(--primary)}
-.card{background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:20px;margin-bottom:20px;transition:transform 0.2s,box-shadow 0.2s}
-.card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,212,255,0.25)}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-footer{text-align:center;padding:25px 15px;border-top:1px solid var(--border);margin-top:40px;color:var(--muted);font-size:1rem;background:rgba(2,2,8,0.7)}
-footer p{margin:5px 0}
-@media (max-width:768px){
-    .hero h1{font-size:2.2rem}
-    nav{width:100%;text-align:center;margin-top:10px}
-    .section h2{font-size:1.7rem}
-    .btn{padding:12px 20px;font-size:1rem}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>CYBERJAYD | Global Grid Sector 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg: #050814; --text: #e8f1ff; --muted: #8ea3c7;
+            --accent: #00e5ff; --accent-soft: rgba(0, 229, 255, 0.15);
+            --accent2: #b026ff; --border: rgba(0, 229, 255, 0.25);
+            --ok: #39ff88; --warn: #ff3860;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Share Tech Mono', monospace; color: var(--text); background: var(--bg); line-height: 1.7; overflow-x: hidden; }
+
+        #earthCanvas { position: fixed; top: 0; left: 0; width: 100vw !important; height: 100vh !important; z-index: -2; display: block; pointer-events: none; }
+        .bg-overlay { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 30%, rgba(5,8,20,0) 0%, rgba(5,8,20,0.5) 45%, rgba(5,8,20,0.95) 100%), linear-gradient(180deg, rgba(5,8,20,0.55), rgba(5,8,20,0.88)); pointer-events: none; }
+
+        nav { position: sticky; top: 0; z-index: 100; padding: 20px 6%; background: rgba(5, 8, 20, 0.78); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 26px; list-style: none; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; transition: 0.2s; }
+        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+
+        .hero { min-height: 92vh; padding: 80px 6% 60px; display: flex; flex-direction: column; justify-content: center; }
+        .hero-eyebrow { color: var(--accent); font-size: 15px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 26px; }
+        .hero-title { font-family: 'Chakra Petch', sans-serif; font-size: clamp(58px, 13.5vw, 135px); font-weight: 700; line-height: 0.95; margin-bottom: 32px; letter-spacing: -1px; }
+        .hero-title .cyan { color: var(--accent); text-shadow: 0 0 14px var(--accent), 0 0 35px rgba(0,229,255,0.45); }
+        .hero-tags { color: var(--muted); font-size: clamp(18px, 2.8vw, 26px); letter-spacing: 2.2px; text-transform: uppercase; margin-bottom: 30px; max-width: 780px; }
+        .hero-desc { font-size: clamp(18px, 2.3vw, 22px); max-width: 780px; margin-bottom: 48px; }
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 18px; }
+        .btn { padding: 16px 34px; font-family: 'Chakra Petch', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; text-decoration: none; border: 2px solid var(--accent); cursor: pointer; transition: 0.25s; border-radius: 2px; }
+        .btn-primary { background: var(--accent-soft); color: var(--accent); }
+        .btn-primary:hover { background: var(--accent); color: #041018; box-shadow: 0 0 30px rgba(0,229,255,0.6); }
+        .btn-outline { background: transparent; color: var(--text); border-color: var(--text); }
+        .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); box-shadow: 0 0 25px rgba(176,38,255,0.45); }
+
+        section { padding: 95px 6%; border-top: 1px solid rgba(0,229,255,0.09); }
+        .section-head { margin-bottom: 55px; }
+        .section-num { color: var(--accent2); font-family: 'Chakra Petch', sans-serif; font-size: 16px; letter-spacing: 3.5px; text-transform: uppercase; margin-bottom: 12px; }
+        .section-title { font-family: 'Chakra Petch', sans-serif; font-size: clamp(34px, 6vw, 56px); font-weight: 700; line-height: 1.1; }
+        .section-title .cyan { color: var(--accent); }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { padding: 30px; border: 1px solid var(--border); background: rgba(10, 15, 35, 0.58); backdrop-filter: blur(8px); transition: 0.25s; border-radius: 3px; }
+        .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 10px 35px rgba(0,229,255,0.18); }
+        .card-label { color: var(--accent); font-size: 13px; letter-spacing: 2.4px; text-transform: uppercase; margin-bottom: 10px; }
+        .card h3 { font-family: 'Chakra Petch', sans-serif; font-size: 23px; margin: 8px 0 14px; line-height: 1.25; }
+        .card p, .card li { color: var(--muted); font-size: 16.5px; line-height: 1.75; }
+        .tag { display: inline-block; padding: 4px 12px; border: 1px solid var(--accent); color: var(--accent); font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; background: var(--accent-soft); margin-bottom: 12px; border-radius: 2px; }
+        .tag-purple { border-color: var(--accent2); color: var(--accent2); background: rgba(176,38,255,0.13); }
+        .status-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
+
+        .bar { height: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); margin-top: 18px; overflow: hidden; border-radius: 2px; }
+        .bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 12px var(--accent); }
+        .skill-percent { color: var(--accent); font-size: 15px; margin-top: 8px; font-weight: 700; text-align: right; }
+
+        .price { font-family: 'Chakra Petch', sans-serif; font-size: 31px; font-weight: 700; color: var(--accent); margin: 10px 0 18px; }
+        .service-card ul { list-style: none; margin: 14px 0 26px; }
+        .service-card li { padding: 5px 0; font-size: 16.5px; }
+        .service-card li::before { content: "✓ "; color: var(--accent); font-weight: 700; margin-right: 6px; }
+        .btn-small { padding: 12px 20px; font-size: 13px; width: 100%; text-align: center; display: block; }
+
+        .contact-item { margin-bottom: 18px; }
+        .contact-label { color: var(--accent); font-size: 13px; letter-spacing: 2.4px; text-transform: uppercase; margin-bottom: 5px; }
+        .contact-item p, .contact-item a { font-size: 17px; color: var(--text); text-decoration: none; }
+        .contact-item a:hover { color: var(--accent); }
+        .ok { color: var(--ok); font-weight: 600; }
+        .warn { color: var(--warn); font-weight: 600; }
+
+        footer { padding: 45px 6%; text-align: center; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; letter-spacing: 1.2px; }
+        footer .brand { color: var(--accent); font-family: 'Chakra Petch', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 2.5px; margin-bottom: 12px; text-shadow: 0 0 10px var(--accent); }
+        footer strong { font-size: 15px; }
+
+        @media (max-width: 600px) {
+            nav { padding: 16px 5%; }
+            .nav-links { gap: 16px; }
+            .nav-links a { font-size: 13px; letter-spacing: 1.4px; }
+            section { padding: 75px 5%; }
+            .hero { padding: 65px 5% 55px; }
+            .hero-title { font-size: clamp(52px, 16vw, 95px); }
+            .hero-tags { font-size: 17px; }
+            .hero-desc { font-size: 17px; }
+            .btn { padding: 14px 26px; font-size: 14px; }
+            .card { padding: 24px; }
+            .card h3 { font-size: 20px; }
+            .card p, .card li { font-size: 15.5px; }
+            .section-title { font-size: clamp(30px, 8vw, 44px); }
+        }
+    </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
-<div class="container">
-<header>
-    <div class="logo">CYBERJAYD</div>
+    <canvas id="earthCanvas"></canvas>
+    <div class="bg-overlay"></div>
+
     <nav>
-        <a href="#about" class="active">ABOUT</a>
-        <a href="#skills">SKILLS</a>
-        <a href="#services">SERVICES</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="flappy.html" target="_blank">🎮 FLAPPY BLUES</a>
-        <a href="jarvis-ai/" target="_blank">🔐 J.A.R.V.I.S</a>
+        <ul class="nav-links">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#why">WHY</a></li>
+            <li><a href="#skills">SKILLS</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
     </nav>
-</header>
 
-<section class="hero">
-    <h1>WELCOME TO GLOBAL GRID</h1>
-    <p>I am Jayd F. Repoberbio — Cybersecurity Researcher, Web & Game Developer. This entire portfolio was built 100% on Android via Termux, with no PC or laptop. Passion, code, and dedication over expensive gear.</p>
-    <a href="#projects" class="btn btn-fill">VIEW MY WORK</a>
-    <a href="#services" class="btn">HIRE ME</a>
-</section>
-
-<section id="about" class="section">
-    <h2>ABOUT ME</h2>
-    <div class="card">
-        <p style="font-size:1.2rem;line-height:1.8;">👋 Hello! I am a first-year BSED English student at FCIC Baybay City, Leyte — fully self-taught in coding, web development, and cybersecurity. I turn ideas into working systems using pure HTML, CSS, JavaScript, Python, and Linux tools.</p>
-        <p style="font-size:1.2rem;line-height:1.8;margin-top:15px;">🌍 My work is built for everyone — lightweight, mobile-friendly, and capable of global standards. I specialize in clean futuristic designs, secure systems, and custom game development.</p>
-    </div>
-</section>
-
-<section id="skills" class="section">
-    <h2>MY SKILLS</h2>
-    <div class="grid-3">
-        <div class="card">
-            <h3>🌐 WEB DEV</h3>
-            <p>HTML5 • CSS3 • JS</p>
-            <p>Three.js • Responsive</p>
-            <p>Mobile-First</p>
+    <section class="hero" id="home">
+        <p class="hero-eyebrow">// GLOBAL GRID // SECTOR 7 — ONLINE</p>
+        <h1 class="hero-title"><span class="cyan">CYBER</span>JAYD</h1>
+        <p class="hero-tags">ETHICAL SECURITY · SOFTWARE DEVELOPMENT · MOBILE TECHNOLOGY</p>
+        <p class="hero-desc">Clean design. Maximum power. Systems forged to run at global standard — built, tested, and optimized on mobile first.</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">VIEW PROJECTS →</a>
+            <a href="#contact" class="btn btn-outline">HIRE ME ✉</a>
         </div>
-        <div class="card">
-            <h3>🔐 CYBER SECURITY</h3>
-            <p>Ethical Research</p>
-            <p>Bug Hunting</p>
-            <p>System Analysis</p>
+    </section>
+
+    <section id="about">
+        <div class="section-head">
+            <p class="section-num">01 // ABOUT_ME.EXE</p>
+            <h2 class="section-title">Initializing User Profile<span class="cyan">...</span></h2>
         </div>
-        <div class="card">
-            <h3>🎮 GAME DEV</h3>
-            <p>Browser Games</p>
-            <p>Logic & Physics</p>
-            <p>Interactive UI</p>
+        <div class="grid-2">
+            <div class="card"><p class="card-label">👋 IDENTITY</p><p><strong>JAYD F. REPOBERBIO</strong> — Web Engineer, Ethical Security Researcher, sole architect behind this network.</p></div>
+            <div class="card"><p class="card-label">🎓 STATUS</p><p>First Year College • BSED-ENG • FCIC Baybay City, Leyte. No formal IT degree. <span class="ok">100% SELF-TAUGHT</span>. Every skill earned through 3AM grind, relentless research, and refusing limits.</p></div>
+            <div class="card"><p class="card-label">⚡ SPECIALIZATION</p><p>Lightweight mobile-optimized websites, automation scripts, and ethical security tools built to run perfectly on <strong style="color:var(--accent2)">Android / Termux</strong> — advanced tech for everyone.</p></div>
+            <div class="card"><p class="card-label">🌍 MISSION</p><p>Prove passion beats paper. That a student from the provinces can build global-standard systems — one commit at a time.</p><div class="status-tags"><span class="tag">● ONLINE</span><span class="tag tag-purple">● ACCEPTING CONTRACTS</span><span class="tag">● RESPONSE < 24H</span></div></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="services" class="section">
-    <h2>SERVICES I OFFER</h2>
-    <div class="grid-2">
-        <div class="card">
-            <h3>PORTFOLIO / BUSINESS WEBSITE</h3>
-            <p>Professional, futuristic design fully customized for you.</p>
+    <section id="why">
+        <div class="section-head">
+            <p class="section-num">02 // WHY_CHOOSE_CYBERJAYD</p>
+            <h2 class="section-title">Six Reasons The Grid Trusts Me</h2>
         </div>
-        <div class="card">
-            <h3>WEB & GAME DEVELOPMENT</h3>
-            <p>Custom projects, interactive tools, and playable games.</p>
+        <div class="grid-3">
+            <div class="card"><p class="card-label">💡 01 / QUALITY</p><h3>Obsessed With Quality</h3><p>No formal background means I try harder. Every project is personal. Every pixel checked twice.</p></div>
+            <div class="card"><p class="card-label">📱 02 / MOBILE</p><h3>Mobile Is First</h3><p>70% of the web is phones. All my work is built, tested, perfected on mobile first.</p></div>
+            <div class="card"><p class="card-label">💰 03 / PRICING</p><h3>Honest Pricing</h3><p>What you see is what you pay. No hidden fees. No surprise invoices. Just fair value.</p></div>
+            <div class="card"><p class="card-label">⚖️ 04 / ETHICS</p><h3>Ethical By Default</h3><p>Every security engagement follows strict global rules. No gray areas. No exceptions. Ever.</p></div>
+            <div class="card"><p class="card-label">⚡ 05 / SUPPORT</p><h3>Real-Time Support</h3><p>Questions at 11PM? I answer. Bug at 2AM? I fix it. Your success is my SLA.</p></div>
+            <div class="card"><p class="card-label">🌍 06 / STANDARD</p><h3>Global Standard</h3><p>Code that passes audits. Designs that compete with top studios. Delivered PH to the world.</p></div>
         </div>
-        <div class="card">
-            <h3>SYSTEM SETUP & OPTIMIZATION</h3>
-            <p>Termux, Linux, and mobile dev environment tuning.</p>
+    </section>
+
+    <section id="skills">
+        <div class="section-head">
+            <p class="section-num">03 // CORE_CAPABILITIES</p>
+            <h2 class="section-title">Capabilities & Proficiency</h2>
         </div>
-        <div class="card">
-            <h3>SECURITY ASSESSMENT</h3>
-            <p>Legal & ethical scanning with full reports.</p>
+        <div class="grid-3">
+            <div class="card"><p class="card-label">🔐 CYBERSECURITY</p><h3>Ethical Research & Testing</h3><p>Ethical Research • Bug Bounty • Vuln Assessment • SSRF & Recon • Security Analysis</p><div class="bar"><span style="width:80%"></span></div><p class="skill-percent">80%</p></div>
+            <div class="card"><p class="card-label">💻 DEVELOPMENT</p><h3>Web & Automation</h3><p>Python • Bash / Shell • HTML/CSS/JS • Automation • Web & Scripting</p><div class="bar"><span style="width:100%"></span></div><p class="skill-percent">100%</p></div>
+            <div class="card"><p class="card-label">📡 PLATFORMS</p><h3>Systems & Deploy</h3><p>Termux / Linux • Mobile Tech • GitHub • Cloud Deploy • System Optimization</p><div class="bar"><span style="width:85%"></span></div><p class="skill-percent">85%</p></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="projects" class="section">
-    <h2>FEATURED PROJECTS</h2>
-    <div class="card">
-        <h3>🎮 FLAPPY BLUES</h3>
-        <p>Custom browser game built entirely on mobile — optimized controls and balanced difficulty.</p>
-        <a href="flappy.html" target="_blank" class="btn">PLAY NOW</a>
-    </div>
-    <div class="card">
-        <h3>🔐 J.A.R.V.I.S AI SYSTEM</h3>
-        <p>Advanced multi-agent AI assistant integrated with PI Agent — fully functional web interface.</p>
-        <a href="jarvis-ai/" target="_blank" class="btn">ACCESS SYSTEM</a>
-    </div>
-</section>
-</div>
+    <section id="services">
+        <div class="section-head">
+            <p class="section-num">04 // SERVICES_&_PRICING</p>
+            <h2 class="section-title">Pick Your Upgrade</h2>
+        </div>
+        <div class="grid-4">
+            <div class="card service-card"><span class="tag">🌐 BEST SELLER</span><p class="card-label mt-2">WEB DESIGN</p><h3>Clean • Professional • Cyber-Grade</h3><p class="price">₱800 – ₱2,000</p><ul><li>Portfolio / Business Sites</li><li>Mobile-First Optimization</li><li>Free Deployment Guide</li><li>1 Free Revision Included</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">🔒 SECURITY AUDIT</p><h3>Find Risks Before Attackers Do</h3><p class="price">₱1,000 – ₱2,500</p><ul><li>Automated + Manual Scan</li><li>Full Vulnerability Report</li><li>Fix Recommendations</li><li>100% Legal & Ethical</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">📱 TERMUX / LINUX</p><h3>Full Setup • Tuned For Speed</h3><p class="price">₱300 – ₱800</p><ul><li>Clean Install & Config</li><li>Essential Toolkit Preloaded</li><li>RAM / Performance Boost</li><li>Step-by-Step Guide</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+            <div class="card service-card"><p class="card-label">⚙️ AUTOMATION</p><h3>Scripts That Work While You Sleep</h3><p class="price">₱500 – ₱1,500</p><ul><li>Python / Bash Source Code</li><li>Full Commented Source</li><li>Usage Documentation</li><li>Free Minor Updates</li></ul><a href="#contact" class="btn btn-primary btn-small">TRANSMIT →</a></div>
+        </div>
+    </section>
 
-<script>
-// 3D EARTH + GRAVITY EFFECTS
-const canvas = document.getElementById('bgCanvas');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    <section id="projects">
+        <div class="section-head">
+            <p class="section-num">05 // FEATURED_PROJECTS</p>
+            <h2 class="section-title">Deployed & Operational</h2>
+        </div>
+        <div class="grid-3">
+            <div class="card"><span class="tag">🔐 FLAGSHIP ● ACTIVE</span><p class="card-label mt-2">v1.7.2</p><h3>CYBERJAYD SECURITY LAB</h3><p>All-in-one fully configured security toolkit for Android/Termux: subdomain enumeration, live host detection, SSRF testing, full automation workflows.</p></div>
+            <div class="card"><span class="tag tag-purple">🛒 MARKETPLACE</span><p class="card-label mt-2">WEB APP</p><h3>CYBERJAYD SHOP</h3><p>Full marketplace with Sign Up, Login, Admin Dashboard, Buyer View, Product CRUD, Settings. 100% hand-coded HTML/CSS/JS. No frameworks. No bloat.</p></div>
+            <div class="card"><span class="tag">🌐 PORTAL</span><p class="card-label mt-2">SERVICES NET</p><h3>CYBERJAYD SERVICES NET</h3><p>Official services portal with pricing tables, portfolio showcase, and direct client intake. Built to convert visitors into contracts.</p></div>
+        </div>
+    </section>
 
-// EARTH BASE
-const earthGeo = new THREE.SphereGeometry(5, 64, 64);
-const earthMat = new THREE.MeshBasicMaterial({color:0x0099ff, wireframe:false, transparent:true, opacity:0.35});
-const earth = new THREE.Mesh(earthGeo, earthMat);
-scene.add(earth);
+    <section id="contact">
+        <div class="section-head">
+            <p class="section-num">06 // ESTABLISH_CONNECTION</p>
+            <h2 class="section-title">Open Channel — Transmit Your Inquiry</h2>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <div class="contact-item"><p class="contact-label">📧 MAIN EMAIL</p><p>repoberbiojayd3@gmail.com</p></div>
+                <div class="contact-item"><p class="contact-label">💼 BUSINESS EMAIL</p><p style="color:var(--accent)">cyberjayd1@gmail.com</p></div>
+                <div class="contact-item"><p class="contact-label">📍 LOCATION</p><p>Baybay City, Leyte / Cebu City, PH 🇵🇭</p></div>
+                <div class="contact-item"><p class="contact-label">⏰ OPERATING HOURS</p><p>Daily 09:00 — 21:00 PHT</p></div>
+                <div class="contact-item"><p class="contact-label">⚡ RESPONSE TIME</p><p class="ok">● < 24 Hours • Mon-Sun</p></div>
+                <div class="contact-item"><p class="contact-label">⚠️ PROTOCOL</p><p class="warn">LEGAL & ETHICAL ONLY</p></div>
+            </div>
+            <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+                <p style="color:var(--muted);font-size:17px;margin-bottom:26px;">Ready to forge your next system? Send your specs, timeline, and target — I reply within the day with a clear scope and exact quote.</p>
+                <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_//_CYBERJAYD_GRAYBLUE" class="btn btn-primary" style="text-align:center;">▶ TRANSMIT INQUIRY</a>
+            </div>
+        </div>
+    </section>
 
-// GLOWING ATMOSPHERE
-const atmoGeo = new THREE.SphereGeometry(5.8, 64, 64);
-const atmoMat = new THREE.MeshBasicMaterial({color:0x00d4ff, side:THREE.BackSide, transparent:true, opacity:0.12});
-const atmo = new THREE.Mesh(atmoGeo, atmoMat);
-scene.add(atmo);
+    <footer>
+        <p class="brand">© 2077 CYBERJAYD SYSTEMS // ALL RIGHTS RESERVED</p>
+        <p><strong>DESIGNED & FORGED BY JAYD F. REPOBERBIO</strong></p>
+        <p style="margin-top:8px;">BUILT WITH PASSION • POWERED BY PURE CODE • CLEAN GRID DESIGN SINCE 2025</p>
+    </footer>
 
-// ORBITAL RINGS
-const ring1 = new THREE.Mesh(new THREE.RingGeometry(6.2, 7.5, 128), new THREE.MeshBasicMaterial({color:0x00d4ff, side:THREE.DoubleSide, transparent:true, opacity:0.18}));
-ring1.rotation.x = Math.PI / 2.5;
-scene.add(ring1);
-const ring2 = new THREE.Mesh(new THREE.RingGeometry(8, 9.5, 128), new THREE.MeshBasicMaterial({color:0xa855f7, side:THREE.DoubleSide, transparent:true, opacity:0.12}));
-ring2.rotation.x = -Math.PI / 3;
-scene.add(ring2);
+    <script>
+    (function init(n){
+        try {
+            const canvas = document.getElementById('earthCanvas');
+            if (!canvas) return;
+            if (typeof THREE === 'undefined') { if (n < 60) { setTimeout(() => init(n+1), 180); return; } return; }
 
-// FLOATING MATH EQUATIONS + GLITTER PARTICLES
-const totalItems = 3500;
-const itemsGeo = new THREE.BufferGeometry();
-const positions = new Float32Array(totalItems * 3);
-const colors = new Float32Array(totalItems * 3);
-const types = [];
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
 
-for(let i=0; i<totalItems; i++){
-    const r = 12 + Math.random() * 45;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos((Math.random() * 2) - 1);
-    positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
-    positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-    positions[i*3+2] = r * Math.cos(phi);
+            const R = 3.0;
+            function fitEarth() {
+                const aspect = window.innerWidth / window.innerHeight;
+                const fovRad = (camera.fov * Math.PI) / 180;
+                let dist = aspect >= 1 ? R / Math.sin(fovRad/2) : R / (Math.sin(fovRad/2) * aspect);
+                camera.position.z = dist * 1.25;
+                camera.updateProjectionMatrix();
+            }
 
-    const c = Math.random();
-    if(c < 0.4){
-        colors[i*3] = 0; colors[i*3+1] = 0.8; colors[i*3+2] = 1;
-    } else if(c < 0.7){
-        colors[i*3] = 0.66; colors[i*3+1] = 0.33; colors[i*3+2] = 0.97;
-    } else {
-        colors[i*3] = 1; colors[i*3+1] = 0.8; colors[i*3+2] = 0;
-    }
-    types.push(Math.random() > 0.6 ? 'math' : 'dust');
-}
-itemsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-itemsGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-const itemsMat = new THREE.PointsMaterial({size:0.07, vertexColors:true, transparent:true, opacity:0.7});
-const items = new THREE.Points(itemsGeo, itemsMat);
-scene.add(items);
+            // 🌍 EARTH
+            const geo = new THREE.SphereGeometry(R, 64, 64);
+            const loader = new THREE.TextureLoader();
+            loader.setCrossOrigin('anonymous');
+            const tex = loader.load(
+                'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg',
+                undefined,
+                () => { mat.color.setHex(0x1a4a8a); mat.map = null; mat.needsUpdate = true; }
+            );
+            const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.82, metalness: 0.08, color: 0xaad4ff });
+            const earth = new THREE.Mesh(geo, mat);
+            scene.add(earth);
 
-camera.position.z = 18;
+            // 🌫️ ATMOSPHERE GLOW
+            const atmoGeo = new THREE.SphereGeometry(R * 1.12, 64, 64);
+            const atmoMat = new THREE.ShaderMaterial({
+                transparent: true, side: THREE.BackSide, depthWrite: false,
+                uniforms: { c:{value:.55}, p:{value:4.2}, glowColor:{value:new THREE.Color(0x00e5ff)} },
+                vertexShader: 'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+                fragmentShader: 'uniform vec3 g;uniform float c,p;varying vec3 vN;void main(){float i=pow(c-dot(vN,vec3(0,0,1)),p);gl_FragColor=vec4(g,i*1.4);}'
+            });
+            scene.add(new THREE.Mesh(atmoGeo, atmoMat));
 
-function animate(){
-    requestAnimationFrame(animate);
-    earth.rotation.y += 0.0025;
-    atmo.rotation.y += 0.0015;
-    ring1.rotation.z += 0.0008;
-    ring2.rotation.z -= 0.0005;
-    items.rotation.y += 0.0002;
-    renderer.render(scene, camera);
-}
-animate();
+            // ✨ 6000 FLOATING DUST + GLITTERS + STARS (FOLLOWING EARTH'S ROTATION)
+            const P_COUNT = 6000;
+            const SPREAD = 130;
+            const positions = new Float32Array(P_COUNT * 3);
+            const colors = new Float32Array(P_COUNT * 3);
+            const baseSizes = new Float32Array(P_COUNT);
+            const drift = [];
+            const palette = [
+                new THREE.Color(0xffffff),
+                new THREE.Color(0x00e5ff),
+                new THREE.Color(0x9d5cff),
+                new THREE.Color(0x88ddff),
+                new THREE.Color(0xffe6b3)
+            ];
 
-window.addEventListener('resize', ()=>{
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-</script>
+            for (let i = 0; i < P_COUNT; i++) {
+                const r = SPREAD * (0.25 + Math.random() * 0.75);
+                const t = Math.random() * Math.PI * 2;
+                const p = Math.acos(2 * Math.random() - 1);
+                positions[i*3]   = r * Math.sin(p) * Math.cos(t);
+                positions[i*3+1] = r * Math.sin(p) * Math.sin(t);
+                positions[i*3+2] = r * Math.cos(p) - 25;
 
-<footer>
-    <p>© 2026 CYBERJAYD SYSTEMS | JAYD F. REPOBERBIO</p>
-    <p>Built 100% on Android • Powered by Pure Code</p>
-</footer>
+                const roll = Math.random();
+                let sz;
+                if (roll < 0.70) sz = 0.04 + Math.random() * 0.07;
+                else if (roll < 0.95) sz = 0.09 + Math.random() * 0.14;
+                else sz = 0.20 + Math.random() * 0.32;
+                baseSizes[i] = sz;
+
+                const c = palette[Math.floor(Math.random() * palette.length)];
+                colors[i*3] = c.r; colors[i*3+1] = c.g; colors[i*3+2] = c.b;
+
+                drift.push({
+                    vx: (Math.random() - 0.5) * 0.009,
+                    vy: (Math.random() > 0.25 ? 1 : -1) * (0.004 + Math.random() * 0.014),
+                    vz: (Math.random() - 0.5) * 0.006,
+                    phase: Math.random() * Math.PI * 2,
+                    tw: 0.6 + Math.random() * 2.8
+                });
+            }
+
+            // Procedural soft-dot particle texture
+            const pc = document.createElement('canvas');
+            pc.width = pc.height = 64;
+            const px = pc.getContext('2d');
+            const g = px.createRadialGradient(32,32,0,32,32,32);
+            g.addColorStop(0.0, 'rgba(255,255,255,1)');
+            g.addColorStop(0.35,'rgba(255,255,255,0.85)');
+            g.addColorStop(0.7, 'rgba(180,230,255,0.35)');
+            g.addColorStop(1.0, 'rgba(0,0,0,0)');
+            px.fillStyle = g; px.fillRect(0,0,64,64);
+            const pTex = new THREE.CanvasTexture(pc);
+
+            const pGeo = new THREE.BufferGeometry();
+            pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            pGeo.setAttribute('aSize', new THREE.BufferAttribute(baseSizes, 1));
+
+            const pMat = new THREE.ShaderMaterial({
+                transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+                vertexColors: true,
+                uniforms: { uTex:{value:pTex}, uTime:{value:0}, uPixelRatio:{value:Math.min(window.devicePixelRatio||1,2)} },
+                vertexShader: `
+                    attribute float aSize;
+                    uniform float uTime;
+                    uniform float uPixelRatio;
+                    varying vec3 vColor;
+                    void main(){
+                        vColor = color;
+                        vec4 mv = modelViewMatrix * vec4(position,1.);
+                        float tw = 0.55 + 0.45 * sin(uTime * 2.0 + aSize * 80.0);
+                        gl_PointSize = aSize * 380.0 * uPixelRatio / -mv.z * tw;
+                        gl_Position = projectionMatrix * mv;
+                    }`,
+                fragmentShader: `
+                    uniform sampler2D uTex;
+                    varying vec3 vColor;
+                    void main(){
+                        vec4 t = texture2D(uTex, gl_PointCoord);
+                        if(t.a < 0.02) discard;
+                        gl_FragColor = vec4(vColor, 1.0) * t;
+                    }`
+            });
+
+            const particles = new THREE.Points(pGeo, pMat);
+            scene.add(particles);
+
+            // 💡 LIGHTS
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            const sun = new THREE.DirectionalLight(0xffffff, 1.3);
+            sun.position.set(10,5,7); scene.add(sun);
+            const rim = new THREE.DirectionalLight(0xb026ff, 0.4);
+            rim.position.set(-8,-4,-6); scene.add(rim);
+
+            fitEarth();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                fitEarth();
+                pMat.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio||1,2);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            const clock = new THREE.Clock();
+            const posArr = pGeo.attributes.position.array;
+            function loop(){
+                requestAnimationFrame(loop);
+                const time = clock.getElapsedTime();
+                pMat.uniforms.uTime.value = time;
+
+                // Drift particles AND rotate with the Earth
+                for (let i = 0; i < P_COUNT; i++) {
+                    const d = drift[i];
+                    // Original drift movement
+                    posArr[i*3]   += d.vx + Math.sin(time*0.6 + d.phase) * 0.003;
+                    posArr[i*3+1] += d.vy + Math.cos(time*0.5 + d.phase) * 0.002;
+                    posArr[i*3+2] += d.vz;
+
+                    // NEW: Rotate the particle around the Y-axis (same as Earth's rotation)
+                    // This makes it look like they're in orbit
+                    const rotationSpeed = 0.0015; // Same as earth.rotation.y
+                    const x = posArr[i*3];
+                    const z = posArr[i*3+2];
+                    posArr[i*3]   = x * Math.cos(rotationSpeed) - z * Math.sin(rotationSpeed);
+                    posArr[i*3+2] = x * Math.sin(rotationSpeed) + z * Math.cos(rotationSpeed);
+
+                    // Wrap around if too far
+                    for (let k = 0; k < 3; k++) {
+                        const ax = i*3 + k;
+                        if (posArr[ax] >  SPREAD) posArr[ax] -= SPREAD * 2;
+                        if (posArr[ax] < -SPREAD) posArr[ax] += SPREAD * 2;
+                    }
+                }
+                pGeo.attributes.position.needsUpdate = true;
+
+                earth.rotation.y += 0.0015;
+                renderer.render(scene, camera);
+            }
+            loop();
+        } catch(e){ console.error(e); }
+    })(0);
+    </script>
 </body>
 </html>
