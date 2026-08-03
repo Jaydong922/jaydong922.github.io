@@ -85,7 +85,7 @@
 
   <header>
     <div class="brand"><span class="dot"></span> CYBER<b>JAYD</b> // J.A.R.V.I.S SYSTEM OS</div>
-    <h1>GOOD EVENING, SIR.</h1>
+    <h1>GOOD MORNING, SIR.</h1>
     <div class="sub">Full System Integration Active · Voice Control · Global AI Assistant · Vision Enabled</div>
   </header>
 
@@ -96,6 +96,7 @@
     <button class="btn btn-out" onclick="window.open('https://console.groq.com/keys','_blank')">GET API KEY</button>
   </div>
 
+  <!-- ✅ TAMA NA ANG MODEL NAME DITO -->
   <div class="model">Active model: <strong>llama-3.3-70b-versatile</strong> · Vision: <strong style="color:var(--ok)">ONLINE</strong> · Max images: <strong>10</strong></div>
 
   <div class="ctrls">
@@ -107,16 +108,16 @@
   <!-- VISION UPLOAD -->
   <label class="upload">
     <p>📷 CLICK / TAP TO UPLOAD — MAX 10 IMAGES</p>
-    <small>Screenshots · Code · Diagrams · Documents · Photos — Llama 3.3 will read & analyze</small>
+    <small>Screenshots · Code · Diagrams · Documents · Photos — Llama 3.3 will read & analyze all</small>
     <input id="fileIn" type="file" accept="image/*" multiple />
   </label>
   <div class="thumbs" id="thumbs"></div>
-  <div class="count">Selected: <b id="nImg">0</b> / 10 — attached automatically when you send</div>
+  <div class="count">Selected: <b id="nImg">0</b> / 10 — attached automatically when you click SEND</div>
 
   <div class="chat" id="chat">
     <div class="msg j">
       <div class="who">J.A.R.V.I.S SYSTEM</div>
-Vision mode online. I can now receive up to 10 images per request and read text, code, diagrams, error messages, and details from any photo or screenshot. How may I assist you ethically today, Sir?
+Vision mode online. I can now receive up to 10 images per request, read text, code, diagrams, and details from any photo or screenshot. How may I assist you ethically today, Sir?
     </div>
   </div>
 
@@ -135,6 +136,7 @@ Vision mode online. I can now receive up to 10 images per request and read text,
    J.A.R.V.I.S + GROQ LLAMA 3.3 70B VERSATILE (VISION x10)
    ========================================================= */
 const GROQ = 'https://api.groq.com/openai/v1/chat/completions';
+// ✅ TAMA NA ANG MODEL NAME PARA SA GROQ API
 const MODEL = 'llama-3.3-70b-versatile';
 let key = localStorage.getItem('groqKey') || '';
 let voiceOn = false;
