@@ -1,286 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-<title>CYBERJAYD // J.A.R.V.I.S System OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYBERJAYD // J.A.R.V.I.S OS | VISION 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#050814; --panel:rgba(8,12,24,.92);
-    --accent:#00e5ff; --accent-soft:rgba(0,229,255,.12);
-    --accent2:#b026ff; --text:#e8f1ff; --muted:#7a8bb3;
-    --border:rgba(0,229,255,.3); --warn:#ff3860; --ok:#39ff88;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#050814;--panel:rgba(8,12,24,.93);--accent:#00e5ff;--accent2:#b026ff;--text:#e8f1ff;--muted:#7a8bb3;--border:rgba(0,229,255,.3);--warn:#ff3860;--ok:#39ff88}
+  *{box-sizing:border-box;margin:0;padding:0}
   html,body{font-family:'Share Tech Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
   .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.05) 1px,transparent 1px);background-size:40px 40px;opacity:.35;z-index:0;pointer-events:none}
-  .bg-glow{position:fixed;top:-20%;left:-20%;width:140%;height:140%;background:radial-gradient(circle at 30% 20%,rgba(0,229,255,.15),transparent 55%),radial-gradient(circle at 70% 80%,rgba(176,38,255,.12),transparent 55%);z-index:0;pointer-events:none}
   .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:18px 14px 40px}
-
-  header{text-align:center;padding:14px 6px 20px;border-bottom:1px solid var(--border);margin-bottom:18px}
-  .brand{font-family:'Chakra Petch',sans-serif;font-weight:700;letter-spacing:2px;color:var(--muted);font-size:12px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:8px}
-  .brand b{color:var(--accent)}
-  .dot{width:8px;height:8px;background:var(--ok);border-radius:50%;box-shadow:0 0 10px var(--ok);animation:pulse 1.8s infinite}
-  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.5}}
-  h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(26px,7.5vw,44px);font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 4px}
+  header{text-align:center;padding:14px 6px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+  h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(26px,7vw,42px);font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
   .sub{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
-
-  .api-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--border);padding:12px;border-radius:4px;margin-bottom:14px}
-  .api-row input{flex:1;min-width:200px;padding:10px 12px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:2px;color:var(--text);font-size:13px;outline:none;font-family:inherit}
-  .api-row input:focus{border-color:var(--accent);box-shadow:0 0 10px var(--accent-soft)}
-  .btn{padding:10px 14px;border:0;border-radius:2px;cursor:pointer;font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;transition:.2s}
+  .ok{color:var(--ok)}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--border);padding:12px;border-radius:4px;margin-bottom:12px}
+  .row input{flex:1;min-width:200px;padding:10px 12px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:inherit;outline:none}
+  .row input:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(0,229,255,.15)}
+  .btn{padding:10px 14px;border:0;border-radius:2px;cursor:pointer;font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:.2s}
   .btn-pri{background:var(--accent);color:#050814}
-  .btn-pri:hover{box-shadow:0 0 18px var(--accent)}
+  .btn-pri:hover{box-shadow:0 0 16px var(--accent)}
   .btn-out{background:transparent;border:1px solid var(--border);color:var(--accent)}
-  .btn-out:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .btn-out:hover{border-color:var(--accent);background:rgba(0,229,255,.1)}
   .btn-warn{background:transparent;border:1px solid var(--warn);color:var(--warn)}
   .btn-warn:hover{background:rgba(255,56,96,.1)}
-
-  .model{text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .model{text-align:center;font-size:12px;color:var(--muted);margin-bottom:10px}
   .model strong{color:var(--accent2)}
-
-  .ctrls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .ctrls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
   .ctrls .btn{flex:1;min-width:110px}
-
-  /* ✅ IMAGE UPLOAD AREA — MAKIKITA MO ITO AGAD PAG NAG-LOAD */
-  .upload{border:2px dashed var(--border);background:var(--panel);border-radius:4px;padding:18px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:10px}
-  .upload:hover{border-color:var(--accent);background:var(--accent-soft)}
+  /* VISION UPLOAD */
+  .upload{border:2px dashed var(--border);background:var(--panel);border-radius:4px;padding:16px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:8px}
+  .upload:hover{border-color:var(--accent);background:rgba(0,229,255,.1)}
   .upload p{font-size:14px;color:var(--muted)}
   .upload small{font-size:11px;opacity:.7}
   .upload input{display:none}
-  .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin-bottom:10px}
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin-bottom:8px}
   .thumb{position:relative;border:1px solid var(--border);border-radius:3px;overflow:hidden;background:#000}
   .thumb img{width:100%;height:86px;object-fit:cover;display:block}
   .thumb .x{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:var(--warn);color:#fff;border:0;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-  .count{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .count{font-size:12px;color:var(--muted);margin-bottom:12px}
   .count b{color:var(--accent)}
-
-  .chat{height:380px;overflow-y:auto;background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+  /* CHAT */
+  .chat{height:360px;overflow-y:auto;background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
   .msg{max-width:88%;padding:10px 12px;border-radius:3px;font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
   .msg .who{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;opacity:.7;margin-bottom:4px}
-  .msg.u{align-self:flex-end;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent)}
+  .msg.u{align-self:flex-end;background:rgba(0,229,255,.1);border:1px solid var(--accent);color:var(--accent)}
   .msg.j{align-self:flex-start;background:rgba(176,38,255,.07);border:1px solid var(--accent2);color:var(--text)}
   .msg.err{border-color:var(--warn);color:var(--warn)}
-  .msg img{max-width:180px;border-radius:3px;border:1px solid var(--border);margin-top:6px;display:block}
-
-  .input-row{display:flex;gap:8px}
-  .input-row input{flex:1;padding:12px 14px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:2px;color:var(--text);font-size:14px;outline:none;font-family:inherit}
-  .input-row input:focus{border-color:var(--accent);box-shadow:0 0 10px var(--accent-soft)}
-
-  footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:16px;border-top:1px solid var(--border);letter-spacing:1px}
+  .msg img{max-width:170px;border-radius:3px;border:1px solid var(--border);margin-top:6px;display:block}
+  .input-row{display:flex;gap:8px;margin-bottom:20px}
+  .input-row input{flex:1;padding:12px 14px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:inherit;outline:none}
+  .input-row input:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(0,229,255,.15)}
+  footer{text-align:center;font-size:11px;color:var(--muted);padding-top:14px;border-top:1px solid var(--border);letter-spacing:1px}
   footer b{color:var(--accent)}
-
-  @media (max-width:600px){
-    .chat{height:330px}
-    .ctrls .btn{min-width:96px;font-size:11px;padding:9px 10px}
-    .msg img{max-width:150px}
-  }
+  @media (max-width:600px){.chat{height:320px}.ctrls .btn{min-width:96px;font-size:11px;padding:9px 10px}}
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
-<div class="bg-glow"></div>
 <div class="wrap">
-
   <header>
-    <div class="brand"><span class="dot"></span> CYBER<b>JAYD</b> // J.A.R.V.I.S SYSTEM OS</div>
     <h1>GOOD AFTERNOON, SIR.</h1>
-    <div class="sub">Full System Integration Active · Voice Control · Global AI Assistant · <b style="color:var(--ok)">VISION ENABLED (10 IMAGES)</b></div>
+    <div class="sub">J.A.R.V.I.S · <span class="ok">VISION MODE ACTIVE</span> · MAX 10 IMAGES</div>
   </header>
 
-  <div class="api-row">
-    <input id="key" type="password" placeholder="GROQ API KEY" />
+  <div class="row">
+    <input id="key" type="password" placeholder="GROQ API KEY">
     <button class="btn btn-pri" onclick="saveKey()">SAVE</button>
-    <button class="btn btn-out" onclick="testConn()">TEST CONNECTION</button>
+    <button class="btn btn-out" onclick="testConn()">TEST</button>
     <button class="btn btn-out" onclick="window.open('https://console.groq.com/keys','_blank')">GET KEY</button>
   </div>
 
-  <!-- ✅ TAMA NA ANG MODEL NAME: GROQ ONLY ACCEPTS THIS EXACT STRING -->
-  <div class="model">Active model: <strong>llama-3.3-70b-versatile</strong> · Vision: <strong style="color:var(--ok)">ONLINE</strong> · Max images: <strong>10</strong></div>
+  <div class="model">Model: <strong>llama-3.3-70b-versatile</strong> · Vision: <b class="ok">ONLINE</b></div>
 
   <div class="ctrls">
     <button class="btn btn-out" id="vBtn" onclick="toggleVoice()">VOICE: OFF</button>
-    <button class="btn btn-out" onmousedown="listenStart()" onmouseup="listenStop()" ontouchstart="listenStart()" ontouchend="listenStop()">HOLD TO SPEAK</button>
-    <button class="btn btn-warn" onclick="clearAll()">CLEAR CHAT</button>
+    <button class="btn btn-out" ontouchstart="listenStart()" ontouchend="listenStop()" onmousedown="listenStart()" onmouseup="listenStop()">HOLD TO SPEAK</button>
+    <button class="btn btn-warn" onclick="clearAll()">CLEAR</button>
   </div>
 
-  <!-- ✅ ITO NA ANG UPLOAD BOX — HINDI ITO NANDITO SA LUMANG CODE MO -->
+  <!-- VISION AREA -->
   <label class="upload">
     <p>📷 CLICK / TAP TO UPLOAD — MAX 10 IMAGES</p>
-    <small>Screenshots · Code · Diagrams · Documents · Photos — Llama 3.3 will read & analyze all</small>
-    <input id="fileIn" type="file" accept="image/*" multiple />
+    <small>Screenshots · Code · Diagrams · Docs · Photos — Llama 3.3 reads & analyzes all</small>
+    <input id="fileIn" type="file" accept="image/*" multiple>
   </label>
   <div class="thumbs" id="thumbs"></div>
   <div class="count">✅ Selected: <b id="nImg">0</b> / 10 — auto-attached when you click SEND</div>
 
   <div class="chat" id="chat">
-    <div class="msg j">
-      <div class="who">J.A.R.V.I.S SYSTEM</div>
-Vision mode fully online. I can now receive up to 10 images per request, read text, code, diagrams, error messages, and details from any photo or screenshot. How may I assist you ethically today, Sir?
-    </div>
+    <div class="msg j"><div class="who">J.A.R.V.I.S SYSTEM</div>Vision system fully online. Upload up to 10 images, type your question, then click SEND. I will analyze every text, code, number, and diagram in them. How may I assist you ethically today, Sir?</div>
   </div>
 
   <div class="input-row">
-    <input id="inp" placeholder="Type command or question… (images auto-attached)" onkeydown="if(event.key==='Enter')send()" />
+    <input id="inp" placeholder="Type command or question… (images auto-attached)" onkeydown="if(event.key==='Enter')send()">
     <button class="btn btn-pri" onclick="send()">SEND</button>
   </div>
 
-  <footer>
-    © 2077 CYBERJAYD SYSTEMS · Built 100% on Android · <b>JAYD F. REPOBERBIO</b> · Baybay Leyte PH
-  </footer>
+  <footer>© 2077 CYBERJAYD SYSTEMS · Built 100% on Android · <b>JAYD F. REPOBERBIO</b> · Baybay Leyte PH</footer>
 </div>
 
 <script>
 /* =========================================================
    J.A.R.V.I.S + GROQ LLAMA 3.3 70B VERSATILE (VISION x10)
    ========================================================= */
-const GROQ = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.3-70b-versatile'; // ✅ EXACT GROQ MODEL NAME
-let key = localStorage.getItem('groqKey') || '';
+const GROQ = "https://api.groq.com/openai/v1/chat/completions";
+const MODEL = "llama-3.3-70b-versatile"; // EXACT GROQ NAME — DO NOT CHANGE
+let key = localStorage.getItem("groqKey") || "";
 let voiceOn = false;
 let imgs = [];
 let rec = null;
+document.getElementById("key").value = key;
 
-document.getElementById('key').value = key;
-
-function saveKey(){
-  key = document.getElementById('key').value.trim();
-  localStorage.setItem('groqKey', key);
-  flash('✅ API Key saved');
-}
+/* API KEY */
+function saveKey(){ key = document.getElementById("key").value.trim(); localStorage.setItem("groqKey", key); flash("✅ API Key saved"); }
 async function testConn(){
-  if(!key) return flash('⚠️ Save your Groq API key first');
+  if(!key) return flash("⚠️ Save your Groq API key first");
   try{
-    const r = await fetch(GROQ,{
-      method:'POST',
-      headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
-      body:JSON.stringify({model:MODEL,messages:[{role:'user',content:'respond: SYSTEM ONLINE VISION READY'}],max_tokens:30})
-    });
-    flash(r.ok ? '✅ Connection OK — 10-image vision ready' : '❌ Failed — check API key / model name');
-  }catch(e){ flash('❌ Network error') }
+    const r = await fetch(GROQ,{method:"POST",headers:{Authorization:`Bearer ${key}`,"Content-Type":"application/json"},body:JSON.stringify({model:MODEL,messages:[{role:"user",content:"reply SYSTEM ONLINE VISION READY"}],max_tokens:20})});
+    flash(r.ok ? "✅ Groq connection OK — 10-image vision ready" : "❌ Failed — check your API key");
+  }catch(e){ flash("❌ Network error — try again"); }
 }
 
-/* ---- IMAGE HANDLING (MAX 10) ---- */
-const fileIn = document.getElementById('fileIn');
-const thumbs = document.getElementById('thumbs');
-const nImg = document.getElementById('nImg');
-fileIn.addEventListener('change', e => {
-  const files = Array.from(e.target.files || []);
-  if(imgs.length + files.length > 10){ flash('⚠️ Max 10 images only'); e.target.value=''; return; }
+/* IMAGE HANDLING — MAX 10 */
+const fileIn = document.getElementById("fileIn");
+const thumbs = document.getElementById("thumbs");
+const nImg = document.getElementById("nImg");
+fileIn.addEventListener("change", e => {
+  const files = Array.from(e.target.files||[]);
+  if(imgs.length + files.length > 10){ flash("⚠️ Maximum 10 images only"); e.target.value=""; return; }
   files.forEach(f => {
-    if(!f.type.startsWith('image/')) return;
+    if(!f.type.startsWith("image/")) return;
     const r = new FileReader();
     r.onload = ev => { imgs.push({name:f.name, data:ev.target.result}); renderThumbs(); };
     r.readAsDataURL(f);
   });
-  e.target.value = '';
+  e.target.value="";
 });
 function removeImg(i){ imgs.splice(i,1); renderThumbs(); }
 function renderThumbs(){
-  thumbs.innerHTML = '';
+  thumbs.innerHTML="";
   imgs.forEach((im,i)=>{
-    const d = document.createElement('div');
-    d.className='thumb';
+    const d = document.createElement("div");
+    d.className="thumb";
     d.innerHTML = `<img src="${im.data}" alt=""><button class="x" onclick="removeImg(${i})">×</button>`;
     thumbs.appendChild(d);
   });
   nImg.textContent = imgs.length;
 }
 
-/* ---- VOICE ---- */
-function toggleVoice(){
-  voiceOn = !voiceOn;
-  document.getElementById('vBtn').textContent = 'VOICE: ' + (voiceOn ? 'ON' : 'OFF');
-}
+/* VOICE */
+function toggleVoice(){ voiceOn = !voiceOn; document.getElementById("vBtn").textContent = "VOICE: " + (voiceOn ? "ON" : "OFF"); }
 function SR(){ return window.SpeechRecognition || window.webkitSpeechRecognition; }
 function listenStart(){
-  if(!voiceOn){ flash('⚠️ Turn VOICE ON first'); return; }
-  if(!SR()) return flash('⚠️ Voice not supported on this browser');
-  try{
-    rec = new (SR())();
-    rec.lang = 'en-US';
-    rec.onresult = e => document.getElementById('inp').value = e.results[0][0].transcript;
-    rec.start();
-  }catch(e){}
+  if(!voiceOn) return flash("⚠️ Turn VOICE ON first");
+  if(!SR()) return flash("⚠️ Voice not supported on this browser");
+  try{ rec = new (SR())(); rec.lang = "en-US"; rec.onresult = e => document.getElementById("inp").value = e.results[0][0].transcript; rec.start(); }catch(e){}
 }
 function listenStop(){ try{ if(rec) rec.stop(); }catch(e){} }
 
-/* ---- CHAT ---- */
-const chat = document.getElementById('chat');
-function addMsg(who, html, extra=''){
-  const d = document.createElement('div');
-  d.className = 'msg ' + (who==='u' ? 'u' : 'j') + (extra?' '+extra:'');
-  d.innerHTML = `<div class="who">${who==='u'?'YOU':'J.A.R.V.I.S'}</div>${html}`;
-  chat.appendChild(d);
-  chat.scrollTop = chat.scrollHeight;
+/* CHAT HELPERS */
+const chat = document.getElementById("chat");
+function addMsg(who, html, extra=""){
+  const d = document.createElement("div");
+  d.className = "msg " + who + (extra ? " "+extra : "");
+  d.innerHTML = `<div class="who">${who==="u" ? "YOU" : "J.A.R.V.I.S"}</div>${html}`;
+  chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
   return d;
 }
-function clearAll(){
-  chat.innerHTML = `<div class="msg j"><div class="who">J.A.R.V.I.S SYSTEM</div>Chat cleared. 10-image vision system active.</div>`;
-  imgs = []; renderThumbs();
-}
-function flash(t){
-  const d = addMsg('j', t, 'err');
-  setTimeout(()=>d.remove(), 2800);
-}
+function clearAll(){ chat.innerHTML = `<div class="msg j"><div class="who">J.A.R.V.I.S</div>Chat cleared. Vision system ready.</div>`; imgs=[]; renderThumbs(); }
+function flash(t){ const d = addMsg("j", t, "err"); setTimeout(()=>d.remove(), 2600); }
 
-/* ---- SEND WITH VISION TO GROQ ---- */
+/* SEND WITH VISION TO GROQ */
 async function send(){
-  const inp = document.getElementById('inp');
+  const inp = document.getElementById("inp");
   const text = inp.value.trim();
   if(!text && imgs.length===0) return;
-  if(!key) return flash('⚠️ Save Groq API Key first');
+  if(!key) return flash("⚠️ Save your Groq API Key first");
 
-  let userHtml = `<div>${text || 'Analyze these images'}</div>`;
-  imgs.forEach(im => userHtml += `<img src="${im.data}" alt="">`);
-  addMsg('u', userHtml);
-  inp.value = '';
+  /* user bubble */
+  let uh = `<div>${text || "Analyze these images"}</div>`;
+  imgs.forEach(im => uh += `<img src="${im.data}" alt="">`);
+  addMsg("u", uh);
+  inp.value="";
 
+  /* build multimodal content */
   const content = [];
-  if(text) content.push({ type:'text', text });
-  imgs.forEach(im => content.push({ type:'image_url', image_url:{ url: im.data, detail:'high' } }));
+  if(text) content.push({type:"text", text});
+  imgs.forEach(im => content.push({type:"image_url", image_url:{url: im.data, detail:"high"}}));
 
   const payload = {
     model: MODEL,
     temperature: 0.7,
     max_tokens: 2048,
     messages: [
-      { role:'system', content:'You are J.A.R.V.I.S — Just A Rather Very Intelligent System. Ethical, precise, concise. Always analyze ALL provided images fully. Read every text, code, number, diagram, and detail in them. Answer based on text + images combined.' },
-      { role:'user', content }
+      {role:"system", content:"You are J.A.R.V.I.S — Just A Rather Very Intelligent System. Ethical, precise, concise. Always analyze ALL provided images completely — read every text, code, number, diagram, error, and detail. Answer based on the provided text AND images combined."},
+      {role:"user", content}
     ]
   };
 
-  const bot = addMsg('j', `<i>Processing ${imgs.length} image(s) + query…</i>`);
+  const bot = addMsg("j", `<i>Processing ${imgs.length} image(s) + query…</i>`);
 
   try{
     const r = await fetch(GROQ, {
-      method:'POST',
-      headers:{ Authorization:`Bearer ${key}`, 'Content-Type':'application/json' },
+      method:"POST",
+      headers:{ Authorization:`Bearer ${key}`, "Content-Type":"application/json" },
       body: JSON.stringify(payload)
     });
     const data = await r.json();
     const reply = data.choices?.[0]?.message?.content
-               || (data.error?.message ? ('⚠️ GROQ ERROR: '+data.error.message) : '⚠️ No response received');
+               || (data.error?.message ? "⚠️ GROQ ERROR: " + data.error.message : "⚠️ No response received");
 
-    bot.innerHTML = `<div class="who">J.A.R.V.I.S</div>` + escapeHtml(reply).replace(/\n/g,'<br>');
+    bot.innerHTML = `<div class="who">J.A.R.V.I.S</div>` + escapeHtml(reply).replace(/\n/g,"<br>");
     chat.scrollTop = chat.scrollHeight;
 
-    if(voiceOn && 'speechSynthesis' in window){
-      try{
-        const u = new SpeechSynthesisUtterance(reply.replace(/<[^>]+>/g,''));
-        u.rate = 1.03; u.pitch = 1; speechSynthesis.speak(u);
-      }catch(e){}
+    /* optional voice reply */
+    if(voiceOn && "speechSynthesis" in window){
+      try{ const u = new SpeechSynthesisUtterance(reply.replace(/<[^>]+>/g,"")); u.rate=1.03; u.pitch=1; speechSynthesis.speak(u); }catch(e){}
     }
   }catch(err){
     bot.innerHTML = `<div class="who">SYSTEM ERROR</div>⚠️ ${err.message}`;
   }
 
+  /* clear images after every send */
   imgs = []; renderThumbs();
 }
 
 function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 }
 </script>
 </body>
