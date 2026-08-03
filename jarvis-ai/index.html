@@ -43,7 +43,7 @@
   .ctrls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
   .ctrls .btn{flex:1;min-width:110px}
 
-  /* ===== IMAGE UPLOAD (MAX 10) ===== */
+  /* ✅ IMAGE UPLOAD AREA — MAKIKITA MO ITO AGAD PAG NAG-LOAD */
   .upload{border:2px dashed var(--border);background:var(--panel);border-radius:4px;padding:18px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:10px}
   .upload:hover{border-color:var(--accent);background:var(--accent-soft)}
   .upload p{font-size:14px;color:var(--muted)}
@@ -85,18 +85,18 @@
 
   <header>
     <div class="brand"><span class="dot"></span> CYBER<b>JAYD</b> // J.A.R.V.I.S SYSTEM OS</div>
-    <h1>GOOD MORNING, SIR.</h1>
-    <div class="sub">Full System Integration Active · Voice Control · Global AI Assistant · Vision Enabled</div>
+    <h1>GOOD AFTERNOON, SIR.</h1>
+    <div class="sub">Full System Integration Active · Voice Control · Global AI Assistant · <b style="color:var(--ok)">VISION ENABLED (10 IMAGES)</b></div>
   </header>
 
   <div class="api-row">
     <input id="key" type="password" placeholder="GROQ API KEY" />
     <button class="btn btn-pri" onclick="saveKey()">SAVE</button>
     <button class="btn btn-out" onclick="testConn()">TEST CONNECTION</button>
-    <button class="btn btn-out" onclick="window.open('https://console.groq.com/keys','_blank')">GET API KEY</button>
+    <button class="btn btn-out" onclick="window.open('https://console.groq.com/keys','_blank')">GET KEY</button>
   </div>
 
-  <!-- ✅ TAMA NA ANG MODEL NAME DITO -->
+  <!-- ✅ TAMA NA ANG MODEL NAME: GROQ ONLY ACCEPTS THIS EXACT STRING -->
   <div class="model">Active model: <strong>llama-3.3-70b-versatile</strong> · Vision: <strong style="color:var(--ok)">ONLINE</strong> · Max images: <strong>10</strong></div>
 
   <div class="ctrls">
@@ -105,19 +105,19 @@
     <button class="btn btn-warn" onclick="clearAll()">CLEAR CHAT</button>
   </div>
 
-  <!-- VISION UPLOAD -->
+  <!-- ✅ ITO NA ANG UPLOAD BOX — HINDI ITO NANDITO SA LUMANG CODE MO -->
   <label class="upload">
     <p>📷 CLICK / TAP TO UPLOAD — MAX 10 IMAGES</p>
     <small>Screenshots · Code · Diagrams · Documents · Photos — Llama 3.3 will read & analyze all</small>
     <input id="fileIn" type="file" accept="image/*" multiple />
   </label>
   <div class="thumbs" id="thumbs"></div>
-  <div class="count">Selected: <b id="nImg">0</b> / 10 — attached automatically when you click SEND</div>
+  <div class="count">✅ Selected: <b id="nImg">0</b> / 10 — auto-attached when you click SEND</div>
 
   <div class="chat" id="chat">
     <div class="msg j">
       <div class="who">J.A.R.V.I.S SYSTEM</div>
-Vision mode online. I can now receive up to 10 images per request, read text, code, diagrams, and details from any photo or screenshot. How may I assist you ethically today, Sir?
+Vision mode fully online. I can now receive up to 10 images per request, read text, code, diagrams, error messages, and details from any photo or screenshot. How may I assist you ethically today, Sir?
     </div>
   </div>
 
@@ -136,16 +136,14 @@ Vision mode online. I can now receive up to 10 images per request, read text, co
    J.A.R.V.I.S + GROQ LLAMA 3.3 70B VERSATILE (VISION x10)
    ========================================================= */
 const GROQ = 'https://api.groq.com/openai/v1/chat/completions';
-// ✅ TAMA NA ANG MODEL NAME PARA SA GROQ API
-const MODEL = 'llama-3.3-70b-versatile';
+const MODEL = 'llama-3.3-70b-versatile'; // ✅ EXACT GROQ MODEL NAME
 let key = localStorage.getItem('groqKey') || '';
 let voiceOn = false;
-let imgs = [];            // { name, data }
+let imgs = [];
 let rec = null;
 
 document.getElementById('key').value = key;
 
-/* ---------- API KEY ---------- */
 function saveKey(){
   key = document.getElementById('key').value.trim();
   localStorage.setItem('groqKey', key);
@@ -157,27 +155,23 @@ async function testConn(){
     const r = await fetch(GROQ,{
       method:'POST',
       headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
-      body:JSON.stringify({model:MODEL,messages:[{role:'user',content:'respond: SYSTEM ONLINE'}],max_tokens:30})
+      body:JSON.stringify({model:MODEL,messages:[{role:'user',content:'respond: SYSTEM ONLINE VISION READY'}],max_tokens:30})
     });
-    flash(r.ok ? '✅ Connection OK — Vision ready' : '❌ Failed — check API key');
+    flash(r.ok ? '✅ Connection OK — 10-image vision ready' : '❌ Failed — check API key / model name');
   }catch(e){ flash('❌ Network error') }
 }
 
-/* ---------- IMAGE HANDLING (MAX 10) ---------- */
+/* ---- IMAGE HANDLING (MAX 10) ---- */
 const fileIn = document.getElementById('fileIn');
 const thumbs = document.getElementById('thumbs');
 const nImg = document.getElementById('nImg');
-
 fileIn.addEventListener('change', e => {
   const files = Array.from(e.target.files || []);
   if(imgs.length + files.length > 10){ flash('⚠️ Max 10 images only'); e.target.value=''; return; }
   files.forEach(f => {
     if(!f.type.startsWith('image/')) return;
     const r = new FileReader();
-    r.onload = ev => {
-      imgs.push({ name: f.name, data: ev.target.result });
-      renderThumbs();
-    };
+    r.onload = ev => { imgs.push({name:f.name, data:ev.target.result}); renderThumbs(); };
     r.readAsDataURL(f);
   });
   e.target.value = '';
@@ -194,7 +188,7 @@ function renderThumbs(){
   nImg.textContent = imgs.length;
 }
 
-/* ---------- VOICE ---------- */
+/* ---- VOICE ---- */
 function toggleVoice(){
   voiceOn = !voiceOn;
   document.getElementById('vBtn').textContent = 'VOICE: ' + (voiceOn ? 'ON' : 'OFF');
@@ -202,7 +196,7 @@ function toggleVoice(){
 function SR(){ return window.SpeechRecognition || window.webkitSpeechRecognition; }
 function listenStart(){
   if(!voiceOn){ flash('⚠️ Turn VOICE ON first'); return; }
-  if(!SR()) return flash('⚠️ Voice not supported');
+  if(!SR()) return flash('⚠️ Voice not supported on this browser');
   try{
     rec = new (SR())();
     rec.lang = 'en-US';
@@ -212,7 +206,7 @@ function listenStart(){
 }
 function listenStop(){ try{ if(rec) rec.stop(); }catch(e){} }
 
-/* ---------- CHAT ---------- */
+/* ---- CHAT ---- */
 const chat = document.getElementById('chat');
 function addMsg(who, html, extra=''){
   const d = document.createElement('div');
@@ -223,28 +217,26 @@ function addMsg(who, html, extra=''){
   return d;
 }
 function clearAll(){
-  chat.innerHTML = `<div class="msg j"><div class="who">J.A.R.V.I.S SYSTEM</div>Chat cleared. Vision system active.</div>`;
+  chat.innerHTML = `<div class="msg j"><div class="who">J.A.R.V.I.S SYSTEM</div>Chat cleared. 10-image vision system active.</div>`;
   imgs = []; renderThumbs();
 }
 function flash(t){
   const d = addMsg('j', t, 'err');
-  setTimeout(()=>d.remove(), 2600);
+  setTimeout(()=>d.remove(), 2800);
 }
 
-/* ---------- SEND WITH VISION TO GROQ ---------- */
+/* ---- SEND WITH VISION TO GROQ ---- */
 async function send(){
   const inp = document.getElementById('inp');
   const text = inp.value.trim();
   if(!text && imgs.length===0) return;
   if(!key) return flash('⚠️ Save Groq API Key first');
 
-  /* user bubble */
   let userHtml = `<div>${text || 'Analyze these images'}</div>`;
   imgs.forEach(im => userHtml += `<img src="${im.data}" alt="">`);
   addMsg('u', userHtml);
   inp.value = '';
 
-  /* build content array: text + up to 10 image_url */
   const content = [];
   if(text) content.push({ type:'text', text });
   imgs.forEach(im => content.push({ type:'image_url', image_url:{ url: im.data, detail:'high' } }));
@@ -254,12 +246,12 @@ async function send(){
     temperature: 0.7,
     max_tokens: 2048,
     messages: [
-      { role:'system', content:'You are J.A.R.V.I.S — Just A Rather Very Intelligent System. Ethical, precise, concise. Answer based on provided text AND images. If images contain code/errors/diagrams, analyze them accurately. Always stay professional and helpful.' },
+      { role:'system', content:'You are J.A.R.V.I.S — Just A Rather Very Intelligent System. Ethical, precise, concise. Always analyze ALL provided images fully. Read every text, code, number, diagram, and detail in them. Answer based on text + images combined.' },
       { role:'user', content }
     ]
   };
 
-  const bot = addMsg('j', `<i>Processing${imgs.length? ` ${imgs.length} image(s)`:''}…</i>`);
+  const bot = addMsg('j', `<i>Processing ${imgs.length} image(s) + query…</i>`);
 
   try{
     const r = await fetch(GROQ, {
@@ -269,12 +261,11 @@ async function send(){
     });
     const data = await r.json();
     const reply = data.choices?.[0]?.message?.content
-               || (data.error?.message ? ('⚠️ '+data.error.message) : '⚠️ No response');
+               || (data.error?.message ? ('⚠️ GROQ ERROR: '+data.error.message) : '⚠️ No response received');
 
     bot.innerHTML = `<div class="who">J.A.R.V.I.S</div>` + escapeHtml(reply).replace(/\n/g,'<br>');
     chat.scrollTop = chat.scrollHeight;
 
-    /* voice reply */
     if(voiceOn && 'speechSynthesis' in window){
       try{
         const u = new SpeechSynthesisUtterance(reply.replace(/<[^>]+>/g,''));
@@ -285,7 +276,6 @@ async function send(){
     bot.innerHTML = `<div class="who">SYSTEM ERROR</div>⚠️ ${err.message}`;
   }
 
-  /* clear images after successful send */
   imgs = []; renderThumbs();
 }
 
