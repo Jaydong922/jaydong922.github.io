@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYBERJAYD | Cybersecurity Researcher · Web · Game · AI Developer</title>
+<meta name="description" content="Jayd F. Repoberbio (CyberJayd) — 100% self-taught Cybersecurity Researcher, Bug Bounty Hunter, Web / Game / AI Developer from Baybay City Leyte PH. Built entirely on Android + Termux.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { cyber: ['Orbitron', 'sans-serif'], body: ['Rajdhani', 'sans-serif'] },
+      colors: { cyber: { bg: '#030712', panel: 'rgba(15,23,42,0.55)', border: 'rgba(56,189,248,0.25)', cyan: '#22d3ee', blue: '#3b82f6', purple: '#a855f7', pink: '#ec4899', text: '#e2e8f0', muted: '#94a3b8' } },
+      boxShadow: { glow: '0 0 25px rgba(34,211,238,0.35)', glowPurple: '0 0 30px rgba(168,85,247,0.4)' },
+      animation: { float: 'float 6s ease-in-out infinite', scan: 'scan 3.5s linear infinite', glitch: 'glitch 2.5s infinite' },
+      keyframes: {
+        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+        scan: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100%)' } },
+        glitch: { '0%,100%': { textShadow: '2px 0 #22d3ee, -2px 0 #a855f7' }, '25%': { textShadow: '-2px 0 #22d3ee, 2px 0 #a855f7' }, '50%': { textShadow: '2px 2px #ec4899, -2px -2px #3b82f6' }, '75%': { textShadow: '-2px 2px #22d3ee, 2px -2px #a855f7' } }
+      }
+    }
+  }
+}
+</script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#030712;color:#e2e8f0;font-family:'Rajdhani',sans-serif;overflow-x:hidden;scroll-behavior:smooth}
+#bg3d{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;display:block}
+.scanline::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(34,211,238,0.08) 50%,transparent 100%);animation:scan 3.5s linear infinite;pointer-events:none;border-radius:inherit}
+.grid-bg{background-image:linear-gradient(rgba(56,189,248,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.07) 1px,transparent 1px);background-size:40px 40px}
+.glass{background:rgba(15,23,42,0.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(56,189,248,0.22)}
+.text-gradient{background:linear-gradient(135deg,#22d3ee 0%,#3b82f6 45%,#a855f7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.border-gradient{position:relative}
+.border-gradient::before{content:'';position:absolute;inset:0;padding:1px;border-radius:inherit;background:linear-gradient(135deg,#22d3ee,#a855f7,#ec4899);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:none}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#030712}
+::-webkit-scrollbar-thumb{background:linear-gradient(#22d3ee,#a855f7);border-radius:8px}
+</style>
+</head>
+<body>
+<canvas id="bg3d"></canvas>
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-cyan-500/20">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+    <a href="#home" class="font-cyber font-black text-xl tracking-widest text-gradient">CYBERJAYD</a>
+    <div class="hidden md:flex items-center gap-7 text-sm font-cyber uppercase tracking-wider">
+      <a href="#about" class="hover:text-cyber-cyan transition">About</a>
+      <a href="#skills" class="hover:text-cyber-cyan transition">Skills</a>
+      <a href="#services" class="hover:text-cyber-cyan transition">Services</a>
+      <a href="#projects" class="hover:text-cyber-cyan transition">Projects</a>
+      <a href="https://jaydong922.github.io/jarvis-ai/" target="_blank" class="hover:text-cyber-purple transition font-bold">J.A.R.V.I.S</a>
+      <a href="#contact" class="hover:text-cyber-cyan transition">Contact</a>
+    </div>
+    <a href="#contact" class="font-cyber text-xs px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-black font-bold hover:shadow-glow transition">HIRE ME</a>
+  </div>
+</nav>
+
+<section id="home" class="relative min-h-screen flex items-center justify-center px-5 pt-24 pb-16 grid-bg overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyber-bg/60 to-cyber-bg"></div>
+  <div class="relative max-w-6xl mx-auto text-center reveal">
+    <div class="inline-block font-cyber text-[10px] md:text-xs tracking-[0.4em] text-cyber-cyan mb-6 px-4 py-2 rounded-full glass">◉ SYSTEM ONLINE · GLOBAL GRID · SECTOR 07 · EST. 2025</div>
+    <h1 class="font-cyber font-black text-5xl md:text-8xl tracking-tight leading-none mb-6 animate-glitch"><span class="text-gradient">JAYD.DEV</span></h1>
+    <p class="font-cyber text-sm md:text-xl tracking-[0.25em] text-cyber-muted mb-4">CYBERSECURITY RESEARCHER · BUG BOUNTY HUNTER</p>
+    <p class="font-cyber text-xs md:text-base tracking-[0.2em] text-cyber-muted mb-10">FULL-STACK WEB · GAME · AI / AUTOMATION DEVELOPER</p>
+    <p class="max-w-2xl mx-auto text-lg md:text-xl text-cyber-text/80 mb-10 leading-relaxed">100% self-taught from Baybay City, Leyte PH. Every exploit, every line of code, every system — built entirely on Android via <span class="text-cyber-cyan font-semibold">Termux</span>. No fancy labs. No expensive gear. Just relentless curiosity and 3AM commits.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#projects" class="font-cyber text-sm px-7 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold hover:shadow-glow transition animate-float">▶ VIEW PROJECTS</a>
+      <a href="https://jaydong922.github.io/jarvis-ai/" target="_blank" class="font-cyber text-sm px-7 py-3 rounded-xl border-gradient glass text-cyber-cyan font-bold hover:bg-cyan-500/10 transition">🤖 LAUNCH JARVIS AI</a>
+      <a href="#contact" class="font-cyber text-sm px-7 py-3 rounded-xl glass text-cyber-text font-bold hover:border-purple-500/50 transition">✉ TRANSMIT INQUIRY</a>
+    </div>
+    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      <div class="glass rounded-xl p-5 scanline relative overflow-hidden"><div class="font-cyber text-3xl md:text-4xl font-black text-gradient">0+</div><div class="text-xs font-cyber tracking-widest text-cyber-muted uppercase mt-1">Bugs Found</div></div>
+      <div class="glass rounded-xl p-5 scanline relative overflow-hidden"><div class="font-cyber text-3xl md:text-4xl font-black text-gradient">100%</div><div class="text-xs font-cyber tracking-widest text-cyber-muted uppercase mt-1">Mobile Built</div></div>
+      <div class="glass rounded-xl p-5 scanline relative overflow-hidden"><div class="font-cyber text-3xl md:text-4xl font-black text-gradient">3AM</div><div class="text-xs font-cyber tracking-widest text-cyber-muted uppercase mt-1">Grind Hours</div></div>
+      <div class="glass rounded-xl p-5 scanline relative overflow-hidden"><div class="font-cyber text-3xl md:text-4xl font-black text-gradient">PH</div><div class="text-xs font-cyber tracking-widest text-cyber-muted uppercase mt-1">Global Standard</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="relative py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal mb-14"><div class="font-cyber text-xs tracking-[0.4em] text-cyber-cyan mb-2">01 / IDENTITY.EXE</div><h2 class="font-cyber text-4xl md:text-5xl font-black text-gradient">ABOUT_ME.EXE</h2></div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="glass rounded-2xl p-8 reveal border-gradient">
+        <h3 class="font-cyber text-2xl font-bold text-cyber-cyan mb-4">👋 Operator Profile</h3>
+        <ul class="space-y-3 text-lg text-cyber-text/90">
+          <li><strong class="text-cyber-purple">Name:</strong> Jayd F. Repoberbio</li>
+          <li><strong class="text-cyber-purple">Handle:</strong> CyberJayd · xcyberjaydd (HackerOne)</li>
+          <li><strong class="text-cyber-purple">Status:</strong> 1st Year College · BSED-ENG · FCIC Baybay City, Leyte PH</li>
+          <li><strong class="text-cyber-purple">Origin:</strong> 100% SELF-TAUGHT · No formal IT degree</li>
+          <li><strong class="text-cyber-purple">Platform:</strong> Android + Termux / Linux · Mobile-first dev & hacking</li>
+          <li><strong class="text-cyber-purple">Protocol:</strong> 100% LEGAL & ETHICAL · Responsible disclosure only</li>
+          <li><strong class="text-cyber-purple">Availability:</strong> Accepting contracts worldwide · Response < 24h</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-8 reveal">
+        <h3 class="font-cyber text-2xl font-bold text-cyber-cyan mb-4">⚡ Mission</h3>
+        <p class="text-lg leading-relaxed text-cyber-text/90 mb-6">Prove <span class="text-gradient font-bold">passion beats paper</span>. That a student from the provinces can build global-grade systems, find critical vulnerabilities in billion-dollar platforms, and ship production software — all from a phone.</p>
+        <h3 class="font-cyber text-xl font-bold text-cyber-purple mb-3">🎯 Core Focus</h3>
+        <div class="grid grid-cols-2 gap-3 text-sm font-cyber tracking-wide">
+          <div class="glass rounded-lg px-3 py-2 text-center">Offensive Security</div>
+          <div class="glass rounded-lg px-3 py-2 text-center">Bug Bounty</div>
+          <div class="glass rounded-lg px-3 py-2 text-center">Web Dev</div>
+          <div class="glass rounded-lg px-3 py-2 text-center">Game Dev</div>
+          <div class="glass rounded-lg px-3 py-2 text-center">AI / LLM</div>
+          <div class="glass rounded-lg px-3 py-2 text-center">Automation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="relative py-24 px-5 grid-bg">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal mb-14"><div class="font-cyber text-xs tracking-[0.4em] text-cyber-cyan mb-2">02 / CAPABILITIES.DAT</div><h2 class="font-cyber text-4xl md:text-5xl font-black text-gradient">CORE_CAPABILITIES</h2></div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="glass rounded-2xl p-7 reveal scanline relative overflow-hidden">
+        <h3 class="font-cyber text-xl font-bold text-cyber-cyan mb-5">🔐 CYBERSECURITY RESEARCH</h3>
+        <div class="space-y-4">
+          <div><div class="flex justify-between text-sm mb-1"><span>SSRF / WAF Bypass</span><span class="text-cyber-cyan">92%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width:92%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>IDOR / Auth Bypass</span><span class="text-cyber-cyan">90%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width:90%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Recon / OSINT</span><span class="text-cyber-cyan">95%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width:95%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Web App Pentest</span><span class="text-cyber-cyan">88%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width:88%"></div></div></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal scanline relative overflow-hidden">
+        <h3 class="font-cyber text-xl font-bold text-cyber-purple mb-5">💻 FULL-STACK WEB DEV</h3>
+        <div class="space-y-4">
+          <div><div class="flex justify-between text-sm mb-1"><span>HTML / CSS / JS</span><span class="text-cyber-purple">100%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-purple-400 to-pink-500" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Python / Bash</span><span class="text-cyber-purple">98%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-purple-400 to-pink-500" style="width:98%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Responsive UI / UX</span><span class="text-cyber-purple">95%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-purple-400 to-pink-500" style="width:95%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>GitHub / Deployment</span><span class="text-cyber-purple">96%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-purple-400 to-pink-500" style="width:96%"></div></div></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal scanline relative overflow-hidden">
+        <h3 class="font-cyber text-xl font-bold text-cyan-300 mb-5">🎮 GAME DEVELOPMENT</h3>
+        <div class="space-y-4">
+          <div><div class="flex justify-between text-sm mb-1"><span>Canvas / JS Engine</span><span class="text-cyan-300">90%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-300 to-emerald-400" style="width:90%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Physics / Collision</span><span class="text-cyan-300">85%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-300 to-emerald-400" style="width:85%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>UI / HUD / Animations</span><span class="text-cyan-300">92%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-300 to-emerald-400" style="width:92%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Flappy Rocket (Released)</span><span class="text-cyan-300">LIVE</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-300 to-emerald-400" style="width:100%"></div></div></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal scanline relative overflow-hidden">
+        <h3 class="font-cyber text-xl font-bold text-pink-400 mb-5">🤖 AI / AUTOMATION</h3>
+        <div class="space-y-4">
+          <div><div class="flex justify-between text-sm mb-1"><span>LLM Integration (JARVIS)</span><span class="text-pink-400">94%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-pink-400 to-rose-500" style="width:94%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Python Automation</span><span class="text-pink-400">97%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-pink-400 to-rose-500" style="width:97%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Recon / Hunting Pipelines</span><span class="text-pink-400">91%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-pink-400 to-rose-500" style="width:91%"></div></div></div>
+          <div><div class="flex justify-between text-sm mb-1"><span>Voice Command Systems</span><span class="text-pink-400">88%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-pink-400 to-rose-500" style="width:88%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="relative py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal mb-14"><div class="font-cyber text-xs tracking-[0.4em] text-cyber-cyan mb-2">03 / SERVICES.PHP</div><h2 class="font-cyber text-4xl md:text-5xl font-black text-gradient">SERVICES & PRICING</h2></div>
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="glass rounded-2xl p-7 reveal border-gradient hover:shadow-glow transition">
+        <div class="text-4xl mb-4">🌐</div><div class="font-cyber text-xs tracking-widest text-cyber-cyan mb-1">BEST SELLER</div>
+        <h3 class="font-cyber text-xl font-bold mb-2">WEB DESIGN</h3>
+        <div class="font-cyber text-3xl font-black text-gradient mb-4">₱800<span class="text-base text-cyber-muted">–₱2,000</span></div>
+        <ul class="text-sm space-y-1 text-cyber-text/85 mb-6"><li>✓ Portfolio / Business Sites</li><li>✓ Mobile-First Optimization</li><li>✓ Free GitHub Deploy</li><li>✓ 1 Free Revision</li></ul>
+        <a href="#contact" class="block text-center font-cyber text-sm py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold">INQUIRE</a>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal border-gradient hover:shadow-glow transition">
+        <div class="text-4xl mb-4">🔒</div><div class="font-cyber text-xs tracking-widest text-cyber-purple mb-1">HIGH DEMAND</div>
+        <h3 class="font-cyber text-xl font-bold mb-2">SECURITY AUDIT</h3>
+        <div class="font-cyber text-3xl font-black text-gradient mb-4">₱1,000<span class="text-base text-cyber-muted">–₱2,500</span></div>
+        <ul class="text-sm space-y-1 text-cyber-text/85 mb-6"><li>✓ Auto + Manual Scan</li><li>✓ Full Vulnerability Report</li><li>✓ Step-by-Step Fixes</li><li>✓ 100% Legal & Ethical</li></ul>
+        <a href="#contact" class="block text-center font-cyber text-sm py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-black font-bold">INQUIRE</a>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal border-gradient hover:shadow-glow transition">
+        <div class="text-4xl mb-4">📱</div><div class="font-cyber text-xs tracking-widest text-cyan-300 mb-1">TERMUX / LINUX</div>
+        <h3 class="font-cyber text-xl font-bold mb-2">FULL SETUP</h3>
+        <div class="font-cyber text-3xl font-black text-gradient mb-4">₱300<span class="text-base text-cyber-muted">–₱800</span></div>
+        <ul class="text-sm space-y-1 text-cyber-text/85 mb-6"><li>✓ Clean Install & Config</li><li>✓ Hunting Toolkit Preloaded</li><li>✓ RAM / Performance Boost</li><li>✓ Step-by-Step Guide</li></ul>
+        <a href="#contact" class="block text-center font-cyber text-sm py-2 rounded-lg bg-gradient-to-r from-cyan-300 to-emerald-500 text-black font-bold">INQUIRE</a>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal border-gradient hover:shadow-glow transition">
+        <div class="text-4xl mb-4">⚙️</div><div class="font-cyber text-xs tracking-widest text-pink-400 mb-1">AUTOMATION</div>
+        <h3 class="font-cyber text-xl font-bold mb-2">CUSTOM SCRIPTS</h3>
+        <div class="font-cyber text-3xl font-black text-gradient mb-4">₱500<span class="text-base text-cyber-muted">–₱1,500</span></div>
+        <ul class="text-sm space-y-1 text-cyber-text/85 mb-6"><li>✓ Python / Bash Source</li><li>✓ Fully Commented Code</li><li>✓ Usage Documentation</li><li>✓ Free Minor Updates</li></ul>
+        <a href="#contact" class="block text-center font-cyber text-sm py-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-black font-bold">INQUIRE</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="relative py-24 px-5 grid-bg">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal mb-14"><div class="font-cyber text-xs tracking-[0.4em] text-cyber-cyan mb-2">04 / FEATURED_PROJECTS</div><h2 class="font-cyber text-4xl md:text-5xl font-black text-gradient">SHOWCASE.LAB</h2></div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <a href="https://jaydong922.github.io/jarvis-ai/" target="_blank" class="glass rounded-2xl p-7 reveal border-gradient md:col-span-2 hover:shadow-glowPurple transition group relative overflow-hidden">
+        <div class="absolute top-3 right-3 font-cyber text-[10px] tracking-widest px-3 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-black font-bold">🚀 FLAGSHIP · ACTIVE</div>
+        <div class="text-6xl mb-4 animate-float">🤖</div>
+        <h3 class="font-cyber text-3xl font-black text-gradient mb-2 group-hover:scale-105 transition">J.A.R.V.I.S AI v7.1</h3>
+        <p class="text-cyber-muted mb-5 text-lg">Full conversational AI assistant with voice control, live PH clock, Baybay weather, 4-model Groq fallback, memory, and cinematic cyber terminal UI. Built 100% on Termux.</p>
+        <div class="flex flex-wrap gap-2 mb-5"><span class="text-xs px-3 py-1 rounded-full glass">AI / LLM</span><span class="text-xs px-3 py-1 rounded-full glass">Voice Control</span><span class="text-xs px-3 py-1 rounded-full glass">Terminal UI</span><span class="text-xs px-3 py-1 rounded-full glass">Real-Time</span></div>
+        <div class="font-cyber text-sm text-cyber-purple font-bold group-hover:translate-x-2 transition">▶ LAUNCH JARVIS →</div>
+      </a>
+      <div class="glass rounded-2xl p-7 reveal border-gradient hover:shadow-glow transition">
+        <div class="absolute top-3 right-3 font-cyber text-[10px] tracking-widest px-3 py-1 rounded-full bg-cyan-500/20 text-cyber-cyan font-bold">🔐 ACTIVE</div>
+        <div class="text-5xl mb-4">🛡️</div>
+        <h3 class="font-cyber text-xl font-bold text-cyber-cyan mb-2">SECURITY LAB v1.7</h3>
+        <p class="text-sm text-cyber-muted mb-4">All-in-one bug bounty toolkit: recon, SSRF, IDOR, auth bypass automation — tuned for Termux / ARM64.</p>
+        <div class="font-cyber text-xs text-cyber-cyan">PRIVATE · INTERNAL USE</div>
+      </div>
+      <a href="https://jaydong922.github.io/Flappy-rocket/" target="_blank" class="glass rounded-2xl p-7 reveal hover:shadow-glow transition group">
+        <div class="absolute top-3 right-3 font-cyber text-[10px] tracking-widest px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">🎮 LIVE</div>
+        <div class="text-5xl mb-4">🚀</div>
+        <h3 class="font-cyber text-xl font-bold text-emerald-300 mb-2">FLAPPY ROCKET</h3>
+        <p class="text-sm text-cyber-muted mb-4">Hand-coded HTML5 canvas game. Physics, scoring, particles, sound — no engines. Pure code.</p>
+        <div class="font-cyber text-xs text-emerald-300 group-hover:translate-x-2 transition">▶ PLAY NOW →</div>
+      </a>
+      <div class="glass rounded-2xl p-7 reveal hover:shadow-glow transition">
+        <div class="absolute top-3 right-3 font-cyber text-[10px] tracking-widest px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 font-bold">🛒 DEMO</div>
+        <div class="text-5xl mb-4">🛍️</div>
+        <h3 class="font-cyber text-xl font-bold text-blue-300 mb-2">CYBERJAYD SHOP</h3>
+        <p class="text-sm text-cyber-muted mb-4">Full marketplace: auth, admin dashboard, buyer view, product CRUD, settings. No frameworks.</p>
+        <div class="font-cyber text-xs text-blue-300">FULL-STACK · VANILLA JS</div>
+      </div>
+      <div class="glass rounded-2xl p-7 reveal hover:shadow-glow transition">
+        <div class="absolute top-3 right-3 font-cyber text-[10px] tracking-widest px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 font-bold">🌐 LIVE</div>
+        <div class="text-5xl mb-4">🌍</div>
+        <h3 class="font-cyber text-xl font-bold text-pink-300 mb-2">SERVICES NET</h3>
+        <p class="text-sm text-cyber-muted mb-4">Client intake portal with pricing, portfolio showcase, contracts, and automated lead system.</p>
+        <div class="font-cyber text-xs text-pink-300">PRODUCTION · CLIENT-FACING</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="jarvis" class="relative py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="glass rounded-3xl p-8 md:p-14 border-gradient reveal relative overflow-hidden scanline">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <div class="font-cyber text-xs tracking-[0.4em] text-cyber-purple mb-3">🤖 FLAGSHIP AI SYSTEM</div>
+          <h2 class="font-cyber text-4xl md:text-6xl font-black mb-4 animate-glitch"><span class="text-gradient">J.A.R.V.I.S</span></h2>
+          <p class="text-cyber-muted font-cyber tracking-widest text-sm mb-5">JUST A RATHER VERY INTELLIGENT SYSTEM</p>
+          <p class="text-lg text-cyber-text/90 mb-6 leading-relaxed">Your personal AI assistant, security operator, and terminal companion — built from scratch with pure web tech. Voice commands, natural chat, system control, security scans, memory recall, and a cinematic cyber UI that responds to every keystroke. Runs anywhere, including your phone.</p>
+          <div class="grid grid-cols-2 gap-3 mb-8 text-sm"><div class="glass rounded-lg px-4 py-3">🎙️ Voice Control</div><div class="glass rounded-lg px-4 py-3">🧠 Long-Term Memory</div><div class="glass rounded-lg px-4 py-3">🔒 Security Module</div><div class="glass rounded-lg px-4 py-3">⚡ Automation Engine</div></div>
+          <a href="https://jaydong922.github.io/jarvis-ai/" target="_blank" class="inline-block font-cyber text-sm px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 text-black font-bold hover:shadow-glowPurple transition animate-float">▶ OPEN JARVIS AI NOW</a>
+        </div>
+        <div class="relative">
+          <div class="glass rounded-2xl p-6 border-gradient scanline overflow-hidden">
+            <div class="font-cyber text-xs text-cyber-cyan mb-3">◉ JARVIS.SYS v7.1 — ONLINE</div>
+            <div class="space-y-2 text-sm font-mono">
+              <div class="text-cyber-muted">[SYSTEM] Initializing neural core...</div>
+              <div class="text-emerald-400">[OK] Voice module loaded</div>
+              <div class="text-emerald-400">[OK] Memory bank connected</div>
+              <div class="text-cyber-cyan">[JARVIS] Good evening, Jayd. All systems nominal. Awaiting command.</div>
+              <div class="text-cyber-purple">[USER] Run security scan on target</div>
+              <div class="text-pink-400">[JARVIS] Scanning 65,535 ports... 3 open services detected. SSRF candidate found on /api/v1/proxy.</div>
+              <div class="text-emerald-400 animate-pulse">[STATUS] READY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="relative py-24 px-5 grid-bg">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal mb-14"><div class="font-cyber text-xs tracking-[0.4em] text-cyber-cyan mb-2">05 / ESTABLISH_CONNECTION</div><h2 class="font-cyber text-4xl md:text-5xl font-black text-gradient">TRANSMIT_INQUIRY</h2></div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="glass rounded-2xl p-8 reveal border-gradient">
+        <h3 class="font-cyber text-2xl font-bold text-cyber-cyan mb-6">📡 Secure Channels</h3>
+        <div class="space-y-5 text-lg">
+          <div class="flex items-start gap-4"><div class="text-3xl">📧</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Main Email</div><a href="mailto:repoberbiojayd3@gmail.com" class="text-cyber-text hover:text-cyber-cyan transition">repoberbiojayd3@gmail.com</a></div></div>
+          <div class="flex items-start gap-4"><div class="text-3xl">💼</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Business Email</div><a href="mailto:cyberjayd1@gmail.com" class="text-cyber-text hover:text-cyber-cyan transition">cyberjayd1@gmail.com</a></div></div>
+          <div class="flex items-start gap-4"><div class="text-3xl">📍</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Location</div><div>Baybay City, Leyte / Cebu City, PH 🇵🇭</div></div></div>
+          <div class="flex items-start gap-4"><div class="text-3xl">⏰</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Operating Hours</div><div>Daily 09:00 — 21:00 PHT</div></div></div>
+          <div class="flex items-start gap-4"><div class="text-3xl">⚡</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Response Time</div><div class="text-emerald-400 font-semibold">< 24 Hours · Mon-Sun</div></div></div>
+          <div class="flex items-start gap-4"><div class="text-3xl">⚠️</div><div><div class="font-cyber text-sm text-cyber-muted uppercase tracking-wider">Protocol</div><div class="text-cyber-purple font-semibold">LEGAL & ETHICAL ONLY</div></div></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-8 reveal border-gradient">
+        <h3 class="font-cyber text-2xl font-bold text-cyber-purple mb-6">✉ Send Direct Message</h3>
+        <a href="mailto:cyberjayd1@gmail.com?subject=CONTRACT_REQUEST_%2F%2F_CYBERJAYD_GRAYBLUE" class="block text-center font-cyber text-base px-6 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-black font-bold hover:shadow-glow transition mb-6">▶ TRANSMIT INQUIRY VIA EMAIL</a>
+        <div class="glass rounded-xl p-5 text-sm text-cyber-muted leading-relaxed">
+          <strong class="text-cyber-cyan">Include in your message:</strong><br>
+          • Project type (Web / Security / Game / AI / Termux)<br>
+          • Scope & deadline<br>
+          • Budget range<br>
+          • Reference links / examples<br><br>
+          <span class="text-emerald-400">⚡ I reply to all legitimate inquiries within 24 hours.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="relative py-10 px-5 border-t border-cyan-500/20">
+  <div class="max-w-6xl mx-auto text-center">
+    <div class="font-cyber text-2xl font-black text-gradient mb-3">CYBERJAYD SYSTEMS</div>
+    <p class="text-sm text-cyber-muted mb-2">© 2025-2077 CYBERJAYD · ALL RIGHTS RESERVED</p>
+    <p class="text-xs text-cyber-muted/70 font-cyber tracking-widest">DESIGNED & FORGED BY JAYD F. REPOBERBIO · BUILT WITH PASSION · POWERED BY PURE CODE · MOBILE-FIRST SINCE DAY ONE</p>
+  </div>
+</footer>
+<script>
+(function(){
+  const c=document.getElementById('bg3d'),s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,200);cam.position.z=40;
+  const r=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(innerWidth,innerHeight);
+  s.add(new THREE.AmbientLight(0x22d3ee,.5));
+  const l1=new THREE.PointLight(0x3b82f6,1.5,120);l1.position.set(20,10,20);s.add(l1);
+  const l2=new THREE.PointLight(0xa855f7,1.2,120);l2.position.set(-20,-10,10);s.add(l2);
+  const g=new THREE.IcosahedronGeometry(10,1);
+  const m=new THREE.MeshStandardMaterial({color:0x0ea5e9,wireframe:true,transparent:true,opacity:.35,metalness:.8,roughness:.2});
+  const core=new THREE.Mesh(g,m);s.add(core);
+  const g2=new THREE.SphereGeometry(14,40,40);
+  const m2=new THREE.MeshBasicMaterial({color:0x22d3ee,wireframe:true,transparent:true,opacity:.15});
+  const shell=new THREE.Mesh(g2,m2);s.add(shell);
+  const parts=new THREE.Group();s.add(parts);
+  for(let i=0;i<180;i++){
+    const p=new THREE.Mesh(new THREE.SphereGeometry(.08,6,6),new THREE.MeshBasicMaterial({color:Math.random()>.5?0x22d3ee:0xa855f7}));
+    const d=20+Math.random()*25,a=Math.random()*Math.PI*2,b=Math.acos(2*Math.random()-1);
+    p.position.set(d*Math.sin(b)*Math.cos(a),d*Math.sin(b)*Math.sin(a),d*Math.cos(b));
+    parts.add(p);
+  }
+  addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight)});
+  function t(){requestAnimationFrame(t);core.rotation.x+=.002;core.rotation.y+=.004;shell.rotation.x-=.001;shell.rotation.y+=.002;parts.rotation.y+=.0008;r.render(s,cam)}t();
+  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
+})();
+</script>
+</body>
+</html>
